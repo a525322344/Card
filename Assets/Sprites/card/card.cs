@@ -10,9 +10,10 @@ public enum CardKind
 [System.Serializable]
 public class card:object
 {
-    public int Id;
     public string Name;
+    public int Id;
     public CardKind Kind;
+    public string Describe;
     private bool canplay;
     public void SetCanPlay(bool b)
     {
