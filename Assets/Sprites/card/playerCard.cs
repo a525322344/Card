@@ -8,13 +8,7 @@ public class Effectclass
 {
     public CardEffect cardEffect;
     public int num;
-    //public Effectclass buildEffectClass(CardEffect cardEffect, int num)
-    //{
-    //    Effectclass e = new Effectclass();
-    //    e.cardEffect = cardEffect;
-    //    e.num = num;
-    //    return e;
-    //}
+
     public Effectclass(CardEffect _cardEffect, int _num)
     {
         cardEffect = _cardEffect;
