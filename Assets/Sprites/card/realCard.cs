@@ -9,25 +9,26 @@ public class realCard : MonoBehaviour
     public int thisid;
     //
     public playerCard thisCard;
-    private RectTransform transform;
+    public RectTransform realCardMesh;
     public Text nameText;
     public Text describeText;
 
     private Vector3 initLocakscale;
-    public Vector3 handPosition;
-    public Vector3 handRotation;
-
+    private Vector3 handPosition;
+    private Vector3 handRotation;
     public Vector3 targetPosition;
+
     public float maxDistance;
     public float adjustDistance;
 
     public float upSpeed;
     public float moveSpeed;
     private bool _b_mouseEnter = false;
+    private bool _b_selected = false;
     // Start is called before the first frame update
     void Start()
     {
-        transform = GetComponent<RectTransform>();
+        realCardMesh = GetComponent<RectTransform>();
         handPosition = transform.position;
         initLocakscale = transform.localScale;
     }
@@ -37,13 +38,16 @@ public class realCard : MonoBehaviour
     {
         if (_b_mouseEnter)
         {
-            transform.position = Vector3.MoveTowards(transform.position,handPosition ,upSpeed*Time.deltaTime);
+            realCardMesh.position = Vector3.MoveTowards(transform.position,handPosition ,upSpeed*Time.deltaTime);
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            realCardMesh.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
         }
-        
+        if (_b_selected)
+        {
+
+        }
     }
 
     public void SetThiscard(playerCard playerCard)
@@ -55,14 +59,25 @@ public class realCard : MonoBehaviour
     private void OnMouseEnter()
     {
         _b_mouseEnter = true;
-        transform.position = targetPosition + Vector3.up * adjustDistance;
+        realCardMesh.position = targetPosition + Vector3.up * adjustDistance;
         handPosition = targetPosition + Vector3.up * maxDistance;
-        transform.localScale = initLocakscale * 2;
+        realCardMesh.localScale = initLocakscale * 1.5f;
     }
     private void OnMouseExit()
     {
         _b_mouseEnter = false;
-        transform.localScale = initLocakscale;
-        transform.position = targetPosition;
+        realCardMesh.localScale = initLocakscale;
+        realCardMesh.position = targetPosition;
+    }
+    private void OnMouseDown()
+    {
+        if (_b_selected)
+        {
+            //进入选择，
+        }
+        else
+        {
+            _b_selected = true;
+        }        
     }
 }
