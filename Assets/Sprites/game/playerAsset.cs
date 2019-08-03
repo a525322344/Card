@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class playerAsset : MonoBehaviour
 {
+    public List<playerCard> AllIdCards = new List<playerCard>();
     public List<playerCard> playerDick=new List<playerCard>();
     public List<playerCard> playerDickInGame=new List<playerCard>();
     public List<playerCard> playerDiscard=new List<playerCard>();

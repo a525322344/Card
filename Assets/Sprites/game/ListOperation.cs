@@ -25,4 +25,23 @@ public static class ListOperation
         }
         return get;
     }
+    /// <summary>
+    /// 随机排序链表<泛型>
+    /// </summary>
+    /// <typeparam name="T_class"></typeparam>
+    /// <param name="tList"></param>
+    /// <returns></returns>
+    public static List<T_class> Shufle<T_class>(List<T_class> tList)
+    {
+        List<T_class> temporary = new List<T_class>(tList);
+        List<T_class> result = new List<T_class>();
+        int countNum = tList.Count;
+        while (result.Count < countNum)
+        {
+            int index = Random.Range(0, temporary.Count);
+            result.Add(temporary[index]);
+            temporary.Remove(temporary[index]);
+        }
+        return result;
+    }
 }

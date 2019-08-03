@@ -478,7 +478,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 64.68
-  m_Text: "\u6CD5\u529B\u51B2\u51FB"
+  m_Text: "\u5361\u540D"
 --- !u!1 &5365490657823901752
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,7 +557,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 19.96
-  m_Text: "\u9020\u62105\u70B9\u4F24\u5BB3"
+  m_Text: "\u63CF\u8FF0"
 --- !u!1 &5365490657936371366
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,6 +626,7 @@ MonoBehaviour:
     Name: 
     Id: 0
     Kind: 0
+    cost: 0
     Describe: 
     damageToEnemy: 0
     deffenceToOwn: 0

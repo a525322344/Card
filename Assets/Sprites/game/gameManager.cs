@@ -6,6 +6,9 @@ public enum ROUND
     PlayerRound,
     EnemyRound
 }
+
+
+
 public class gameManager : MonoBehaviour
 {
     static gameManager _instance;
@@ -41,8 +44,9 @@ public class gameManager : MonoBehaviour
     {
         GameRound = ROUND.PlayerRound;
         startBattale();
-        playerAsset.playerDickInGame = ListOperation.shuffle(playerAsset.playerDickInGame);
+        playerAsset.playerDickInGame = ListOperation.Shufle<playerCard>(playerAsset.playerDickInGame);
         StartRound();
+
     }
     public int check;
     public int min = 0;

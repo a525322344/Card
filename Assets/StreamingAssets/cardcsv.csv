@@ -1,0 +1,4 @@
+id,name,kind,cost,damage,deffence
+0,法力冲击,PlayerCard,1,5,0
+1,护盾,PlayerCard,1,0,5
+2,小火球,PlayerCard,2,10,0

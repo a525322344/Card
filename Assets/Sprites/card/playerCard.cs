@@ -1,20 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[System.Serializable]
-public delegate void CardEffect(int num);
-[System.Serializable]
-public class Effectclass
+public enum CardKind
 {
-    public CardEffect cardEffect;
-    public int num;
-
-    public Effectclass(CardEffect _cardEffect, int _num)
+    PlayerCard,
+    StateCard,
+    CurseCard
+}
+[System.Serializable]
+public class card : object
+{
+    public string Name;
+    public int Id;
+    public CardKind Kind;
+    public int cost;
+    public string Describe;
+    private bool canplay;
+    public void SetCanPlay(bool b)
     {
-        cardEffect = _cardEffect;
-        num = _num;
+        canplay = b;
+    }
+    public bool GetCanPlay()
+    {
+        return canplay;
     }
 }
+
+//游戏卡牌数据类，负责：记录原始信息，字段数据，生成并保存效果类链表；不包含打出函数
 [System.Serializable]
 public class playerCard : card
 {
@@ -48,43 +60,27 @@ public class playerCard : card
     #region 卡牌效果字段
     //伤害
     public int damageToEnemy;
-    public void SetDamageToEnemy(int num)
-    {
-        damageToEnemy = num;
-    }
     //护甲
     public int deffenceToOwn;
-    public void SetDeffence_own(int num)
-    {
-        deffenceToOwn = num;
-    }
     #endregion
-    //效果链表
-    public List<Effectclass> Effectclass_Enemy=new List<Effectclass>();
-    public List<Effectclass> Effectclass_Own=new List<Effectclass>();
+    //打出效果链表
+    public List<cardEffectBase> EffectPlayList = new List<cardEffectBase>();
+
     private void setEffect()
     {
         if (damageToEnemy > 0)
-        {            
-            Effectclass_Enemy.Add(new Effectclass(new CardEffect(AllAsset.effectAsset.giveDemage),damageToEnemy));
-            Describe += "造成" + damageToEnemy + "点伤害;";
+        {
+            cardEffectBase effect = new Damage(damageToEnemy);
+            EffectPlayList.Add(effect);
+
+            Describe += effect.DescribeEffect(damageToEnemy);
         }
         if (deffenceToOwn > 0)
         {
-            Effectclass_Own.Add(new Effectclass(new CardEffect(AllAsset.effectAsset.getArmor),deffenceToOwn));
-            Describe += "获得" + deffenceToOwn + "点护甲;";
-        }
-        
-    }
-
-    //效果
-    public void cardPlayEffect()
-    {
-        int listLength = Effectclass_Own.Count;
-        for(int i = 0; i < listLength; i++)
-        {
-            Effectclass_Own[i].cardEffect(Effectclass_Own[i].num);
-        }
-    }
+            cardEffectBase effect = new Deffence(deffenceToOwn);
+            EffectPlayList.Add(effect);
+            Describe += effect.DescribeEffect(deffenceToOwn);
+        }       
+    }    
 }
 

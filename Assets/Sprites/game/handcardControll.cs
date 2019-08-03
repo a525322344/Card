@@ -8,6 +8,12 @@ public class handcardControll : MonoBehaviour
     public int cardCount;
     public float maxDistance;
     public float AllDistance;
+
+    public float maxMouseOnDistance;
+    public float adjustMouseOnDistance;
+
+    public float upfloatSpeed;
+    public float moveSpeed;
     public List<realCard> playerHandCards=new List<realCard>();
     // Start is called before the first frame update
     void Start()
@@ -19,6 +25,11 @@ public class handcardControll : MonoBehaviour
     void Update()
     {
         cardCount = playerHandCards.Count;
+        foreach(realCard real in playerHandCards)
+        {
+            //临时实时传递数据，便于调教，最后删除
+            real.SetCardMoveNum(maxMouseOnDistance, adjustMouseOnDistance, upfloatSpeed, moveSpeed);
+        }
         if (cardCount * maxDistance <= AllDistance)
         {
             if (cardCount % 2 == 0) //偶数
@@ -30,9 +41,8 @@ public class handcardControll : MonoBehaviour
                     float disright = (cardCount - 1 - i) - (cardCount - 1) / 2;
                     playerHandCards[i].targetPosition = transform.position + new Vector3(1,0,0) * disleft * maxDistance;
                     playerHandCards[cardCount - 1 - i].targetPosition = transform.position + new Vector3(1, 0, 0) * disright * maxDistance;
-                    //playerHandCards[i].handPosition = playerHandCards[i].targetPosition;
-                    //playerHandCards[cardCount - 1 - i].handPosition = playerHandCards[cardCount - 1 - i].targetPosition;
-                    //Debug.Log("" + disleft + "   " + disright);
+
+                    
                 }
             }
             else                                //奇数

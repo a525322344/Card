@@ -1,15 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[System.Serializable]
+public class pawnbase
+{
+    public int healthmax;
+    public int healthnow;
+    public int armor;
+}
 
+[System.Serializable]
 public class enemybase : pawnbase
 {
-    public void HurtHealth(int i)
+    public int index;
+    public void hurtHealth(int i)
     {
-        if (i >= 0)
-        {
-            healthnow -= i;
-        }
+        healthnow -= i;
     }
     public void GetArmor(int i)
     {

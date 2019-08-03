@@ -15,14 +15,13 @@ public class realCard : MonoBehaviour
 
     private Vector3 initLocakscale;
     private Vector3 handPosition;
-    private Vector3 handRotation;
     public Vector3 targetPosition;
 
-    public float maxDistance;
-    public float adjustDistance;
+    private float maxMouseOnDistance;
+    private float adjustMouseOnDistance;
+    private float upfloatSpeed;
+    private float moveSpeed;
 
-    public float upSpeed;
-    public float moveSpeed;
     private bool _b_mouseEnter = false;
     private bool _b_selected = false;
     // Start is called before the first frame update
@@ -38,7 +37,7 @@ public class realCard : MonoBehaviour
     {
         if (_b_mouseEnter)
         {
-            realCardMesh.position = Vector3.MoveTowards(transform.position,handPosition ,upSpeed*Time.deltaTime);
+            realCardMesh.position = Vector3.MoveTowards(transform.position,handPosition , upfloatSpeed * Time.deltaTime);
         }
         else
         {
@@ -56,11 +55,25 @@ public class realCard : MonoBehaviour
         nameText.text = playerCard.Name;
         describeText.text = playerCard.Describe;
     }
+    /// <summary>
+    /// 设置手牌移动效果参数
+    /// </summary>
+    /// <param name="_maxD">缓慢向上飘最大距离</param>
+    /// <param name="_adjustD">放大的位置调整</param>
+    /// <param name="_upSpeed">缓慢向上飘的速度</param>
+    /// <param name="_moveSpeed">卡牌移动速度</param>
+    public void SetCardMoveNum(float _maxD,float _adjustD,float _upSpeed,float _moveSpeed)
+    {
+        maxMouseOnDistance = _maxD;
+        adjustMouseOnDistance = _adjustD;
+        upfloatSpeed = _upSpeed;
+        moveSpeed = _moveSpeed;
+    }
     private void OnMouseEnter()
     {
         _b_mouseEnter = true;
-        realCardMesh.position = targetPosition + Vector3.up * adjustDistance;
-        handPosition = targetPosition + Vector3.up * maxDistance;
+        realCardMesh.position = targetPosition + Vector3.up * adjustMouseOnDistance;
+        handPosition = targetPosition + Vector3.up * maxMouseOnDistance;
         realCardMesh.localScale = initLocakscale * 1.5f;
     }
     private void OnMouseExit()
@@ -71,6 +84,7 @@ public class realCard : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        playthiscardTest();
         if (_b_selected)
         {
             //进入选择，
@@ -79,5 +93,10 @@ public class realCard : MonoBehaviour
         {
             _b_selected = true;
         }        
+    }
+
+    void playthiscardTest()
+    {
+
     }
 }
