@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 //对效果的强化函数
-public delegate int DeleExtraEffect(int cardnum);
+public delegate int DeleExtraEffect(int cardnum,int extraadjust);
 public abstract class extraEffectBase
 {
     public abstract int AdjustEffect(int cardnum);
-    public abstract bool canInffence(cardEffectBase _cardEffectBase);
+    public abstract bool canInfluence(cardEffectBase _cardEffectBase);
 
     protected int priority;
     protected int adjustnum;
     protected List<cardEffectBase> CanInffenceEffects = new List<cardEffectBase>();
-    protected List<DeleExtraEffect> deleExtraList = new List<DeleExtraEffect>();
+    protected DeleExtraEffect deleAdjust;
 }
 
 public class extraAttackUp : extraEffectBase
@@ -25,12 +25,13 @@ public class extraAttackUp : extraEffectBase
         priority = 5;
         adjustnum = adjust;
         CanInffenceEffects.Add(new Damage(0));
+        deleAdjust = new DeleExtraEffect(AllAsset.extraAsset.addSubNum);
     }
-    public override int AdjustEffect(int cardnum)
-    { 
-        return cardnum + adjustnum;
+    public override int AdjustEffect(int _cardnum)
+    {
+        return deleAdjust(_cardnum, adjustnum);
     }
-    public override bool canInffence(cardEffectBase _cardEffectBase)
+    public override bool canInfluence(cardEffectBase _cardEffectBase)
     {
         bool can = false;
         foreach(cardEffectBase cardEffect in CanInffenceEffects)
@@ -52,12 +53,13 @@ public class extraDeffenceUp : extraEffectBase
         priority = 5;
         adjustnum = adjust;
         CanInffenceEffects.Add(new Deffence(0));
+        deleAdjust = new DeleExtraEffect(AllAsset.extraAsset.addSubNum);
     }
-    public override int AdjustEffect(int cardnum)
+    public override int AdjustEffect(int _cardnum)
     {
-        return cardnum + adjustnum;
+        return deleAdjust(_cardnum, adjustnum);
     }
-    public override bool canInffence(cardEffectBase _cardEffectBase)
+    public override bool canInfluence(cardEffectBase _cardEffectBase)
     {
         bool can = false;
         foreach (cardEffectBase cardEffect in CanInffenceEffects)

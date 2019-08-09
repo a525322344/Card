@@ -57,6 +57,10 @@ public class playerCard : card
         deffenceToOwn = _deffenceToOwn;
         setEffect();
     }
+    public List<cardEffectBase> getEffectList()
+    {
+        return EffectPlayList;
+    }
     #region 卡牌效果字段
     //伤害
     public int damageToEnemy;

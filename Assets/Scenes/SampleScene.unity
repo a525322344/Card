@@ -2476,8 +2476,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battleInfo:
     Enemy:
-      healthmax: 0
-      healthnow: 0
+      healthmax: 60
+      healthnow: 60
       armor: 0
       index: 0
     Player:
@@ -2485,3 +2485,11 @@ MonoBehaviour:
       healthnow: 0
       armor: 0
       index: 0
+  falichongji:
+    Name: 
+    Id: 0
+    Kind: 0
+    cost: 0
+    Describe: 
+    damageToEnemy: 0
+    deffenceToOwn: 0

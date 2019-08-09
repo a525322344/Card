@@ -20,26 +20,37 @@ public class battleManager : MonoBehaviour
     public battleInfo battleInfo;
     //玩家要打的手牌
     public playerCard falichongji;
-    //实时事件队列
+    //部件触发
+    public PartTrigger attackUp = new PartTrigger();
+    //环境触发
+    public List<Trigger> enveTriggerList = new List<Trigger>();
+    //延后事件队列
     public List<singleEvent> realtimeEvents = new List<singleEvent>();
     //打出一张牌
-    void playerthecard(playerCard playerCard,singleEvent partevent)
+    void playerthecard()
     {
-        singleEvent newcardevent = new CardEvent();
+        attackUp.addExtraEffect(new extraAttackUp(1));
+        CardEvent newcardevent = new CardEvent(falichongji, attackUp);
+        newcardevent.SetCommonTrigger(enveTriggerList);
+        realtimeEvents.Add(newcardevent);
     }
+
     // Start is called before the first frame update
     void Start()
     {
         falichongji = AllAsset.cardAsset.AllIdCards[0];
+        //falichongji.
+        playerthecard();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (realtimeEvents.Count > 0)
-        //{
-        //    realtimeEvents[0].dealEffect(battleInfo);
-        //    realtimeEvents.Remove(realtimeEvents[0]);
-        //}
+        if (realtimeEvents.Count > 0)
+        {
+            realtimeEvents[0].dealEffect();
+            realtimeEvents[0].launchEffect(battleInfo);
+            realtimeEvents.Remove(realtimeEvents[0]);
+        }
     }
 }

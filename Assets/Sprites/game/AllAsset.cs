@@ -26,6 +26,14 @@ namespace AllAsset
             gameManager.Instance.PlayerClass.GetArmor(num);
         }
     }
+    //声明所有的额外强化效果
+    public static class extraAsset
+    {
+        public static int addSubNum(int _num,int adjust)
+        {
+            return _num + adjust;
+        }
+    }
     //声明所有的卡牌
     public static class cardAsset
     {
