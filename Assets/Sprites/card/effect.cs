@@ -2,34 +2,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//效果的枚举量
 
 //对卡牌效果的委托
 public delegate void DeleCardEffect(int num,battleInfo battleinfo);
+//public delegate bool DeleIsorNot(int num, battleInfo battleInfo);
 
-//弃用
-//[System.Serializable]
-//public class Effectclass
-//{
-//    public CardEffect cardEffect;
-//    public int num;
+[System.Serializable]
+public class Effect
+{
+    public DeleCardEffect istrue;
+    public cardEffectBase cardEffect;
 
-//    public Effectclass(CardEffect _cardEffect, int _num)
-//    {
-//        cardEffect = _cardEffect;
-//        num = _num;
-//    }
-//}
+}
 
 //一个效果抽象基类，派生出每个卡牌效果
 [System.Serializable]
 public abstract class cardEffectBase
 {
-    public abstract DeleCardEffect getEffect();
     public abstract string DescribeEffect(int _i);
     public abstract void DealEffect(int num,battleInfo battleInfo); 
     public int getNum()
     {
         return num;
+    }
+    public EventKind GetEventKind()
+    {
+        return eventkind;
     }
     public DeleCardEffect getCardEffect()
     {
@@ -38,14 +37,32 @@ public abstract class cardEffectBase
 
     protected int num;
     protected DeleCardEffect effectDele;
+    protected EventKind eventkind;          //该效果创建的事件类型
 }
+////该效果是空效果子类，是为了统合调用，表明CardEvent的种类
+public abstract class emptyKind : cardEffectBase
+{
+    
+}
+
+//打出一张卡
+public class emplyPlayCard:emptyKind
+{
+    public emplyPlayCard(){
+        eventkind = EventKind.Event_PlayCard;
+    }
+    public override string DescribeEffect(int _i){ return ""; }
+    public override void DealEffect(int num, battleInfo battleInfo) { }
+}
+
 
 public class Damage : cardEffectBase
 {
-    public Damage(int _num)
+    public Damage(int _num=0)
     {
         num = _num;
         effectDele= new DeleCardEffect(AllAsset.effectAsset.dealDemage);
+        eventkind = EventKind.Event_Damage;
     }
     public override string DescribeEffect(int _i)
     {
@@ -53,22 +70,19 @@ public class Damage : cardEffectBase
         result += "造成" + _i + "点伤害";
         return result;
     }
-    public override DeleCardEffect getEffect()
-    {
-        return effectDele;
-    }
     public override void DealEffect(int newnum,battleInfo battleinfo)
     {
-        effectDele(num,battleinfo);
+        effectDele(newnum, battleinfo);
     }
 }
 
-public class Deffence : cardEffectBase
+public class Armor : cardEffectBase
 {
-    public Deffence(int _num)
+    public Armor(int _num=0)
     {
         num = _num;
         effectDele = new DeleCardEffect(AllAsset.effectAsset.gainArmor);
+        eventkind = EventKind.Event_Armor;
     }
     public override string DescribeEffect(int _i)
     {
@@ -76,12 +90,27 @@ public class Deffence : cardEffectBase
         result += "获得" + _i + "点护盾";
         return result;
     }
-    public override DeleCardEffect getEffect()
-    {
-        return effectDele;
-    }
     public override void DealEffect(int newnum, battleInfo battleinfo)
     {
-        effectDele(num, battleinfo);
+        effectDele(newnum, battleinfo);
+    }
+}
+
+public class DrawCard : cardEffectBase
+{
+    public DrawCard(int _num=0)
+    {
+        num = _num;
+    }
+    public override string DescribeEffect(int _i)
+    {
+        string result = "";
+        result += "抽" + _i + "张卡";
+        return result;
+    }
+    public override void DealEffect(int num, battleInfo battleInfo)
+    {
+        //抽卡效果
+        //
     }
 }

@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 //储存数据
 namespace AllAsset
 {
+    
     //声明所有的卡片效果
     public static class effectAsset
     {
@@ -39,7 +41,23 @@ namespace AllAsset
     {
         //从表格里获得的所有卡
         public static List<playerCard> AllIdCards = new List<playerCard>();
-
+    }
+    //声明所有的魔力部件
+    public static class magicpartAsset
+    {
+        public static List<MagicPart> AllMagicParts = new List<MagicPart>();
     }
 
+}
+
+namespace Constant
+{
+    public class Path
+    {
+        public const string GRID_MATERIAL_CYAN = "Materials/grid/grid_cyan";
+        public const string GRID_MATERIAL_BLACK = "Materials/grid/grid_black";
+        public const string GRID_MATERIAL_GRAY = "Materials/grid/grid_gray";
+        public const string GRID_MATERIAL_WRITE = "Materials/grid/grid_write";
+    } 
+    
 }

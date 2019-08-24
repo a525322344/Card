@@ -81,7 +81,7 @@ public class playerCard : card
         }
         if (deffenceToOwn > 0)
         {
-            cardEffectBase effect = new Deffence(deffenceToOwn);
+            cardEffectBase effect = new Armor(deffenceToOwn);
             EffectPlayList.Add(effect);
             Describe += effect.DescribeEffect(deffenceToOwn);
         }       

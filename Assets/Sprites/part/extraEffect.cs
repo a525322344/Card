@@ -3,14 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 //对效果的强化函数
 public delegate int DeleExtraEffect(int cardnum,int extraadjust);
+
+public enum AffectEffectKind
+{
+    Affect_DamageUp,
+    Affect_ArmorUp,
+
+}
 public abstract class extraEffectBase
 {
     public abstract int AdjustEffect(int cardnum);
     public abstract bool canInfluence(cardEffectBase _cardEffectBase);
+    public cardEffectBase getInfluenceEffect()
+    {
+        return CanInffenceEffect;
+    }
 
     protected int priority;
     protected int adjustnum;
-    protected List<cardEffectBase> CanInffenceEffects = new List<cardEffectBase>();
+    protected cardEffectBase CanInffenceEffect;
     protected DeleExtraEffect deleAdjust;
 }
 
@@ -24,7 +35,7 @@ public class extraAttackUp : extraEffectBase
     {
         priority = 5;
         adjustnum = adjust;
-        CanInffenceEffects.Add(new Damage(0));
+        CanInffenceEffect = new Damage();
         deleAdjust = new DeleExtraEffect(AllAsset.extraAsset.addSubNum);
     }
     public override int AdjustEffect(int _cardnum)
@@ -33,16 +44,7 @@ public class extraAttackUp : extraEffectBase
     }
     public override bool canInfluence(cardEffectBase _cardEffectBase)
     {
-        bool can = false;
-        foreach(cardEffectBase cardEffect in CanInffenceEffects)
-        {
-            if (cardEffect.GetType() == _cardEffectBase.GetType())
-            {
-                can = true;
-                break;
-            }
-        }
-        return can;
+        return _cardEffectBase.GetType() == CanInffenceEffect.GetType();
     }
 
 }
@@ -52,7 +54,7 @@ public class extraDeffenceUp : extraEffectBase
     {
         priority = 5;
         adjustnum = adjust;
-        CanInffenceEffects.Add(new Deffence(0));
+        CanInffenceEffect = new Armor();
         deleAdjust = new DeleExtraEffect(AllAsset.extraAsset.addSubNum);
     }
     public override int AdjustEffect(int _cardnum)
@@ -61,16 +63,7 @@ public class extraDeffenceUp : extraEffectBase
     }
     public override bool canInfluence(cardEffectBase _cardEffectBase)
     {
-        bool can = false;
-        foreach (cardEffectBase cardEffect in CanInffenceEffects)
-        {
-            if (cardEffect.GetType() == _cardEffectBase.GetType())
-            {
-                can = true;
-                break;
-            }
-        }
-        return can;
+        return _cardEffectBase.GetType() == CanInffenceEffect.GetType();
     }
     
 }
