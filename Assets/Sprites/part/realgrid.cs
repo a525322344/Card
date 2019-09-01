@@ -19,6 +19,7 @@ public class realgrid : MonoBehaviour
     void Start()
     {
         _renderer = GetComponent<MeshRenderer>();
+        
     }
     public void Init()
     {

@@ -5,7 +5,6 @@ using UnityEngine;
 //储存数据
 namespace AllAsset
 {
-    
     //声明所有的卡片效果
     public static class effectAsset
     {
@@ -25,7 +24,7 @@ namespace AllAsset
             {
                 num = 0;
             }
-            gameManager.Instance.PlayerClass.GetArmor(num);
+            battleInfo.getPlayer().GetArmor(num);
         }
     }
     //声明所有的额外强化效果
@@ -54,10 +53,10 @@ namespace Constant
 {
     public class Path
     {
-        public const string GRID_MATERIAL_CYAN = "Materials/grid/grid_cyan";
-        public const string GRID_MATERIAL_BLACK = "Materials/grid/grid_black";
-        public const string GRID_MATERIAL_GRAY = "Materials/grid/grid_gray";
-        public const string GRID_MATERIAL_WRITE = "Materials/grid/grid_write";
+        public const string GRID_MATERIAL_CYAN = "Materials/Grid/grid_cyan";
+        public const string GRID_MATERIAL_BLACK = "Materials/Grid/grid_black";
+        public const string GRID_MATERIAL_GRAY = "Materials/Grid/grid_gray";
+        public const string GRID_MATERIAL_WRITE = "Materials/Grid/grid_write";
     } 
     
 }

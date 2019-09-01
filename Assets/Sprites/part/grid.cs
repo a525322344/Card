@@ -30,7 +30,8 @@ public class grid
     }
 
     public bool Opening {
-        get { return m_Opening; }
+        get;
+        set;
     }
     public bool Power
     {

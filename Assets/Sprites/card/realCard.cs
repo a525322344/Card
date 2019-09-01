@@ -8,7 +8,7 @@ public class realCard : MonoBehaviour
     //生成时，传递给该手牌类的数据
     public int thisid;
     //
-    public playerCard thisCard;
+    public card thisCard;
     public RectTransform realCardMesh;
     public Text nameText;
     public Text describeText;
@@ -49,7 +49,7 @@ public class realCard : MonoBehaviour
         }
     }
 
-    public void SetThiscard(playerCard playerCard)
+    public void SetThiscard(card playerCard)
     {
         thisCard = playerCard;
         nameText.text = playerCard.Name;

@@ -6,6 +6,7 @@ using UnityEngine;
 //Part();
 //addReaction()*n;
 //SetinReactions();
+[System.Serializable]
 public class Part 
 {
     public Part(){}
@@ -28,7 +29,7 @@ public class Part
     }
     protected List<Reaction> m_overallReactionList = new List<Reaction>();
 }
-
+[System.Serializable]
 public class MagicPart : Part
 {
     public MagicPart() { }
@@ -37,14 +38,20 @@ public class MagicPart : Part
     {
         for(int i = 0; i < a.Length; i++)
         {
+            grid newgrid = new grid(true);
+            int posy = i / 3;
+            int posx = i % 3;
+            newgrid.setPosition(posx, posy);
             if (a[i] == 1)
             {
-                grid newgrid = new grid(true);
-                int posy = i / 3;
-                int posx = i % 3;
-                newgrid.setPosition(posx, posy);
-                grids.Add(newgrid);
+                newgrid.Opening = true;
             }
+            else
+            {
+                newgrid.Opening = false;
+            }
+            grids.Add(newgrid);
+            
         }
     }
     public override void addReaction(Reaction reaction)

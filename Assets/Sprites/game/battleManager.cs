@@ -1,6 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public enum ROUND
+{
+    PlayerRound,
+    EnemyRound
+}
+
 //此场战斗的信息
 [System.Serializable]
 public class battleInfo
@@ -8,6 +15,10 @@ public class battleInfo
     public enemybase getEnemy()
     {
         return Enemy;
+    }
+    public enemybase getPlayer()
+    {
+        return Player;
     }
     public enemybase Enemy;             //敌人
     public enemybase Player;            //玩家自己
@@ -18,75 +29,63 @@ public class battleInfo
 
 public class battleManager : MonoBehaviour
 {
+    instantiateManager instantiatemanager;
+
+    //战斗回合状态
+    public ROUND BattleRound = ROUND.PlayerRound;
+    //玩家数据类
+    public playerInfo playerinfo;
+    //玩家的卡组
+    public List<playerCard> dickInGame = new List<playerCard>();
+    //玩家的弃牌堆
+    public List<playerCard> dickDiscard = new List<playerCard>();
+    //玩家的手牌
+    public List<playerCard> dickHandCard = new List<playerCard>();
+
     //战场信息
     public battleInfo battleInfo;
-    //卡牌
-    public playerCard falichongji;
-    //部件
-    public Part PatrAttackUp = new MagicPart();
 
-    //延后事件队列
-    public List<singleEvent> realtimeEvents = new List<singleEvent>();
 
-    //初始化信息
-    void initSetting()
-    {
-        //完成部件
-        Reaction attackUpReaction = new Reaction_Affect(new extraAttackUp(1), ReactionKind.Reaction_Affect_DamageUp);
-        PatrAttackUp.addAndSetin(attackUpReaction);
-    }
-    //打出一张牌
-    void playerthecard()
-    {
-        CardEvent newcardevent = new CardEvent(falichongji,(MagicPart)PatrAttackUp,new emplyPlayCard());
-        newcardevent.recesiveNotice();
-        realtimeEvents.Add(newcardevent);
-    }
 
     // Start is called before the first frame update
     void Start()
     {
-        falichongji = AllAsset.cardAsset.AllIdCards[0];
-        initSetting();
-        playerthecard();
-
- 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (realtimeEvents.Count > 0)
-        {
-            realtimeEvents[0].dealEffect(battleInfo);
-            realtimeEvents.Remove(realtimeEvents[0]);
-        }
     }
-    //[System.Serializable]
-    public class a
-    {
-        public a(int a)
-        {
-            _a = a;
-        }
-        public void seta(int i)
-        {
-            _a = i;
-        }
-        public int _a;
-    }
-    public List<a> aList = new List<a>();
-    public List<a> As = new List<a>();
-    void test()
-    {
-        //test
-        a a1 = new a(1);
-        a a2 = new a(2);
-        aList.Add(a1);
-        aList.Add(a2);
 
-        As.Add(aList[1]);
-        As.Add(aList[0]);
-        aList[0].seta(10);
+    /// <summary>
+    /// 开始战斗
+    /// </summary>
+    public void startBattale()
+    {
+        playerinfo = gameManager.Instance.playerinfo;
+        instantiatemanager = gameManager.Instance.instantiatemanager;
+        //初始化战斗卡组/洗牌
+        dickInGame = new List<playerCard>(playerinfo.playerDick);
+        dickInGame = ListOperation.Shufle<playerCard>(dickInGame);
+        //实例化部件
+        instantiatemanager.instanBattleStartPart(playerinfo.MagicPartDick);
     }
+
+    /// <summary>
+    /// 你的回合开始
+    /// </summary>
+    public void startRound()
+    {
+        //按抽牌数抽牌
+        for (int i = 0; i < 6; i++)
+        {
+            playerCard thiscard = dickInGame[dickInGame.Count - 1];
+            dickInGame.Remove(thiscard);
+            dickHandCard.Add(thiscard);
+
+            //实例化卡牌
+            instantiatemanager.instanDrawACard(thiscard);
+        }
+    }
+
 }
