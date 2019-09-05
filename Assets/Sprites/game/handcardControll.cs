@@ -4,50 +4,87 @@ using UnityEngine;
 
 public class handcardControll : MonoBehaviour
 {
-    private RectTransform transform;
-    public int cardCount;
-    public float maxDistance;
-    public float AllDistance;
+    public static handcardControll instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+    private static handcardControll _instance;
 
-    public float maxMouseOnDistance;
-    public float adjustMouseOnDistance;
+    private RectTransform rectTransform;
+    public List<realCard> playerHandCards = new List<realCard>();
+    //手牌数量
+    public int cardnum;
 
-    public float upfloatSpeed;
-    public float moveSpeed;
-    public List<realCard> playerHandCards=new List<realCard>();
-    // Start is called before the first frame update
+
+    // 要向realcard传递的参数
+    #region 卡牌移动的相关参数
+    ///进入状态设置的值
+    public float enterPosiY;
+    public float scaleF = 1.6f;
+    public float enterFloatUp;
+    ///时间
+    public float handswayTime = 1;
+    public float cardrotateTime = 0.5f;
+    public float scalechangeTime = 0.3f;
+    public float floatupTime = 1;
+    #endregion
+    //
+    public float allAngle;                  //手牌能占的最大的区域（用角度所得
+    public float defuatAngle;               //手牌数少的时候，牌与牌之间默认角度
+    public float abdicateAngle;             //微调的角度
+
+
+    private void Awake()
+    {
+        _instance = this;
+    }
     void Start()
     {
-        transform = GetComponent<RectTransform>();
+        rectTransform = GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        cardCount = playerHandCards.Count;
-        foreach(realCard real in playerHandCards)
-        {
-            //临时实时传递数据，便于调教，最后删除
-            real.SetCardMoveNum(maxMouseOnDistance, adjustMouseOnDistance, upfloatSpeed, moveSpeed);
-        }
-        if (cardCount * maxDistance <= AllDistance)
-        {
-            if (cardCount % 2 == 0) //偶数
-            {
-                for(int i = 0; i < cardCount / 2; i++)
-                {
-                    
-                    float disleft = i - (cardCount - 1) / 2;
-                    float disright = (cardCount - 1 - i) - (cardCount - 1) / 2;
-                    playerHandCards[i].targetPosition = transform.position + new Vector3(1,0,0) * disleft * maxDistance;
-                    playerHandCards[cardCount - 1 - i].targetPosition = transform.position + new Vector3(1, 0, 0) * disright * maxDistance;
+        cardnum = playerHandCards.Count;
 
-                    
+        float betweenAngle = allAngle / (playerHandCards.Count - 1);
+        if (betweenAngle > defuatAngle)
+        {
+            betweenAngle = defuatAngle;
+        }
+        float angleIndex = (float)-(cardnum - 1) / 2;
+        bool needAbdicate = false;
+
+        for(int i = 0; i < playerHandCards.Count; i++)
+        {
+            float angle;
+            if (playerHandCards[i].handCardState == HandCardState.Enter)
+            {
+                needAbdicate = true;
+                angle = (angleIndex + i) * betweenAngle;
+                playerHandCards[i].SetCardMoveNum(-angle);
+                for(int j = 0; j < i; j++)
+                {
+                    angle = (angleIndex + j) * betweenAngle - abdicateAngle;
+                    playerHandCards[j].SetCardMoveNum(-angle);
+                }
+                for(int j = i + 1; j < playerHandCards.Count; j++)
+                {
+                    angle = (angleIndex + j) * betweenAngle + abdicateAngle;
+                    playerHandCards[j].SetCardMoveNum(-angle);
                 }
             }
-            else                                //奇数
+        }
+        if (!needAbdicate)
+        {
+            for (int i = 0; i < cardnum; i++)
             {
-
+                float angle = (angleIndex + i) * betweenAngle;
+                playerHandCards[i].SetCardMoveNum(-angle);
             }
         }
     }

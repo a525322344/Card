@@ -42,7 +42,8 @@ public class instantiateManager : MonoBehaviour
     public void instanDrawACard(card playercard)
     {
         GameObject card = Instantiate(cardGO, handCardControll);
-        card.GetComponent<realCard>().SetThiscard(playercard);
-        handCardControll.GetComponent<handcardControll>().playerHandCards.Add(card.GetComponent<realCard>());
+        realCard realcard = card.GetComponentInChildren<realCard>();
+        realcard.SetThiscard(playercard);
+        handCardControll.GetComponent<handcardControll>().playerHandCards.Add(realcard);
     }
 }

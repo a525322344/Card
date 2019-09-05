@@ -2,50 +2,73 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
+public enum HandCardState
+{
+    Freedom,
+    Enter,
+    Select,
+}
 public class realCard : MonoBehaviour
 {
-    //生成时，传递给该手牌类的数据
-    public int thisid;
-    //
+    public handcardControll handcardControll;
     public card thisCard;
-    public RectTransform realCardMesh;
+    //UI
+    //public RectTransform realCardMesh;
     public Text nameText;
     public Text describeText;
 
-    private Vector3 initLocakscale;
-    private Vector3 handPosition;
-    public Vector3 targetPosition;
+    // 旋转节点
+    Transform father;
+    // 根节点旋转角度
+    private float adjustAngle;
 
-    private float maxMouseOnDistance;
-    private float adjustMouseOnDistance;
-    private float upfloatSpeed;
-    private float moveSpeed;
 
-    private bool _b_mouseEnter = false;
-    private bool _b_selected = false;
-    // Start is called before the first frame update
+
+
+    ///进入状态设置的值
+    public float enterPosiY;
+    public float scaleF = 1.6f;
+    public float enterFloatUp;
+    ///时间
+    public float handswayTime = 1;
+    public float cardrotateTime = 0.5f;
+    public float scalechangeTime = 0.3f;
+    public float floatupTime = 1;
+
+    /// 记录初始信息
+    private Vector3 localpositionStart;
+
+    public HandCardState handCardState = HandCardState.Freedom;
+
     void Start()
     {
-        realCardMesh = GetComponent<RectTransform>();
-        handPosition = transform.position;
-        initLocakscale = transform.localScale;
+        father = transform.parent;
+        //realCardMesh = GetComponent<RectTransform>();
+        localpositionStart = transform.localPosition;
+        handcardControll = father.parent.GetComponent<handcardControll>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_b_mouseEnter)
+        recesiveInfo();
+        switch (handCardState)
         {
-            realCardMesh.position = Vector3.MoveTowards(transform.position,handPosition , upfloatSpeed * Time.deltaTime);
-        }
-        else
-        {
-            realCardMesh.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-        }
-        if (_b_selected)
-        {
-
+            case HandCardState.Freedom:
+                father.DORotate(new Vector3(0, 0, adjustAngle), handswayTime);
+                transform.DORotate(new Vector3(0, 0, adjustAngle), cardrotateTime);
+                transform.DOScale(Vector3.one, scalechangeTime);
+                transform.DOLocalMove(localpositionStart, handswayTime);
+                break;
+            case HandCardState.Enter:
+                father.DORotate(new Vector3(0, 0, adjustAngle), handswayTime);
+                transform.DORotate(Vector3.zero, cardrotateTime);
+                transform.DOScale(Vector3.one * scaleF, scalechangeTime);
+                transform.DOMoveY(enterPosiY + enterFloatUp, floatupTime);
+                break;
+            case HandCardState.Select:
+                break;
         }
     }
 
@@ -56,47 +79,34 @@ public class realCard : MonoBehaviour
         describeText.text = playerCard.Describe;
     }
     /// <summary>
-    /// 设置手牌移动效果参数
+    /// 设置手牌转动角度
     /// </summary>
-    /// <param name="_maxD">缓慢向上飘最大距离</param>
-    /// <param name="_adjustD">放大的位置调整</param>
-    /// <param name="_upSpeed">缓慢向上飘的速度</param>
-    /// <param name="_moveSpeed">卡牌移动速度</param>
-    public void SetCardMoveNum(float _maxD,float _adjustD,float _upSpeed,float _moveSpeed)
+    /// <param name="angle"></param>
+    public void SetCardMoveNum(float angle)
     {
-        maxMouseOnDistance = _maxD;
-        adjustMouseOnDistance = _adjustD;
-        upfloatSpeed = _upSpeed;
-        moveSpeed = _moveSpeed;
+        adjustAngle = angle;
+    }
+    private void recesiveInfo()
+    {
+        enterPosiY = handcardControll.enterPosiY;
+        scaleF = handcardControll.scaleF;
+        enterFloatUp = handcardControll.enterFloatUp;
+        handswayTime = handcardControll.handswayTime;
+        cardrotateTime = handcardControll.cardrotateTime;
+        scalechangeTime = handcardControll.scalechangeTime;
+        floatupTime = handcardControll.floatupTime;
     }
     private void OnMouseEnter()
     {
-        _b_mouseEnter = true;
-        realCardMesh.position = targetPosition + Vector3.up * adjustMouseOnDistance;
-        handPosition = targetPosition + Vector3.up * maxMouseOnDistance;
-        realCardMesh.localScale = initLocakscale * 1.5f;
+        handCardState = HandCardState.Enter;
+        transform.position = new Vector3(transform.position.x, enterPosiY, transform.position.z); 
     }
     private void OnMouseExit()
     {
-        _b_mouseEnter = false;
-        realCardMesh.localScale = initLocakscale;
-        realCardMesh.position = targetPosition;
+        handCardState = HandCardState.Freedom;
     }
     private void OnMouseDown()
     {
-        playthiscardTest();
-        if (_b_selected)
-        {
-            //进入选择，
-        }
-        else
-        {
-            _b_selected = true;
-        }        
     }
 
-    void playthiscardTest()
-    {
-
-    }
 }
