@@ -4,7 +4,16 @@ using UnityEngine;
 
 public class instantiateManager : MonoBehaviour
 {
+    public static instantiateManager instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+    private static instantiateManager _instance;
 
+    public Canvas uiCanvas;
     public GameObject partGO;
     public GameObject cardGO;
     public GameObject gridGO;
@@ -17,6 +26,11 @@ public class instantiateManager : MonoBehaviour
 
     public List<Transform> parttransforms = new List<Transform>();
 
+
+    private void Awake()
+    {
+        _instance = GetComponent<instantiateManager>();
+    }
     // Start is called before the first frame update
     void Start()
     {

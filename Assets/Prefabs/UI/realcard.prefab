@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3275276983107518620}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: realcard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8856913945566966141}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: cardmesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ RectTransform:
   m_GameObject: {fileID: 5081008623835489056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5893116, y: 1.5893116, z: 1.5893116}
+  m_LocalScale: {x: 1.2271, y: 1.2271, z: 1.2271}
   m_Children:
   - {fileID: 7011066560685146813}
   - {fileID: 7011066560843039458}
@@ -70,7 +70,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 41}
-  m_SizeDelta: {x: 120, y: 120}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6944425276130488968
 GameObject:
@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 1885288015668687456}
   - component: {fileID: 2762969832446408733}
   - component: {fileID: 3794560931971846908}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 7011066560685146813}
   - component: {fileID: 7011066560685146808}
   - component: {fileID: 7011066560685146811}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u5361\u56FE"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 7011066560709427635}
   - component: {fileID: 7011066560709427646}
   - component: {fileID: 7011066560709427633}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u63CF\u8FF0"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 7011066560835854506}
   - component: {fileID: 7011066560835854509}
   - component: {fileID: 7011066560835854508}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u586B\u5145"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 7011066560843039458}
   - component: {fileID: 7011066560843039457}
   - component: {fileID: 7011066560843039456}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u8D39\u7528"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +421,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7011066560843039461}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 55, y: 68.600006, z: -2.5}
+  m_LocalPosition: {x: 55, y: 68.600006, z: -2.29}
   m_LocalScale: {x: 37.49, y: 37.49, z: 0.3749}
   m_Children: []
   m_Father: {fileID: 8856913945566966141}
@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 7011066561227244504}
   - component: {fileID: 7011066561227244519}
   - component: {fileID: 7011066561227244518}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u5361\u540D"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -719,7 +719,7 @@ GameObject:
   - component: {fileID: 7011066562289007872}
   - component: {fileID: 5394109964315821601}
   - component: {fileID: 2800899268120319755}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -744,7 +744,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1962}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7011066562289007872
@@ -768,13 +768,14 @@ MonoBehaviour:
     Describe: 
   nameText: {fileID: 7011066561839375285}
   describeText: {fileID: 7011066562247842714}
-  enterPosiY: 0
-  scaleF: 1.6
-  enterFloatUp: 0
+  enter_cardPosiYSet: 0
+  enter_cardScaleMultiple: 1.6
+  enter_cardPosiYFloatUp: 0
   handswayTime: 1
   cardrotateTime: 0.5
   scalechangeTime: 0.3
   floatupTime: 1
+  init_cardLocalPosiY: 0
   handCardState: 0
 --- !u!65 &5394109964315821601
 BoxCollider:

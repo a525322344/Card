@@ -45,6 +45,7 @@ public class battleManager : MonoBehaviour
     //战场信息
     public battleInfo battleInfo;
 
+    public int testDrawCardnum;
 
 
     // Start is called before the first frame update
@@ -77,7 +78,7 @@ public class battleManager : MonoBehaviour
     public void startRound()
     {
         //按抽牌数抽牌
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < testDrawCardnum; i++)
         {
             playerCard thiscard = dickInGame[dickInGame.Count - 1];
             dickInGame.Remove(thiscard);

@@ -14,7 +14,13 @@ public class handcardControll : MonoBehaviour
     private static handcardControll _instance;
 
     private RectTransform rectTransform;
+    [HideInInspector]
     public List<realCard> playerHandCards = new List<realCard>();
+
+    public Transform handcardspaceSphere;
+    private Vector3 sphereCenter;
+    [HideInInspector]
+    public float radiues;
     //手牌数量
     public int cardnum;
 
@@ -22,9 +28,11 @@ public class handcardControll : MonoBehaviour
     // 要向realcard传递的参数
     #region 卡牌移动的相关参数
     ///进入状态设置的值
-    public float enterPosiY;
-    public float scaleF = 1.6f;
-    public float enterFloatUp;
+    public float enter_cardPosiYSet;            //鼠标进入时，卡片瞬间上移距离
+    public float enter_cardScaleMultiple = 1.6f;//鼠标进入时，卡片瞬间变大倍数
+    public float enter_cardPosiYFloatUp;        //鼠标进入后，卡片上飘距离
+    [HideInInspector]
+    public float init_cardLocalPosiY;
     ///时间
     public float handswayTime = 1;
     public float cardrotateTime = 0.5f;
@@ -36,21 +44,45 @@ public class handcardControll : MonoBehaviour
     public float defuatAngle;               //手牌数少的时候，牌与牌之间默认角度
     public float abdicateAngle;             //微调的角度
 
+    public realCard selectedCard;
 
     private void Awake()
     {
         _instance = this;
+        rectTransform = GetComponent<RectTransform>();
     }
     void Start()
     {
-        rectTransform = GetComponent<RectTransform>();
+       
     }
 
-    // Update is called once per frame
     void Update()
     {
+        GetHandcardspaceSphereInfo();
         cardnum = playerHandCards.Count;
+        PlayRealCardManage();
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (selectedCard)
+            {
+                selectedCard.StateSelect_Freedom();
+                selectedCard = null;
+            }
+        }
+    }
 
+    public void GetHandcardspaceSphereInfo()
+    {
+        sphereCenter = handcardspaceSphere.position;
+        radiues = handcardspaceSphere.localScale.x / 2;
+
+        init_cardLocalPosiY = sphereCenter.y + radiues*transform.parent.localScale.y;
+
+        transform.position = handcardspaceSphere.position;
+    }
+
+    private void PlayRealCardManage()
+    {
         float betweenAngle = allAngle / (playerHandCards.Count - 1);
         if (betweenAngle > defuatAngle)
         {
@@ -59,7 +91,7 @@ public class handcardControll : MonoBehaviour
         float angleIndex = (float)-(cardnum - 1) / 2;
         bool needAbdicate = false;
 
-        for(int i = 0; i < playerHandCards.Count; i++)
+        for (int i = 0; i < playerHandCards.Count; i++)
         {
             float angle;
             if (playerHandCards[i].handCardState == HandCardState.Enter)
@@ -67,12 +99,12 @@ public class handcardControll : MonoBehaviour
                 needAbdicate = true;
                 angle = (angleIndex + i) * betweenAngle;
                 playerHandCards[i].SetCardMoveNum(-angle);
-                for(int j = 0; j < i; j++)
+                for (int j = 0; j < i; j++)
                 {
                     angle = (angleIndex + j) * betweenAngle - abdicateAngle;
                     playerHandCards[j].SetCardMoveNum(-angle);
                 }
-                for(int j = i + 1; j < playerHandCards.Count; j++)
+                for (int j = i + 1; j < playerHandCards.Count; j++)
                 {
                     angle = (angleIndex + j) * betweenAngle + abdicateAngle;
                     playerHandCards[j].SetCardMoveNum(-angle);
@@ -87,5 +119,10 @@ public class handcardControll : MonoBehaviour
                 playerHandCards[i].SetCardMoveNum(-angle);
             }
         }
+    }
+
+    public void SetSelectCard(realCard realcard)
+    {
+        selectedCard = realcard;
     }
 }

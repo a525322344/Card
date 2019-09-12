@@ -21,6 +21,10 @@ public class playerInfo
         playerDick.Add(cardAsset.AllIdCards[1]);
         playerDick.Add(cardAsset.AllIdCards[1]);
         playerDick.Add(cardAsset.AllIdCards[2]);
+        playerDick.Add(cardAsset.AllIdCards[2]);
+        playerDick.Add(cardAsset.AllIdCards[2]);
+        playerDick.Add(cardAsset.AllIdCards[2]);
+        playerDick.Add(cardAsset.AllIdCards[2]);
     }
 
     //初始化玩家的

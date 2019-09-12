@@ -27,14 +27,16 @@ public class realCard : MonoBehaviour
 
 
     ///进入状态设置的值
-    public float enterPosiY;
-    public float scaleF = 1.6f;
-    public float enterFloatUp;
+    public float enter_cardPosiYSet;
+    public float enter_cardScaleMultiple = 1.6f;
+    public float enter_cardPosiYFloatUp;
     ///时间
     public float handswayTime = 1;
     public float cardrotateTime = 0.5f;
     public float scalechangeTime = 0.3f;
     public float floatupTime = 1;
+
+    public float init_cardLocalPosiY;
 
     /// 记录初始信息
     private Vector3 localpositionStart;
@@ -64,10 +66,14 @@ public class realCard : MonoBehaviour
             case HandCardState.Enter:
                 father.DORotate(new Vector3(0, 0, adjustAngle), handswayTime);
                 transform.DORotate(Vector3.zero, cardrotateTime);
-                transform.DOScale(Vector3.one * scaleF, scalechangeTime);
-                transform.DOMoveY(enterPosiY + enterFloatUp, floatupTime);
+                transform.DOScale(Vector3.one * enter_cardScaleMultiple, scalechangeTime);
+                transform.DOMoveY(init_cardLocalPosiY + enter_cardPosiYSet + enter_cardPosiYFloatUp, floatupTime);
                 break;
             case HandCardState.Select:
+                Vector3 mouseposition = Input.mousePosition; 
+                mouseposition = Camera.main.ScreenToWorldPoint(new Vector3(mouseposition.x,mouseposition.y,instantiateManager.instance.uiCanvas.planeDistance));
+                transform.DOMove(mouseposition,0.1f);
+                transform.DOScale(Vector3.one*1.1f, 0.1f);
                 break;
         }
     }
@@ -88,25 +94,56 @@ public class realCard : MonoBehaviour
     }
     private void recesiveInfo()
     {
-        enterPosiY = handcardControll.enterPosiY;
-        scaleF = handcardControll.scaleF;
-        enterFloatUp = handcardControll.enterFloatUp;
+        enter_cardPosiYSet = handcardControll.enter_cardPosiYSet;
+        enter_cardScaleMultiple = handcardControll.enter_cardScaleMultiple;
+        enter_cardPosiYFloatUp = handcardControll.enter_cardPosiYFloatUp;
         handswayTime = handcardControll.handswayTime;
         cardrotateTime = handcardControll.cardrotateTime;
         scalechangeTime = handcardControll.scalechangeTime;
         floatupTime = handcardControll.floatupTime;
+        init_cardLocalPosiY = handcardControll.init_cardLocalPosiY;
+
+        localpositionStart = transform.parent.localPosition + Vector3.up * handcardControll.radiues;
     }
-    private void OnMouseEnter()
-    {
-        handCardState = HandCardState.Enter;
-        transform.position = new Vector3(transform.position.x, enterPosiY, transform.position.z); 
-    }
-    private void OnMouseExit()
+
+    public void StateSelect_Freedom()
     {
         handCardState = HandCardState.Freedom;
     }
+    private void OnMouseEnter()
+    {
+        switch (handCardState)
+        {
+            case HandCardState.Enter:
+                break;
+            case HandCardState.Freedom:
+                handCardState = HandCardState.Enter;
+                transform.position = new Vector3(transform.position.x, init_cardLocalPosiY + enter_cardPosiYSet, transform.position.z);
+                break;
+            case HandCardState.Select:
+
+                break;
+        }
+         
+    }
+    private void OnMouseExit()
+    {
+        switch (handCardState)
+        {
+            case HandCardState.Enter:
+            case HandCardState.Freedom:
+                handCardState = HandCardState.Freedom;
+                break;
+            case HandCardState.Select:
+
+                break;
+        }
+    }
     private void OnMouseDown()
     {
+        handCardState = HandCardState.Select;
+        handcardControll.SetSelectCard(this);
+        Debug.Log(Camera.main);
     }
 
 }
