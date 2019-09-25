@@ -18,7 +18,7 @@ public class InitData : MonoBehaviour
         csvcard = CSVLoader.LoadCsvData<csvcard>(Application.streamingAssetsPath + "/cardcsv.csv");
         foreach (int i in csvcard.Keys)
         {
-            cardAsset.AllIdCards.Add(new playerCard(csvcard[i].id, csvcard[i].name, CSVLoader.StringToEnum(csvcard[i].kind), csvcard[i].damage, csvcard[i].deffence));
+            cardAsset.AllIdCards.Add(new playerCard(csvcard[i].id, csvcard[i].name, CSVLoader.StringToEnum(csvcard[i].kind),csvcard[i].cost ,csvcard[i].damage, csvcard[i].deffence));
         }
     }
     //“手动”加载全部件 可能是暂定

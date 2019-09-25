@@ -48,6 +48,25 @@ public class battleManager : MonoBehaviour
     public int testDrawCardnum;
 
 
+    //准备打出卡牌的事件相关信息
+    //当前选择的卡
+    // [HideInInspector]
+    public bool b_isSelectCard;
+    public card selectedCard;
+    public void SetSelectedCard(card _playerCard)
+    {
+        selectedCard = _playerCard;
+    }
+    //当前选择的部件
+    [HideInInspector]
+    public MagicPart selectedPart;
+    public void SetSelectPart(MagicPart _magicPart)
+    {
+        selectedPart = _magicPart;
+    }
+
+
+
     // Start is called before the first frame update
     void Start()
     {

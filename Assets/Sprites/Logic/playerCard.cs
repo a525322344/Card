@@ -8,12 +8,20 @@ public enum CardKind
     CurseCard
 }
 [System.Serializable]
-public class card : object
+public class card
 {
     public string Name;
     public int Id;
     public CardKind Kind;
-    public int cost;
+    public int Cost;
+    protected int[,] priCostVector2;
+    public int[,] costVector2
+    {
+        get
+        {
+            return priCostVector2;
+        }
+    }
     public string Describe;
     private bool canplay;
     public void SetCanPlay(bool b)
@@ -38,11 +46,12 @@ public class playerCard : card
     /// <param name="kind">种类（enum CardKind）</param>
     /// <param name="_damageToEnemy">伤害</param>
     /// <param name="_deffenceToOwn">护甲</param>
-    public playerCard(int id, string name, CardKind kind,int _damageToEnemy,int _deffenceToOwn)
+    public playerCard(int id, string name, CardKind kind,int cost,int _damageToEnemy,int _deffenceToOwn)
     {
         Id = id;
         Name = name;
         Kind = kind;
+        Cost = cost;
         switch (kind)
         {
             case CardKind.CurseCard:
@@ -52,6 +61,27 @@ public class playerCard : card
             case CardKind.PlayerCard:
                 SetCanPlay(true);
                 break;
+        }
+        priCostVector2 = new int[3,3];
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                priCostVector2[i, j] = 0;
+            }
+        }
+        switch (Cost)
+        {
+            case 0:
+                break;
+            case 1:
+                priCostVector2[1, 1] = 1;
+                break;
+            case 2:
+                priCostVector2[1, 1] = 1;
+                priCostVector2[2, 1] = 1;
+                break;
+                //other
         }
         damageToEnemy = _damageToEnemy;
         deffenceToOwn = _deffenceToOwn;

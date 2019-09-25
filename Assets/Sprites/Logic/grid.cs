@@ -23,6 +23,20 @@ public class grid
         m_PositionX = x;
         m_PositionY = y;
     }
+    public int PositionX
+    {
+        get
+        {
+            return m_PositionX;
+        }
+    }
+    public int PositionY
+    {
+        get
+        {
+            return m_PositionY;
+        }
+    }
     public Vector3 getPosition()
     {
         Vector3 result = new Vector3(m_PositionX - 1, m_PositionY - 1, 0);
@@ -44,7 +58,7 @@ public class grid
     private bool m_Opening;
     private bool m_Power;
     private gridCover m_gridcover;
-
+    public MagicPart fatherPart;
 }
 
 public abstract class gridCover

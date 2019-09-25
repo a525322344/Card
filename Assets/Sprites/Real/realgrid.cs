@@ -5,12 +5,31 @@ using Constant;
 
 public class realgrid : MonoBehaviour
 {
+    public realpart fatherPart;
     public grid thisgrig;
+    private Part part;
     private MeshRenderer _renderer;
-    public Material mr_black;
-    public Material mr_write;
-    public Material mr_gray;
-    public Material mr_cyan;
+    private Material mr_black;
+    private Material mr_write;
+    private Material mr_gray;
+    private Material mr_cyan;
+
+
+    public card downtheCard;
+    private bool b_DownCard;
+    public void SetDownCard(card _selectcard)
+    {
+        if (_selectcard == null)
+        {
+            downtheCard = null;
+            b_DownCard = false;
+        }
+        else
+        {
+            downtheCard = _selectcard;
+            b_DownCard = true;
+        }
+    }
 
     public void setThisGrid(grid _grid)
     {
@@ -32,7 +51,13 @@ public class realgrid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (b_DownCard)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log(downtheCard.Describe);
+            }
+        }
     }
     public void changeMaterial()
     {
@@ -44,5 +69,10 @@ public class realgrid : MonoBehaviour
         {
             _renderer.material = mr_black;
         }
+    }
+
+    public bool CanOverCostPlay(card selectcard)
+    {
+        return fatherPart.CanCostPlay(thisgrig, selectcard);
     }
 }

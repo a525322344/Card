@@ -16,8 +16,9 @@ public class handcardControll : MonoBehaviour
     private RectTransform rectTransform;
     [HideInInspector]
     public List<realCard> playerHandCards = new List<realCard>();
-
     public Transform handcardspaceSphere;
+    public Transform handPlace;
+    public Transform showCardPosition;
     private Vector3 sphereCenter;
     [HideInInspector]
     public float radiues;
@@ -58,19 +59,28 @@ public class handcardControll : MonoBehaviour
 
     void Update()
     {
-        GetHandcardspaceSphereInfo();
-        cardnum = playerHandCards.Count;
+        GetHandcardspaceSphereInfo();       
         PlayRealCardManage();
+        //按下鼠标右键，取消选择的卡牌
         if (Input.GetMouseButtonDown(1))
         {
             if (selectedCard)
             {
                 selectedCard.StateSelect_Freedom();
+                if (selectedCard.realcost.lastrealgrid)
+                {
+                    selectedCard.realcost.lastrealgrid.SetDownCard(null);
+                    selectedCard.realcost.lastrealgrid = null;
+                }
+                
                 selectedCard = null;
+                gameManager.Instance.battlemanager.b_isSelectCard = false;
             }
         }
     }
-
+    /// <summary>
+    /// 实时获得协助球体的信息【最终确定下来，可以优化这里】
+    /// </summary>
     public void GetHandcardspaceSphereInfo()
     {
         sphereCenter = handcardspaceSphere.position;
@@ -80,9 +90,12 @@ public class handcardControll : MonoBehaviour
 
         transform.position = handcardspaceSphere.position;
     }
-
+    /// <summary>
+    /// 计算卡牌的旋转位置
+    /// </summary>
     private void PlayRealCardManage()
     {
+        cardnum = playerHandCards.Count;
         float betweenAngle = allAngle / (playerHandCards.Count - 1);
         if (betweenAngle > defuatAngle)
         {
@@ -98,16 +111,16 @@ public class handcardControll : MonoBehaviour
             {
                 needAbdicate = true;
                 angle = (angleIndex + i) * betweenAngle;
-                playerHandCards[i].SetCardMoveNum(-angle);
+                playerHandCards[i].SetCardMoveNum(-angle,i+1);
                 for (int j = 0; j < i; j++)
                 {
                     angle = (angleIndex + j) * betweenAngle - abdicateAngle;
-                    playerHandCards[j].SetCardMoveNum(-angle);
+                    playerHandCards[j].SetCardMoveNum(-angle,j+1);
                 }
                 for (int j = i + 1; j < playerHandCards.Count; j++)
                 {
                     angle = (angleIndex + j) * betweenAngle + abdicateAngle;
-                    playerHandCards[j].SetCardMoveNum(-angle);
+                    playerHandCards[j].SetCardMoveNum(-angle,j+1);
                 }
             }
         }
@@ -116,13 +129,23 @@ public class handcardControll : MonoBehaviour
             for (int i = 0; i < cardnum; i++)
             {
                 float angle = (angleIndex + i) * betweenAngle;
-                playerHandCards[i].SetCardMoveNum(-angle);
+                playerHandCards[i].SetCardMoveNum(-angle,i+1);
             }
         }
     }
-
+    /// <summary>
+    /// 设置选择的卡牌
+    /// realCard调用;通知battleManager
+    /// </summary>
+    /// <param name="realcard"></param>
     public void SetSelectCard(realCard realcard)
     {
         selectedCard = realcard;
+        gameManager.Instance.battlemanager.SetSelectedCard(realcard.thisCard);
+       
+    }
+    public void SelectCardOut()
+    {
+        gameManager.Instance.battlemanager.b_isSelectCard = true;
     }
 }

@@ -57,6 +57,8 @@ namespace Constant
         public const string GRID_MATERIAL_BLACK = "Materials/Grid/grid_black";
         public const string GRID_MATERIAL_GRAY = "Materials/Grid/grid_gray";
         public const string GRID_MATERIAL_WRITE = "Materials/Grid/grid_write";
+        public const string MATERIAL_COST_CYAN = "Materials/Grid/cost_cyan";
+        public const string MATERIAL_COST_BLUE = "Materials/Grid/cost_blue";
     } 
     
 }

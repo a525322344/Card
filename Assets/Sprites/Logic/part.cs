@@ -36,12 +36,14 @@ public class MagicPart : Part
     //暂定：数组a应该是9位
     public MagicPart(int[] a)
     {
+        Vector2GridPairs = new Dictionary<Vector2, grid>();
         for(int i = 0; i < a.Length; i++)
         {
             grid newgrid = new grid(true);
             int posy = i / 3;
             int posx = i % 3;
             newgrid.setPosition(posx, posy);
+            newgrid.fatherPart = this;
             if (a[i] == 1)
             {
                 newgrid.Opening = true;
@@ -50,8 +52,7 @@ public class MagicPart : Part
             {
                 newgrid.Opening = false;
             }
-            grids.Add(newgrid);
-            
+            Vector2GridPairs.Add(new Vector2(posx, posy), newgrid);
         }
     }
     public override void addReaction(Reaction reaction)
@@ -85,12 +86,12 @@ public class MagicPart : Part
         }
     }
 
-    public List<grid> getGridList()
+    public Dictionary<Vector2, grid> getGridDic()
     {
-        return grids;
+        return Vector2GridPairs;
     }
     //7 8 9
     //4 5 6
     //1 2 3
-    private List<grid> grids = new List<grid>();
+    private Dictionary<Vector2, grid> Vector2GridPairs;
 }

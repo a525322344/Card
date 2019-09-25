@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 139278716423516455}
   - component: {fileID: 6782531100421716063}
   - component: {fileID: 8422671866255224417}
-  m_Layer: 5
-  m_Name: gird
+  m_Layer: 9
+  m_Name: realgird
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
