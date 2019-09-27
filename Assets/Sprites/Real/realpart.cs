@@ -6,11 +6,13 @@ public class realpart : MonoBehaviour
 {
     public MagicPart thisMagicPart;
     public GameObject realgridMode;
-
-    public List<realgrid> realgrids = new List<realgrid>();
-
     public float distance = 0.333f;
 
+    private Dictionary<grid, realgrid> gridRealgridPairs = new Dictionary<grid, realgrid>();
+
+    private bool b_readyToPlayACard = false;
+    private card selectedCard;
+    //用于创建时调用初始化
     public void setThisMagicPart(MagicPart magicPart)
     {
         thisMagicPart = magicPart;
@@ -28,9 +30,11 @@ public class realpart : MonoBehaviour
             newrealgrid.Init();
             newrealgrid.changeMaterial();
 
-            realgrids.Add(newrealgrid);
+            gridRealgridPairs.Add(g.Value, newrealgrid);
         }
     }
+
+    private List<realgrid> selectgrids = new List<realgrid>();
     public bool CanCostPlay(grid bygrid,card selectcard)
     {
         bool result=true;
@@ -53,7 +57,7 @@ public class realpart : MonoBehaviour
                         grid fitgrid = thisMagicPart.getGridDic()[new Vector2(fitx, fity)];
                         if (fitgrid.Opening && fitgrid.Power)
                         {
-
+                            selectgrids.Add(gridRealgridPairs[fitgrid]);
                         }
                         else
                         {
@@ -67,18 +71,62 @@ public class realpart : MonoBehaviour
                 }
             }
         }
-
+        if (!result)
+        {
+            selectgrids.Clear();
+        }
         return result;
     }
-    // Start is called before the first frame update
-    void Start()
+    public void SetDownCard(card _selectcard)
     {
-        
+        if (_selectcard == null)
+        {
+            for(int i = 0; i < selectgrids.Count; i++)
+            {
+                selectgrids[i].SetDownCard(null);
+            }
+            selectgrids.Clear();
+            b_readyToPlayACard = false;
+            selectedCard = null;
+        }
+        else
+        {
+            for (int i = 0; i < selectgrids.Count; i++)
+            {
+                selectgrids[i].SetDownCard(_selectcard);
+            }
+            b_readyToPlayACard = true;
+            selectedCard = _selectcard;
+            gameManager.Instance.battlemanager.SetSelectPart(this);
+        }
+    }
+    public void UseSelectGrids()
+    {
+        for(int i = 0; i < selectgrids.Count; i++)
+        {
+            selectgrids[i].thisgrig.Power = false;
+            selectgrids[i].changeMaterial();
+        }
+    }
+    public void PowerRealPart()
+    {
+        thisMagicPart.PowerAllGrid();
+        foreach(var g in gridRealgridPairs)
+        {
+            g.Value.changeMaterial();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (b_readyToPlayACard)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                gameManager.Instance.battlemanager.PlayCard();
+
+            }
+        }
     }
 }

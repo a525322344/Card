@@ -46,7 +46,7 @@ public class gameManager : MonoBehaviour
         //  /这里直接获得，正式时要先实例，赋予数据
         battlemanager = GetComponent<battleManager>();
         battlemanager.startBattale();
-        battlemanager.startRound();
+        //battlemanager.startRound();
     }
 
     void Update()

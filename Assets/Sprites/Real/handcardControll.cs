@@ -69,7 +69,7 @@ public class handcardControll : MonoBehaviour
                 selectedCard.StateSelect_Freedom();
                 if (selectedCard.realcost.lastrealgrid)
                 {
-                    selectedCard.realcost.lastrealgrid.SetDownCard(null);
+                    selectedCard.realcost.lastrealgrid.fatherPart.SetDownCard(null);
                     selectedCard.realcost.lastrealgrid = null;
                 }
                 
@@ -141,7 +141,7 @@ public class handcardControll : MonoBehaviour
     public void SetSelectCard(realCard realcard)
     {
         selectedCard = realcard;
-        gameManager.Instance.battlemanager.SetSelectedCard(realcard.thisCard);
+        gameManager.Instance.battlemanager.SetSelectedCard(realcard);
        
     }
     public void SelectCardOut()

@@ -5,9 +5,13 @@ using DG.Tweening;
 
 public class bookFolderControll : MonoBehaviour
 {
+    public List<realpart> realparts = new List<realpart>();
+
     public Transform positionStart;
     public Transform positionShow;
     public float time;
+    private bool b_toshow;
+    private bool b_alreadyToShow = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +23,26 @@ public class bookFolderControll : MonoBehaviour
     {
         if (gameManager.Instance.battlemanager.b_isSelectCard)
         {
-            transform.DOMove(positionShow.position,time);
-            transform.DORotateQuaternion(positionShow.rotation,time);
+            if (b_alreadyToShow)
+            {
+                b_alreadyToShow = false;
+                StopCoroutine("IEtoShow");
+            }
+            b_toshow = true;          
+        }
+        else
+        {
+            if (!b_alreadyToShow)
+            {
+                b_alreadyToShow = true;
+                StartCoroutine("IEtoShow");
+            }
+        }
+
+        if (b_toshow)
+        {
+            transform.DOMove(positionShow.position, time);
+            transform.DORotateQuaternion(positionShow.rotation, time);
             transform.DOScale(positionShow.localScale, time);
         }
         else
@@ -29,5 +51,11 @@ public class bookFolderControll : MonoBehaviour
             transform.DORotateQuaternion(positionStart.rotation, time);
             transform.DOScale(positionStart.localScale, time);
         }
+    }
+
+    IEnumerator IEtoShow()
+    {
+        yield return new WaitForSeconds(1);
+        b_toshow = false;
     }
 }

@@ -26,6 +26,13 @@ namespace AllAsset
             }
             battleInfo.getPlayer().GetArmor(num);
         }
+        public static void drawCard(int num,battleInfo battleInfo)
+        {
+            for(int i = 0; i < num; i++)
+            {
+                gameManager.Instance.battlemanager.DrawACard();
+            }
+        }
     }
     //声明所有的额外强化效果
     public static class extraAsset

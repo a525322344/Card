@@ -2,13 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EventKind
-{
-    Event_Damage,
-    Event_Armor,
-    Event_PlayCard,
-    Event_Discard,
-}
+
 
 //打出卡牌受到各种加成，buff影响，怪物能力调整的事件——的基类
 public abstract class singleEvent
@@ -17,14 +11,53 @@ public abstract class singleEvent
     public abstract void recesiveNotice();
 
     //事件类型，用于枚举
-    protected EventKind eventKind;
+    protected EventKind m_eventKind;
 }
 
 public abstract class triggerEvent : singleEvent
 {
 
 }
-
+public class SystemEvent : singleEvent
+{
+    public SystemEvent(EffectBase effect)
+    {
+        m_eventKind = effect.GetEventKind();
+        m_effect = effect;
+    }
+    //设置影响效果，执行反应事件
+    public override void recesiveNotice()
+    {
+        List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(m_eventKind);
+        foreach (Reaction reaction in reactionlist)
+        {
+            if (reaction.Active == true)
+            {
+                extraEffectBase indexextra = reaction.dealReaction();
+                if (indexextra != null)
+                {
+                    m_extraEffectList.Add(indexextra);
+                }
+            }
+        }
+    }
+    public override void dealEffect(battleInfo battleInfo)
+    {
+        int index = m_effect.getNum();
+        foreach (extraEffectBase extraEffect in m_extraEffectList)
+        {
+            index = extraEffect.AdjustEffect(index);
+            Debug.Log(index);
+        }
+        m_effect.DealEffect(index, battleInfo);
+    }
+    //效果类
+    private EffectBase m_effect;
+    //强化效果表
+    private List<extraEffectBase> m_extraEffectList = new List<extraEffectBase>();
+    //场景战场信息
+    private battleInfo m_battleInfo;
+}
 
 /// <summary>
 /// 独立的效果事件
@@ -39,26 +72,24 @@ public class EffectEvent : singleEvent
     /// <param name="fatherevent">事件父类</param>
     public EffectEvent(cardEffectBase effect,singleEvent fatherevent)
     {
-        Effect = effect;
-        fatherEvent = fatherevent;
-        eventKind = effect.GetEventKind();
+        m_effect = effect;
+        m_fatherEvent = fatherevent;
+        m_eventKind = effect.GetEventKind();
     }
     //执行效果
     public override void dealEffect(battleInfo battleInfo)
     {
-        int index = Effect.getNum();
-        foreach(extraEffectBase extraEffect in extraEffectList)
+        int index = m_effect.getNum();
+        foreach(extraEffectBase extraEffect in m_extraEffectList)
         {
-            Debug.Log("0.0");
             index = extraEffect.AdjustEffect(index);
-            Debug.Log(index);
         }
-        Effect.DealEffect(index, battleInfo);
+        m_effect.DealEffect(index, battleInfo);
     }
     //设置影响效果，执行反应事件
     public override void recesiveNotice()
     {
-        List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(eventKind);
+        List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(m_eventKind);
         foreach(Reaction reaction in reactionlist)
         {
             if (reaction.Active == true)
@@ -66,7 +97,7 @@ public class EffectEvent : singleEvent
                 extraEffectBase indexextra = reaction.dealReaction();
                 if (indexextra != null)
                 {
-                    extraEffectList.Add(indexextra);
+                    m_extraEffectList.Add(indexextra);
                 }
             }  
         }
@@ -74,11 +105,11 @@ public class EffectEvent : singleEvent
 
 
     //效果类
-    private cardEffectBase Effect;
+    private cardEffectBase m_effect;
     //强化效果表
-    private List<extraEffectBase> extraEffectList = new List<extraEffectBase>();
+    private List<extraEffectBase> m_extraEffectList = new List<extraEffectBase>();
     //父类事件
-    private singleEvent fatherEvent;
+    private singleEvent m_fatherEvent;
     //场景战场信息
     private battleInfo battleInfo;
 }
@@ -98,10 +129,10 @@ public class CardEvent : singleEvent
     {
         //记录卡牌类
         playercard = _playerCard;
-        eventKind = cardkind.GetEventKind();
+        m_eventKind = cardkind.GetEventKind();
         m_magicPart = magicPart;
         m_magicPart.activatePart();
-        //询问卡牌类的效果表创建效果时间表
+        //询问卡牌类的效果表，创建效果事件表
         foreach (cardEffectBase effect in playercard.getEffectList())
         {
             //创建效果事件
@@ -111,6 +142,7 @@ public class CardEvent : singleEvent
             //把这个效果添加到该卡牌事件的事件子表中
             EffectChildEvents.Add(effectevent);
         }  
+
     }
     //发动效果
     public override void dealEffect(battleInfo battleInfo)
@@ -127,7 +159,7 @@ public class CardEvent : singleEvent
     //接受反应表
     public override void recesiveNotice()
     {
-        List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(eventKind);
+        List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(m_eventKind);
         foreach (Reaction reaction in reactionlist)
         {
             if (reaction.Active == true)

@@ -94,4 +94,15 @@ public class MagicPart : Part
     //4 5 6
     //1 2 3
     private Dictionary<Vector2, grid> Vector2GridPairs;
+
+    public void PowerAllGrid()
+    {
+        foreach(var g in Vector2GridPairs)
+        {
+            if (g.Value.Opening)
+            {
+                g.Value.Power = true;
+            }
+        }
+    }
 }

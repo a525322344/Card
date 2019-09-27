@@ -10,6 +10,10 @@ public class playerInfo
     public List<playerCard> playerDick=new List<playerCard>();
     //玩家的魔纹部件
     public List<MagicPart> MagicPartDick = new List<MagicPart>();
+    public int roundStartDrawCardNum = 5;
+    public int playerHealthMax = 100;
+    public int playerHealth = 100;
+
 
     
     //初始化玩家的开局卡组
@@ -20,8 +24,6 @@ public class playerInfo
         playerDick.Add(cardAsset.AllIdCards[1]);
         playerDick.Add(cardAsset.AllIdCards[1]);
         playerDick.Add(cardAsset.AllIdCards[1]);
-        playerDick.Add(cardAsset.AllIdCards[2]);
-        playerDick.Add(cardAsset.AllIdCards[2]);
         playerDick.Add(cardAsset.AllIdCards[2]);
         playerDick.Add(cardAsset.AllIdCards[2]);
         playerDick.Add(cardAsset.AllIdCards[2]);

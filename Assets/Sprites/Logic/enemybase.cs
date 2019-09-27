@@ -25,3 +25,8 @@ public class enemybase : pawnbase
         }
     }
 }
+[System.Serializable]
+public class playerpawn : enemybase
+{
+
+}

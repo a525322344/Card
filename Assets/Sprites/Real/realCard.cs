@@ -127,7 +127,7 @@ public class realCard : MonoBehaviour
         nameText.text = playerCard.Name;
         describeText.text = playerCard.Describe;
 
-        realcost.setCost(playerCard);
+        realcost.setCost(thisCard);
         realcost.gameObject.SetActive(false);
     }
 

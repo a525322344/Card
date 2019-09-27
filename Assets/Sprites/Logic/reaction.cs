@@ -2,13 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ReactionKind
-{
-    Reaction_Affect_DamageUp,
-    Reaction_Affect_ArmorUp,
-    Reaction_Create_PlayCard,
-    Reaction_Create_Discard,
-}
 
 public static class ReactionListController
 {
@@ -23,26 +16,27 @@ public static class ReactionListController
             case EventKind.Event_PlayCard:
                 return reactListToPlaycard;
             case EventKind.Event_Discard:
-                break;
+                return reactListToDiscard;
+                //更新
+            default:
+                Debug.Log("错误，没有写这个效果的额外效果表");
+                return null;
         }
-        Debug.Log("错误，没有写这个效果的额外效果表");
-        return null;
     }
     public static void recesiveReactonToSetIn(Reaction reaction)
     {
         switch (reaction.getReactionKind())
         {
-            case ReactionKind.Reaction_Affect_DamageUp:
+            case EventKind.Event_Damage:
                 reactListToDamage.Add(reaction);
                 break;
-            case ReactionKind.Reaction_Affect_ArmorUp:
+            case EventKind.Event_Armor:
                 reactListToArmor.Add(reaction);
                 break;
-            case ReactionKind.Reaction_Create_PlayCard:
+            case EventKind.Event_PlayCard:
                 reactListToPlaycard.Add(reaction);
                 break;
-            case ReactionKind.Reaction_Create_Discard:
-                break;
+                //需要更新
         }
     }
 
@@ -50,7 +44,7 @@ public static class ReactionListController
     private static List<Reaction> reactListToArmor = new List<Reaction>();
     private static List<Reaction> reactListToPlaycard = new List<Reaction>();
     private static List<Reaction> reactListToDiscard = new List<Reaction>();
-    
+    //更新
 }
 
 
@@ -63,8 +57,8 @@ public abstract class Reaction
         get { return m_Active; }
     }
     //反应种类
-    protected ReactionKind kind;
-    public ReactionKind getReactionKind()
+    protected EventKind kind;
+    public EventKind getReactionKind()
     {
         return kind;
     }
@@ -77,7 +71,7 @@ public abstract class Reaction
 //对反应的效果事件造成影响，强化或削弱效果
 public class Reaction_Affect : Reaction
 {
-    public Reaction_Affect(extraEffectBase extraEffect,ReactionKind _kind)
+    public Reaction_Affect(extraEffectBase extraEffect, EventKind _kind)
     {
         kind = _kind;
         affectEffect = extraEffect;
@@ -94,7 +88,7 @@ public class Reaction_Affect : Reaction
 //对反应的效果事件，产生新的事件
 public class Reaction_Create : Reaction
 {
-    public Reaction_Create(singleEvent createEvent,ReactionKind _kind)
+    public Reaction_Create(singleEvent createEvent, EventKind _kind)
     {
         kind = _kind;
         toCreateEvent = createEvent;

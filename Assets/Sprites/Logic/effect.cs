@@ -3,6 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //效果的枚举量
+//对应了其产生的event及对其产生影响的reaction
+public enum EventKind
+{
+    Event_Damage,
+    Event_Armor,
+    Event_PlayCard,
+    Event_Discard,
+    Event_DrawCard,
+    Event_RoundStartDrawCard,
+}
 
 //对卡牌效果的委托
 public delegate void DeleCardEffect(int num,battleInfo battleinfo);
@@ -13,15 +23,12 @@ public class Effect
 {
     public DeleCardEffect istrue;
     public cardEffectBase cardEffect;
-
 }
-
-//一个效果抽象基类，派生出每个卡牌效果
-[System.Serializable]
-public abstract class cardEffectBase
+//抽象效果类，派生出所有效果
+public abstract class EffectBase
 {
-    public abstract string DescribeEffect(int _i);
-    public abstract void DealEffect(int num,battleInfo battleInfo); 
+    public abstract void DealEffect(int num, battleInfo battleInfo);
+
     public int getNum()
     {
         return num;
@@ -38,6 +45,13 @@ public abstract class cardEffectBase
     protected int num;
     protected DeleCardEffect effectDele;
     protected EventKind eventkind;          //该效果创建的事件类型
+}
+
+//一个效果抽象基类，派生出每个卡牌效果
+[System.Serializable]
+public abstract class cardEffectBase:EffectBase
+{
+    public abstract string DescribeEffect(int _i);
 }
 ////该效果是空效果子类，是为了统合调用，表明CardEvent的种类
 public abstract class emptyKind : cardEffectBase
@@ -112,5 +126,19 @@ public class DrawCard : cardEffectBase
     {
         //抽卡效果
         //
+    }
+}
+
+public class RoundStartDrawCard:EffectBase
+{
+    public RoundStartDrawCard(int _num)
+    {
+        num = _num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.drawCard);
+        eventkind = EventKind.Event_RoundStartDrawCard;
+    }
+    public override void DealEffect(int num, battleInfo battleInfo)
+    {
+        effectDele(num, battleInfo);
     }
 }

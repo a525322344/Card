@@ -15,20 +15,23 @@ public class realgrid : MonoBehaviour
     private Material mr_cyan;
 
 
-    public card downtheCard;
+
     private bool b_DownCard;
     public void SetDownCard(card _selectcard)
     {
         if (_selectcard == null)
         {
-            downtheCard = null;
             b_DownCard = false;
         }
         else
         {
-            downtheCard = _selectcard;
             b_DownCard = true;
         }
+        changeMaterial();
+    }
+    public void ToSetPart(card _selectcard)
+    {
+        fatherPart.SetDownCard(_selectcard);
     }
 
     public void setThisGrid(grid _grid)
@@ -51,19 +54,28 @@ public class realgrid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (b_DownCard)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Debug.Log(downtheCard.Describe);
-            }
-        }
+
     }
     public void changeMaterial()
     {
         if (thisgrig.Opening)
         {
-            _renderer.material = mr_write;
+            if (thisgrig.Power)
+            {
+                if (b_DownCard)
+                {
+                    _renderer.material = mr_cyan;
+                }
+                else
+                {
+                    _renderer.material = mr_write;
+                }
+            }
+            else
+            {
+                _renderer.material = mr_gray;
+            }
+            
         }
         else
         {

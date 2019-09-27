@@ -7,13 +7,19 @@ public class realCost : MonoBehaviour
 {
     public Transform[] costchildrens = new Transform[9];
     public card thiscard;
+
+    //  costMode
+    //1:当前位置不合适安放cost
+    //2:当前位置合适
     public int costMode = 0;
     private int nextCostMode = 0;
+
     private List<MeshRenderer> _renderers = new List<MeshRenderer>();
     private Material mr_cyan;
     private Material mr_blue;
 
     public realgrid lastrealgrid;
+    //public Transform lastrealgridTran=null;
     public void Update()
     {
         //射线检测当前选中的是哪格
@@ -21,29 +27,37 @@ public class realCost : MonoBehaviour
         realgrid downRealgrid; 
         if(Physics.Raycast(transform.position, Vector3.forward,out hit, 100, 1 << 9)){
             downRealgrid = hit.transform.GetComponent<realgrid>();
-            if (downRealgrid.CanOverCostPlay(thiscard)){
-                if (downRealgrid == lastrealgrid)
+            //判断是否切换格子，如若切换，reset last readgrid
+            if (lastrealgrid)
+            {
+                if (lastrealgrid != downRealgrid)
                 {
-
+                    lastrealgrid.ToSetPart(null);
+                    lastrealgrid = null;
                 }
-                else
+            }
+            //如若没有过改变，则不用再次检测
+            if (downRealgrid != lastrealgrid)
+            {
+                if (downRealgrid.CanOverCostPlay(thiscard))
                 {
                     nextCostMode = 2;
                     lastrealgrid = downRealgrid;
-                    downRealgrid.SetDownCard(thiscard);
+                    downRealgrid.ToSetPart(thiscard);
                 }
-            }
-            else
-            {
-                nextCostMode = 1;
-                if (lastrealgrid)
+                else
                 {
-                    lastrealgrid.SetDownCard(null);
-                    lastrealgrid = null;
-                }            
+                    nextCostMode = 1;
+                    if (lastrealgrid)
+                    {
+                        lastrealgrid.ToSetPart(null);
+                        lastrealgrid = null;
+                    }
+                }
             }
         }
 
+        //根据costMode进行切换
         if (costMode != nextCostMode)
         {
             costMode = nextCostMode;

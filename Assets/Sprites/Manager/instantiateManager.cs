@@ -20,7 +20,7 @@ public class instantiateManager : MonoBehaviour
 
     //手牌的位置
     public Transform handCardControll;
-
+    public Transform bookFolderTran;
     //储存部件的坐标
     public List<Vector3> partPositionList = new List<Vector3>();
 
@@ -50,6 +50,7 @@ public class instantiateManager : MonoBehaviour
             GameObject part = Instantiate(partGO, parttransforms[i]);
             realpart realpart = part.GetComponent<realpart>();
             realpart.setThisMagicPart(magicParts[i]);
+            parttransforms[0].parent.GetComponent<bookFolderControll>().realparts.Add(realpart);
         }
     }
 
@@ -60,4 +61,5 @@ public class instantiateManager : MonoBehaviour
         realcard.SetThiscard(playercard);
         handCardControll.GetComponent<handcardControll>().playerHandCards.Add(realcard);
     }
+
 }
