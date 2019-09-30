@@ -12,6 +12,9 @@ public enum EventKind
     Event_Discard,
     Event_DrawCard,
     Event_RoundStartDrawCard,
+    Event_PlayerGetHurt,
+    Event_EnemyGetArmor,
+    Event_Action,
 }
 
 //对卡牌效果的委托
@@ -27,7 +30,10 @@ public class Effect
 //抽象效果类，派生出所有效果
 public abstract class EffectBase
 {
-    public abstract void DealEffect(int num, battleInfo battleInfo);
+    public virtual void DealEffect(int num, battleInfo battleInfo)
+    {
+        effectDele(num, battleInfo);
+    }
 
     public int getNum()
     {
@@ -46,12 +52,20 @@ public abstract class EffectBase
     protected DeleCardEffect effectDele;
     protected EventKind eventkind;          //该效果创建的事件类型
 }
-
 //一个效果抽象基类，派生出每个卡牌效果
-[System.Serializable]
-public abstract class cardEffectBase:EffectBase
+public abstract class cardEffectBase : EffectBase
 {
     public abstract string DescribeEffect(int _i);
+}
+//系统效果抽象基类
+public abstract class systemEffectBase : EffectBase
+{
+
+}
+//怪物行为效果抽象基类
+public abstract class actionEffectBase : EffectBase
+{
+
 }
 ////该效果是空效果子类，是为了统合调用，表明CardEvent的种类
 public abstract class emptyKind : cardEffectBase
@@ -59,6 +73,8 @@ public abstract class emptyKind : cardEffectBase
     
 }
 
+////
+//卡牌事件效果
 //打出一张卡
 public class emplyPlayCard:emptyKind
 {
@@ -69,7 +85,8 @@ public class emplyPlayCard:emptyKind
     public override void DealEffect(int num, battleInfo battleInfo) { }
 }
 
-
+////
+//卡牌效果
 public class Damage : cardEffectBase
 {
     public Damage(int _num=0)
@@ -83,10 +100,6 @@ public class Damage : cardEffectBase
         string result = "";
         result += "造成" + _i + "点伤害";
         return result;
-    }
-    public override void DealEffect(int newnum,battleInfo battleinfo)
-    {
-        effectDele(newnum, battleinfo);
     }
 }
 
@@ -104,10 +117,6 @@ public class Armor : cardEffectBase
         result += "获得" + _i + "点护盾";
         return result;
     }
-    public override void DealEffect(int newnum, battleInfo battleinfo)
-    {
-        effectDele(newnum, battleinfo);
-    }
 }
 
 public class DrawCard : cardEffectBase
@@ -115,6 +124,7 @@ public class DrawCard : cardEffectBase
     public DrawCard(int _num=0)
     {
         num = _num;
+        eventkind = EventKind.Event_DrawCard;
     }
     public override string DescribeEffect(int _i)
     {
@@ -129,7 +139,9 @@ public class DrawCard : cardEffectBase
     }
 }
 
-public class RoundStartDrawCard:EffectBase
+////
+//系统效果
+public class RoundStartDrawCard:systemEffectBase
 {
     public RoundStartDrawCard(int _num)
     {
@@ -137,8 +149,28 @@ public class RoundStartDrawCard:EffectBase
         effectDele = new DeleCardEffect(AllAsset.effectAsset.drawCard);
         eventkind = EventKind.Event_RoundStartDrawCard;
     }
-    public override void DealEffect(int num, battleInfo battleInfo)
+}
+
+
+////
+//行为效果
+//攻击玩家
+public class effectActionHurt : actionEffectBase
+{
+    public effectActionHurt(int _num)
     {
-        effectDele(num, battleInfo);
+        num = _num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.PlayerGetHurt);
+        eventkind = EventKind.Event_PlayerGetHurt;
+    }
+}
+//获得护甲
+public class effectActionEnemyArmor : actionEffectBase
+{
+    public effectActionEnemyArmor(int _num)
+    {
+        num = _num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.EnemyGetArmor);
+        eventkind = EventKind.Event_EnemyGetArmor;
     }
 }

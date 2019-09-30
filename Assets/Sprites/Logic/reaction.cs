@@ -17,7 +17,17 @@ public static class ReactionListController
                 return reactListToPlaycard;
             case EventKind.Event_Discard:
                 return reactListToDiscard;
-                //更新
+            case EventKind.Event_DrawCard:
+                return reactListToDrawCard;
+            case EventKind.Event_RoundStartDrawCard:
+                return reactListToRoundStartDrawCard;
+            case EventKind.Event_PlayerGetHurt:
+                return reactListToPlayerGetHurt;
+            case EventKind.Event_EnemyGetArmor:
+                return reactListToEnemyGetArmor;
+            case EventKind.Event_Action:
+                return reactListToAction;
+            //更新
             default:
                 Debug.Log("错误，没有写这个效果的额外效果表");
                 return null;
@@ -36,6 +46,21 @@ public static class ReactionListController
             case EventKind.Event_PlayCard:
                 reactListToPlaycard.Add(reaction);
                 break;
+            case EventKind.Event_DrawCard:
+                reactListToDrawCard.Add(reaction);
+                break;
+            case EventKind.Event_RoundStartDrawCard:
+                reactListToRoundStartDrawCard.Add(reaction);
+                break;
+            case EventKind.Event_PlayerGetHurt:
+                reactListToPlayerGetHurt.Add(reaction);
+                break;
+            case EventKind.Event_EnemyGetArmor:
+                reactListToEnemyGetArmor.Add(reaction);
+                break;
+            case EventKind.Event_Action:
+                reactListToAction.Add(reaction);
+                break;
                 //需要更新
         }
     }
@@ -44,6 +69,11 @@ public static class ReactionListController
     private static List<Reaction> reactListToArmor = new List<Reaction>();
     private static List<Reaction> reactListToPlaycard = new List<Reaction>();
     private static List<Reaction> reactListToDiscard = new List<Reaction>();
+    private static List<Reaction> reactListToDrawCard = new List<Reaction>();
+    private static List<Reaction> reactListToRoundStartDrawCard = new List<Reaction>();
+    private static List<Reaction> reactListToPlayerGetHurt = new List<Reaction>();
+    private static List<Reaction> reactListToEnemyGetArmor = new List<Reaction>();
+    private static List<Reaction> reactListToAction = new List<Reaction>();
     //更新
 }
 

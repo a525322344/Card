@@ -7,7 +7,12 @@ public enum EVENTSTATE
     Do,
     Over
 }
-
+public abstract class ShowAbstract
+{
+    public float StartTime { get; } = 0;
+    public float EndTime { get; }
+    public float timeCursor;
+}
 public class EventShow
 {
     public EventShow(singleEvent _event)
@@ -19,6 +24,7 @@ public class EventShow
     {
         lasttime -= Time.deltaTime;
     }
+    
     public float lasttime;
     public singleEvent thisevent;
     public EVENTSTATE state;
@@ -51,7 +57,6 @@ public class EventManager : MonoBehaviour
                     }
                     break;
                 case ROUNDSTAGE.Battle:
-                    //应该再加一个按了回合结束以后
                     if (BattleEventShows.Count == 0&&battleManager.b_toEndRound)
                     {
                         battleManager.RoundStage = ROUNDSTAGE.End;

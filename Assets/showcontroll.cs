@@ -20,7 +20,7 @@ public class showcontroll : MonoBehaviour
     }
     public void init()
     {
-        enemybase = gameManager.Instance.battlemanager.battleInfoShow.Enemy;
+        enemybase = GetComponent<enemyControll>().pikaqiu;
         healthslider.maxValue = enemybase.healthmax;
         healthslider.minValue = 0;
     }

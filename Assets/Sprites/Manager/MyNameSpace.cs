@@ -15,7 +15,7 @@ namespace AllAsset
             {
                 num = 0;
             }
-            battleInfo.getEnemy().hurtHealth(num);
+            battleInfo.Enemy.hurtHealth(num);
         }
         public static void gainArmor(int num, battleInfo battleInfo)
         {
@@ -24,7 +24,7 @@ namespace AllAsset
             {
                 num = 0;
             }
-            battleInfo.getPlayer().GetArmor(num);
+            battleInfo.Player.GetArmor(num);
         }
         public static void drawCard(int num,battleInfo battleInfo)
         {
@@ -32,6 +32,24 @@ namespace AllAsset
             {
                 gameManager.Instance.battlemanager.DrawACard();
             }
+        }
+
+        //行为
+        public static void PlayerGetHurt(int num,battleInfo battleInfo)
+        {
+            if (num < 0)
+            {
+                num = 0;
+            }
+            battleInfo.Player.hurtHealth(num);
+        }
+        public static void EnemyGetArmor(int num,battleInfo battleinfo)
+        {
+            if (num < 0)
+            {
+                num = 0;
+            }
+            battleinfo.Enemy.GetArmor(num);
         }
     }
     //声明所有的额外强化效果

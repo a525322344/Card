@@ -8,16 +8,13 @@ using UnityEngine;
 public abstract class singleEvent
 {
     public abstract void dealEffect(battleInfo battleInfo);
-    public abstract void recesiveNotice();
-
+    protected abstract void recesiveNotice();
+    public bool b_logoutAfterDeal = true;
     //事件类型，用于枚举
     protected EventKind m_eventKind;
 }
 
-public abstract class triggerEvent : singleEvent
-{
-
-}
+//系统事件，比如回合开始抽卡；回合结束弃卡；回合开始护甲归零
 public class SystemEvent : singleEvent
 {
     public SystemEvent(EffectBase effect)
@@ -26,7 +23,7 @@ public class SystemEvent : singleEvent
         m_effect = effect;
     }
     //设置影响效果，执行反应事件
-    public override void recesiveNotice()
+    protected override void recesiveNotice()
     {
         List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(m_eventKind);
         foreach (Reaction reaction in reactionlist)
@@ -43,6 +40,7 @@ public class SystemEvent : singleEvent
     }
     public override void dealEffect(battleInfo battleInfo)
     {
+        recesiveNotice();
         int index = m_effect.getNum();
         foreach (extraEffectBase extraEffect in m_extraEffectList)
         {
@@ -60,7 +58,7 @@ public class SystemEvent : singleEvent
 }
 
 /// <summary>
-/// 独立的效果事件
+/// 独立的效果事件，卡牌的效果子事件
 /// </summary>
 public class EffectEvent : singleEvent
 {
@@ -70,7 +68,7 @@ public class EffectEvent : singleEvent
     /// <param name="effect">效果</param>
     /// <param name="extralist">反应表</param>
     /// <param name="fatherevent">事件父类</param>
-    public EffectEvent(cardEffectBase effect,singleEvent fatherevent)
+    public EffectEvent(EffectBase effect,singleEvent fatherevent)
     {
         m_effect = effect;
         m_fatherEvent = fatherevent;
@@ -79,6 +77,7 @@ public class EffectEvent : singleEvent
     //执行效果
     public override void dealEffect(battleInfo battleInfo)
     {
+        recesiveNotice();
         int index = m_effect.getNum();
         foreach(extraEffectBase extraEffect in m_extraEffectList)
         {
@@ -87,7 +86,7 @@ public class EffectEvent : singleEvent
         m_effect.DealEffect(index, battleInfo);
     }
     //设置影响效果，执行反应事件
-    public override void recesiveNotice()
+    protected override void recesiveNotice()
     {
         List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(m_eventKind);
         foreach(Reaction reaction in reactionlist)
@@ -105,7 +104,7 @@ public class EffectEvent : singleEvent
 
 
     //效果类
-    private cardEffectBase m_effect;
+    private EffectBase m_effect;
     //强化效果表
     private List<extraEffectBase> m_extraEffectList = new List<extraEffectBase>();
     //父类事件
@@ -137,18 +136,19 @@ public class CardEvent : singleEvent
         {
             //创建效果事件
             singleEvent effectevent = new EffectEvent(effect, this);
-            //为这个效果事件接受相应的反应表
-            effectevent.recesiveNotice();
+            ////为这个效果事件接受相应的反应表
+            //effectevent.recesiveNotice();
             //把这个效果添加到该卡牌事件的事件子表中
             EffectChildEvents.Add(effectevent);
-        }  
-
+        }
+        b_logoutAfterDeal = true;
     }
     //发动效果
     public override void dealEffect(battleInfo battleInfo)
     {
+        recesiveNotice();
         //对于卡牌的每个效果事件，触发其效果
-        foreach(singleEvent effectevent in EffectChildEvents)
+        foreach (singleEvent effectevent in EffectChildEvents)
         {
             effectevent.dealEffect(battleInfo);
         }
@@ -157,7 +157,7 @@ public class CardEvent : singleEvent
         m_magicPart.sleepPart();
     }
     //接受反应表
-    public override void recesiveNotice()
+    protected override void recesiveNotice()
     {
         List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(m_eventKind);
         foreach (Reaction reaction in reactionlist)
@@ -177,4 +177,37 @@ public class CardEvent : singleEvent
     private MagicPart m_magicPart;
     private playerCard playercard;
     private List<singleEvent> EffectChildEvents = new List<singleEvent>();
+}
+
+public class ActionEvent:singleEvent
+{   
+    public ActionEvent(actionAbstract actionAb)
+    {
+        foreach (EffectBase effect in actionAb.effects)
+        {
+            m_effectEvents.Add(new EffectEvent(effect, this));
+        }            
+        m_eventKind = EventKind.Event_Action;
+    }
+
+    protected override void recesiveNotice()
+    {
+        List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(m_eventKind);
+        foreach (Reaction reaction in reactionlist)
+        {
+            if (reaction.Active == true)
+            {
+                reaction.dealReaction();
+            }
+        }
+    }
+    public override void dealEffect(battleInfo battleInfo)
+    {
+        recesiveNotice();
+        foreach(EffectEvent effectevent in m_effectEvents)
+        {
+            effectevent.dealEffect(battleInfo);
+        }
+    }
+    private List<EffectEvent> m_effectEvents = new List<EffectEvent>();
 }

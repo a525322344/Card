@@ -18,14 +18,6 @@ public enum ROUNDSTAGE
 [System.Serializable]
 public class battleInfo
 {
-    public enemybase getEnemy()
-    {
-        return Enemy;
-    }
-    public enemybase getPlayer()
-    {
-        return Player;
-    }
     public enemybase Enemy;             //敌人
     public playerpawn Player;            //玩家自己
     public List<extraEffectBase> CommonExtraEffects = new List<extraEffectBase>();
@@ -80,8 +72,9 @@ public class battleManager : MonoBehaviour
         selectedPart = _magicPart;
     }
 
-
+    //临时的
     public showcontroll showcontroll;
+    public enemyControll nowenemy;
 
     /// <summary>
     /// 开始战斗
@@ -114,6 +107,7 @@ public class battleManager : MonoBehaviour
     }
     public void SetEnemyShow()
     {
+        battleInfo.Enemy = nowenemy.pikaqiu;
         showcontroll.init();
     }
     public void DrawACard()

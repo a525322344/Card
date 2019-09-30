@@ -44,4 +44,27 @@ public static class ListOperation
         }
         return result;
     }
+    /// <summary>
+    /// 随机返回链表中的一个值
+    /// </summary>
+    /// <typeparam name="T_class"></typeparam>
+    /// <param name="tList"></param>
+    /// <returns></returns>
+    public static T_class RandomValue<T_class>(List<T_class> tList)
+    {
+        return tList[Random.Range(0, tList.Count)];
+    }
+    /// <summary>
+    /// 将整个链表插入另一个链表中
+    /// </summary>
+    /// <typeparam name="T_class"></typeparam>
+    /// <param name="tListA"></param>
+    /// <param name="tListB"></param>
+    public static void InsertList<T_class>(List<T_class> tListA,List<T_class> tListB)
+    {
+        foreach(T_class t in tListB)
+        {
+            tListA.Add(t);
+        }
+    }
 }
