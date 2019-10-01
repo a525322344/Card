@@ -15,12 +15,14 @@ public abstract class singleEvent
 }
 
 //系统事件，比如回合开始抽卡；回合结束弃卡；回合开始护甲归零
+[System.Serializable]
 public class SystemEvent : singleEvent
 {
     public SystemEvent(EffectBase effect)
     {
         m_eventKind = effect.GetEventKind();
         m_effect = effect;
+        b_logoutAfterDeal = false;
     }
     //设置影响效果，执行反应事件
     protected override void recesiveNotice()

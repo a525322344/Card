@@ -13,6 +13,7 @@ public abstract class ShowAbstract
     public float EndTime { get; }
     public float timeCursor;
 }
+[System.Serializable]
 public class EventShow
 {
     public EventShow(singleEvent _event)
@@ -37,8 +38,11 @@ public class EventManager : MonoBehaviour
     public List<EventShow> BattleEventShows = new List<EventShow>();
     public List<EventShow> EndEventShows = new List<EventShow>();
 
-    public int testbattleeventnum;
+    public List<EventShow> BattleEnemyShows = new List<EventShow>();
 
+    public int testbattleeventnum;
+    //事件游标  共用
+    public int eventCursor = 0;
     private void Update()
     {
         testbattleeventnum = BattleEventShows.Count;
@@ -47,9 +51,10 @@ public class EventManager : MonoBehaviour
             switch (battleManager.RoundStage)
             {
                 case ROUNDSTAGE.Start:
-                    if (StartEventShows.Count == 0)
+                    if (eventCursor >= StartEventShows.Count)
                     {
                         battleManager.RoundStage = ROUNDSTAGE.Battle;
+                        eventCursor = 0;
                     }
                     else
                     {
@@ -57,12 +62,14 @@ public class EventManager : MonoBehaviour
                     }
                     break;
                 case ROUNDSTAGE.Battle:
-                    if (BattleEventShows.Count == 0&&battleManager.b_toEndRound)
+                    if (eventCursor >= BattleEventShows.Count&&battleManager.b_toEndRound)
                     {
                         battleManager.RoundStage = ROUNDSTAGE.End;
+                        eventCursor = 0;
                     }
                     else
                     {
+                        //保证没按结束按钮的时候，不调用空链表
                         if (BattleEventShows.Count != 0)
                         {
                             advanceEventList(BattleEventShows);
@@ -70,10 +77,10 @@ public class EventManager : MonoBehaviour
                     }
                     break;
                 case ROUNDSTAGE.End:
-                    if (EndEventShows.Count == 0)
+                    if (eventCursor >= EndEventShows.Count)
                     {
                         battleManager.BattleRound = ROUND.EnemyRound;
-                        battleManager.deleteHandCard();
+                        eventCursor = 0;
                     }
                     else
                     {
@@ -84,24 +91,42 @@ public class EventManager : MonoBehaviour
         }
         else if (battleManager.BattleRound == ROUND.EnemyRound)
         {
-            battleManager.EndEnemyRound();
+            //只进行怪物的
+            if (eventCursor >= BattleEnemyShows.Count)
+            {
+                battleManager.EndEnemyRound();
+                eventCursor = 0;
+            }
+            else
+            {
+                advanceEventList(BattleEnemyShows);
+            }
+            
         }
     }
 
     void advanceEventList(List<EventShow> eventShows)
     {
-        switch (eventShows[0].state)
+        switch (eventShows[eventCursor].state)
         {
             case EVENTSTATE.Wait:
-                eventShows[0].state = EVENTSTATE.Do;
-                eventShows[0].thisevent.dealEffect(battleManager.battleInfoShow);
+                eventShows[eventCursor].state = EVENTSTATE.Do;
+                eventShows[eventCursor].thisevent.dealEffect(battleManager.battleInfoShow);
                 break;
             case EVENTSTATE.Do:
-                eventShows[0].upDateEvent();
-                eventShows[0].state = EVENTSTATE.Over;
+                eventShows[eventCursor].upDateEvent();
+                eventShows[eventCursor].state = EVENTSTATE.Over;
                 break;
             case EVENTSTATE.Over:
-                eventShows.Remove(eventShows[0]);
+                if (eventShows[eventCursor].thisevent.b_logoutAfterDeal)
+                {
+                    eventShows.Remove(eventShows[eventCursor]);
+                }
+                else
+                {
+                    eventShows[eventCursor].state = EVENTSTATE.Wait;
+                    eventCursor++;
+                }
                 break;
         }
     }

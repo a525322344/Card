@@ -5,10 +5,10 @@ using UnityEngine;
 //储存数据
 namespace AllAsset
 {
-    //声明所有的卡片效果
+    //声明所有的效果，供委托，无标签
     public static class effectAsset
     {
-        public static void dealDemage(int num, battleInfo battleInfo)
+        public static void EnemyGetHurt(int num, battleInfo battleInfo)
         {
             //对敌人造成“num”点伤害。
             if (num < 0)
@@ -17,7 +17,7 @@ namespace AllAsset
             }
             battleInfo.Enemy.hurtHealth(num);
         }
-        public static void gainArmor(int num, battleInfo battleInfo)
+        public static void PlayerGetArmor(int num, battleInfo battleInfo)
         {
             //获得“num”点护甲。
             if (num < 0)
@@ -33,8 +33,10 @@ namespace AllAsset
                 gameManager.Instance.battlemanager.DrawACard();
             }
         }
-
-        //行为
+        public static void disAllCard(int num,battleInfo battleInfo)
+        {
+            gameManager.Instance.battlemanager.deleteAllHandCard();
+        }
         public static void PlayerGetHurt(int num,battleInfo battleInfo)
         {
             if (num < 0)

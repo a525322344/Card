@@ -92,7 +92,7 @@ public class Damage : cardEffectBase
     public Damage(int _num=0)
     {
         num = _num;
-        effectDele= new DeleCardEffect(AllAsset.effectAsset.dealDemage);
+        effectDele= new DeleCardEffect(AllAsset.effectAsset.EnemyGetHurt);
         eventkind = EventKind.Event_Damage;
     }
     public override string DescribeEffect(int _i)
@@ -108,7 +108,7 @@ public class Armor : cardEffectBase
     public Armor(int _num=0)
     {
         num = _num;
-        effectDele = new DeleCardEffect(AllAsset.effectAsset.gainArmor);
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.PlayerGetArmor);
         eventkind = EventKind.Event_Armor;
     }
     public override string DescribeEffect(int _i)
@@ -151,6 +151,14 @@ public class RoundStartDrawCard:systemEffectBase
     }
 }
 
+public class RoundEndDisCard : systemEffectBase
+{
+    public RoundEndDisCard(int _num)
+    {
+        num = _num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.disAllCard);
+    }
+}
 
 ////
 //行为效果

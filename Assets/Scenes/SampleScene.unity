@@ -141,7 +141,7 @@ GameObject:
 --- !u!199 &20344233
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5524,7 +5524,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 9.1837e-41, z: -9.05e-43, w: -1.595e-42}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -6362,7 +6362,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1984434227}
-        m_MethodName: ToEndPlayerRound
+        m_MethodName: ButtonToEndPlayerRound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6569,6 +6569,7 @@ MonoBehaviour:
       healthnow: 0
       armor: 0
     roundStartDrawCardNum: 0
+    playerHandCardNum: 0
   battleInfoShow:
     Enemy:
       healthmax: 60
@@ -6579,6 +6580,7 @@ MonoBehaviour:
       healthnow: 0
       armor: 0
     roundStartDrawCardNum: 0
+    playerHandCardNum: 0
   b_toEndRound: 0
   b_isSelectCard: 0
   selectedCard: {fileID: 0}
@@ -6598,7 +6600,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
+  StartEventShows: []
+  BattleEventShows: []
+  EndEventShows: []
+  BattleEnemyShows: []
   testbattleeventnum: 0
+  eventCursor: 0
 --- !u!1 &2060660170
 GameObject:
   m_ObjectHideFlags: 0

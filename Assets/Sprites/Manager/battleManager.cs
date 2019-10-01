@@ -22,6 +22,7 @@ public class battleInfo
     public playerpawn Player;            //玩家自己
     public List<extraEffectBase> CommonExtraEffects = new List<extraEffectBase>();
     public int roundStartDrawCardNum;
+    public int playerHandCardNum;
 
     public void Init(playerInfo info)
     {
@@ -29,6 +30,10 @@ public class battleInfo
         Player.healthnow = info.playerHealth;
         Player.armor = 0;
         roundStartDrawCardNum = info.roundStartDrawCardNum;
+    }
+    public void setHandCardNum()
+    {
+        playerHandCardNum = gameManager.Instance.battlemanager.dickHandCard.Count;
     }
 }
 
@@ -49,12 +54,12 @@ public class battleManager : MonoBehaviour
     public List<playerCard> dickDiscard = new List<playerCard>();
     //玩家的手牌
     public List<playerCard> dickHandCard = new List<playerCard>();
-
     //战场信息
     public battleInfo battleInfo;
     public battleInfo battleInfoShow;
 
     public bool b_toEndRound = false;
+    #region 选择的牌和部件
     //准备打出卡牌的事件相关信息
     //当前选择的卡
     // [HideInInspector]
@@ -71,10 +76,8 @@ public class battleManager : MonoBehaviour
     {
         selectedPart = _magicPart;
     }
+    #endregion
 
-    //临时的
-    public showcontroll showcontroll;
-    public enemyControll nowenemy;
 
     /// <summary>
     /// 开始战斗
@@ -98,18 +101,18 @@ public class battleManager : MonoBehaviour
         battleInfoShow.Init(playerinfo);
         SetEnemyShow();
         //注册回合抽牌事件
-        singleEvent drawCardEvent = new SystemEvent(new RoundStartDrawCard(battleInfo.roundStartDrawCardNum));
-        EventShow drawcardShowEvent = new EventShow(drawCardEvent);
+        EventShow drawcardShowEvent = new EventShow(new SystemEvent(new RoundStartDrawCard(battleInfo.roundStartDrawCardNum)));
         eventManager.StartEventShows.Add(drawcardShowEvent);
+        //注册回合结束弃牌事件
+        EventShow discardShowEvent = new EventShow(new SystemEvent(new RoundEndDisCard(battleInfo.playerHandCardNum)));
+        eventManager.EndEventShows.Add(discardShowEvent);
+        //注册怪物的下一次行动事件
+        eventManager.BattleEnemyShows.Add(new EventShow(new ActionEvent(nowenemy.chooseAction())));
 
         RoundStage = ROUNDSTAGE.Start;
         BattleRound = ROUND.PlayerRound;
     }
-    public void SetEnemyShow()
-    {
-        battleInfo.Enemy = nowenemy.pikaqiu;
-        showcontroll.init();
-    }
+    
     public void DrawACard()
     {
         if (dickInGame.Count == 0)
@@ -143,7 +146,7 @@ public class battleManager : MonoBehaviour
         }
     }
     //丢弃全部手牌
-    public void deleteHandCard()
+    public void deleteAllHandCard()
     {
         List<realCard> realCards = gameManager.Instance.instantiatemanager.handCardControll.GetComponent<handcardControll>().playerHandCards;
         for(int i = realCards.Count - 1; i >= 0; i--)
@@ -163,23 +166,34 @@ public class battleManager : MonoBehaviour
         gameManager.Instance.instantiatemanager.handCardControll.GetComponent<handcardControll>().playerHandCards.Remove(real);
         Destroy(real.transform.parent.gameObject);
     }
-    public void ToEndPlayerRound()
+
+    public void ButtonToEndPlayerRound()
     {
         b_toEndRound = true;
     }
 
     public void EndEnemyRound()
     {
-        singleEvent drawCardEvent = new SystemEvent(new RoundStartDrawCard(battleInfo.roundStartDrawCardNum));
-        EventShow drawcardShowEvent = new EventShow(drawCardEvent);
-        eventManager.StartEventShows.Add(drawcardShowEvent);
         b_toEndRound = false;
 
         foreach(realpart rp in gameManager.Instance.instantiatemanager.bookFolderTran.GetComponent<bookFolderControll>().realparts){
             rp.PowerRealPart();
         }
-
+        //注册怪物的下一次行动事件
+        eventManager.BattleEnemyShows.Add(new EventShow(new ActionEvent(nowenemy.chooseAction())));
         RoundStage = ROUNDSTAGE.Start;
         BattleRound = ROUND.PlayerRound;
     }
+
+
+    #region 临时的
+    public showcontroll showcontroll;
+    public enemyControll nowenemy;
+    public void SetEnemyShow()
+    {
+        battleInfo.Enemy = nowenemy.pikaqiu;
+        showcontroll.init();
+    }
+    #endregion
+
 }
