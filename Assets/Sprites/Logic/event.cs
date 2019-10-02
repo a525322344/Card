@@ -12,10 +12,11 @@ public abstract class singleEvent
     public bool b_logoutAfterDeal = true;
     //事件类型，用于枚举
     protected EventKind m_eventKind;
+    public bool b_haveChildEvent;
+    public List<singleEvent> childEvents = new List<singleEvent>();
 }
 
 //系统事件，比如回合开始抽卡；回合结束弃卡；回合开始护甲归零
-[System.Serializable]
 public class SystemEvent : singleEvent
 {
     public SystemEvent(EffectBase effect)
@@ -23,6 +24,7 @@ public class SystemEvent : singleEvent
         m_eventKind = effect.GetEventKind();
         m_effect = effect;
         b_logoutAfterDeal = false;
+        b_haveChildEvent = false;
     }
     //设置影响效果，执行反应事件
     protected override void recesiveNotice()
@@ -59,9 +61,7 @@ public class SystemEvent : singleEvent
     private battleInfo m_battleInfo;
 }
 
-/// <summary>
-/// 独立的效果事件，卡牌的效果子事件
-/// </summary>
+//独立的效果事件，卡牌的效果子事件
 public class EffectEvent : singleEvent
 {
     /// <summary>
@@ -75,6 +75,7 @@ public class EffectEvent : singleEvent
         m_effect = effect;
         m_fatherEvent = fatherevent;
         m_eventKind = effect.GetEventKind();
+        b_haveChildEvent = false;
     }
     //执行效果
     public override void dealEffect(battleInfo battleInfo)
@@ -115,10 +116,7 @@ public class EffectEvent : singleEvent
     private battleInfo battleInfo;
 }
 
-
-/// <summary>
-/// 卡牌事件
-/// </summary>
+//卡牌事件
 public class CardEvent : singleEvent
 {
     /// <summary>
@@ -141,16 +139,17 @@ public class CardEvent : singleEvent
             ////为这个效果事件接受相应的反应表
             //effectevent.recesiveNotice();
             //把这个效果添加到该卡牌事件的事件子表中
-            EffectChildEvents.Add(effectevent);
+            childEvents.Add(effectevent);
         }
         b_logoutAfterDeal = true;
+        b_haveChildEvent = true;
     }
     //发动效果
     public override void dealEffect(battleInfo battleInfo)
     {
         recesiveNotice();
         //对于卡牌的每个效果事件，触发其效果
-        foreach (singleEvent effectevent in EffectChildEvents)
+        foreach (singleEvent effectevent in childEvents)
         {
             effectevent.dealEffect(battleInfo);
         }
@@ -178,18 +177,19 @@ public class CardEvent : singleEvent
     //卡牌
     private MagicPart m_magicPart;
     private playerCard playercard;
-    private List<singleEvent> EffectChildEvents = new List<singleEvent>();
 }
 
+//行动事件
 public class ActionEvent:singleEvent
 {   
     public ActionEvent(actionAbstract actionAb)
     {
         foreach (EffectBase effect in actionAb.effects)
         {
-            m_effectEvents.Add(new EffectEvent(effect, this));
+            childEvents.Add(new EffectEvent(effect, this));
         }            
         m_eventKind = EventKind.Event_Action;
+        b_haveChildEvent = true;
     }
 
     protected override void recesiveNotice()
@@ -206,10 +206,9 @@ public class ActionEvent:singleEvent
     public override void dealEffect(battleInfo battleInfo)
     {
         recesiveNotice();
-        foreach(EffectEvent effectevent in m_effectEvents)
+        foreach(EffectEvent effectevent in childEvents)
         {
             effectevent.dealEffect(battleInfo);
         }
     }
-    private List<EffectEvent> m_effectEvents = new List<EffectEvent>();
 }

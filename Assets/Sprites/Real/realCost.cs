@@ -56,7 +56,14 @@ public class realCost : MonoBehaviour
                 }
             }
         }
-
+        else
+        {
+            if (lastrealgrid)
+            {
+                lastrealgrid.ToSetPart(null);
+                lastrealgrid = null;
+            }
+        }
         //根据costMode进行切换
         if (costMode != nextCostMode)
         {

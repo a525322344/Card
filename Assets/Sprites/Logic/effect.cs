@@ -124,6 +124,7 @@ public class DrawCard : cardEffectBase
     public DrawCard(int _num=0)
     {
         num = _num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.drawCard);
         eventkind = EventKind.Event_DrawCard;
     }
     public override string DescribeEffect(int _i)
@@ -131,11 +132,6 @@ public class DrawCard : cardEffectBase
         string result = "";
         result += "抽" + _i + "张卡";
         return result;
-    }
-    public override void DealEffect(int num, battleInfo battleInfo)
-    {
-        //抽卡效果
-        //
     }
 }
 

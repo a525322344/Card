@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 public enum HandCardState
 {
+    Draw,
+    DisCard,
     Freedom,
     Enter,
     Select,
@@ -47,7 +49,7 @@ public class realCard : MonoBehaviour
     /// 记录初始信息
     private Vector3 localpositionStart;
 
-    public HandCardState handCardState = HandCardState.Freedom;
+    public HandCardState handCardState = HandCardState.Other;
 
     private Vector3 startmeshsalce;
 
@@ -60,13 +62,15 @@ public class realCard : MonoBehaviour
         handcardControll = father.parent.GetComponent<handcardControll>();
         startmeshsalce = cardmesh.localScale;
     }
-
+    float timecount;
     // Update is called once per frame
     void Update()
     {
         recesiveInfo();
         switch (handCardState)
         {
+            case HandCardState.Draw:
+                break;
             case HandCardState.Freedom:
                 father.DORotate(new Vector3(0, 0, adjustAngle), handswayTime);
                 transform.DORotate(new Vector3(0, 0, adjustAngle), cardrotateTime);
@@ -84,7 +88,7 @@ public class realCard : MonoBehaviour
             case HandCardState.Select:
                 Vector3 mouseposition = Input.mousePosition; 
                 mouseposition = Camera.main.ScreenToWorldPoint(new Vector3(mouseposition.x,mouseposition.y,instantiateManager.instance.uiCanvas.planeDistance));
-                transform.DOMove(mouseposition+Vector3.back*1,0.1f);
+                transform.DOMove(mouseposition+Vector3.back*1,0);
                 transform.DOScale(Vector3.one, 0.1f);
 
                 cardmesh.localPosition = Vector3.zero;
@@ -171,6 +175,16 @@ public class realCard : MonoBehaviour
         cardmesh.localScale = startmeshsalce;
         realcost.gameObject.SetActive(false);
 
+    }
+
+    public void ShowDraw()
+    {
+        DOTween.To(() => timecount, a => timecount = a, 1, 0.1f).OnComplete(() =>
+        {
+            handCardState = HandCardState.Freedom;
+        });
+        transform.position = gameManager.Instance.instantiatemanager.dicktran.position;
+        handCardState = HandCardState.Draw;
     }
 
     private bool IsOutOfHandPlace()

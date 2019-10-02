@@ -37,6 +37,7 @@ public class bookFolderControll : MonoBehaviour
                 b_alreadyToShow = true;
                 StartCoroutine("IEtoShow");
             }
+            //b_toshow = false;
         }
 
         if (b_toshow)

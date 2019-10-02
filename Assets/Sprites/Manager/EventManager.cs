@@ -1,35 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum EVENTSTATE
-{
-    Wait,
-    Do,
-    Over
-}
-public abstract class ShowAbstract
-{
-    public float StartTime { get; } = 0;
-    public float EndTime { get; }
-    public float timeCursor;
-}
-[System.Serializable]
-public class EventShow
-{
-    public EventShow(singleEvent _event)
-    {
-        thisevent = _event;
-        state = EVENTSTATE.Wait;
-    }
-    public void upDateEvent()
-    {
-        lasttime -= Time.deltaTime;
-    }
-    
-    public float lasttime;
-    public singleEvent thisevent;
-    public EVENTSTATE state;
-}
+public delegate void toDo();
+
 public class EventManager : MonoBehaviour
 {
     public battleManager battleManager;

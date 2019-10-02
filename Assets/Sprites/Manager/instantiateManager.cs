@@ -17,7 +17,8 @@ public class instantiateManager : MonoBehaviour
     public GameObject partGO;
     public GameObject cardGO;
     public GameObject gridGO;
-
+    //牌库的位置
+    public Transform dicktran;
     //手牌的位置
     public Transform handCardControll;
     public Transform bookFolderTran;
@@ -59,6 +60,7 @@ public class instantiateManager : MonoBehaviour
         GameObject card = Instantiate(cardGO, handCardControll);
         realCard realcard = card.GetComponentInChildren<realCard>();
         realcard.SetThiscard(playercard);
+        realcard.ShowDraw();
         handCardControll.GetComponent<handcardControll>().playerHandCards.Add(realcard);
     }
 

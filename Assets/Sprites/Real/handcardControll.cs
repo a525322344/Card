@@ -142,10 +142,13 @@ public class handcardControll : MonoBehaviour
     {
         selectedCard = realcard;
         gameManager.Instance.battlemanager.SetSelectedCard(realcard);
-       
+        if (realcard)
+        {
+            gameManager.Instance.battlemanager.b_isSelectCard = true;
+        }      
     }
     public void SelectCardOut()
     {
-        gameManager.Instance.battlemanager.b_isSelectCard = true;
+        //gameManager.Instance.battlemanager.b_isSelectCard = true;
     }
 }
