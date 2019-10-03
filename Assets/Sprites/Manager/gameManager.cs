@@ -5,7 +5,7 @@ using UnityEngine;
 public enum GameState
 {
     StartMenu,
-    RouteChoose,
+    MapSence,
     BattleSence
 }
 
@@ -28,6 +28,8 @@ public class gameManager : MonoBehaviour
     public battleManager battlemanager;
     //实例管理器
     public instantiateManager instantiatemanager;
+    //地图管理器
+    public MapManager mapmanager;
 
 
 
