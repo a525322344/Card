@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public delegate void deleToDo();
 public enum EVENTSTATE
 {
     Wait,
@@ -34,6 +34,8 @@ public class EventShow
         switch (state)
         {
             case EVENTSTATE.Wait:
+                StartToDo();
+                state = EVENTSTATE.Do;
                 break;
             case EVENTSTATE.Do:
                 if (timecursor < 1)
@@ -62,20 +64,14 @@ public class EventShow
                 }
                 break;
             case EVENTSTATE.Over:
+                EndToDo();
                 return true;
-        }
-        //子事件update
-        if (thisevent.b_haveChildEvent)
-        {
-            foreach (EventShow eventShow in childEventShows)
-            {
-                eventShow.upDateEvent();
-            }
         }
         return false;
     }
 
-
+    public deleToDo StartToDo;
+    public deleToDo EndToDo;
     public List<EventShow> childEventShows = new List<EventShow>();
     public float lasttime=0.5f;
     public float timecursor;

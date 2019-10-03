@@ -1,0 +1,9 @@
+diff a/Assets/Sprites/Manager/gameManager.cs b/Assets/Sprites/Manager/gameManager.cs	(rejected hunks)
+@@ -28,6 +28,7 @@
+     public battleManager battlemanager;
+     //实例管理器
+     public instantiateManager instantiatemanager;
++    //地图管理器
+     public MapManager mapmanager;
+ 
+ 
