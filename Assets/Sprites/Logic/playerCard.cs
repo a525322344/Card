@@ -88,6 +88,44 @@ public class playerCard : card
         setEffect();
         CardDescribe();
     }
+    public playerCard(int id, string name, CardKind kind, int cost)
+    {
+        Id = id;
+        Name = name;
+        Kind = kind;
+        Cost = cost;
+        switch (kind)
+        {
+            case CardKind.CurseCard:
+            case CardKind.StateCard:
+                SetCanPlay(false);
+                break;
+            case CardKind.PlayerCard:
+                SetCanPlay(true);
+                break;
+        }
+        priCostVector2 = new int[3, 3];
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                priCostVector2[i, j] = 0;
+            }
+        }
+        switch (Cost)
+        {
+            case 0:
+                break;
+            case 1:
+                priCostVector2[1, 1] = 1;
+                break;
+            case 2:
+                priCostVector2[1, 1] = 1;
+                priCostVector2[2, 1] = 1;
+                break;
+                //other
+        }
+    }
     public List<cardEffectBase> getEffectList()
     {
         return EffectPlayList;

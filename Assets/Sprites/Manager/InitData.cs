@@ -25,6 +25,11 @@ public class InitData : MonoBehaviour
         playerCard card_jinGangQiangPo = new playerCard(3,"金刚枪破", CardKind.PlayerCard, 1, 5, 0);
         card_jinGangQiangPo.AddEffect(new DrawCard(2));
         cardAsset.AllIdCards.Add(card_jinGangQiangPo);
+        //2费 打8 护甲8
+        playerCard attackAndDeffence = new playerCard(4, "攻击和防御", CardKind.PlayerCard, 2);
+        attackAndDeffence.AddEffect(new Damage(8));
+        attackAndDeffence.AddEffect(new Armor(8));
+        cardAsset.AllIdCards.Add(attackAndDeffence);
     }
     //“手动”加载全部件 可能是暂定
     void MagicPartInit()
