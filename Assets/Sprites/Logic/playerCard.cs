@@ -86,6 +86,7 @@ public class playerCard : card
         damageToEnemy = _damageToEnemy;
         deffenceToOwn = _deffenceToOwn;
         setEffect();
+        CardDescribe();
     }
     public List<cardEffectBase> getEffectList()
     {
@@ -106,15 +107,29 @@ public class playerCard : card
         {
             cardEffectBase effect = new Damage(damageToEnemy);
             EffectPlayList.Add(effect);
-
-            Describe += effect.DescribeEffect(damageToEnemy);
         }
         if (deffenceToOwn > 0)
         {
             cardEffectBase effect = new Armor(deffenceToOwn);
             EffectPlayList.Add(effect);
-            Describe += effect.DescribeEffect(deffenceToOwn);
         }       
-    }    
+    }
+    public string CardDescribe()
+    {
+        Describe = "";
+        foreach (cardEffectBase effect in EffectPlayList)
+        {
+            Describe += effect.DescribeEffect() + ",";
+        }
+        Describe = Describe.Substring(0, Describe.Length - 1);
+        return Describe;
+    }
+
+    //    逻辑操作 手动添加效果
+    public void AddEffect(cardEffectBase effect)
+    {
+        EffectPlayList.Add(effect);
+        CardDescribe();
+    }
 }
 

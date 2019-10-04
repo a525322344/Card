@@ -28,6 +28,8 @@ public class EventShow
                 childEventShows.Add(new EventShow(childevent));
             }
         }
+        StartToDo = new deleToDo(() => { });
+        EndToDo = new deleToDo(() => { });
     }
     public bool upDateEvent()
     {

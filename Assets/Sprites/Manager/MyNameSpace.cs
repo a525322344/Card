@@ -26,12 +26,9 @@ namespace AllAsset
             }
             battleInfo.Player.GetArmor(num);
         }
-        public static void drawCard(int num,battleInfo battleInfo)
+        public static void drawACard(int num,battleInfo battleInfo)
         {
-            for(int i = 0; i < num; i++)
-            {
-                gameManager.Instance.battlemanager.DrawACard();
-            }
+            gameManager.Instance.battlemanager.DrawACard();
         }
         public static void disAllCard(int num,battleInfo battleInfo)
         {

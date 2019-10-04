@@ -20,6 +20,11 @@ public class InitData : MonoBehaviour
         {
             cardAsset.AllIdCards.Add(new playerCard(csvcard[i].id, csvcard[i].name, CSVLoader.StringToEnum(csvcard[i].kind),csvcard[i].cost ,csvcard[i].damage, csvcard[i].deffence));
         }
+
+        //1费 抽2，打5
+        playerCard card_jinGangQiangPo = new playerCard(3,"金刚枪破", CardKind.PlayerCard, 1, 5, 0);
+        card_jinGangQiangPo.AddEffect(new DrawCard(2));
+        cardAsset.AllIdCards.Add(card_jinGangQiangPo);
     }
     //“手动”加载全部件 可能是暂定
     void MagicPartInit()

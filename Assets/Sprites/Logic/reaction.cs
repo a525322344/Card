@@ -19,6 +19,8 @@ public static class ReactionListController
                 return reactListToDiscard;
             case EventKind.Event_DrawCard:
                 return reactListToDrawCard;
+            case EventKind.Event_DrawACard:
+                return reactListToDrawACard;
             case EventKind.Event_RoundStartDrawCard:
                 return reactListToRoundStartDrawCard;
             case EventKind.Event_PlayerGetHurt:
@@ -49,6 +51,9 @@ public static class ReactionListController
             case EventKind.Event_DrawCard:
                 reactListToDrawCard.Add(reaction);
                 break;
+            case EventKind.Event_DrawACard:
+                reactListToDrawACard.Add(reaction);
+                break;
             case EventKind.Event_RoundStartDrawCard:
                 reactListToRoundStartDrawCard.Add(reaction);
                 break;
@@ -70,6 +75,7 @@ public static class ReactionListController
     private static List<Reaction> reactListToPlaycard = new List<Reaction>();
     private static List<Reaction> reactListToDiscard = new List<Reaction>();
     private static List<Reaction> reactListToDrawCard = new List<Reaction>();
+    private static List<Reaction> reactListToDrawACard = new List<Reaction>();
     private static List<Reaction> reactListToRoundStartDrawCard = new List<Reaction>();
     private static List<Reaction> reactListToPlayerGetHurt = new List<Reaction>();
     private static List<Reaction> reactListToEnemyGetArmor = new List<Reaction>();

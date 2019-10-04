@@ -101,7 +101,7 @@ public class battleManager : MonoBehaviour
         battleInfoShow.Init(playerinfo);
         SetEnemyShow();
         //注册回合抽牌事件
-        EventShow drawcardShowEvent = new EventShow(new SystemEvent(new RoundStartDrawCard(battleInfo.roundStartDrawCardNum)));
+        EventShow drawcardShowEvent = new EventShow(new SystemEvent(new RoundStartDrawCard(battleInfo.roundStartDrawCardNum)));       
         eventManager.StartEventShows.Add(drawcardShowEvent);
         //注册回合结束弃牌事件
         EventShow discardShowEvent = new EventShow(new SystemEvent(new RoundEndDisCard(battleInfo.playerHandCardNum)));
@@ -135,7 +135,7 @@ public class battleManager : MonoBehaviour
         {
             selectedPart.UseSelectGrids();
             singleEvent newevent = new CardEvent((playerCard)selectedCard.thisCard, selectedPart.thisMagicPart, new emplyPlayCard());
-            newevent.dealEffect(battleInfo);
+            //newevent.dealEffect(battleInfo);
             eventManager.BattleEventShows.Add(new EventShow(newevent));
 
             selectedCard.realcost.lastrealgrid.fatherPart.SetDownCard(null);

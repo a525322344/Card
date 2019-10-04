@@ -11,6 +11,7 @@ public enum EventKind
     Event_PlayCard,
     Event_Discard,
     Event_DrawCard,
+    Event_DrawACard,
     Event_RoundStartDrawCard,
     Event_PlayerGetHurt,
     Event_EnemyGetArmor,
@@ -21,12 +22,6 @@ public enum EventKind
 public delegate void DeleCardEffect(int num,battleInfo battleinfo);
 //public delegate bool DeleIsorNot(int num, battleInfo battleInfo);
 
-[System.Serializable]
-public class Effect
-{
-    public DeleCardEffect istrue;
-    public cardEffectBase cardEffect;
-}
 //抽象效果类，派生出所有效果
 public abstract class EffectBase
 {
@@ -34,7 +29,7 @@ public abstract class EffectBase
     {
         effectDele(num, battleInfo);
     }
-
+    public virtual string DescribeEffect() { return ""; }
     public int getNum()
     {
         return num;
@@ -49,13 +44,15 @@ public abstract class EffectBase
     }
 
     protected int num;
+    protected int mixnum;
     protected DeleCardEffect effectDele;
+    public bool b_hasChildEffect = false;
+    public List<EffectBase> childeffects = new List<EffectBase>();
     protected EventKind eventkind;          //该效果创建的事件类型
 }
 //一个效果抽象基类，派生出每个卡牌效果
 public abstract class cardEffectBase : EffectBase
 {
-    public abstract string DescribeEffect(int _i);
 }
 //系统效果抽象基类
 public abstract class systemEffectBase : EffectBase
@@ -81,8 +78,6 @@ public class emplyPlayCard:emptyKind
     public emplyPlayCard(){
         eventkind = EventKind.Event_PlayCard;
     }
-    public override string DescribeEffect(int _i){ return ""; }
-    public override void DealEffect(int num, battleInfo battleInfo) { }
 }
 
 ////
@@ -92,45 +87,89 @@ public class Damage : cardEffectBase
     public Damage(int _num=0)
     {
         num = _num;
+        mixnum = num;
         effectDele= new DeleCardEffect(AllAsset.effectAsset.EnemyGetHurt);
         eventkind = EventKind.Event_Damage;
     }
-    public override string DescribeEffect(int _i)
+    public override string DescribeEffect()
     {
         string result = "";
-        result += "造成" + _i + "点伤害";
+        result += "造成" + mixnum + "点伤害";
         return result;
     }
 }
-
+public class Repeat : cardEffectBase
+{
+    public Repeat() { }
+    public Repeat(int _num,params EffectBase[] effects)
+    {
+        effectDele = new DeleCardEffect((a, b) => { });
+        num = _num;
+        mixnum = num;
+        foreach(EffectBase effect in effects)
+        {
+            childeffects.Add(effect);
+        }
+        b_hasChildEffect = true;
+    }
+    public override string DescribeEffect()
+    {
+        string result = "";
+        foreach (EffectBase effect in childeffects)
+        {
+            result += effect.DescribeEffect() + ",";
+        }
+        result += "重复" + mixnum + "次";
+        return result;
+    }
+}
 public class Armor : cardEffectBase
 {
     public Armor(int _num=0)
     {
         num = _num;
+        mixnum = num;
         effectDele = new DeleCardEffect(AllAsset.effectAsset.PlayerGetArmor);
         eventkind = EventKind.Event_Armor;
     }
-    public override string DescribeEffect(int _i)
+    public override string DescribeEffect()
     {
         string result = "";
-        result += "获得" + _i + "点护盾";
+        result += "获得" + mixnum + "点护盾";
         return result;
     }
 }
 
-public class DrawCard : cardEffectBase
+public class drawACard : cardEffectBase
 {
-    public DrawCard(int _num=0)
+    public drawACard()
+    {
+        num = 0;
+        mixnum = 0;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.drawACard);
+        eventkind = EventKind.Event_DrawACard;
+    }
+    public override string DescribeEffect()
+    {
+        return "Test:抽一张卡";
+    }
+}
+
+public class DrawCard : Repeat
+{
+    public DrawCard(int _num)
     {
         num = _num;
-        effectDele = new DeleCardEffect(AllAsset.effectAsset.drawCard);
+        mixnum = num;
+        effectDele = new DeleCardEffect((a, b) => { });
+        childeffects.Add(new drawACard());
         eventkind = EventKind.Event_DrawCard;
+        b_hasChildEffect = true;
     }
-    public override string DescribeEffect(int _i)
+    public override string DescribeEffect()
     {
         string result = "";
-        result += "抽" + _i + "张卡";
+        result += "抽" + mixnum + "张卡";
         return result;
     }
 }
@@ -142,7 +181,7 @@ public class RoundStartDrawCard:systemEffectBase
     public RoundStartDrawCard(int _num)
     {
         num = _num;
-        effectDele = new DeleCardEffect(AllAsset.effectAsset.drawCard);
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.drawACard);
         eventkind = EventKind.Event_RoundStartDrawCard;
     }
 }

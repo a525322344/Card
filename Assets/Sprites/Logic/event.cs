@@ -75,7 +75,14 @@ public class EffectEvent : singleEvent
         m_effect = effect;
         m_fatherEvent = fatherevent;
         m_eventKind = effect.GetEventKind();
-        b_haveChildEvent = false;
+        if (effect.b_hasChildEffect)
+        {
+            b_haveChildEvent = true;
+        }
+        else
+        {
+            b_haveChildEvent = false;
+        }
     }
     //执行效果
     public override void dealEffect(battleInfo battleInfo)
@@ -87,6 +94,24 @@ public class EffectEvent : singleEvent
             index = extraEffect.AdjustEffect(index);
         }
         m_effect.DealEffect(index, battleInfo);
+        Debug.Log(m_effect.DescribeEffect());
+        //如果有子效果,则说明该effect为repeat类
+
+        if (b_haveChildEvent)
+        {
+            Debug.Log("repeat:" + index);
+            for (int i = 0; i < index; i++)
+            {
+                foreach (cardEffectBase effect in m_effect.childeffects)
+                {
+                    childEvents.Add(new EffectEvent(effect, this));
+                }
+            }
+            foreach (EffectEvent childevent in childEvents)
+            {
+                childevent.dealEffect(battleInfo);
+            }
+        }
     }
     //设置影响效果，执行反应事件
     protected override void recesiveNotice()
@@ -107,7 +132,7 @@ public class EffectEvent : singleEvent
 
 
     //效果类
-    private EffectBase m_effect;
+    public EffectBase m_effect;
     //强化效果表
     private List<extraEffectBase> m_extraEffectList = new List<extraEffectBase>();
     //父类事件
