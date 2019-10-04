@@ -9,6 +9,7 @@ public class sourcetreeTest : MonoBehaviour
     void Start()
     {
         Debug.Log("UMP45AA@*)SUERPOJA8j=-fdsfsf2346%$^%TWdfposj98u092j");
+        Debug.Log("kirakira");
     }
 
     // Update is called once per frame
