@@ -18,7 +18,7 @@ public class battlePlace : place
     public override void onclick()
     {
         //进入战斗
-        Debug.Log("计入战斗");
+        Debug.Log("进入战斗");
     }
 
     public int enemynum;
