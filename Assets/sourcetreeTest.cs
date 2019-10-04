@@ -8,7 +8,7 @@ public class sourcetreeTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log("UMP45AA@*)SUERPOJA8j=-fdsfsf2346%$^%TWdfposj98u092j");
     }
 
     // Update is called once per frame
