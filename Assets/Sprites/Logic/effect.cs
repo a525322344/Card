@@ -6,6 +6,7 @@ using UnityEngine;
 //对应了其产生的event及对其产生影响的reaction
 public enum EventKind
 {
+    Event_OutOfKind,
     Event_Damage,
     Event_Armor,
     Event_PlayCard,
@@ -13,9 +14,15 @@ public enum EventKind
     Event_DrawCard,
     Event_DrawACard,
     Event_RoundStartDrawCard,
+    Event_RoundEndDisCard,
     Event_PlayerGetHurt,
     Event_EnemyGetArmor,
     Event_Action,
+    Event_Repeat,
+    Event_SystmeRepeat,
+    Event_EnemyGetBurn,
+    //Event_EnemyBurnDeal,
+    Event_EnemyBurnDamage,
 }
 
 //对卡牌效果的委托
@@ -42,6 +49,10 @@ public abstract class EffectBase
     {
         return effectDele;
     }
+    public void SetNum(int _n)
+    {
+        num = _n;
+    }
 
     protected int num;
     protected int mixnum;
@@ -55,6 +66,10 @@ public abstract class cardEffectBase : EffectBase
 {
 }
 //系统效果抽象基类
+public abstract class stateEffectBase:EffectBase
+{
+
+}
 public abstract class systemEffectBase : EffectBase
 {
 
@@ -111,6 +126,7 @@ public class Repeat : cardEffectBase
             childeffects.Add(effect);
         }
         b_hasChildEffect = true;
+        eventkind = EventKind.Event_Repeat;
     }
     public override string DescribeEffect()
     {
@@ -174,15 +190,53 @@ public class DrawCard : Repeat
     }
 }
 
+public class Burn : cardEffectBase
+{
+    public Burn(int _num = 0)
+    {
+        num = _num;
+        mixnum = num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.EnemyGetBurn);
+        eventkind = EventKind.Event_EnemyGetBurn;
+    }
+    public override string DescribeEffect()
+    {
+        return "敌人获得" + mixnum + "层灼烧";
+    }
+}
+
 ////
 //系统效果
-public class RoundStartDrawCard:systemEffectBase
+public class SystemRepeat : systemEffectBase
+{
+    public SystemRepeat() { }
+    public SystemRepeat(int _num,params EffectBase[] effects)
+    {
+        effectDele = new DeleCardEffect((a, b) => { });
+        num = _num;
+        mixnum = _num;
+        foreach(EffectBase effect in effects)
+        {
+            childeffects.Add(effect);
+        }
+        b_hasChildEffect = true;
+        eventkind = EventKind.Event_SystmeRepeat;
+    }
+}
+
+public class RoundStartDrawCard:SystemRepeat
 {
     public RoundStartDrawCard(int _num)
     {
         num = _num;
-        effectDele = new DeleCardEffect(AllAsset.effectAsset.drawACard);
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.EmptyEffect);
+        childeffects.Add(new drawACard());
+        b_hasChildEffect = true;
         eventkind = EventKind.Event_RoundStartDrawCard;
+    }
+    public override string DescribeEffect()
+    {
+        return "回合开始抽卡";
     }
 }
 
@@ -191,7 +245,12 @@ public class RoundEndDisCard : systemEffectBase
     public RoundEndDisCard(int _num)
     {
         num = _num;
+        eventkind = EventKind.Event_RoundEndDisCard;
         effectDele = new DeleCardEffect(AllAsset.effectAsset.disAllCard);
+    }
+    public override string DescribeEffect()
+    {
+        return "回合结束，弃掉所有手牌";
     }
 }
 
@@ -206,6 +265,10 @@ public class effectActionHurt : actionEffectBase
         effectDele = new DeleCardEffect(AllAsset.effectAsset.PlayerGetHurt);
         eventkind = EventKind.Event_PlayerGetHurt;
     }
+    public override string DescribeEffect()
+    {
+        return "怪物造成伤害：" + num;
+    }
 }
 //获得护甲
 public class effectActionEnemyArmor : actionEffectBase
@@ -215,5 +278,37 @@ public class effectActionEnemyArmor : actionEffectBase
         num = _num;
         effectDele = new DeleCardEffect(AllAsset.effectAsset.EnemyGetArmor);
         eventkind = EventKind.Event_EnemyGetArmor;
+    }
+    public override string DescribeEffect()
+    {
+        return "怪物获得护甲：" + num;
+    }
+}
+// //
+//状态效果
+//public class effectStateBurn : stateEffectBase
+//{
+//    public effectStateBurn(int _num=0)
+//    {
+//        num = _num;
+//        effectDele = new DeleCardEffect(AllAsset.effectAsset.EmptyEffect);
+//        eventkind = EventKind.Event_EnemyBurnDeal;
+//    }
+//    public override string DescribeEffect()
+//    {
+//        return "灼烧伤害";
+//    }
+//}
+public class effectBurnDamage : stateEffectBase
+{
+    public effectBurnDamage(int _num=0)
+    {
+        num = _num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.EnemyGetRealHurt);
+        eventkind = EventKind.Event_EnemyBurnDamage;
+    }
+    public override string DescribeEffect()
+    {
+        return "灼烧伤害：" + num;
     }
 }

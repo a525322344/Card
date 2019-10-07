@@ -24,7 +24,6 @@ public class SystemEvent : singleEvent
         m_eventKind = effect.GetEventKind();
         m_effect = effect;
         b_logoutAfterDeal = false;
-        b_haveChildEvent = false;
     }
     //设置影响效果，执行反应事件
     protected override void recesiveNotice()
@@ -44,14 +43,34 @@ public class SystemEvent : singleEvent
     }
     public override void dealEffect(battleInfo battleInfo)
     {
+        //先接受信息，同时会先触发父事件的反应事件，将其添加在后面
         recesiveNotice();
+        //重复几次
         int index = m_effect.getNum();
         foreach (extraEffectBase extraEffect in m_extraEffectList)
         {
             index = extraEffect.AdjustEffect(index);
-            Debug.Log(index);
         }
         m_effect.DealEffect(index, battleInfo);
+        Debug.Log("系统；" + m_effect.DescribeEffect());
+        //生成子事件表
+        childEvents.Clear();
+        if (m_effect.b_hasChildEffect)
+        {
+            b_haveChildEvent = true;
+            for (int i = 0; i < index; i++)
+            {
+                foreach (EffectBase childeffect in m_effect.childeffects)
+                {
+                    childEvents.Add(new EffectEvent(childeffect, this));
+                }
+            }
+            //根据子事件表，创建添加EventShow
+            for(int i=childEvents.Count-1;i>=0;i--)
+            {
+                gameManager.Instance.battlemanager.eventManager.InsertEvent(childEvents[i]);
+            }
+        }
     }
     //效果类
     private EffectBase m_effect;
@@ -94,12 +113,11 @@ public class EffectEvent : singleEvent
             index = extraEffect.AdjustEffect(index);
         }
         m_effect.DealEffect(index, battleInfo);
-        Debug.Log(m_effect.DescribeEffect());
+        Debug.Log("效果："+ m_effect.DescribeEffect());
         //如果有子效果,则说明该effect为repeat类
 
         if (b_haveChildEvent)
         {
-            Debug.Log("repeat:" + index);
             for (int i = 0; i < index; i++)
             {
                 foreach (cardEffectBase effect in m_effect.childeffects)
@@ -107,9 +125,10 @@ public class EffectEvent : singleEvent
                     childEvents.Add(new EffectEvent(effect, this));
                 }
             }
-            foreach (EffectEvent childevent in childEvents)
+            //根据子事件表，创建添加EventShow
+            for (int i = childEvents.Count - 1; i >= 0; i--)
             {
-                childevent.dealEffect(battleInfo);
+                gameManager.Instance.battlemanager.eventManager.InsertEvent(childEvents[i]);
             }
         }
     }
@@ -161,8 +180,6 @@ public class CardEvent : singleEvent
         {
             //创建效果事件
             singleEvent effectevent = new EffectEvent(effect, this);
-            ////为这个效果事件接受相应的反应表
-            //effectevent.recesiveNotice();
             //把这个效果添加到该卡牌事件的事件子表中
             childEvents.Add(effectevent);
         }
@@ -173,10 +190,11 @@ public class CardEvent : singleEvent
     public override void dealEffect(battleInfo battleInfo)
     {
         recesiveNotice();
-        //对于卡牌的每个效果事件，触发其效果
-        foreach (singleEvent effectevent in childEvents)
+        Debug.Log("卡牌:"+playercard.Name);
+        //根据子事件表，创建添加EventShow
+        for (int i = childEvents.Count - 1; i >= 0; i--)
         {
-            effectevent.dealEffect(battleInfo);
+            gameManager.Instance.battlemanager.eventManager.InsertEvent(childEvents[i]);
         }
         //临时的
         //  处理卡牌事件，使使用的部件休眠
@@ -215,6 +233,7 @@ public class ActionEvent:singleEvent
         }            
         m_eventKind = EventKind.Event_Action;
         b_haveChildEvent = true;
+        b_logoutAfterDeal = true;
     }
 
     protected override void recesiveNotice()
@@ -231,9 +250,52 @@ public class ActionEvent:singleEvent
     public override void dealEffect(battleInfo battleInfo)
     {
         recesiveNotice();
-        foreach(EffectEvent effectevent in childEvents)
+        //根据子事件表，创建添加EventShow
+        for (int i = childEvents.Count - 1; i >= 0; i--)
         {
-            effectevent.dealEffect(battleInfo);
+            gameManager.Instance.battlemanager.eventManager.InsertEvent(childEvents[i]);
         }
     }
+}
+//状态事件
+public class StateEvent : singleEvent
+{
+    public StateEvent(stateAbstarct state,EffectBase effect)
+    {
+        m_effect = effect;
+        m_state = state;
+        m_eventKind = effect.GetEventKind();
+    }
+    public override void dealEffect(battleInfo battleInfo)
+    {
+        recesiveNotice();
+        int index = m_state.num;
+        m_effect.SetNum(index);
+        foreach (extraEffectBase extraEffect in m_extraEffectList)
+        {
+            index = extraEffect.AdjustEffect(index);
+        }
+        Debug.Log("状态：" + m_effect.DescribeEffect());
+        m_effect.DealEffect(index, battleInfo);
+        m_state.DealState();
+    }
+    protected override void recesiveNotice()
+    {
+        List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(m_eventKind);
+        foreach (Reaction reaction in reactionlist)
+        {
+            if (reaction.Active == true)
+            {
+                extraEffectBase indexextra = reaction.dealReaction();
+                if (indexextra != null)
+                {
+                    m_extraEffectList.Add(indexextra);
+                }
+            }
+        }
+    }
+
+    public EffectBase m_effect;
+    public stateAbstarct m_state;
+    public List<extraEffectBase> m_extraEffectList = new List<extraEffectBase>();
 }

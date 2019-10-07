@@ -8,6 +8,7 @@ namespace AllAsset
     //声明所有的效果，供委托，无标签
     public static class effectAsset
     {
+        public static void EmptyEffect(int num,battleInfo battleinfo) { }
         public static void EnemyGetHurt(int num, battleInfo battleInfo)
         {
             //对敌人造成“num”点伤害。
@@ -16,6 +17,14 @@ namespace AllAsset
                 num = 0;
             }
             battleInfo.Enemy.hurtHealth(num);
+        }
+        public static void EnemyGetRealHurt(int num,battleInfo battleInfo)
+        {
+            if (num < 0)
+            {
+                num = 0;
+            }
+            battleInfo.Enemy.healthnow -= num;
         }
         public static void PlayerGetArmor(int num, battleInfo battleInfo)
         {
@@ -49,6 +58,20 @@ namespace AllAsset
                 num = 0;
             }
             battleinfo.Enemy.GetArmor(num);
+        }
+        public static void EnemyGetBurn(int num,battleInfo battleinfo)
+        {
+            if (battleinfo.Enemy.nameStatePairs.ContainsKey("Burn"))
+            {
+                battleinfo.Enemy.nameStatePairs["Burn"].num += num;
+            }
+            else
+            {
+                stateAbstarct burnstate = new StateBurn(num);
+                burnstate.SetInState();
+                battleinfo.Enemy.nameStatePairs.Add("Burn", burnstate);
+                battleinfo.Enemy.stateList.Add(burnstate);
+            }
         }
     }
     //声明所有的额外强化效果

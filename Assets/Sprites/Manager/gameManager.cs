@@ -49,6 +49,12 @@ public class gameManager : MonoBehaviour
         battlemanager = GetComponent<battleManager>();
         battlemanager.startBattale();
         //battlemanager.startRound();
+        a inserta = new a("插入");
+        a a1 = new a("1");
+        ass.Add(new a("0"));
+        ass.Add(a1);
+        ass.Add(new a("2"));
+        ListOperation.InsertItemAfter(ass, a1, inserta);
     }
 
     void Update()
@@ -64,6 +70,17 @@ public class gameManager : MonoBehaviour
         playerinfo.MagicPartDickInit();
     }
 
+    public List<a> ass = new List<a>();
+    
 
-
+}
+//test
+[System.Serializable]
+public class a
+{
+    public string st = "a";
+    public a(string stt)
+    {
+        st = stt;
+    }
 }

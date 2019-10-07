@@ -41,7 +41,7 @@ public class battleInfo
 public class battleManager : MonoBehaviour
 {
     instantiateManager instantiatemanager;
-    EventManager eventManager;
+    public EventManager eventManager;
     
     //战斗回合状态
     public ROUND BattleRound = ROUND.OutOfRound;
@@ -101,13 +101,20 @@ public class battleManager : MonoBehaviour
         battleInfoShow.Init(playerinfo);
         SetEnemyShow();
         //注册回合抽牌事件
-        EventShow drawcardShowEvent = new EventShow(new SystemEvent(new RoundStartDrawCard(battleInfo.roundStartDrawCardNum)));       
+        EventShow drawcardShowEvent = new EventShow(
+            new SystemEvent(new RoundStartDrawCard(battleInfo.roundStartDrawCardNum)),
+            eventManager.StartEventShows);
         eventManager.StartEventShows.Add(drawcardShowEvent);
         //注册回合结束弃牌事件
-        EventShow discardShowEvent = new EventShow(new SystemEvent(new RoundEndDisCard(battleInfo.playerHandCardNum)));
+        EventShow discardShowEvent = new EventShow(
+            new SystemEvent(new RoundEndDisCard(battleInfo.playerHandCardNum)), 
+            eventManager.EndEventShows);
         eventManager.EndEventShows.Add(discardShowEvent);
         //注册怪物的下一次行动事件
-        eventManager.BattleEnemyShows.Add(new EventShow(new ActionEvent(nowenemy.chooseAction())));
+        EventShow enemyNextActionEvent = new EventShow(
+            new ActionEvent(nowenemy.chooseAction()),
+            eventManager.BattleEnemyShows);
+        eventManager.BattleEnemyShows.Add(enemyNextActionEvent);
 
         RoundStage = ROUNDSTAGE.Start;
         BattleRound = ROUND.PlayerRound;
@@ -136,8 +143,8 @@ public class battleManager : MonoBehaviour
             selectedPart.UseSelectGrids();
             singleEvent newevent = new CardEvent((playerCard)selectedCard.thisCard, selectedPart.thisMagicPart, new emplyPlayCard());
             //newevent.dealEffect(battleInfo);
-            eventManager.BattleEventShows.Add(new EventShow(newevent));
-
+            EventShow neweventshow = new EventShow(newevent, eventManager.BattleEventShows);
+            eventManager.BattleEventShows.Add(neweventshow);
             selectedCard.realcost.lastrealgrid.fatherPart.SetDownCard(null);
             gameManager.Instance.battlemanager.b_isSelectCard = false;
             //从手牌删掉这张卡
@@ -180,7 +187,10 @@ public class battleManager : MonoBehaviour
             rp.PowerRealPart();
         }
         //注册怪物的下一次行动事件
-        eventManager.BattleEnemyShows.Add(new EventShow(new ActionEvent(nowenemy.chooseAction())));
+        EventShow enemyNextActionEvent = new EventShow(
+            new ActionEvent(nowenemy.chooseAction()),
+            eventManager.BattleEnemyShows
+            );
         RoundStage = ROUNDSTAGE.Start;
         BattleRound = ROUND.PlayerRound;
     }

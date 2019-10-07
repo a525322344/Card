@@ -67,4 +67,15 @@ public static class ListOperation
             tListA.Add(t);
         }
     }
+    public static void InsertItemAfter<T_class>(List<T_class> tList,T_class t_posi,T_class item)
+    {
+        if (tList.Contains(t_posi))
+        {
+            tList.Insert(tList.IndexOf(t_posi)+1, item);
+        }
+        else
+        {
+            Debug.Log("没有找到t_posi");
+        }
+    }
 }
