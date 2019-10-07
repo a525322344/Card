@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public abstract class place
 {
@@ -20,6 +20,7 @@ public class battlePlace : place
     {
         //进入战斗
         Debug.Log("进入战斗");
+        SceneManager.LoadScene("SampleScene");
     }
 
     public override void onover()

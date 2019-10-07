@@ -2,19 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum MAPSTAGE
+{
+    Shop,
+    Event,
+    Deck,
+    Battle
+}
+
+
 public class MapManager : MonoBehaviour
 {
 
-    public enum MAPSTAGE
-    {
-        Shop,
-        Event,
-        Deck,
-        Battle
-    }
 
-    //战斗按钮
-    public battleButton battleButton;
+    //敌人信息
+    public List<enemybase> enemies = new List<enemybase>();
+    //事件信息
+    public List<mapEvent> events = new List<mapEvent>();
+
+
+    //地点按钮
+    public place Place;
 
 
     // Start is called before the first frame update
