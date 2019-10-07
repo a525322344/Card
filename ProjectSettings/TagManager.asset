@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - battlePlace
+  - shopPlace
+  - eventPlace
+  - deckPlace
   layers:
   - Default
   - TransparentFX
