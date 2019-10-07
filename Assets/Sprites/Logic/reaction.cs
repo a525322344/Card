@@ -23,12 +23,22 @@ public static class ReactionListController
                 return reactListToDrawACard;
             case EventKind.Event_RoundStartDrawCard:
                 return reactListToRoundStartDrawCard;
+            case EventKind.Event_RoundEndDisCard:
+                return reactListToRoundEndDisCard;
             case EventKind.Event_PlayerGetHurt:
                 return reactListToPlayerGetHurt;
             case EventKind.Event_EnemyGetArmor:
                 return reactListToEnemyGetArmor;
             case EventKind.Event_Action:
                 return reactListToAction;
+            case EventKind.Event_Repeat:
+                return reactListToRepeat;
+            case EventKind.Event_SystmeRepeat:
+                return reactListToSystemRepeat;
+            case EventKind.Event_EnemyGetBurn:
+                return reactListToEnemyGetBurn;
+            case EventKind.Event_EnemyBurnDamage:
+                return reactListToEnemyBurnDamage;
             //更新
             default:
                 Debug.Log("错误，没有写这个效果的额外效果表");
@@ -37,37 +47,7 @@ public static class ReactionListController
     }
     public static void recesiveReactonToSetIn(Reaction reaction)
     {
-        switch (reaction.getReactionKind())
-        {
-            case EventKind.Event_Damage:
-                reactListToDamage.Add(reaction);
-                break;
-            case EventKind.Event_Armor:
-                reactListToArmor.Add(reaction);
-                break;
-            case EventKind.Event_PlayCard:
-                reactListToPlaycard.Add(reaction);
-                break;
-            case EventKind.Event_DrawCard:
-                reactListToDrawCard.Add(reaction);
-                break;
-            case EventKind.Event_DrawACard:
-                reactListToDrawACard.Add(reaction);
-                break;
-            case EventKind.Event_RoundStartDrawCard:
-                reactListToRoundStartDrawCard.Add(reaction);
-                break;
-            case EventKind.Event_PlayerGetHurt:
-                reactListToPlayerGetHurt.Add(reaction);
-                break;
-            case EventKind.Event_EnemyGetArmor:
-                reactListToEnemyGetArmor.Add(reaction);
-                break;
-            case EventKind.Event_Action:
-                reactListToAction.Add(reaction);
-                break;
-                //需要更新
-        }
+        GetReactionByEventkind(reaction.getReactionKind()).Add(reaction);
     }
 
     private static List<Reaction> reactListToDamage = new List<Reaction>();
@@ -80,6 +60,11 @@ public static class ReactionListController
     private static List<Reaction> reactListToPlayerGetHurt = new List<Reaction>();
     private static List<Reaction> reactListToEnemyGetArmor = new List<Reaction>();
     private static List<Reaction> reactListToAction = new List<Reaction>();
+    private static List<Reaction> reactListToRepeat = new List<Reaction>();
+    private static List<Reaction> reactListToSystemRepeat = new List<Reaction>();
+    private static List<Reaction> reactListToEnemyGetBurn = new List<Reaction>();
+    private static List<Reaction> reactListToEnemyBurnDamage = new List<Reaction>();
+    private static List<Reaction> reactListToRoundEndDisCard = new List<Reaction>();
     //更新
 }
 
@@ -131,10 +116,9 @@ public class Reaction_Create : Reaction
     }
     public override extraEffectBase dealReaction()
     {
-        //创建事件toCreateEvent,并添加到事件队列中
-        //……
-
+        gameManager.Instance.battlemanager.eventManager.InsertEvent(toCreateEvent);
         return null;
     }
     private singleEvent toCreateEvent;
 }
+

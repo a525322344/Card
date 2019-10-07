@@ -17,17 +17,20 @@ public abstract class ShowAbstract
 [System.Serializable]
 public class EventShow
 {
-    public EventShow(singleEvent _event)
+    public EventShow(singleEvent _event,List<EventShow> belongList)
     {
         thisevent = _event;
+        belongEventShows = belongList;
         state = EVENTSTATE.Wait;
-        if (thisevent.b_haveChildEvent)
-        {
-            foreach (singleEvent childevent in thisevent.childEvents)
-            {
-                childEventShows.Add(new EventShow(childevent));
-            }
-        }
+
+        //if (thisevent.b_haveChildEvent)
+        //{
+        //    foreach (singleEvent childevent in thisevent.childEvents)
+        //    {
+        //        childevent.b_logoutAfterDeal = false;
+        //        belongEventShows.Add(new EventShow(childevent,belongEventShows));
+        //    }
+        //}
         StartToDo = new deleToDo(() => { });
         EndToDo = new deleToDo(() => { });
     }
@@ -43,26 +46,10 @@ public class EventShow
                 if (timecursor < 1)
                 {
                     timecursor += Time.deltaTime / lasttime;
-                    foreach (EventShow eventShow in childEventShows)
-                    {
-                        eventShow.upDateEvent();
-                    }
                 }
                 else
                 {
-                    bool allchildover = true;
-                    foreach (EventShow eventShow in childEventShows)
-                    {
-                        if (!eventShow.upDateEvent())
-                        {
-                            allchildover = false;
-                        }
-                    }
-                    if (allchildover)
-                    {
-                        //to over
-                        state = EVENTSTATE.Over;
-                    }
+                    state = EVENTSTATE.Over;
                 }
                 break;
             case EVENTSTATE.Over:
@@ -74,9 +61,9 @@ public class EventShow
 
     public deleToDo StartToDo;
     public deleToDo EndToDo;
-    public List<EventShow> childEventShows = new List<EventShow>();
-    public float lasttime=0.5f;
+    public float lasttime=5;
     public float timecursor;
     public singleEvent thisevent;
+    private List<EventShow> belongEventShows = new List<EventShow>();
     public EVENTSTATE state;
 }

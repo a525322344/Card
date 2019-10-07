@@ -21,6 +21,7 @@ public class InitData : MonoBehaviour
             cardAsset.AllIdCards.Add(new playerCard(csvcard[i].id, csvcard[i].name, CSVLoader.StringToEnum(csvcard[i].kind),csvcard[i].cost ,csvcard[i].damage, csvcard[i].deffence));
         }
 
+        cardAsset.AllIdCards[2].AddEffect(new Burn(3));
         //1费 抽2，打5
         playerCard card_jinGangQiangPo = new playerCard(3,"金刚枪破", CardKind.PlayerCard, 1, 5, 0);
         card_jinGangQiangPo.AddEffect(new DrawCard(2));
@@ -30,6 +31,10 @@ public class InitData : MonoBehaviour
         attackAndDeffence.AddEffect(new Damage(8));
         attackAndDeffence.AddEffect(new Armor(8));
         cardAsset.AllIdCards.Add(attackAndDeffence);
+        //1费 灼烧4
+        playerCard fire = new playerCard(5, "烈焰", CardKind.PlayerCard, 1);
+        fire.AddEffect(new Burn(4));
+        cardAsset.AllIdCards.Add(fire);
     }
     //“手动”加载全部件 可能是暂定
     void MagicPartInit()

@@ -13,6 +13,8 @@ public class EventManager : MonoBehaviour
 
     public List<EventShow> BattleEnemyShows = new List<EventShow>();
 
+    public List<EventShow> nowEventShowList = new List<EventShow>();
+    public EventShow nowEventShow;
     public int testbattleeventnum;
     //事件游标  共用
     public int eventCursor = 0;
@@ -80,6 +82,8 @@ public class EventManager : MonoBehaviour
 
     void advanceEventList(List<EventShow> eventShows)
     {
+        nowEventShowList = eventShows;
+        nowEventShow = eventShows[eventCursor];
         switch (eventShows[eventCursor].state)
         {
             case EVENTSTATE.Wait:
@@ -102,5 +106,9 @@ public class EventManager : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void InsertEvent(singleEvent singleevent){
+        nowEventShowList.Insert(eventCursor+1,new EventShow(singleevent, nowEventShowList));
     }
 }
