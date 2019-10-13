@@ -7,6 +7,7 @@ public abstract class pawnbase
     public int healthmax;
     public int healthnow;
     public int armor;
+    public int enemynum;
     public List<stateAbstarct> stateList = new List<stateAbstarct>();///展示用链表
     public Dictionary<string, stateAbstarct> nameStatePairs = new Dictionary<string, stateAbstarct>();
 
