@@ -23,7 +23,7 @@ public class card
         }
     }
     public string Describe;
-    private bool canplay;
+    protected bool canplay;
     public void SetCanPlay(bool b)
     {
         canplay = b;
@@ -124,6 +124,21 @@ public class playerCard : card
                 priCostVector2[2, 1] = 1;
                 break;
                 //other
+        }
+    }
+    public playerCard(playerCard card)
+    {
+        Id = card.Id;
+        Name = card.Name;
+        Kind = card.Kind;
+        Cost = card.Cost;
+        Kind = card.Kind;
+        priCostVector2 = card.priCostVector2;
+        canplay = card.canplay;
+        Describe = card.Describe;
+        foreach(cardEffectBase effect in card.EffectPlayList)
+        {
+            //EffectPlayList.Add(new cardEffectBase(effect));
         }
     }
     public List<cardEffectBase> getEffectList()

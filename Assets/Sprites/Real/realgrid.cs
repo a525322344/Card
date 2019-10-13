@@ -79,6 +79,7 @@ public class realgrid : MonoBehaviour
         }
         else
         {
+            gameObject.SetActive(false);
             _renderer.material = mr_black;
         }
     }

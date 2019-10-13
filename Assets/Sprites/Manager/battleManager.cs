@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum ROUND
 {
@@ -18,14 +19,16 @@ public enum ROUNDSTAGE
 [System.Serializable]
 public class battleInfo
 {
-    public enemybase Enemy;             //敌人
-    public playerpawn Player;            //玩家自己
+    public pawnbase Enemy;             //敌人
+    public pawnbase Player;            //玩家自己
     public List<extraEffectBase> CommonExtraEffects = new List<extraEffectBase>();
     public int roundStartDrawCardNum;
     public int playerHandCardNum;
 
-    public void Init(playerInfo info)
+    public battleInfo(playerInfo info)
     {
+        Enemy = new enemybase();
+        Player = new playerpawn();
         Player.healthmax = info.playerHealthMax;
         Player.healthnow = info.playerHealth;
         Player.armor = 0;
@@ -56,7 +59,7 @@ public class battleManager : MonoBehaviour
     public List<playerCard> dickHandCard = new List<playerCard>();
     //战场信息
     public battleInfo battleInfo;
-    public battleInfo battleInfoShow;
+    //public battleInfo battleInfoShow;
 
     public bool b_toEndRound = false;
     #region 选择的牌和部件
@@ -97,8 +100,8 @@ public class battleManager : MonoBehaviour
         playerinfo.MagicPartDick[0].SetinReactions();
         playerinfo.MagicPartDick[1].SetinReactions();
         //初始化battleinfo
-        battleInfo.Init(playerinfo);
-        battleInfoShow.Init(playerinfo);
+        battleInfo=new battleInfo(playerinfo);
+        //battleInfoShow.Init(playerinfo);
         SetEnemyShow();
         //注册回合抽牌事件
         EventShow drawcardShowEvent = new EventShow(
@@ -141,10 +144,12 @@ public class battleManager : MonoBehaviour
         if (RoundStage == ROUNDSTAGE.Battle)
         {
             selectedPart.UseSelectGrids();
-            singleEvent newevent = new CardEvent((playerCard)selectedCard.thisCard, selectedPart.thisMagicPart, new emplyPlayCard());
-            //newevent.dealEffect(battleInfo);
+            CardEvent newevent = new CardEvent((playerCard)selectedCard.thisCard, selectedPart.thisMagicPart, new emplyPlayCard());
             EventShow neweventshow = new EventShow(newevent, eventManager.BattleEventShows);
             eventManager.BattleEventShows.Add(neweventshow);
+            newevent.prepareEvent();
+            newevent.insertEvent();
+
             selectedCard.realcost.lastrealgrid.fatherPart.SetDownCard(null);
             gameManager.Instance.battlemanager.b_isSelectCard = false;
             //从手牌删掉这张卡
@@ -152,6 +157,14 @@ public class battleManager : MonoBehaviour
 
         }
     }
+
+    public void setCardDescribe(MagicPart magicPart)
+    {
+        CardEvent cardevent = new CardEvent((playerCard)gameManager.Instance.battlemanager.selectedCard.thisCard, magicPart, new emplyPlayCard());
+        cardevent.prepareEvent();
+        selectedCard.describeText.text = cardevent.EventCardDescribe();        
+    }
+
     //丢弃全部手牌
     public void deleteAllHandCard()
     {
@@ -173,12 +186,7 @@ public class battleManager : MonoBehaviour
         gameManager.Instance.instantiatemanager.handCardControll.GetComponent<handcardControll>().playerHandCards.Remove(real);
         Destroy(real.transform.parent.gameObject);
     }
-
-    public void ButtonToEndPlayerRound()
-    {
-        b_toEndRound = true;
-    }
-
+    //回合结束的事
     public void EndEnemyRound()
     {
         b_toEndRound = false;
@@ -191,11 +199,17 @@ public class battleManager : MonoBehaviour
             new ActionEvent(nowenemy.chooseAction()),
             eventManager.BattleEnemyShows
             );
+        eventManager.BattleEnemyShows.Add(enemyNextActionEvent);
         RoundStage = ROUNDSTAGE.Start;
         BattleRound = ROUND.PlayerRound;
     }
 
 
+    //回合结束按钮
+    public void ButtonToEndPlayerRound()
+    {
+        b_toEndRound = true;
+    }
     #region 临时的
     public showcontroll showcontroll;
     public enemyControll nowenemy;
@@ -203,6 +217,15 @@ public class battleManager : MonoBehaviour
     {
         battleInfo.Enemy = nowenemy.pikaqiu;
         showcontroll.init();
+    }
+
+    public Slider healthSlider;
+    public Text healthText;
+    private void Update()
+    {
+        healthSlider.value =(float) battleInfo.Player.healthnow/battleInfo.Player.healthmax;
+        healthText.text = "" + battleInfo.Player.healthnow + " / " + battleInfo.Player.healthmax;
+
     }
     #endregion
 

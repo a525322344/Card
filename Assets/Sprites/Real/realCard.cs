@@ -17,6 +17,7 @@ public class realCard : MonoBehaviour
 {
     public handcardControll handcardControll;
     public realCost realcost;
+    public Transform costtran;
     public card thisCard;
     //UI
     //public RectTransform realCardMesh;
@@ -28,8 +29,8 @@ public class realCard : MonoBehaviour
     Transform cardmesh;
     // 根节点旋转角度
     private float adjustAngle;
-    private int handorder;
-    private const float deviationZ = 0.1f;
+    public int handorder;
+    private const float deviationZ = 10;
     //
 
     ///进入状态设置的值
@@ -133,6 +134,8 @@ public class realCard : MonoBehaviour
 
         realcost.setCost(thisCard);
         realcost.gameObject.SetActive(false);
+
+        Instantiate(gameManager.Instance.instantiatemanager.costs[thisCard.Cost - 1],costtran);
     }
 
     /// <summary>

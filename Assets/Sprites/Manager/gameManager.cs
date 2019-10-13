@@ -31,7 +31,8 @@ public class gameManager : MonoBehaviour
     //地图管理器
     public MapManager mapmanager;
 
-
+    public Camera Encamera;
+    public Camera UIcamera;
 
     void Awake()
     {

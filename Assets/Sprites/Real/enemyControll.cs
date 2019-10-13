@@ -22,6 +22,8 @@ public class enemyControll : MonoBehaviour
             result= ListOperation.RandomValue<actionAbstract>(actions);
         }
         lastAction = result;
+        gameManager.Instance.battlemanager.showcontroll.CreateNewAction(result);
         return result;
     }
+
 }

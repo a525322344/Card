@@ -20,7 +20,7 @@ public class InitData : MonoBehaviour
         {
             cardAsset.AllIdCards.Add(new playerCard(csvcard[i].id, csvcard[i].name, CSVLoader.StringToEnum(csvcard[i].kind),csvcard[i].cost ,csvcard[i].damage, csvcard[i].deffence));
         }
-
+        //给火球术添加灼烧效果
         cardAsset.AllIdCards[2].AddEffect(new Burn(3));
         //1费 抽2，打5
         playerCard card_jinGangQiangPo = new playerCard(3,"金刚枪破", CardKind.PlayerCard, 1, 5, 0);
@@ -42,6 +42,7 @@ public class InitData : MonoBehaviour
         int[] a = { 0, 1, 0, 0, 1, 0, 0, 0, 0 };
         Reaction reaction = new Reaction_Affect(new extraAttackUp(1), EventKind.Event_Damage);
         MagicPart Init_ATTACKUP_1 = new MagicPart(a);
+        Init_ATTACKUP_1.describe = "伤害+1";
         Init_ATTACKUP_1.addReaction(reaction);
 
         AllAsset.magicpartAsset.AllMagicParts.Add(Init_ATTACKUP_1);
@@ -49,6 +50,7 @@ public class InitData : MonoBehaviour
         a[4] = 0;
         reaction = new Reaction_Affect(new extraDeffenceUp(1), EventKind.Event_Armor);
         MagicPart Init_DefenceUp_1 = new MagicPart(a);
+        Init_DefenceUp_1.describe = "护甲+1";
         Init_DefenceUp_1.addReaction(reaction);
 
         AllAsset.magicpartAsset.AllMagicParts.Add(Init_DefenceUp_1);

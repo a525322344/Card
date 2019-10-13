@@ -105,4 +105,5 @@ public class MagicPart : Part
             }
         }
     }
+    public string describe;
 }

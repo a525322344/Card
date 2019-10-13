@@ -55,7 +55,7 @@ public abstract class EffectBase
     }
 
     protected int num;
-    protected int mixnum;
+    public int mixnum;
     protected DeleCardEffect effectDele;
     public bool b_hasChildEffect = false;
     public List<EffectBase> childeffects = new List<EffectBase>();

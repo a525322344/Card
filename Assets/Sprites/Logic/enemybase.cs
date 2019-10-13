@@ -2,18 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
-public class pawnbase
+public abstract class pawnbase
 {
     public int healthmax;
     public int healthnow;
     public int armor;
     public List<stateAbstarct> stateList = new List<stateAbstarct>();///展示用链表
     public Dictionary<string, stateAbstarct> nameStatePairs = new Dictionary<string, stateAbstarct>();
-}
 
-[System.Serializable]
-public class enemybase : pawnbase
-{
     public void hurtHealth(int i)
     {
         if (i > 0)
@@ -29,24 +25,43 @@ public class enemybase : pawnbase
             }
         }
     }
-    public void GetArmor(int i)
+    public virtual void GetArmor(int i) { }
+    public virtual void destoryArmor(int i) { }
+}
+
+[System.Serializable]
+public class enemybase : pawnbase
+{
+    public override void GetArmor(int i)
     {
         if (i >= 0)
         {
             armor += i;
         }
+        gameManager.Instance.battlemanager.showcontroll.ShowArmor(armor);
     }
-    public void destoryArmor(int i)
+    public override void destoryArmor(int i)
     {
+
         armor -= i;
-        if (armor < 0)
-        {
-            armor = 0;
-        }
+        gameManager.Instance.battlemanager.showcontroll.ShowArmor(armor);
     }
 }
 [System.Serializable]
-public class playerpawn : enemybase
+public class playerpawn : pawnbase
 {
+    public override void GetArmor(int i)
+    {
+        if (i >= 0)
+        {
+            armor += i;
+        }
+        gameManager.Instance.battlemanager.showcontroll.ShowPlayerArmor(armor);
+    }
+    public override void destoryArmor(int i)
+    {
 
+        armor -= i;
+        gameManager.Instance.battlemanager.showcontroll.ShowPlayerArmor(armor);
+    }
 }

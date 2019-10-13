@@ -44,6 +44,8 @@ public class realCost : MonoBehaviour
                     nextCostMode = 2;
                     lastrealgrid = downRealgrid;
                     downRealgrid.ToSetPart(thiscard);
+
+                    gameManager.Instance.battlemanager.setCardDescribe(downRealgrid.fatherPart.thisMagicPart);
                 }
                 else
                 {
@@ -51,6 +53,7 @@ public class realCost : MonoBehaviour
                     if (lastrealgrid)
                     {
                         lastrealgrid.ToSetPart(null);
+                        gameManager.Instance.battlemanager.setCardDescribe(new MagicPart());
                         lastrealgrid = null;
                     }
                 }
@@ -62,6 +65,7 @@ public class realCost : MonoBehaviour
             {
                 lastrealgrid.ToSetPart(null);
                 lastrealgrid = null;
+                gameManager.Instance.battlemanager.setCardDescribe(new MagicPart());
             }
         }
         //根据costMode进行切换

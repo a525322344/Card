@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class realpart : MonoBehaviour
 {
     public MagicPart thisMagicPart;
     public GameObject realgridMode;
     public float distance = 0.333f;
+
+    public Text text;
 
     private Dictionary<grid, realgrid> gridRealgridPairs = new Dictionary<grid, realgrid>();
 
@@ -32,6 +35,7 @@ public class realpart : MonoBehaviour
 
             gridRealgridPairs.Add(g.Value, newrealgrid);
         }
+        text.text = thisMagicPart.describe;
     }
 
     private List<realgrid> selectgrids = new List<realgrid>();
@@ -88,6 +92,9 @@ public class realpart : MonoBehaviour
             selectgrids.Clear();
             b_readyToPlayACard = false;
             selectedCard = null;
+            //部件的激活与睡眠转移到了CardEvent中
+            //thisMagicPart.sleepPart();
+
         }
         else
         {
@@ -97,7 +104,11 @@ public class realpart : MonoBehaviour
             }
             b_readyToPlayACard = true;
             selectedCard = _selectcard;
+
             gameManager.Instance.battlemanager.SetSelectPart(this);
+            //部件的激活与睡眠转移到了CardEvent中
+            //thisMagicPart.activatePart();
+           
         }
     }
     public void UseSelectGrids()
@@ -124,8 +135,8 @@ public class realpart : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                b_readyToPlayACard = false;
                 gameManager.Instance.battlemanager.PlayCard();
-
             }
         }
     }

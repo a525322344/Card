@@ -17,6 +17,10 @@ public class instantiateManager : MonoBehaviour
     public GameObject partGO;
     public GameObject cardGO;
     public GameObject gridGO;
+    public GameObject[] costs;
+    public GameObject actionAttack;
+    public GameObject actionDefense;
+    public GameObject fireState;
     //牌库的位置
     public Transform dicktran;
     //手牌的位置
@@ -24,7 +28,8 @@ public class instantiateManager : MonoBehaviour
     public Transform bookFolderTran;
     //储存部件的坐标
     public List<Vector3> partPositionList = new List<Vector3>();
-
+    //意图的位置
+    public Transform actionTran;
     public List<Transform> parttransforms = new List<Transform>();
 
 

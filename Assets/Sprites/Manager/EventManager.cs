@@ -30,6 +30,9 @@ public class EventManager : MonoBehaviour
                     {
                         battleManager.RoundStage = ROUNDSTAGE.Battle;
                         eventCursor = 0;
+                        nowEventShowList = BattleEventShows;
+                        //
+                        gameManager.Instance.battlemanager.battleInfo.Player.destoryArmor(gameManager.Instance.battlemanager.battleInfo.Player.armor);
                     }
                     else
                     {
@@ -40,6 +43,7 @@ public class EventManager : MonoBehaviour
                     if (eventCursor >= BattleEventShows.Count&&battleManager.b_toEndRound)
                     {
                         battleManager.RoundStage = ROUNDSTAGE.End;
+                        nowEventShowList = EndEventShows;
                         eventCursor = 0;
                     }
                     else
@@ -56,6 +60,9 @@ public class EventManager : MonoBehaviour
                     {
                         battleManager.BattleRound = ROUND.EnemyRound;
                         eventCursor = 0;
+                        nowEventShowList = BattleEnemyShows;
+                        //
+                        gameManager.Instance.battlemanager.battleInfo.Enemy.destoryArmor(gameManager.Instance.battlemanager.battleInfo.Enemy.armor);
                     }
                     else
                     {
@@ -71,6 +78,7 @@ public class EventManager : MonoBehaviour
             {
                 battleManager.EndEnemyRound();
                 eventCursor = 0;
+                nowEventShowList = StartEventShows;
             }
             else
             {
@@ -88,6 +96,7 @@ public class EventManager : MonoBehaviour
         {
             case EVENTSTATE.Wait:
                 eventShows[eventCursor].state = EVENTSTATE.Do;
+                eventShows[eventCursor].thisevent.dealEvent(battleManager.battleInfo);
                 eventShows[eventCursor].thisevent.dealEffect(battleManager.battleInfo);
                 break;
             case EVENTSTATE.Do:
@@ -110,5 +119,9 @@ public class EventManager : MonoBehaviour
 
     public void InsertEvent(singleEvent singleevent){
         nowEventShowList.Insert(eventCursor+1,new EventShow(singleevent, nowEventShowList));
+    }
+    public void AddEvent(singleEvent singleevent)
+    {
+        nowEventShowList.Add(new EventShow(singleevent,nowEventShowList));
     }
 }

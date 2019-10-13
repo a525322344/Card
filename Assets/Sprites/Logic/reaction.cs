@@ -83,10 +83,12 @@ public abstract class Reaction
     {
         return kind;
     }
-    public abstract extraEffectBase dealReaction();
+    public virtual void dealReaction() { }
+    public virtual extraEffectBase getExtreEffect() { return null; }
 
     //反应一次就移除
     protected bool m_Active = true;
+    public bool b_haveEvent = false;
 }
 
 //对反应的效果事件造成影响，强化或削弱效果
@@ -96,9 +98,10 @@ public class Reaction_Affect : Reaction
     {
         kind = _kind;
         affectEffect = extraEffect;
+        b_haveEvent = false;
     }
 
-    public override extraEffectBase dealReaction()
+    public override extraEffectBase getExtreEffect()
     {
         return affectEffect;
     }
@@ -113,11 +116,11 @@ public class Reaction_Create : Reaction
     {
         kind = _kind;
         toCreateEvent = createEvent;
+        b_haveEvent = true;
     }
-    public override extraEffectBase dealReaction()
+    public override void dealReaction()
     {
-        gameManager.Instance.battlemanager.eventManager.InsertEvent(toCreateEvent);
-        return null;
+        gameManager.Instance.battlemanager.eventManager.AddEvent(toCreateEvent);
     }
     private singleEvent toCreateEvent;
 }
