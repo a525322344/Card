@@ -56,6 +56,8 @@ public abstract class EffectBase
 
     protected int num;
     public int mixnum;
+    public string frontDesctibe;
+    public string backDesctibe;
     protected DeleCardEffect effectDele;
     public bool b_hasChildEffect = false;
     public List<EffectBase> childeffects = new List<EffectBase>();
@@ -64,6 +66,28 @@ public abstract class EffectBase
 //一个效果抽象基类，派生出每个卡牌效果
 public abstract class cardEffectBase : EffectBase
 {
+    protected string colorRed = "<color=red>";
+    protected string colorGreen = "<color=green>";
+    protected string colorEnd = "</color>";
+    public override string DescribeEffect()
+    {
+        string result = "";
+        result += frontDesctibe;
+        if (mixnum > num)
+        {
+            result += colorGreen + mixnum + colorEnd;
+        }
+        else if (mixnum < num)
+        {
+            result += colorRed + mixnum + colorEnd;
+        }
+        else
+        {
+            result += mixnum;
+        }
+        result += backDesctibe;
+        return result;
+    }
 }
 //系统效果抽象基类
 public abstract class stateEffectBase:EffectBase
@@ -105,12 +129,9 @@ public class Damage : cardEffectBase
         mixnum = num;
         effectDele= new DeleCardEffect(AllAsset.effectAsset.EnemyGetHurt);
         eventkind = EventKind.Event_Damage;
-    }
-    public override string DescribeEffect()
-    {
-        string result = "";
-        result += "造成" + mixnum + "点伤害";
-        return result;
+
+        frontDesctibe = "造成";
+        backDesctibe = "点伤害";
     }
 }
 public class Repeat : cardEffectBase
@@ -127,6 +148,9 @@ public class Repeat : cardEffectBase
         }
         b_hasChildEffect = true;
         eventkind = EventKind.Event_Repeat;
+
+        frontDesctibe = "重复";
+        backDesctibe = "次";
     }
     public override string DescribeEffect()
     {
@@ -135,7 +159,20 @@ public class Repeat : cardEffectBase
         {
             result += effect.DescribeEffect() + ",";
         }
-        result += "重复" + mixnum + "次";
+        result += frontDesctibe;
+        if (mixnum > num)
+        {
+            result += colorGreen + mixnum + colorEnd;
+        }
+        else if (mixnum < num)
+        {
+            result += colorRed + mixnum + colorEnd;
+        }
+        else
+        {
+            result += mixnum;
+        }
+        result += backDesctibe;
         return result;
     }
 }
@@ -147,12 +184,9 @@ public class Armor : cardEffectBase
         mixnum = num;
         effectDele = new DeleCardEffect(AllAsset.effectAsset.PlayerGetArmor);
         eventkind = EventKind.Event_Armor;
-    }
-    public override string DescribeEffect()
-    {
-        string result = "";
-        result += "获得" + mixnum + "点护盾";
-        return result;
+
+        frontDesctibe = "获得";
+        backDesctibe = "点护甲";
     }
 }
 
@@ -181,12 +215,9 @@ public class DrawCard : Repeat
         childeffects.Add(new drawACard());
         eventkind = EventKind.Event_DrawCard;
         b_hasChildEffect = true;
-    }
-    public override string DescribeEffect()
-    {
-        string result = "";
-        result += "抽" + mixnum + "张卡";
-        return result;
+
+        frontDesctibe = "抽";
+        backDesctibe = "张牌";
     }
 }
 
@@ -198,10 +229,9 @@ public class Burn : cardEffectBase
         mixnum = num;
         effectDele = new DeleCardEffect(AllAsset.effectAsset.EnemyGetBurn);
         eventkind = EventKind.Event_EnemyGetBurn;
-    }
-    public override string DescribeEffect()
-    {
-        return "敌人获得" + mixnum + "层灼烧";
+
+        frontDesctibe = "给与敌人";
+        backDesctibe = "层灼烧";
     }
 }
 
