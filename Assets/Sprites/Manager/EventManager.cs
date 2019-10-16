@@ -97,7 +97,6 @@ public class EventManager : MonoBehaviour
             case EVENTSTATE.Wait:
                 eventShows[eventCursor].state = EVENTSTATE.Do;
                 eventShows[eventCursor].thisevent.dealEvent(battleManager.battleInfo);
-                eventShows[eventCursor].thisevent.dealEffect(battleManager.battleInfo);
                 break;
             case EVENTSTATE.Do:
                 eventShows[eventCursor].upDateEvent();

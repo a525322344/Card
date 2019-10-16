@@ -136,6 +136,7 @@ public class realCard : MonoBehaviour
         realcost.gameObject.SetActive(false);
 
         Instantiate(gameManager.Instance.instantiatemanager.costs[thisCard.Cost - 1],costtran);
+        gameManager.Instance.battlemanager.setCardDescribe(this,new MagicPart());
     }
 
     /// <summary>

@@ -72,9 +72,10 @@ public class handcardControll : MonoBehaviour
                     selectedCard.realcost.lastrealgrid.fatherPart.SetDownCard(null);
                     selectedCard.realcost.lastrealgrid = null;
                 }
-                
+
+                gameManager.Instance.battlemanager.setCardDescribe(new MagicPart());
                 selectedCard = null;
-                gameManager.Instance.battlemanager.b_isSelectCard = false;
+                gameManager.Instance.battlemanager.b_isSelectCard = false;            
             }
         }
     }

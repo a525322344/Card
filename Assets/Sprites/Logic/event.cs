@@ -11,8 +11,6 @@ public abstract class singleEvent
     public virtual void insertEvent() { }
     public virtual void dealEvent(battleInfo battleInfo) { }
 
-    public abstract void dealEffect(battleInfo battleInfo);
-
     public abstract void recesiveNotice();
     public bool b_logoutAfterDeal = true;
     //事件类型，用于枚举
@@ -48,20 +46,18 @@ public class SystemEvent : singleEvent
             }
         }
     }
-    public override void dealEffect(battleInfo battleInfo)
+    //预处理事件，当选择一张卡而不打出时，应显示实时数值，不改变reaction之类的效果
+    public override void prepareEvent()
     {
-        //先接受信息，同时会先触发父事件的反应事件，将其添加在后面
+        childEvents.Clear();
         recesiveNotice();
-        //重复几次
         int index = m_effect.getNum();
         foreach (extraEffectBase extraEffect in m_extraEffectList)
         {
             index = extraEffect.AdjustEffect(index);
         }
-        m_effect.DealEffect(index, battleInfo);
-        Debug.Log("系统；" + m_effect.DescribeEffect());
-        //生成子事件表
-        childEvents.Clear();
+        m_effect.mixnum = index;
+
         if (m_effect.b_hasChildEffect)
         {
             b_haveChildEvent = true;
@@ -72,12 +68,28 @@ public class SystemEvent : singleEvent
                     childEvents.Add(new EffectEvent(childeffect, this));
                 }
             }
-            //根据子事件表，创建添加EventShow
-            for(int i=childEvents.Count-1;i>=0;i--)
-            {
-                gameManager.Instance.battlemanager.eventManager.InsertEvent(childEvents[i]);
-            }
         }
+    }
+    //插入事件时，处理的事情
+    public override void insertEvent()
+    {
+        foreach (Reaction react in EventReactionList)
+        {
+            react.dealReaction();
+        }
+        foreach (EffectEvent effectEvent in childEvents)
+        {
+            gameManager.Instance.battlemanager.eventManager.InsertEvent(effectEvent);
+            effectEvent.insertEvent();
+        }
+    }
+    //处理事件
+    public override void dealEvent(battleInfo battleInfo)
+    {
+        Debug.Log("系统；" + m_effect.DescribeEffect());
+        prepareEvent();
+        insertEvent();
+        m_effect.DealEffect(m_effect.mixnum, battleInfo);
     }
     //效果类
     private EffectBase m_effect;
@@ -121,7 +133,6 @@ public class EffectEvent : singleEvent
             index = extraEffect.AdjustEffect(index);
         }
         m_effect.mixnum = index;
-        Debug.Log("effect prepare:" + m_effect.DescribeEffect());
 
         if (b_haveChildEvent)
         {
@@ -140,7 +151,6 @@ public class EffectEvent : singleEvent
     }
     public override void insertEvent()
     {
-        Debug.Log("effect insert" + m_effect.DescribeEffect());
         foreach (Reaction react in EventReactionList)
         {
             react.dealReaction();
@@ -156,36 +166,6 @@ public class EffectEvent : singleEvent
     {
         m_effect.DealEffect(m_effect.mixnum, battleInfo);
         Debug.Log("效果：" + m_effect.DescribeEffect());
-    }
-    //执行效果
-    public override void dealEffect(battleInfo battleInfo)
-    {
-        //recesiveNotice();
-        //int index = m_effect.getNum();
-        //foreach(extraEffectBase extraEffect in m_extraEffectList)
-        //{
-        //    index = extraEffect.AdjustEffect(index);
-        //}
-        //m_effect.DealEffect(index, battleInfo);
-        
-        ////如果有子效果,则说明该effect为repeat类
-
-        //if (b_haveChildEvent)
-        //{
-        //    childEvents.Clear();
-        //    for (int i = 0; i < index; i++)
-        //    {
-        //        foreach (cardEffectBase effect in m_effect.childeffects)
-        //        {
-        //            childEvents.Add(new EffectEvent(effect, this));
-        //        }
-        //    }
-        //    //根据子事件表，创建添加EventShow
-        //    for (int i = childEvents.Count - 1; i >= 0; i--)
-        //    {
-        //        gameManager.Instance.battlemanager.eventManager.InsertEvent(childEvents[i]);
-        //    }
-        //}
     }
     //设置影响效果，执行反应事件
     public override void recesiveNotice()
@@ -282,7 +262,6 @@ public class CardEvent : singleEvent
             childEvents.Add(effectevent);
         }
         recesiveNotice();
-        Debug.Log("card prepare");
         foreach (EffectEvent _event in childEvents)
         {
             _event.prepareEvent();
@@ -291,13 +270,9 @@ public class CardEvent : singleEvent
         m_magicPart.sleepPart();
 
     }
-    //发动效果
-    public override void dealEffect(battleInfo battleInfo)
-    {
-    }
+    //插入事件时，处理的事情
     public override void insertEvent()
     {
-        Debug.Log("card insert");
         foreach(Reaction react in EventReactionList)
         {
             react.dealReaction();
@@ -309,6 +284,7 @@ public class CardEvent : singleEvent
         }
         m_magicPart.sleepPart();
     }
+    //处理事件
     public override void dealEvent(battleInfo battleInfo)
     {
         Debug.Log("卡牌:" + playercard.Name);
@@ -332,7 +308,6 @@ public class CardEvent : singleEvent
             }                    
         }
     }
-
     public string EventCardDescribe()
     {
         return playercard.CardDescribe();
@@ -367,14 +342,30 @@ public class ActionEvent:singleEvent
             }
         }
     }
-    public override void dealEffect(battleInfo battleInfo)
+    public override void prepareEvent()
     {
         recesiveNotice();
-        //根据子事件表，创建添加EventShow
-        for (int i = childEvents.Count - 1; i >= 0; i--)
+        foreach (EffectEvent _event in childEvents)
         {
-            gameManager.Instance.battlemanager.eventManager.InsertEvent(childEvents[i]);
+            _event.prepareEvent();
         }
+    }
+    public override void insertEvent()
+    {
+        foreach (Reaction react in EventReactionList)
+        {
+            react.dealReaction();
+        }
+        foreach (EffectEvent effectEvent in childEvents)
+        {
+            gameManager.Instance.battlemanager.eventManager.InsertEvent(effectEvent);
+            effectEvent.insertEvent();
+        }
+    }
+    public override void dealEvent(battleInfo battleInfo)
+    {
+        prepareEvent();
+        insertEvent();
     }
 }
 //状态事件
@@ -386,7 +377,7 @@ public class StateEvent : singleEvent
         m_state = state;
         m_eventKind = effect.GetEventKind();
     }
-    public override void dealEffect(battleInfo battleInfo)
+    public override void prepareEvent()
     {
         recesiveNotice();
         int index = m_state.num;
@@ -395,9 +386,23 @@ public class StateEvent : singleEvent
         {
             index = extraEffect.AdjustEffect(index);
         }
-        Debug.Log("状态：" + m_effect.DescribeEffect());
-        m_effect.DealEffect(index, battleInfo);
+        m_effect.mixnum = index;
+        
+    }
+    public override void insertEvent()
+    {
+        foreach (Reaction react in EventReactionList)
+        {
+            react.dealReaction();
+        }
+    }
+    public override void dealEvent(battleInfo battleInfo)
+    {
+        prepareEvent();
+        insertEvent();
+        m_effect.DealEffect(m_effect.mixnum, battleInfo);
         m_state.DealState();
+        Debug.Log("状态事件，" + m_effect.DescribeEffect());
     }
     public override void recesiveNotice()
     {

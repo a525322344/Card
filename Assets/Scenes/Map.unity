@@ -452,7 +452,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fe3488608fb4d344bdc52d036eef602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleButton: {fileID: 0}
+  enemies: []
+  events: []
 --- !u!4 &1443980683
 Transform:
   m_ObjectHideFlags: 0
@@ -474,7 +475,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1443980680}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efddfebe98a1f3343ad0fb449d972961, type: 3}
   m_Name: 
@@ -483,10 +484,15 @@ MonoBehaviour:
   partGO: {fileID: 0}
   cardGO: {fileID: 0}
   gridGO: {fileID: 0}
+  costs: []
+  actionAttack: {fileID: 0}
+  actionDefense: {fileID: 0}
+  fireState: {fileID: 0}
   dicktran: {fileID: 0}
   handCardControll: {fileID: 0}
   bookFolderTran: {fileID: 0}
   partPositionList: []
+  actionTran: {fileID: 0}
   parttransforms: []
 --- !u!1 &1455067478
 GameObject:

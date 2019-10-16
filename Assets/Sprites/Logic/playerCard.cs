@@ -126,21 +126,6 @@ public class playerCard : card
                 //other
         }
     }
-    public playerCard(playerCard card)
-    {
-        Id = card.Id;
-        Name = card.Name;
-        Kind = card.Kind;
-        Cost = card.Cost;
-        Kind = card.Kind;
-        priCostVector2 = card.priCostVector2;
-        canplay = card.canplay;
-        Describe = card.Describe;
-        foreach(cardEffectBase effect in card.EffectPlayList)
-        {
-            //EffectPlayList.Add(new cardEffectBase(effect));
-        }
-    }
     public List<cardEffectBase> getEffectList()
     {
         return EffectPlayList;

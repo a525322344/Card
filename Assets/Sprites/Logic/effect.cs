@@ -201,7 +201,7 @@ public class drawACard : cardEffectBase
     }
     public override string DescribeEffect()
     {
-        return "Test:抽一张卡";
+        return "子效果，抽一张卡";
     }
 }
 
@@ -218,6 +218,25 @@ public class DrawCard : Repeat
 
         frontDesctibe = "抽";
         backDesctibe = "张牌";
+    }
+    public override string DescribeEffect()
+    {
+        string result = "";
+        result += frontDesctibe;
+        if (mixnum > num)
+        {
+            result += colorGreen + mixnum + colorEnd;
+        }
+        else if (mixnum < num)
+        {
+            result += colorRed + mixnum + colorEnd;
+        }
+        else
+        {
+            result += mixnum;
+        }
+        result += backDesctibe;
+        return result;
     }
 }
 

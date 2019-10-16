@@ -164,6 +164,13 @@ public class battleManager : MonoBehaviour
         cardevent.prepareEvent();
         selectedCard.describeText.text = cardevent.EventCardDescribe();        
     }
+    public void setCardDescribe(realCard realcard,MagicPart magicPart)
+    {
+        CardEvent cardevent = new CardEvent((playerCard)realcard.thisCard, magicPart, new emplyPlayCard());
+        cardevent.prepareEvent();
+        realcard.describeText.text = cardevent.EventCardDescribe();
+    }
+
 
     //丢弃全部手牌
     public void deleteAllHandCard()
