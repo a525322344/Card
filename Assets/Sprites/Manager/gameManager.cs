@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public enum GameState
 {
     StartMenu,
@@ -21,15 +23,18 @@ public class gameManager : MonoBehaviour
             return _instance;
         }
     }
-
+    public GameState gameState;
     //玩家信息管理记录类
     public playerInfo playerinfo;
     //战斗管理器
+    //[HideInInspector]
     public battleManager battlemanager;
     //实例管理器
+    //[HideInInspector]
     public instantiateManager instantiatemanager;
     //地图管理器
     public MapManager mapmanager;
+    public UImanager uimanager;
 
     public Camera Encamera;
     public Camera UIcamera;
@@ -37,9 +42,10 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
         _instance = this;
-
         //待定
         instantiatemanager = GetComponent<instantiateManager>();
+        uimanager = GetComponent<UImanager>();
+        DontDestroyOnLoad(gameObject);
     }
     void Start()
     {
@@ -47,15 +53,8 @@ public class gameManager : MonoBehaviour
         GameStartInit();
         //默认进入第一场战斗
         //  /这里直接获得，正式时要先实例，赋予数据
-        battlemanager = GetComponent<battleManager>();
-        battlemanager.startBattale();
-        //battlemanager.startRound();
-        a inserta = new a("插入");
-        a a1 = new a("1");
-        ass.Add(new a("0"));
-        ass.Add(a1);
-        ass.Add(new a("2"));
-        ListOperation.InsertItemAfter(ass, a1, inserta);
+        //battlemanager = GetComponent<battleManager>();
+        //battlemanager.startBattale();
     }
 
     void Update()
@@ -71,17 +70,17 @@ public class gameManager : MonoBehaviour
         playerinfo.MagicPartDickInit();
     }
 
-    public List<a> ass = new List<a>();
-    
-
-}
-//test
-[System.Serializable]
-public class a
-{
-    public string st = "a";
-    public a(string stt)
+    public void mapManagerInit()
     {
-        st = stt;
+        mapmanager = gameObject.AddComponent<MapManager>();
+        instantiatemanager.mapRootInfo= GameObject.Find("root").GetComponent<MapRootInfo>();
+        mapmanager.InitMap();
+    }
+
+    public void battleManagerInit()
+    {
+        battlemanager = gameObject.AddComponent<battleManager>();
+        instantiatemanager.battleuiRoot = GameObject.Find("CameraUI").GetComponent<battleUIRoot>();
+        battlemanager.startBattale();
     }
 }

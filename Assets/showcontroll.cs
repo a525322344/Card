@@ -48,55 +48,56 @@ public class showcontroll : MonoBehaviour
     }
     public void CreateNewAction(actionAbstract action)
     {
-        realAction realaction;
-        GameObject newRealAction;
-        for (int i= realActionList.Count-1; i>=0;i--)
-        {
-            realaction = realActionList[i];
-            realActionList.Remove(realaction);
-            Destroy(realaction.gameObject);
-        }
+        Debug.Log("创建新行动");
+        //realAction realaction;
+        //GameObject newRealAction;
+        //for (int i= realActionList.Count-1; i>=0;i--)
+        //{
+        //    realaction = realActionList[i];
+        //    realActionList.Remove(realaction);
+        //    Destroy(realaction.gameObject);
+        //}
 
-        int j = 0;
+        //int j = 0;
 
-        switch (action.Kind)
-        {
-            case ACTIONKIND.Attack:
-                newRealAction = Instantiate(gameManager.Instance.instantiatemanager.actionAttack, gameManager.Instance.instantiatemanager.actionTran.position + Vector3.left * distance * j, Quaternion.identity, gameManager.Instance.instantiatemanager.actionTran);
-                realaction = newRealAction.GetComponent<realAction>();
-                realaction.SetNum(""+action.effects[0].getNum());
-                //Debug.Log("" + action.effects[0].getNum());
-                realActionList.Add(realaction);
-                break;
-            case ACTIONKIND.Defense:
-                newRealAction = Instantiate(gameManager.Instance.instantiatemanager.actionDefense, gameManager.Instance.instantiatemanager.actionTran.position + Vector3.left * distance * j, Quaternion.identity, gameManager.Instance.instantiatemanager.actionTran);
-                realaction = newRealAction.GetComponent<realAction>();
-                realaction.SetNum("");
-                realActionList.Add(realaction);
-                break;
-            case ACTIONKIND.Combin:
-                foreach(actionAbstract act in action.actionList)
-                {
-                    switch (act.Kind)
-                    {
-                        case ACTIONKIND.Attack:
-                            newRealAction = Instantiate(gameManager.Instance.instantiatemanager.actionAttack, gameManager.Instance.instantiatemanager.actionTran.position + Vector3.left * distance * 0, Quaternion.identity, gameManager.Instance.instantiatemanager.actionTran);
-                            realaction = newRealAction.GetComponent<realAction>();
-                            realaction.SetNum("" + action.effects[0].getNum());
-                            realActionList.Add(realaction);
-                            j++;
-                            break;
-                        case ACTIONKIND.Defense:
-                            newRealAction = Instantiate(gameManager.Instance.instantiatemanager.actionDefense, gameManager.Instance.instantiatemanager.actionTran.position + Vector3.left * distance * 0, Quaternion.identity, gameManager.Instance.instantiatemanager.actionTran);
-                            realaction = newRealAction.GetComponent<realAction>();
-                            realaction.SetNum("");
-                            realActionList.Add(realaction);
-                            j++;
-                            break;
-                    }
-                }
-                break;
-        }
+        //switch (action.Kind)
+        //{
+        //    case ACTIONKIND.Attack:
+        //        newRealAction = Instantiate(gameManager.Instance.instantiatemanager.actionAttack, gameManager.Instance.instantiatemanager.actionTran.position + Vector3.left * distance * j, Quaternion.identity, gameManager.Instance.instantiatemanager.actionTran);
+        //        realaction = newRealAction.GetComponent<realAction>();
+        //        realaction.SetNum(""+action.effects[0].getNum());
+        //        //Debug.Log("" + action.effects[0].getNum());
+        //        realActionList.Add(realaction);
+        //        break;
+        //    case ACTIONKIND.Defense:
+        //        newRealAction = Instantiate(gameManager.Instance.instantiatemanager.actionDefense, gameManager.Instance.instantiatemanager.actionTran.position + Vector3.left * distance * j, Quaternion.identity, gameManager.Instance.instantiatemanager.actionTran);
+        //        realaction = newRealAction.GetComponent<realAction>();
+        //        realaction.SetNum("");
+        //        realActionList.Add(realaction);
+        //        break;
+        //    case ACTIONKIND.Combin:
+        //        foreach(actionAbstract act in action.actionList)
+        //        {
+        //            switch (act.Kind)
+        //            {
+        //                case ACTIONKIND.Attack:
+        //                    newRealAction = Instantiate(gameManager.Instance.instantiatemanager.actionAttack, gameManager.Instance.instantiatemanager.actionTran.position + Vector3.left * distance * 0, Quaternion.identity, gameManager.Instance.instantiatemanager.actionTran);
+        //                    realaction = newRealAction.GetComponent<realAction>();
+        //                    realaction.SetNum("" + action.effects[0].getNum());
+        //                    realActionList.Add(realaction);
+        //                    j++;
+        //                    break;
+        //                case ACTIONKIND.Defense:
+        //                    newRealAction = Instantiate(gameManager.Instance.instantiatemanager.actionDefense, gameManager.Instance.instantiatemanager.actionTran.position + Vector3.left * distance * 0, Quaternion.identity, gameManager.Instance.instantiatemanager.actionTran);
+        //                    realaction = newRealAction.GetComponent<realAction>();
+        //                    realaction.SetNum("");
+        //                    realActionList.Add(realaction);
+        //                    j++;
+        //                    break;
+        //            }
+        //        }
+        //        break;
+        //}
     }
 
     public void ShowArmor(int num)

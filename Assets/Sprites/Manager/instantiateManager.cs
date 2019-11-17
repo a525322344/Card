@@ -13,6 +13,9 @@ public class instantiateManager : MonoBehaviour
     }
     private static instantiateManager _instance;
 
+    public battleUIRoot battleuiRoot;
+    public MapRootInfo mapRootInfo;
+
     public Canvas uiCanvas;
     public GameObject partGO;
     public GameObject cardGO;
@@ -21,52 +24,33 @@ public class instantiateManager : MonoBehaviour
     public GameObject actionAttack;
     public GameObject actionDefense;
     public GameObject fireState;
-    //牌库的位置
-    public Transform dicktran;
-    //手牌的位置
-    public Transform handCardControll;
-    public Transform bookFolderTran;
-    //储存部件的坐标
-    public List<Vector3> partPositionList = new List<Vector3>();
-    //意图的位置
-    public Transform actionTran;
-    public List<Transform> parttransforms = new List<Transform>();
-
+    public List<GameObject> placeGOs = new List<GameObject>();
+    public List<GameObject> MonsterAll = new List<GameObject>();
 
     private void Awake()
     {
         _instance = GetComponent<instantiateManager>();
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void instanBattleStartPart(List<MagicPart> magicParts)
     {
         for(int i=0;i<magicParts.Count;i++)
         {
-            GameObject part = Instantiate(partGO, parttransforms[i]);
+            GameObject part = Instantiate(partGO, battleuiRoot.parttransforms[i]);
             realpart realpart = part.GetComponent<realpart>();
             realpart.setThisMagicPart(magicParts[i]);
-            parttransforms[0].parent.GetComponent<bookFolderControll>().realparts.Add(realpart);
+            battleuiRoot.parttransforms[0].parent.GetComponent<bookFolderControll>().realparts.Add(realpart);
         }
     }
 
     public void instanDrawACard(card playercard)
     {
-        GameObject card = Instantiate(cardGO, handCardControll);
+        GameObject card = Instantiate(cardGO, battleuiRoot.handCardControll);
         realCard realcard = card.GetComponentInChildren<realCard>();
         realcard.SetThiscard(playercard);
         realcard.ShowDraw();
-        handCardControll.GetComponent<handcardControll>().playerHandCards.Add(realcard);
+        battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards.Add(realcard);
     }
 
 }

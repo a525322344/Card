@@ -15,30 +15,13 @@ public class realPlace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(this.tag == "battlePlace")
-        {
-            thisplace = new battlePlace();
-        }
 
-        if (this.tag == "shopPlace")
-        {
-            thisplace = new shopPlace();
-        }
-
-        if (this.tag == "eventPlace")
-        {
-            thisplace = new eventPlace();
-        }
-
-        if (this.tag == "deckPlace")
-        {
-            thisplace = new deckPlace();
-        }
     }
 
     private void OnMouseDown()
     {
         thisplace.onclick();
+
     }
 
     private void OnMouseOver()
