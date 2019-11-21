@@ -12,15 +12,17 @@ public abstract class place
 
 public class battlePlace : place
 {
-    public battlePlace(enemybase enemybase=null)
+    public int enemyId;
+    public int sceneId;
+    public battlePlace(enemybase enemybase=null,int sceneid=1,int enemyid = 0)
     {
-
+        enemyId = enemyid;
+        sceneId = sceneid;
     }
     public override void onclick()
     {
         //进入战斗
-        Debug.Log("进入战斗");
-        SceneManager.LoadScene("SampleScene");
+        gameManager.Instance.mapmanager.EnterBattle(this);
     }
 
     public override void onover()
@@ -28,8 +30,6 @@ public class battlePlace : place
         //图标高亮
         Debug.Log("图标高亮");
     }
-
-    public int enemynum;
 }
 
 public class shopPlace : place

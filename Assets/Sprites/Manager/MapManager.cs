@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using AllAsset;
 
 public enum MAPSTAGE
 {
@@ -14,32 +15,46 @@ public enum MAPSTAGE
 
 public class MapManager : MonoBehaviour
 {
+    public int allplacenum;
+    public int battleplacenum;
+    public int shopplacenum;
+    public int ralexplacenum;
 
+    public List<place> placeList = new List<place>();
+    float width = 15;
+    float height = 8;
 
-    //敌人信息
-    public List<enemybase> enemies = new List<enemybase>();
-    //事件信息
-    public List<mapEvent> events = new List<mapEvent>();
+    private MapRootInfo maprootinfo;
 
-
-    //地点按钮
-    public place Place;
-
-
-    // Start is called before the first frame update
-    void Start()
+    public void InitMap()
     {
-        
+        //mapRootInfo = GameObject.Find("root").GetComponent<MapRootInfo>();
+        maprootinfo = gameManager.Instance.instantiatemanager.mapRootInfo;
+
+        float x = Random.Range(-width, width);
+        float y = Random.Range(-height, height);
+        GameObject place = Instantiate(
+            gameManager.Instance.instantiatemanager.placeGOs[0],
+            new Vector3(x,y, maprootinfo.placefolder.position.z),
+            Quaternion.identity,
+            maprootinfo.placefolder
+        );
+        place newplace = new battlePlace(null, 2);
+        place.GetComponent<realPlace>().thisplace = newplace;
+        placeList.Add(newplace);
+        Debug.Log("init map");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void EnterBattle(battlePlace battle)
     {
-        
+        AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync(AllAsset.MapAsset.GetSceneStr(battle.sceneId));
+        StartCoroutine(IEenterBattle(_asyncOperation));
     }
-
-    public void EnterBattle()
+    IEnumerator IEenterBattle(AsyncOperation asyncOperation)
     {
-
+        yield return new WaitUntil(() => {
+            return asyncOperation.isDone;
+        });
+        gameManager.Instance.battleManagerInit();
     }
 }

@@ -81,16 +81,17 @@ public class battleManager : MonoBehaviour
     }
     #endregion
 
-
+    private void Awake()
+    {
+        playerinfo = gameManager.Instance.playerinfo;
+        instantiatemanager = gameManager.Instance.instantiatemanager;
+        eventManager = new EventManager(this);
+    }
     /// <summary>
     /// 开始战斗
     /// </summary>
     public void startBattale()
     {
-        playerinfo = gameManager.Instance.playerinfo;
-        instantiatemanager = gameManager.Instance.instantiatemanager;
-        eventManager = GetComponent<EventManager>();
-        eventManager.battleManager = this;
         //初始化战斗卡组/洗牌
         dickInGame = new List<playerCard>(playerinfo.playerDick);
         dickInGame = ListOperation.Shufle<playerCard>(dickInGame);
@@ -102,7 +103,7 @@ public class battleManager : MonoBehaviour
         //初始化battleinfo
         battleInfo=new battleInfo(playerinfo);
         //battleInfoShow.Init(playerinfo);
-        SetEnemyShow();
+        //SetEnemyShow();
         //注册回合抽牌事件
         EventShow drawcardShowEvent = new EventShow(
             new SystemEvent(new RoundStartDrawCard(battleInfo.roundStartDrawCardNum)),
@@ -175,7 +176,7 @@ public class battleManager : MonoBehaviour
     //丢弃全部手牌
     public void deleteAllHandCard()
     {
-        List<realCard> realCards = gameManager.Instance.instantiatemanager.handCardControll.GetComponent<handcardControll>().playerHandCards;
+        List<realCard> realCards = gameManager.Instance.instantiatemanager.battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards;
         for(int i = realCards.Count - 1; i >= 0; i--)
         {
             realCard indexrealcard = realCards[i];
@@ -190,7 +191,7 @@ public class battleManager : MonoBehaviour
     {
         dickHandCard.Remove((playerCard)real.thisCard);
         dickDiscard.Add((playerCard)real.thisCard);
-        gameManager.Instance.instantiatemanager.handCardControll.GetComponent<handcardControll>().playerHandCards.Remove(real);
+        gameManager.Instance.instantiatemanager.battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards.Remove(real);
         Destroy(real.transform.parent.gameObject);
     }
     //回合结束的事
@@ -198,7 +199,7 @@ public class battleManager : MonoBehaviour
     {
         b_toEndRound = false;
 
-        foreach(realpart rp in gameManager.Instance.instantiatemanager.bookFolderTran.GetComponent<bookFolderControll>().realparts){
+        foreach(realpart rp in gameManager.Instance.instantiatemanager.battleuiRoot.bookFolderTran.GetComponent<bookFolderControll>().realparts){
             rp.PowerRealPart();
         }
         //注册怪物的下一次行动事件
@@ -230,9 +231,11 @@ public class battleManager : MonoBehaviour
     public Text healthText;
     private void Update()
     {
-        healthSlider.value =(float) battleInfo.Player.healthnow/battleInfo.Player.healthmax;
-        healthText.text = "" + battleInfo.Player.healthnow + " / " + battleInfo.Player.healthmax;
+        //healthSlider.value =(float) battleInfo.Player.healthnow/battleInfo.Player.healthmax;
+        //healthText.text = "" + battleInfo.Player.healthnow + " / " + battleInfo.Player.healthmax;
 
+
+        eventManager.EventListUpdate();
     }
     #endregion
 

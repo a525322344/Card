@@ -97,7 +97,23 @@ namespace AllAsset
     {
         public static List<MagicPart> AllMagicParts = new List<MagicPart>();
     }
-
+    public static class MapAsset
+    {
+        public static List<monsterInfo> AllMonsters = new List<monsterInfo>();
+        public static string GetSceneStr(int id)
+        {
+            switch (id)
+            {
+                case 1:
+                    return "myFirstBattle";
+                case 2:
+                    return "battleTest";
+                default:
+                    Debug.Log("没有设置");
+                    return "";
+            }
+        }
+    }
 }
 
 namespace Constant

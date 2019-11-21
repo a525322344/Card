@@ -187,7 +187,7 @@ public class realCard : MonoBehaviour
         {
             handCardState = HandCardState.Freedom;
         });
-        transform.position = gameManager.Instance.instantiatemanager.dicktran.position;
+        transform.position = gameManager.Instance.instantiatemanager.battleuiRoot.dicktran.position;
         handCardState = HandCardState.Draw;
     }
 

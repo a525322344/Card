@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 public delegate void toDo();
 
-public class EventManager : MonoBehaviour
+public class EventManager
 {
-    public battleManager battleManager;
+    public EventManager(battleManager _bm)
+    {
+        battleManager = _bm;
+    }
+    private battleManager battleManager;
 
     public List<EventShow> StartEventShows = new List<EventShow>();
     public List<EventShow> BattleEventShows = new List<EventShow>();
@@ -18,7 +22,7 @@ public class EventManager : MonoBehaviour
     public int testbattleeventnum;
     //事件游标  共用
     public int eventCursor = 0;
-    private void Update()
+    public void EventListUpdate()
     {
         testbattleeventnum = BattleEventShows.Count;
         if (battleManager.BattleRound == ROUND.PlayerRound)
