@@ -192,11 +192,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleuiRoot: {fileID: 0}
+  mapRootInfo: {fileID: 0}
   uiCanvas: {fileID: 0}
   partGO: {fileID: 720710080346659454, guid: 673cb9c42b277c847a3874e73a951df3, type: 3}
   cardGO: {fileID: 3275276983107518619, guid: 33b522c1b475c084d851d50803293caa, type: 3}
   gridGO: {fileID: 1972082160367306617, guid: 0e76362a6d8d6fe4aa1bea608aacda58, type: 3}
-  costs: []
+  costs:
+  - {fileID: 4591183519418314503, guid: 3658c03a861d11e43920acab2a5d47aa, type: 3}
+  - {fileID: 8679174471440462015, guid: cb937635bfcceeb4facab91e78473427, type: 3}
   actionAttack: {fileID: 1878781521414808844, guid: 3a9da2c0cee4e2b40865bfaf6adf2374,
     type: 3}
   actionDefense: {fileID: 8073743595131508596, guid: 8f87929cb5db6b24184a4fb52379ee5b,

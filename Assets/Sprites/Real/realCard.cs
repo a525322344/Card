@@ -88,7 +88,7 @@ public class realCard : MonoBehaviour
                 break;
             case HandCardState.Select:
                 Vector3 mouseposition = Input.mousePosition; 
-                mouseposition = Camera.main.ScreenToWorldPoint(new Vector3(mouseposition.x,mouseposition.y,instantiateManager.instance.uiCanvas.planeDistance));
+                mouseposition = Camera.main.ScreenToWorldPoint(new Vector3(mouseposition.x,mouseposition.y,instantiateManager.instance.battleuiRoot.uiCanvas.planeDistance));
                 transform.DOMove(mouseposition+Vector3.back*1,0);
                 transform.DOScale(Vector3.one, 0.1f);
 
@@ -109,7 +109,7 @@ public class realCard : MonoBehaviour
                 break;
             case HandCardState.SelectOut:
                 mouseposition = Input.mousePosition;
-                mouseposition = Camera.main.ScreenToWorldPoint(new Vector3(mouseposition.x, mouseposition.y, instantiateManager.instance.uiCanvas.planeDistance));
+                mouseposition = Camera.main.ScreenToWorldPoint(new Vector3(mouseposition.x, mouseposition.y, instantiateManager.instance.battleuiRoot.uiCanvas.planeDistance));
                 transform.DOMove(mouseposition + Vector3.back * 1, 0);
                 transform.DOScale(Vector3.one*1.1f, 0.1f);
 

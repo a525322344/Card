@@ -35,8 +35,8 @@ public class EventManager
                         battleManager.RoundStage = ROUNDSTAGE.Battle;
                         eventCursor = 0;
                         nowEventShowList = BattleEventShows;
-                        //
-                        gameManager.Instance.battlemanager.battleInfo.Player.destoryArmor(gameManager.Instance.battlemanager.battleInfo.Player.armor);
+                        //回合开始摧毁护盾
+                        //gameManager.Instance.battlemanager.battleInfo.Player.destoryArmor(gameManager.Instance.battlemanager.battleInfo.Player.armor);
                     }
                     else
                     {

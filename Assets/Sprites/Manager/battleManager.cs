@@ -115,10 +115,11 @@ public class battleManager : MonoBehaviour
             eventManager.EndEventShows);
         eventManager.EndEventShows.Add(discardShowEvent);
         //注册怪物的下一次行动事件
-        EventShow enemyNextActionEvent = new EventShow(
-            new ActionEvent(nowenemy.chooseAction()),
-            eventManager.BattleEnemyShows);
-        eventManager.BattleEnemyShows.Add(enemyNextActionEvent);
+        ///先注销enemuControll nowenemy
+        //EventShow enemyNextActionEvent = new EventShow(
+        //    new ActionEvent(nowenemy.chooseAction()),
+        //    eventManager.BattleEnemyShows);
+        //eventManager.BattleEnemyShows.Add(enemyNextActionEvent);
 
         RoundStage = ROUNDSTAGE.Start;
         BattleRound = ROUND.PlayerRound;
