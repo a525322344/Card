@@ -36,8 +36,8 @@ public class gameManager : MonoBehaviour
     public MapManager mapmanager;
     public UImanager uimanager;
 
-    public Camera Encamera;
-    public Camera UIcamera;
+    //public Camera Encamera;
+    //public Camera UIcamera;
 
     void Awake()
     {

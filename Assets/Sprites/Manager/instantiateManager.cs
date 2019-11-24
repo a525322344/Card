@@ -27,6 +27,9 @@ public class instantiateManager : MonoBehaviour
     public List<GameObject> placeGOs = new List<GameObject>();
     public List<GameObject> MonsterAll = new List<GameObject>();
 
+    public Camera Encamera;
+    public Camera UIcamera;
+
     private void Awake()
     {
         _instance = GetComponent<instantiateManager>();

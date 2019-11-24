@@ -33,7 +33,7 @@ public class damagePopup : MonoBehaviour
     void Update()
     {
         speed -= ac * Time.deltaTime;
-        transform.LookAt(gameManager.Instance.UIcamera.transform);
+        transform.LookAt(instantiateManager.instance.UIcamera.transform);
         transform.DOScale(Vector3.one * initscale * 1.1f, lefttime);
         transform.Translate(new Vector3(xspeed,speed,0) * Time.deltaTime);
     }

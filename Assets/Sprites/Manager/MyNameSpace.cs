@@ -107,7 +107,7 @@ namespace AllAsset
                 case 1:
                     return "myFirstBattle";
                 case 2:
-                    return "battleTest";
+                    return "battleTest0";
                 default:
                     Debug.Log("没有设置");
                     return "";

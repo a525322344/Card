@@ -1,9 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public delegate actionAbstract selectWay(int index);
 
-public class monsterInfo
+public abstract class monsterInfo
 {
+    public int Id;
     public int monsterLevel;
-    public enemybase enemybase;
+    public int health;
+    public List<actionAbstract> actionList = new List<actionAbstract>();
+    public selectWay selectAction;
+}
+
+public class monInfo_Slima : monsterInfo
+{
+    monInfo_Slima()
+    {
+
+    }
+
+
 }
