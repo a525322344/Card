@@ -12,11 +12,11 @@ public abstract class place
 
 public class battlePlace : place
 {
-    public int enemyId;
+    public monsterInfo monsterInfo;
     public int sceneId;
-    public battlePlace(enemybase enemybase=null,int sceneid=1,int enemyid = 0)
+    public battlePlace(monsterInfo monsterinfo=null,int sceneid=1)
     {
-        enemyId = enemyid;
+        monsterInfo = monsterinfo;
         sceneId = sceneid;
     }
     public override void onclick()
@@ -28,7 +28,6 @@ public class battlePlace : place
     public override void onover()
     {
         //图标高亮
-        Debug.Log("图标高亮");
     }
 }
 
