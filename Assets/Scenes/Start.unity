@@ -177,8 +177,6 @@ MonoBehaviour:
   instantiatemanager: {fileID: 0}
   mapmanager: {fileID: 0}
   uimanager: {fileID: 0}
-  Encamera: {fileID: 0}
-  UIcamera: {fileID: 0}
 --- !u!114 &828882826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleuiRoot: {fileID: 0}
+  battleEnvRoot: {fileID: 0}
   mapRootInfo: {fileID: 0}
   uiCanvas: {fileID: 0}
   partGO: {fileID: 720710080346659454, guid: 673cb9c42b277c847a3874e73a951df3, type: 3}
@@ -211,6 +210,8 @@ MonoBehaviour:
   - {fileID: 3287210646327940154, guid: b614d08c43a888f45be886bd5c48019f, type: 3}
   MonsterAll:
   - {fileID: 5888839611947553217, guid: b8a1fffdee2d37643b90617a01b8d310, type: 3}
+  Encamera: {fileID: 0}
+  UIcamera: {fileID: 0}
 --- !u!114 &828882827
 MonoBehaviour:
   m_ObjectHideFlags: 0

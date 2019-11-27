@@ -51,10 +51,6 @@ public class gameManager : MonoBehaviour
     {
         //游戏开始
         GameStartInit();
-        //默认进入第一场战斗
-        //  /这里直接获得，正式时要先实例，赋予数据
-        //battlemanager = GetComponent<battleManager>();
-        //battlemanager.startBattale();
     }
 
     void Update()
@@ -81,6 +77,6 @@ public class gameManager : MonoBehaviour
     {
         battlemanager = gameObject.AddComponent<battleManager>();
         instantiatemanager.battleuiRoot = GameObject.Find("CameraUI").GetComponent<battleUIRoot>();
-        battlemanager.startBattale();
+        instantiatemanager.battleEnvRoot = GameObject.Find("Environment").GetComponent<BattleEnvRoot>();
     }
 }

@@ -14,6 +14,7 @@ public class instantiateManager : MonoBehaviour
     private static instantiateManager _instance;
 
     public battleUIRoot battleuiRoot;
+    public BattleEnvRoot battleEnvRoot;
     public MapRootInfo mapRootInfo;
 
     public Canvas uiCanvas;
@@ -56,4 +57,12 @@ public class instantiateManager : MonoBehaviour
         battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards.Add(realcard);
     }
 
+
+    public void instanMonster(monsterInfo moninfo,out pawnbase enemy)
+    {
+        GameObject monster = Instantiate(MonsterAll[moninfo.Id], battleEnvRoot.monsterPosi);
+        realEnemy realenemy = monster.GetComponent<realEnemy>();
+        realenemy.Init(moninfo);
+        enemy = realenemy.enemy;
+    }
 }

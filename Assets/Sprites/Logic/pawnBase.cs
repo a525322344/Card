@@ -4,6 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public abstract class pawnbase
 {
+    public string name = "默认单位";
     public int healthmax;
     public int healthnow;
     public int armor;
@@ -39,13 +40,13 @@ public class enemybase : pawnbase
         {
             armor += i;
         }
-        gameManager.Instance.battlemanager.showcontroll.ShowArmor(armor);
+        //gameManager.Instance.battlemanager.showcontroll.ShowArmor(armor);
     }
     public override void destoryArmor(int i)
     {
 
         armor -= i;
-        gameManager.Instance.battlemanager.showcontroll.ShowArmor(armor);
+        //gameManager.Instance.battlemanager.showcontroll.ShowArmor(armor);
     }
 }
 [System.Serializable]

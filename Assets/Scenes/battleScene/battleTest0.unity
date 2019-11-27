@@ -409,10 +409,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 331205890313985474, guid: aaf0032df5c5e9b47a68521aa8bed414,
+        type: 3}
+      propertyPath: monsterPosi
+      value: 
+      objectReference: {fileID: 2011219379}
     - target: {fileID: 882473707085665768, guid: aaf0032df5c5e9b47a68521aa8bed414,
         type: 3}
       propertyPath: m_Name
-      value: environment
+      value: Environment
       objectReference: {fileID: 0}
     - target: {fileID: 882473707085665769, guid: aaf0032df5c5e9b47a68521aa8bed414,
         type: 3}
@@ -529,5 +534,27 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 882473708120296943, guid: aaf0032df5c5e9b47a68521aa8bed414,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 882473708120296943, guid: aaf0032df5c5e9b47a68521aa8bed414,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6126396525913449806, guid: aaf0032df5c5e9b47a68521aa8bed414,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 882473706962061577, guid: aaf0032df5c5e9b47a68521aa8bed414, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: aaf0032df5c5e9b47a68521aa8bed414, type: 3}
+--- !u!4 &2011219379 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 882473708120296943, guid: aaf0032df5c5e9b47a68521aa8bed414,
+    type: 3}
+  m_PrefabInstance: {fileID: 2011219378}
+  m_PrefabAsset: {fileID: 0}

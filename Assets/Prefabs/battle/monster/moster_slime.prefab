@@ -353,10 +353,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5888839611947553230}
-  - component: {fileID: 5888839611947553228}
-  - component: {fileID: 5888839611947553231}
+  - component: {fileID: 7374792513644769351}
   m_Layer: 0
-  m_Name: moster
+  m_Name: moster_slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -370,7 +369,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5888839611947553217}
   m_LocalRotation: {x: -0, y: -0, z: 0.000000002561137, w: 1}
-  m_LocalPosition: {x: 1.0600014, y: 3.23, z: -3.64}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0000143, y: 1.0000163, z: 1}
   m_Children:
   - {fileID: 1496295290463730621}
@@ -378,7 +377,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5888839611947553228
+--- !u!114 &7374792513644769351
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -387,45 +386,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5888839611947553217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e65e9e0cdd482418adae75a138ef34, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b6cfe767fa3c5742b607c6c4bcbbf86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pikaqiu:
-    healthmax: 60
-    healthnow: 60
-    armor: 0
-    enemynum: 0
-    stateList: []
---- !u!114 &5888839611947553231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5888839611947553217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e2b62267331f9446b66b2248254d72d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthslider: {fileID: 5888839612358045897}
-  healthnum: {fileID: 5888839611340760942}
-  enemybase:
+  enemy:
     healthmax: 0
     healthnow: 0
     armor: 0
     enemynum: 0
     stateList: []
-  damagepop: {fileID: 2690487459769679972, guid: 9bf6a271ab2b31d4b877a9edec1e052a,
-    type: 3}
-  realActionList: []
-  Armorgo: {fileID: 5888839611198575147}
-  armortext: {fileID: 5888839612255747692}
-  playerarmor: {fileID: 0}
-  playerarmortext: {fileID: 0}
-  fireState: {fileID: 5888839611505302822}
-  fireText: {fileID: 5888839611480748355}
-  distance: 1.5
 --- !u!1 &5888839611949236608
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,21 +857,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: slime
       objectReference: {fileID: 0}
-    - target: {fileID: -9004580598524078107, guid: 2ce747db6f6bd4c49bc6d05bfdfdfbb8,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 9d6d2408330c2c440a9c8a708620d516, type: 2}
-    - target: {fileID: -7078581854405578231, guid: 2ce747db6f6bd4c49bc6d05bfdfdfbb8,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a9e2c9d4222470947bd283add969a7f5, type: 2}
-    - target: {fileID: -6057140222963153312, guid: 2ce747db6f6bd4c49bc6d05bfdfdfbb8,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 9264a71e2e9dbfa42b41e3f0bbd2811e, type: 2}
     - target: {fileID: -4216859302048453862, guid: 2ce747db6f6bd4c49bc6d05bfdfdfbb8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -973,6 +927,21 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 120.66
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: 2ce747db6f6bd4c49bc6d05bfdfdfbb8,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 9264a71e2e9dbfa42b41e3f0bbd2811e, type: 2}
+    - target: {fileID: -7078581854405578231, guid: 2ce747db6f6bd4c49bc6d05bfdfdfbb8,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a9e2c9d4222470947bd283add969a7f5, type: 2}
+    - target: {fileID: -9004580598524078107, guid: 2ce747db6f6bd4c49bc6d05bfdfdfbb8,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d6d2408330c2c440a9c8a708620d516, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ce747db6f6bd4c49bc6d05bfdfdfbb8, type: 3}
 --- !u!4 &1496295290463730621 stripped

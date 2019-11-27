@@ -39,7 +39,7 @@ public class MapManager : MonoBehaviour
             Quaternion.identity,
             maprootinfo.placefolder
         );
-        place newplace = new battlePlace(null, 2);
+        place newplace = new battlePlace(new monInfo_Slima(), 2);
         place.GetComponent<realPlace>().thisplace = newplace;
         placeList.Add(newplace);
         Debug.Log("init map");
@@ -48,13 +48,16 @@ public class MapManager : MonoBehaviour
     public void EnterBattle(battlePlace battle)
     {
         AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync(AllAsset.MapAsset.GetSceneStr(battle.sceneId));
-        StartCoroutine(IEenterBattle(_asyncOperation));
+        StartCoroutine(IEenterBattle(_asyncOperation, battle.monsterInfo));
     }
-    IEnumerator IEenterBattle(AsyncOperation asyncOperation)
+    IEnumerator IEenterBattle(AsyncOperation asyncOperation,monsterInfo monster)
     {
         yield return new WaitUntil(() => {
             return asyncOperation.isDone;
         });
         gameManager.Instance.battleManagerInit();
+        gameManager.Instance.battlemanager.startBattale();
+        gameManager.Instance.battlemanager.BattleStartEnemySet(monster);
+
     }
 }

@@ -59,6 +59,8 @@ public class battleManager : MonoBehaviour
     public List<playerCard> dickHandCard = new List<playerCard>();
     //战场信息
     public battleInfo battleInfo;
+
+    public enemybase aa;
     //public battleInfo battleInfoShow;
 
     public bool b_toEndRound = false;
@@ -95,6 +97,7 @@ public class battleManager : MonoBehaviour
         //初始化战斗卡组/洗牌
         dickInGame = new List<playerCard>(playerinfo.playerDick);
         dickInGame = ListOperation.Shufle<playerCard>(dickInGame);
+
         //实例化部件
         instantiatemanager.instanBattleStartPart(playerinfo.MagicPartDick);
         //注册玩家的部件
@@ -125,6 +128,13 @@ public class battleManager : MonoBehaviour
         BattleRound = ROUND.PlayerRound;
     }
     
+    public void BattleStartEnemySet(monsterInfo monsterinfo)
+    {
+        //实例化怪物
+        instantiatemanager.instanMonster(monsterinfo, out battleInfo.Enemy);
+        Debug.Log(battleInfo.Enemy.name);
+    }
+
     public void DrawACard()
     {
         if (dickInGame.Count == 0)
