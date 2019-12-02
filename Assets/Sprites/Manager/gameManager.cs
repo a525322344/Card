@@ -78,5 +78,7 @@ public class gameManager : MonoBehaviour
         battlemanager = gameObject.AddComponent<battleManager>();
         instantiatemanager.battleuiRoot = GameObject.Find("CameraUI").GetComponent<battleUIRoot>();
         instantiatemanager.battleEnvRoot = GameObject.Find("Environment").GetComponent<BattleEnvRoot>();
+        uimanager.roundEndButton = instantiatemanager.battleuiRoot.RoundEndButton;
+        uimanager.roundEndButton.onClick.AddListener(()=> { uimanager.EndRound(); });
     }
 }

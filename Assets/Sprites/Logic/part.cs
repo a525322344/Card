@@ -9,6 +9,10 @@ using UnityEngine;
 [System.Serializable]
 public class Part 
 {
+    //基础信息
+    public string name;
+    public int id;
+
     public Part(){}
     public virtual void addReaction(Reaction reaction)
     {
@@ -32,11 +36,15 @@ public class Part
 [System.Serializable]
 public class MagicPart : Part
 {
+    //功能信息
+    public int gridsum;
+    public int gridpower;
     public MagicPart() { }
     //暂定：数组a应该是9位
     public MagicPart(int[] a)
     {
         Vector2GridPairs = new Dictionary<Vector2, grid>();
+        gridsum = 0;
         for(int i = 0; i < a.Length; i++)
         {
             grid newgrid = new grid(true);
@@ -47,6 +55,7 @@ public class MagicPart : Part
             if (a[i] == 1)
             {
                 newgrid.Opening = true;
+                gridsum++;
             }
             else
             {
@@ -85,7 +94,16 @@ public class MagicPart : Part
             reaction.Active = false;
         }
     }
-
+    public void PowerAllGrid()
+    {
+        foreach (var g in Vector2GridPairs)
+        {
+            if (g.Value.Opening)
+            {
+                g.Value.Power = true;
+            }
+        }
+    }
     public Dictionary<Vector2, grid> getGridDic()
     {
         return Vector2GridPairs;
@@ -95,15 +113,6 @@ public class MagicPart : Part
     //1 2 3
     private Dictionary<Vector2, grid> Vector2GridPairs;
 
-    public void PowerAllGrid()
-    {
-        foreach(var g in Vector2GridPairs)
-        {
-            if (g.Value.Opening)
-            {
-                g.Value.Power = true;
-            }
-        }
-    }
+
     public string describe;
 }

@@ -17,7 +17,7 @@ namespace AllAsset
                 num = 0;
             }
             battleInfo.Enemy.hurtHealth(num);
-            gameManager.Instance.battlemanager.showcontroll.gethurt(num);
+            //gameManager.Instance.battlemanager.showcontroll.gethurt(num);
         }
         public static void EnemyGetRealHurt(int num,battleInfo battleInfo)
         {
@@ -26,7 +26,7 @@ namespace AllAsset
                 num = 0;
             }
             battleInfo.Enemy.healthnow -= num;
-            gameManager.Instance.battlemanager.showcontroll.gethurt(num);
+            //gameManager.Instance.battlemanager.showcontroll.gethurt(num);
         }
         public static void PlayerGetArmor(int num, battleInfo battleInfo)
         {
@@ -66,7 +66,7 @@ namespace AllAsset
             if (battleinfo.Enemy.nameStatePairs.ContainsKey("Burn"))
             {
                 battleinfo.Enemy.nameStatePairs["Burn"].num += num;
-                gameManager.Instance.battlemanager.showcontroll.ShowFire(battleinfo.Enemy.nameStatePairs["Burn"].num);
+                //gameManager.Instance.battlemanager.showcontroll.ShowFire(battleinfo.Enemy.nameStatePairs["Burn"].num);
             }
             else
             {
@@ -74,7 +74,7 @@ namespace AllAsset
                 burnstate.SetInState();
                 battleinfo.Enemy.nameStatePairs.Add("Burn", burnstate);
                 battleinfo.Enemy.stateList.Add(burnstate);
-                gameManager.Instance.battlemanager.showcontroll.ShowFire(battleinfo.Enemy.nameStatePairs["Burn"].num);
+                //gameManager.Instance.battlemanager.showcontroll.ShowFire(battleinfo.Enemy.nameStatePairs["Burn"].num);
             }
         }
     }

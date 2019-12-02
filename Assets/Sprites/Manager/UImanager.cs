@@ -2,21 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 
 public class UImanager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Button roundEndButton;
+    //战斗场景回合结束按钮
+    public void EndRound()
     {
-        
+        Debug.Log("endclick");
+        gameManager.Instance.battlemanager.b_toEndRound = true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void InitEnterMap()
     {
         //加载地图

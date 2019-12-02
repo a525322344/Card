@@ -23,6 +23,7 @@ public enum EventKind
     Event_EnemyGetBurn,
     //Event_EnemyBurnDeal,
     Event_EnemyBurnDamage,
+    Event_LinkRandom,
 }
 
 //对卡牌效果的委托
@@ -251,6 +252,20 @@ public class Burn : cardEffectBase
 
         frontDesctibe = "给与敌人";
         backDesctibe = "层灼烧";
+    }
+}
+
+public class LinkRandom : cardEffectBase
+{
+    public LinkRandom(int _num = 2)
+    {
+        num = _num;
+        mixnum = _num;
+        effectDele = new DeleCardEffect((int a, battleInfo b) => { Debug.Log("随机链接部件"); });
+        eventkind = EventKind.Event_LinkRandom;
+
+        frontDesctibe = "随机链接";
+        backDesctibe = "个部件";
     }
 }
 

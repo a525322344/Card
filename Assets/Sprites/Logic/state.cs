@@ -39,7 +39,7 @@ public class StateBurn : stateAbstarct
         {
             SetOutState();
         }
-        gameManager.Instance.battlemanager.showcontroll.ShowFire(num);
+        //gameManager.Instance.battlemanager.showcontroll.ShowFire(num);
     }
     private Reaction m_reaction;
     private singleEvent m_reactionEvent;

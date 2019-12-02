@@ -1,10 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class battleUIRoot : MonoBehaviour
 {
     public Canvas uiCanvas;
+    public Button RoundEndButton;
+    public void aa()
+    {
+        Debug.Log("GAGA");
+    }
     //手牌的位置
     public Transform handCardControll;
     public Transform bookFolderTran;

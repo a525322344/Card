@@ -36,7 +36,7 @@ public class monInfo_Slima : monsterInfo
                   result = ListOperation.RandomValue<actionAbstract>(actionList);
               }
               lastAction = result;
-              gameManager.Instance.battlemanager.showcontroll.CreateNewAction(result);
+              //gameManager.Instance.battlemanager.showcontroll.CreateNewAction(result);
               return result;
           });
     }

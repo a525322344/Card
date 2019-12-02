@@ -59,8 +59,7 @@ public class battleManager : MonoBehaviour
     public List<playerCard> dickHandCard = new List<playerCard>();
     //战场信息
     public battleInfo battleInfo;
-
-    public enemybase aa;
+    public realEnemy realenemy;
     //public battleInfo battleInfoShow;
 
     public bool b_toEndRound = false;
@@ -105,6 +104,7 @@ public class battleManager : MonoBehaviour
         playerinfo.MagicPartDick[1].SetinReactions();
         //初始化battleinfo
         battleInfo=new battleInfo(playerinfo);
+        battleInfo.Enemy = realenemy.enemy;
         //battleInfoShow.Init(playerinfo);
         //SetEnemyShow();
         //注册回合抽牌事件
@@ -119,10 +119,10 @@ public class battleManager : MonoBehaviour
         eventManager.EndEventShows.Add(discardShowEvent);
         //注册怪物的下一次行动事件
         ///先注销enemuControll nowenemy
-        //EventShow enemyNextActionEvent = new EventShow(
-        //    new ActionEvent(nowenemy.chooseAction()),
-        //    eventManager.BattleEnemyShows);
-        //eventManager.BattleEnemyShows.Add(enemyNextActionEvent);
+        EventShow enemyNextActionEvent = new EventShow(
+            new ActionEvent(realenemy.chooseAction()),
+            eventManager.BattleEnemyShows);
+        eventManager.BattleEnemyShows.Add(enemyNextActionEvent);
 
         RoundStage = ROUNDSTAGE.Start;
         BattleRound = ROUND.PlayerRound;
@@ -131,8 +131,7 @@ public class battleManager : MonoBehaviour
     public void BattleStartEnemySet(monsterInfo monsterinfo)
     {
         //实例化怪物
-        instantiatemanager.instanMonster(monsterinfo, out battleInfo.Enemy);
-        Debug.Log(battleInfo.Enemy.name);
+        instantiatemanager.instanMonster(monsterinfo, out realenemy);
     }
 
     public void DrawACard()
@@ -215,7 +214,7 @@ public class battleManager : MonoBehaviour
         }
         //注册怪物的下一次行动事件
         EventShow enemyNextActionEvent = new EventShow(
-            new ActionEvent(nowenemy.chooseAction()),
+            new ActionEvent(realenemy.chooseAction()),
             eventManager.BattleEnemyShows
             );
         eventManager.BattleEnemyShows.Add(enemyNextActionEvent);
@@ -231,10 +230,10 @@ public class battleManager : MonoBehaviour
     }
     #region 临时的
     public showcontroll showcontroll;
-    public enemyControll nowenemy;
+
     public void SetEnemyShow()
     {
-        battleInfo.Enemy = nowenemy.pikaqiu;
+        //battleInfo.Enemy = nowenemy.pikaqiu;
         showcontroll.init();
     }
 

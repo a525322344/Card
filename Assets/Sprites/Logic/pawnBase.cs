@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
-public abstract class pawnbase
+public class pawnbase
 {
     public string name = "默认单位";
     public int healthmax;
@@ -58,12 +58,12 @@ public class playerpawn : pawnbase
         {
             armor += i;
         }
-        gameManager.Instance.battlemanager.showcontroll.ShowPlayerArmor(armor);
+        //gameManager.Instance.battlemanager.showcontroll.ShowPlayerArmor(armor);
     }
     public override void destoryArmor(int i)
     {
 
         armor -= i;
-        gameManager.Instance.battlemanager.showcontroll.ShowPlayerArmor(armor);
+        //gameManager.Instance.battlemanager.showcontroll.ShowPlayerArmor(armor);
     }
 }

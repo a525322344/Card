@@ -58,11 +58,11 @@ public class instantiateManager : MonoBehaviour
     }
 
 
-    public void instanMonster(monsterInfo moninfo,out pawnbase enemy)
+    public void instanMonster(monsterInfo moninfo,out realEnemy realEnemy)
     {
         GameObject monster = Instantiate(MonsterAll[moninfo.Id], battleEnvRoot.monsterPosi);
         realEnemy realenemy = monster.GetComponent<realEnemy>();
         realenemy.Init(moninfo);
-        enemy = realenemy.enemy;
+        realEnemy = realenemy;
     }
 }

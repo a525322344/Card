@@ -29,10 +29,7 @@ public class realgrid : MonoBehaviour
         }
         changeMaterial();
     }
-    public void ToSetPart(card _selectcard)
-    {
-        fatherPart.SetDownCard(_selectcard);
-    }
+
 
     public void setThisGrid(grid _grid)
     {
@@ -87,5 +84,9 @@ public class realgrid : MonoBehaviour
     public bool CanOverCostPlay(card selectcard)
     {
         return fatherPart.CanCostPlay(thisgrig, selectcard);
+    }
+    public void ToSetPart(card _selectcard)
+    {
+        fatherPart.SetDownCard(_selectcard);
     }
 }
