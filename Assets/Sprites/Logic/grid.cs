@@ -18,8 +18,9 @@ public class grid
         }
     }
     //坐标
-    public void setPosition(int x,int y)
+    public void setPosition(int x,int y,int set)
     {
+        posnum = set;
         m_PositionX = x;
         m_PositionY = y;
     }
@@ -27,7 +28,7 @@ public class grid
     {
         get
         {
-            return m_PositionX;
+            return m_PositionX+posnum*4;
         }
     }
     public int PositionY
@@ -55,6 +56,7 @@ public class grid
 
     private int m_PositionX;
     private int m_PositionY;
+    public int posnum;
     private bool m_Opening;
     private bool m_Power;
     private gridCover m_gridcover;

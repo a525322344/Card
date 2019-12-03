@@ -33,6 +33,17 @@ public class Part
     }
     protected List<Reaction> m_overallReactionList = new List<Reaction>();
 }
+public class LinkPart : MagicPart
+{
+    public LinkPart(params MagicPart[] magicParts)
+    {
+        foreach(var magicpart in magicParts)
+        {
+
+        }
+    }
+
+}
 [System.Serializable]
 public class MagicPart : Part
 {
@@ -41,16 +52,17 @@ public class MagicPart : Part
     public int gridpower;
     public MagicPart() { }
     //暂定：数组a应该是9位
-    public MagicPart(int[] a)
+    public MagicPart(int[] a,int set)
     {
         Vector2GridPairs = new Dictionary<Vector2, grid>();
         gridsum = 0;
+        offset = set;
         for(int i = 0; i < a.Length; i++)
         {
             grid newgrid = new grid(true);
-            int posy = i / 3;
-            int posx = i % 3;
-            newgrid.setPosition(posx, posy);
+            int posy = i / 3 ;
+            int posx = i % 3 ;
+            newgrid.setPosition(posx, posy,set);
             newgrid.fatherPart = this;
             if (a[i] == 1)
             {
@@ -61,7 +73,7 @@ public class MagicPart : Part
             {
                 newgrid.Opening = false;
             }
-            Vector2GridPairs.Add(new Vector2(posx, posy), newgrid);
+            Vector2GridPairs.Add(new Vector2(posx+set*4, posy), newgrid);
         }
     }
     public override void addReaction(Reaction reaction)
@@ -111,8 +123,8 @@ public class MagicPart : Part
     //7 8 9
     //4 5 6
     //1 2 3
-    private Dictionary<Vector2, grid> Vector2GridPairs;
+    public Dictionary<Vector2, grid> Vector2GridPairs;
 
-
+    private int offset;
     public string describe;
 }

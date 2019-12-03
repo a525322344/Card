@@ -41,7 +41,7 @@ public class InitData : MonoBehaviour
     {
         int[] a = { 0, 1, 0, 0, 1, 0, 0, 0, 0 };
         Reaction reaction = new Reaction_Affect(new extraAttackUp(1), EventKind.Event_Damage);
-        MagicPart Init_ATTACKUP_1 = new MagicPart(a);
+        MagicPart Init_ATTACKUP_1 = new MagicPart(a,0);
         Init_ATTACKUP_1.describe = "伤害+1";
         Init_ATTACKUP_1.addReaction(reaction);
 
@@ -49,7 +49,7 @@ public class InitData : MonoBehaviour
 
         a[4] = 0;
         reaction = new Reaction_Affect(new extraDeffenceUp(1), EventKind.Event_Armor);
-        MagicPart Init_DefenceUp_1 = new MagicPart(a);
+        MagicPart Init_DefenceUp_1 = new MagicPart(a,1);
         Init_DefenceUp_1.describe = "护甲+1";
         Init_DefenceUp_1.addReaction(reaction);
 
