@@ -6,6 +6,17 @@ using UnityEngine.UI;
 public class realpart : MonoBehaviour
 {
     public MagicPart thisMagicPart;
+    #region linkPart
+    private MagicPart linkSavePart;
+    public void enterLinkPart(MagicPart linkPart)
+    {
+        thisMagicPart = linkPart;
+    }
+    public void exitLinkPart()
+    {
+        thisMagicPart = linkSavePart;
+    }
+    #endregion
     public GameObject realgridMode;
     public float distance = 0.333f;
 
@@ -19,7 +30,7 @@ public class realpart : MonoBehaviour
     public void setThisMagicPart(MagicPart magicPart)
     {
         thisMagicPart = magicPart;
-
+        linkSavePart = thisMagicPart;
         //根据magicpart中的grid表，创建realgird
         foreach(var g in thisMagicPart.getGridDic())
         {

@@ -60,6 +60,8 @@ public class battleManager : MonoBehaviour
     //战场信息
     public battleInfo battleInfo;
     public realEnemy realenemy;
+    public List<realpart> realPartList;
+    public List<realCard> realCardList;
     //public battleInfo battleInfoShow;
 
     public bool b_toEndRound = false;

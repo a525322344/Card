@@ -39,6 +39,8 @@ public static class ReactionListController
                 return reactListToEnemyGetBurn;
             case EventKind.Event_EnemyBurnDamage:
                 return reactListToEnemyBurnDamage;
+            case EventKind.Event_LinkRandom:
+                return reactListToLinkRandom;
             //更新
             default:
                 Debug.Log("错误，没有写这个效果的额外效果表");
@@ -65,6 +67,7 @@ public static class ReactionListController
     private static List<Reaction> reactListToEnemyGetBurn = new List<Reaction>();
     private static List<Reaction> reactListToEnemyBurnDamage = new List<Reaction>();
     private static List<Reaction> reactListToRoundEndDisCard = new List<Reaction>();
+    private static List<Reaction> reactListToLinkRandom = new List<Reaction>();
     //更新
 }
 

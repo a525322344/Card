@@ -46,6 +46,7 @@ public class instantiateManager : MonoBehaviour
             realpart.setThisMagicPart(magicParts[i]);
             battleuiRoot.parttransforms[0].parent.GetComponent<bookFolderControll>().realparts.Add(realpart);
         }
+        gameManager.Instance.battlemanager.realPartList = battleuiRoot.parttransforms[0].parent.GetComponent<bookFolderControll>().realparts;
     }
 
     public void instanDrawACard(card playercard)

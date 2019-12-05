@@ -77,6 +77,49 @@ namespace AllAsset
                 //gameManager.Instance.battlemanager.showcontroll.ShowFire(battleinfo.Enemy.nameStatePairs["Burn"].num);
             }
         }
+        public static void RandomLinkPart(int num,battleInfo battleinfo)
+        {
+            List<realpart> copyrealparts = new List<realpart>(gameManager.Instance.battlemanager.realPartList);
+            int partnum= copyrealparts.Count;
+            List<realpart> getlist = new List<realpart>();
+            if (partnum > num)
+            {
+                for(int i = 0; i < num; i++)
+                {
+                    realpart get = ListOperation.RandomValue<realpart>(copyrealparts);
+                    copyrealparts.Remove(get);
+                    getlist.Add(get);
+                }
+                List<MagicPart> getmagicParts = new List<MagicPart>();
+                foreach (realpart rp in getlist)
+                {
+                    getmagicParts.Add(rp.thisMagicPart);
+                }
+                LinkPart linkPart = new LinkPart(getmagicParts);
+                foreach(realpart rp in getlist)
+                {
+                    rp.enterLinkPart(linkPart);
+                }
+            }
+            else
+            {
+                LinkAllPart(0,battleinfo);
+            }
+        }
+        public static void LinkAllPart(int num,battleInfo battleinfo)
+        {
+            List<realpart> getlist = gameManager.Instance.battlemanager.realPartList;
+            List<MagicPart> getmagicParts = new List<MagicPart>();
+            foreach (realpart rp in getlist)
+            {
+                getmagicParts.Add(rp.thisMagicPart);
+            }
+            LinkPart linkPart = new LinkPart(getmagicParts);
+            foreach (realpart rp in getlist)
+            {
+                rp.enterLinkPart(linkPart);
+            }
+        }
     }
     //声明所有的额外强化效果
     public static class extraAsset

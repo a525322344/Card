@@ -31,16 +31,27 @@ public class Part
             ReactionListController.recesiveReactonToSetIn(reaction);
         }
     }
-    protected List<Reaction> m_overallReactionList = new List<Reaction>();
+    public List<Reaction> m_overallReactionList = new List<Reaction>();
 }
 public class LinkPart : MagicPart
 {
-    public LinkPart(params MagicPart[] magicParts)
+    public LinkPart(List<MagicPart> magicParts)
     {
+        gridsum = 0;
+        Vector2GridPairs = new Dictionary<Vector2, grid>();
         foreach(var magicpart in magicParts)
         {
-
+            gridsum += magicpart.gridsum;
+            foreach(Reaction r in magicpart.m_overallReactionList)
+            {
+                base.addReaction(r);
+            }
+            foreach(var p in magicpart.Vector2GridPairs)
+            {
+                Vector2GridPairs.Add(p.Key,p.Value);
+            }
         }
+        SetinReactions();
     }
 
 }
@@ -56,7 +67,6 @@ public class MagicPart : Part
     {
         Vector2GridPairs = new Dictionary<Vector2, grid>();
         gridsum = 0;
-        offset = set;
         for(int i = 0; i < a.Length; i++)
         {
             grid newgrid = new grid(true);
@@ -125,6 +135,5 @@ public class MagicPart : Part
     //1 2 3
     public Dictionary<Vector2, grid> Vector2GridPairs;
 
-    private int offset;
     public string describe;
 }

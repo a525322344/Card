@@ -35,6 +35,10 @@ public class InitData : MonoBehaviour
         playerCard fire = new playerCard(5, "烈焰", CardKind.PlayerCard, 1);
         fire.AddEffect(new Burn(4));
         cardAsset.AllIdCards.Add(fire);
+        //1费 链接
+        playerCard link = new playerCard(6, "不稳定连结", CardKind.PlayerCard, 1);
+        link.AddEffect(new LinkRandom());
+        cardAsset.AllIdCards.Add(link);
     }
     //“手动”加载全部件 可能是暂定
     void MagicPartInit()

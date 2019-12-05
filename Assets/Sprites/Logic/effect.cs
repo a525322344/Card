@@ -261,7 +261,7 @@ public class LinkRandom : cardEffectBase
     {
         num = _num;
         mixnum = _num;
-        effectDele = new DeleCardEffect((int a, battleInfo b) => { Debug.Log("随机链接部件"); });
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.RandomLinkPart);
         eventkind = EventKind.Event_LinkRandom;
 
         frontDesctibe = "随机链接";
