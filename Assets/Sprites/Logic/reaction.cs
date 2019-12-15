@@ -76,6 +76,7 @@ public static class ReactionListController
 //反应器
 public abstract class Reaction
 {
+    public string name;
     public bool Active {
         set { m_Active = value; }
         get { return m_Active; }
@@ -97,8 +98,9 @@ public abstract class Reaction
 //对反应的效果事件造成影响，强化或削弱效果
 public class Reaction_Affect : Reaction
 {
-    public Reaction_Affect(extraEffectBase extraEffect, EventKind _kind)
+    public Reaction_Affect(string _name,extraEffectBase extraEffect, EventKind _kind)
     {
+        name = _name;
         kind = _kind;
         affectEffect = extraEffect;
         b_haveEvent = false;
@@ -106,6 +108,7 @@ public class Reaction_Affect : Reaction
 
     public override extraEffectBase getExtreEffect()
     {
+        Debug.Log("reaction"+name);
         return affectEffect;
     }
 

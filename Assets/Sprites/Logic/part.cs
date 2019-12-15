@@ -32,11 +32,19 @@ public class Part
         }
     }
     public List<Reaction> m_overallReactionList = new List<Reaction>();
+    protected void debugReactionList()
+    {
+        foreach(Reaction r in m_overallReactionList)
+        {
+            Debug.Log(name + ":" + r.name);
+        }
+    }
 }
 public class LinkPart : MagicPart
 {
     public LinkPart(List<MagicPart> magicParts)
     {
+        name = "链接部件";
         gridsum = 0;
         Vector2GridPairs = new Dictionary<Vector2, grid>();
         foreach(var magicpart in magicParts)
@@ -51,7 +59,7 @@ public class LinkPart : MagicPart
                 Vector2GridPairs.Add(p.Key,p.Value);
             }
         }
-        SetinReactions();
+        //debugReactionList();
     }
 
 }
