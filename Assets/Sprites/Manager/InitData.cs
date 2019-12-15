@@ -6,6 +6,7 @@ using AllAsset;
 public class InitData : MonoBehaviour
 {
     Dictionary<int, csvcard> csvcard = new Dictionary<int, csvcard>();
+    public List<playerCard> ShowAllCards;
 
     public void Awake()
     {
@@ -15,6 +16,7 @@ public class InitData : MonoBehaviour
     //数据加载全卡
     void CsvCardInit()
     {
+        ShowAllCards = cardAsset.AllIdCards;
         csvcard = CSVLoader.LoadCsvData<csvcard>(Application.streamingAssetsPath + "/cardcsv.csv");
         foreach (int i in csvcard.Keys)
         {
@@ -39,6 +41,10 @@ public class InitData : MonoBehaviour
         playerCard link = new playerCard(6, "不稳定连结", CardKind.PlayerCard, 1);
         link.AddEffect(new LinkRandom());
         cardAsset.AllIdCards.Add(link);
+        //1费 魔珠连环
+        playerCard mozhulianhuan = new playerCard(7, "魔珠连环", CardKind.PlayerCard, 1);
+        mozhulianhuan.AddEffect(new Repeat(3,new Damage(3)));
+        cardAsset.AllIdCards.Add(mozhulianhuan);
     }
     //“手动”加载全部件 可能是暂定
     void MagicPartInit()

@@ -6,24 +6,23 @@ using UnityEngine;
 //对应了其产生的event及对其产生影响的reaction
 public enum EventKind
 {
-    Event_OutOfKind,
-    Event_Damage,
-    Event_Armor,
-    Event_PlayCard,
-    Event_Discard,
-    Event_DrawCard,
-    Event_DrawACard,
-    Event_RoundStartDrawCard,
-    Event_RoundEndDisCard,
-    Event_PlayerGetHurt,
-    Event_EnemyGetArmor,
-    Event_Action,
-    Event_Repeat,
-    Event_SystmeRepeat,
-    Event_EnemyGetBurn,
-    //Event_EnemyBurnDeal,
-    Event_EnemyBurnDamage,
-    Event_LinkRandom,
+    Event_OutOfKind,            //默认null效果
+    Event_Damage,               //伤害
+    Event_Armor,                //护甲
+    Event_PlayCard,             //打出卡片,"抽象效果"
+    Event_Discard,              //弃牌     "抽象效果"
+    Event_DrawCard,             //抽牌(repeat)
+    Event_DrawACard,            //抽一张牌
+    Event_RoundStartDrawCard,   //回合开始抽牌
+    Event_RoundEndDisCard,      //回合结束弃牌
+    Event_PlayerGetHurt,        //玩家受到伤害
+    Event_EnemyGetArmor,        //怪物获得护甲
+    Event_Action,               //怪物行动  "抽象效果"
+    Event_Repeat,               //重复，包含子效果
+    Event_SystmeRepeat,         //系统重复
+    Event_EnemyGetBurn,         //获得灼烧  "抽象效果"
+    Event_EnemyBurnDamage,      //灼烧伤害(穿透
+    Event_LinkRandom,           //随机链接
 }
 
 //对卡牌效果的委托

@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b73121ea4d121ce40a9fa60aa18943ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setInitCard: 0000000001000000020000000300000004000000050000000600000007000000
   gameState: 0
   playerinfo:
     playerDick: []
@@ -225,6 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0da826e4688aa4a43b8d20a46e970064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowAllCards: []
 --- !u!114 &828882828
 MonoBehaviour:
   m_ObjectHideFlags: 0

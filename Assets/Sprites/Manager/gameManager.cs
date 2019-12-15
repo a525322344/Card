@@ -13,6 +13,7 @@ public enum GameState
 
 public class gameManager : MonoBehaviour
 {
+    public List<int> setInitCard = new List<int>();
     //外部静态访问
     static gameManager _instance;
     public static gameManager Instance
@@ -25,15 +26,18 @@ public class gameManager : MonoBehaviour
     }
     public GameState gameState;
     //玩家信息管理记录类
+    //[HideInInspector]
     public playerInfo playerinfo;
     //战斗管理器
-    //[HideInInspector]
+    [HideInInspector]
     public battleManager battlemanager;
     //实例管理器
-    //[HideInInspector]
+    [HideInInspector]
     public instantiateManager instantiatemanager;
     //地图管理器
+    [HideInInspector]
     public MapManager mapmanager;
+    [HideInInspector]
     public UImanager uimanager;
 
     //public Camera Encamera;
@@ -62,7 +66,7 @@ public class gameManager : MonoBehaviour
     {
         //初始化玩家数据
         playerinfo = new playerInfo();
-        playerinfo.PlayerDickInit();
+        playerinfo.PlayerDickInit(setInitCard);
         playerinfo.MagicPartDickInit();
     }
 
