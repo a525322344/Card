@@ -63,16 +63,16 @@ namespace AllAsset
         }
         public static void EnemyGetBurn(int num,battleInfo battleinfo)
         {
-            if (battleinfo.Enemy.nameStatePairs.ContainsKey("Burn"))
+            stateAbstarct burnstate = new StateBurn(num);
+            if (battleinfo.Enemy.nameStatePairs.ContainsKey(burnstate.key))
             {
-                battleinfo.Enemy.nameStatePairs["Burn"].num += num;
+                battleinfo.Enemy.nameStatePairs[burnstate.key].num += num;
                 //gameManager.Instance.battlemanager.showcontroll.ShowFire(battleinfo.Enemy.nameStatePairs["Burn"].num);
             }
             else
-            {
-                stateAbstarct burnstate = new StateBurn(num);               
+            {             
                 burnstate.SetInState();
-                battleinfo.Enemy.nameStatePairs.Add("Burn", burnstate);
+                battleinfo.Enemy.nameStatePairs.Add(burnstate.key, burnstate);
                 battleinfo.Enemy.stateList.Add(burnstate);
                 //gameManager.Instance.battlemanager.showcontroll.ShowFire(battleinfo.Enemy.nameStatePairs["Burn"].num);
             }
@@ -90,9 +90,14 @@ namespace AllAsset
                     copyrealparts.Remove(get);
                     getlist.Add(get);
                 }
+                
                 List<MagicPart> getmagicParts = new List<MagicPart>();
                 foreach (realpart rp in getlist)
                 {
+                    if (!battleinfo.havenLinkParts.Contains(rp))
+                    {
+                        battleinfo.havenLinkParts.Add(rp);
+                    }
                     getmagicParts.Add(rp.thisMagicPart);
                 }
                 LinkPart linkPart = new LinkPart(getmagicParts);
@@ -112,12 +117,32 @@ namespace AllAsset
             List<MagicPart> getmagicParts = new List<MagicPart>();
             foreach (realpart rp in getlist)
             {
+                if (!battleinfo.havenLinkParts.Contains(rp))
+                {
+                    battleinfo.havenLinkParts.Add(rp);
+                }
                 getmagicParts.Add(rp.thisMagicPart);
             }
             LinkPart linkPart = new LinkPart(getmagicParts);
             foreach (realpart rp in getlist)
             {
                 rp.enterLinkPart(linkPart);
+            }
+        }
+        public static void CreatState_ExitLinkPart(int num ,battleInfo battleinfo)
+        {
+            stateAbstarct exitLinkState = new StateExitLinkPart();
+            if (!battleinfo.Player.nameStatePairs.ContainsKey(exitLinkState.key)){
+                exitLinkState.SetInState();
+                battleinfo.Player.nameStatePairs.Add(exitLinkState.key, exitLinkState);
+                battleinfo.Player.stateList.Add(exitLinkState);
+            }
+        }
+        public static void ExitLinkPark(int num,battleInfo battleinfo)
+        {
+            foreach(realpart rp in battleinfo.havenLinkParts)
+            {
+                rp.exitLinkPart();
             }
         }
     }

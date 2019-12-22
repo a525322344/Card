@@ -292,16 +292,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 376821765490311818, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: RoundEndButton
-      value: 
-      objectReference: {fileID: 674587353}
     - target: {fileID: 8519204321783155390, guid: b0be205746ae69d43bee4138c9635c17,
         type: 3}
       propertyPath: m_Name
       value: CameraUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5734015392561880935, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734015392561880935, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734015392561880935, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734015392561880935, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1337831632}
+    - target: {fileID: 5734015392561880935, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: aa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734015392561880935, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 376821765490311818, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: RoundEndButton
+      value: 
+      objectReference: {fileID: 674587353}
     - target: {fileID: 8519204321545788387, guid: b0be205746ae69d43bee4138c9635c17,
         type: 3}
       propertyPath: m_RootOrder
@@ -491,36 +521,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5734015392561880935, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5734015392561880935, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5734015392561880935, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5734015392561880935, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1337831632}
-    - target: {fileID: 5734015392561880935, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: aa
-      objectReference: {fileID: 0}
-    - target: {fileID: 5734015392561880935, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0be205746ae69d43bee4138c9635c17, type: 3}

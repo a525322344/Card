@@ -21,7 +21,8 @@ public class battleInfo
 {
     public pawnbase Enemy;             //敌人
     public pawnbase Player;            //玩家自己
-    public List<extraEffectBase> CommonExtraEffects = new List<extraEffectBase>();
+    //已经链接了的部件
+    public List<realpart> havenLinkParts = new List<realpart>();
     public int roundStartDrawCardNum;
     public int playerHandCardNum;
 

@@ -9,6 +9,9 @@ public static class ReactionListController
     {
         switch (eventKind)
         {
+            case EventKind.Event_NULL:
+                //返回空表
+                return new List<Reaction>();
             case EventKind.Event_Damage:
                 return reactListToDamage;
             case EventKind.Event_Armor:

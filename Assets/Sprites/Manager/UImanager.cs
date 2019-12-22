@@ -10,7 +10,6 @@ public class UImanager : MonoBehaviour
     //战斗场景回合结束按钮
     public void EndRound()
     {
-        Debug.Log("endclick");
         gameManager.Instance.battlemanager.b_toEndRound = true;
     }
 

@@ -7,10 +7,6 @@ public class battleUIRoot : MonoBehaviour
 {
     public Canvas uiCanvas;
     public Button RoundEndButton;
-    public void aa()
-    {
-        Debug.Log("GAGA");
-    }
     //手牌的位置
     public Transform handCardControll;
     public Transform bookFolderTran;

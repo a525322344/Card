@@ -157,7 +157,10 @@ public class playerCard : card
         Describe = "";
         foreach (cardEffectBase effect in EffectPlayList)
         {
-            Describe += effect.DescribeEffect() + ",";
+            if (!effect.b_hideDesctibe)
+            {
+                Describe += effect.DescribeEffect() + ",";
+            }
         }
         Describe = Describe.Substring(0, Describe.Length - 1);
         return Describe;

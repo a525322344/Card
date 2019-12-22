@@ -40,6 +40,7 @@ public class InitData : MonoBehaviour
         //1费 链接
         playerCard link = new playerCard(6, "不稳定连结", CardKind.PlayerCard, 1);
         link.AddEffect(new LinkRandom());
+        link.AddEffect(new CardEffect_ToExitLink());
         cardAsset.AllIdCards.Add(link);
         //1费 魔珠连环
         playerCard mozhulianhuan = new playerCard(7, "魔珠连环", CardKind.PlayerCard, 1);

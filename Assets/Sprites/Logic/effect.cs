@@ -7,6 +7,7 @@ using UnityEngine;
 public enum EventKind
 {
     Event_OutOfKind,            //默认null效果
+    Event_NULL,                 //一些效果觉得不会有对其有反应的，就先用NULL;
     Event_Damage,               //伤害
     Event_Armor,                //护甲
     Event_PlayCard,             //打出卡片,"抽象效果"
@@ -56,6 +57,7 @@ public abstract class EffectBase
 
     protected int num;
     public int mixnum;
+    public bool b_hideDesctibe = false;
     public string frontDesctibe;
     public string backDesctibe;
     protected DeleCardEffect effectDele;
@@ -109,7 +111,7 @@ public abstract class emptyKind : cardEffectBase
     
 }
 
-////
+
 //卡牌事件效果
 //打出一张卡
 public class emplyPlayCard:emptyKind
@@ -119,7 +121,7 @@ public class emplyPlayCard:emptyKind
     }
 }
 
-////
+
 //卡牌效果
 public class Damage : cardEffectBase
 {
@@ -134,6 +136,7 @@ public class Damage : cardEffectBase
         backDesctibe = "点伤害";
     }
 }
+//重复效果，有子效果表
 public class Repeat : cardEffectBase
 {
     public Repeat() { }
@@ -176,6 +179,7 @@ public class Repeat : cardEffectBase
         return result;
     }
 }
+//玩家获得护甲
 public class Armor : cardEffectBase
 {
     public Armor(int _num=0)
@@ -189,7 +193,7 @@ public class Armor : cardEffectBase
         backDesctibe = "点护甲";
     }
 }
-
+//抽一张卡
 public class drawACard : cardEffectBase
 {
     public drawACard()
@@ -204,7 +208,7 @@ public class drawACard : cardEffectBase
         return "子效果，抽一张卡";
     }
 }
-
+//抽num张卡
 public class DrawCard : Repeat
 {
     public DrawCard(int _num)
@@ -239,7 +243,7 @@ public class DrawCard : Repeat
         return result;
     }
 }
-
+//敌人获得灼伤
 public class Burn : cardEffectBase
 {
     public Burn(int _num = 0)
@@ -253,7 +257,7 @@ public class Burn : cardEffectBase
         backDesctibe = "层灼烧";
     }
 }
-
+//随机链接部件
 public class LinkRandom : cardEffectBase
 {
     public LinkRandom(int _num = 2)
@@ -263,13 +267,23 @@ public class LinkRandom : cardEffectBase
         effectDele = new DeleCardEffect(AllAsset.effectAsset.RandomLinkPart);
         eventkind = EventKind.Event_LinkRandom;
 
-        frontDesctibe = "随机链接";
+        frontDesctibe = "本回合内随机链接";
         backDesctibe = "个部件";
     }
 }
-
+public class CardEffect_ToExitLink : cardEffectBase
+{
+    public CardEffect_ToExitLink()
+    {
+        b_hideDesctibe = true;
+        eventkind = EventKind.Event_NULL;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.CreatState_ExitLinkPart);
+    }
+}
 ////
-//系统效果
+//系统效果 一般排除在卡的影响效果外；
+//比如，“每当弃一张卡”，回合结束弃卡效果不触发这种reaction;
+//换句话说，Event_kind不同
 public class SystemRepeat : systemEffectBase
 {
     public SystemRepeat() { }
@@ -286,7 +300,7 @@ public class SystemRepeat : systemEffectBase
         eventkind = EventKind.Event_SystmeRepeat;
     }
 }
-
+//回合开始抽卡
 public class RoundStartDrawCard:SystemRepeat
 {
     public RoundStartDrawCard(int _num)
@@ -302,7 +316,7 @@ public class RoundStartDrawCard:SystemRepeat
         return "回合开始抽卡";
     }
 }
-
+//回合结束弃卡
 public class RoundEndDisCard : systemEffectBase
 {
     public RoundEndDisCard(int _num)
@@ -319,7 +333,7 @@ public class RoundEndDisCard : systemEffectBase
 
 ////
 //行为效果
-//攻击玩家
+//攻击玩家，玩家受到伤害
 public class effectActionHurt : actionEffectBase
 {
     public effectActionHurt(int _num)
@@ -333,7 +347,7 @@ public class effectActionHurt : actionEffectBase
         return "怪物造成伤害：" + num;
     }
 }
-//获得护甲
+//怪物获得护甲
 public class effectActionEnemyArmor : actionEffectBase
 {
     public effectActionEnemyArmor(int _num)
@@ -347,21 +361,9 @@ public class effectActionEnemyArmor : actionEffectBase
         return "怪物获得护甲：" + num;
     }
 }
-// //
+
 //状态效果
-//public class effectStateBurn : stateEffectBase
-//{
-//    public effectStateBurn(int _num=0)
-//    {
-//        num = _num;
-//        effectDele = new DeleCardEffect(AllAsset.effectAsset.EmptyEffect);
-//        eventkind = EventKind.Event_EnemyBurnDeal;
-//    }
-//    public override string DescribeEffect()
-//    {
-//        return "灼烧伤害";
-//    }
-//}
+//添加给状态事件，状态事件由状态reaction反应添加
 public class effectBurnDamage : stateEffectBase
 {
     public effectBurnDamage(int _num=0)
@@ -373,5 +375,14 @@ public class effectBurnDamage : stateEffectBase
     public override string DescribeEffect()
     {
         return "灼烧伤害：" + num;
+    }
+}
+
+public class StateEffect_ExitLinkPart : stateEffectBase
+{
+    public StateEffect_ExitLinkPart()
+    {
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.ExitLinkPark);
+        eventkind = EventKind.Event_NULL;
     }
 }
