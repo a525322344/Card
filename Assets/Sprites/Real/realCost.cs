@@ -41,7 +41,7 @@ public class realCost : MonoBehaviour
             {
                 if (downRealgrid.CanOverCostPlay(thiscard))
                 {
-                    Debug.Log("canovercostPlay");
+                    //Debug.Log("canovercostPlay");
                     nextCostMode = 2;
                     lastrealgrid = downRealgrid;
                     downRealgrid.ToSetPart(thiscard);

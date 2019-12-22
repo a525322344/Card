@@ -108,7 +108,7 @@ public class Reaction_Affect : Reaction
 
     public override extraEffectBase getExtreEffect()
     {
-        Debug.Log("reaction"+name);
+        //Debug.Log("reaction"+name);
         return affectEffect;
     }
 

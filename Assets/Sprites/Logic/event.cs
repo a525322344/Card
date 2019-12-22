@@ -158,7 +158,7 @@ public class EffectEvent : singleEvent
         foreach (EffectEvent effectEvent in childEvents)
         {
             gameManager.Instance.battlemanager.eventManager.AddEvent(effectEvent);
-            effectEvent.prepareEvent();
+            //effectEvent.prepareEvent();
             effectEvent.insertEvent();
         }
     }
@@ -173,6 +173,7 @@ public class EffectEvent : singleEvent
         m_extraEffectList.Clear();
         EventReactionList.Clear();
         List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(m_eventKind);
+        Debug.Log(m_eventKind);
         foreach(Reaction reaction in reactionlist)
         {
             if (reaction.Active == true)
