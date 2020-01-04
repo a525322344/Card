@@ -53,7 +53,7 @@ public class instantiateManager : MonoBehaviour
     {
         GameObject card = Instantiate(cardGO, battleuiRoot.handCardControll);
         realCard realcard = card.GetComponentInChildren<realCard>();
-        realcard.SetThiscard(playercard);
+        realcard.SetThiscard(playercard,RealCardState.RealCard);
         realcard.ShowDraw();
         battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards.Add(realcard);
     }

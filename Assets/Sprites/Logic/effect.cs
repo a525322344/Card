@@ -24,11 +24,12 @@ public enum EventKind
     Event_EnemyGetBurn,         //获得灼烧  "抽象效果"
     Event_EnemyBurnDamage,      //灼烧伤害(穿透
     Event_LinkRandom,           //随机链接
+    Event_Whether               //条件效果
 }
 
 //对卡牌效果的委托
 public delegate void DeleCardEffect(int num,battleInfo battleinfo);
-//public delegate bool DeleIsorNot(int num, battleInfo battleInfo);
+
 
 //抽象效果类，派生出所有效果
 public abstract class EffectBase
@@ -60,9 +61,23 @@ public abstract class EffectBase
     public bool b_hideDesctibe = false;
     public string frontDesctibe;
     public string backDesctibe;
+
     protected DeleCardEffect effectDele;
+    
     public bool b_hasChildEffect = false;
     public List<EffectBase> childeffects = new List<EffectBase>();
+    public void AddChildEffect(EffectBase effect)
+    {
+        childeffects.Add(effect);
+    }
+    //如果
+    public bool b_judgeEffect = false;
+    public List<judgeCondition> judgeConditions = new List<judgeCondition>();
+    public void AddJudge(judgeCondition judge)
+    {
+        judgeConditions.Add(judge);
+    }
+
     protected EventKind eventkind;          //该效果创建的事件类型
 }
 //一个效果抽象基类，派生出每个卡牌效果
@@ -278,6 +293,30 @@ public class CardEffect_ToExitLink : cardEffectBase
         b_hideDesctibe = true;
         eventkind = EventKind.Event_NULL;
         effectDele = new DeleCardEffect(AllAsset.effectAsset.CreatState_ExitLinkPart);
+    }
+}
+//判断效果 
+public class Effect_Whether : EffectBase
+{
+    public Effect_Whether()
+    {
+        b_judgeEffect = true;
+    }
+}
+public class CardEffect_Whether : Effect_Whether
+{
+    public CardEffect_Whether()
+    {
+        b_judgeEffect = true;
+    }
+}
+public class CardEffect_DisCard : cardEffectBase
+{
+    public CardEffect_DisCard(int _num)
+    {
+        num = _num;
+        mixnum = _num;
+
     }
 }
 ////

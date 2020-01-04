@@ -13,6 +13,7 @@ public enum ROUNDSTAGE
 {
     Start,
     Battle,
+    WaitInput,
     End,
 }
 //此场战斗的信息
@@ -23,7 +24,13 @@ public class battleInfo
     public pawnbase Player;            //玩家自己
     //已经链接了的部件
     public List<realpart> havenLinkParts = new List<realpart>();
+    //选择的手牌
+    public List<int> selectedHandCards = new List<int>();
+    //是否得到确认
+    public bool selectedConfirm = false;
+    //每回合抽卡数量
     public int roundStartDrawCardNum;
+    //手牌数量
     public int playerHandCardNum;
 
     public battleInfo(playerInfo info)
@@ -171,7 +178,7 @@ public class battleManager : MonoBehaviour
 
         }
     }
-
+    //根据强化动态更新卡牌描述
     public void setCardDescribe(MagicPart magicPart)
     {
         CardEvent cardevent = new CardEvent((playerCard)gameManager.Instance.battlemanager.selectedCard.thisCard, magicPart, new emplyPlayCard());

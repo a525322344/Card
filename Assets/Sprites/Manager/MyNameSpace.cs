@@ -154,6 +154,13 @@ namespace AllAsset
             return _num + adjust;
         }
     }
+    public static class judgeAsset
+    {
+        public static bool EnemyWillAttack(int num,battleInfo battleinfo)
+        {
+
+        }
+    }
     //声明所有的卡牌
     public static class cardAsset
     {
