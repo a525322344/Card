@@ -158,7 +158,7 @@ namespace AllAsset
     {
         public static bool EnemyWillAttack(int num,battleInfo battleinfo)
         {
-
+            return ActionOperation.IsActionHasAttack(gameManager.Instance.battlemanager.battleInfo.enemyAction);
         }
     }
     //声明所有的卡牌

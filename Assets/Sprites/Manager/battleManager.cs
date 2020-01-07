@@ -24,6 +24,8 @@ public class battleInfo
     public pawnbase Player;            //玩家自己
     //已经链接了的部件
     public List<realpart> havenLinkParts = new List<realpart>();
+    //敌人的意图
+    public actionAbstract enemyAction;
     //选择的手牌
     public List<int> selectedHandCards = new List<int>();
     //是否得到确认
@@ -129,8 +131,10 @@ public class battleManager : MonoBehaviour
         eventManager.EndEventShows.Add(discardShowEvent);
         //注册怪物的下一次行动事件
         ///先注销enemuControll nowenemy
+        actionAbstract newaction = realenemy.chooseAction();
+        battleInfo.enemyAction = newaction;
         EventShow enemyNextActionEvent = new EventShow(
-            new ActionEvent(realenemy.chooseAction()),
+            new ActionEvent(newaction),
             eventManager.BattleEnemyShows);
         eventManager.BattleEnemyShows.Add(enemyNextActionEvent);
 
@@ -214,7 +218,7 @@ public class battleManager : MonoBehaviour
         gameManager.Instance.instantiatemanager.battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards.Remove(real);
         Destroy(real.transform.parent.gameObject);
     }
-    //回合结束的事
+    //怪物回合结束的事
     public void EndEnemyRound()
     {
         b_toEndRound = false;

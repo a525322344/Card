@@ -3,11 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum ACTIONKIND
 {
+    Deffaut,
     Attack,
     Defense,
     StrongUP,
     Debuff,
     Combin,
+}
+public static class ActionOperation
+{
+    //检查是否有攻击意图
+    public static bool IsActionHasAttack(actionAbstract action)
+    {
+        bool result = false;
+        foreach(var ae in action.effects)
+        {
+            if (ae.GetEventKind() == EventKind.Event_PlayerGetHurt)
+            {
+                result = true;
+            }
+        }
+        return result;
+    }
 }
 //怪物行动的抽象类
 public abstract class actionAbstract

@@ -300,16 +300,25 @@ public class Effect_Whether : EffectBase
 {
     public Effect_Whether()
     {
-        b_judgeEffect = true;
+        b_judgeEffect = true;   
     }
 }
 public class CardEffect_Whether : Effect_Whether
 {
+    public CardEffect_Whether(judgeCondition judge,EffectBase effect)
+    {
+        b_judgeEffect = true;
+        judgeConditions.Add(judge);
+        childeffects.Add(effect);
+    }
     public CardEffect_Whether()
     {
         b_judgeEffect = true;
     }
 }
+
+
+
 public class CardEffect_DisCard : cardEffectBase
 {
     public CardEffect_DisCard(int _num)
