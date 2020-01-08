@@ -9,18 +9,18 @@ public class judgeCondition
     public int param;
     public DeleWhether whetherDele;
     public string describe;
-    public bool Whether(int num,battleInfo battleinfo)
+    public bool Whether(battleInfo battleinfo)
     {
-        return whetherDele(num, battleinfo);
+        return whetherDele(param, battleinfo);
     }
 }
 
 public class Judge_EnemyWillAttack : judgeCondition
 {
-    public Judge_EnemyWillAttack(int _param)
+    public Judge_EnemyWillAttack()
     {
-        param = _param;
+        param = 0;
         whetherDele = AllAsset.judgeAsset.EnemyWillAttack;
-        describe = "如果敌人有攻击意图";
+        describe = "敌人意图攻击";
     }
 }

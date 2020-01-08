@@ -16,6 +16,7 @@ public abstract class singleEvent
     //事件类型，用于枚举
     protected EventKind m_eventKind;
     public bool b_haveChildEvent;
+    public bool b_haveJudgeEvent;
     public List<singleEvent> childEvents = new List<singleEvent>();
     public List<Reaction> EventReactionList = new List<Reaction>();
 }
@@ -121,6 +122,14 @@ public class EffectEvent : singleEvent
         {
             b_haveChildEvent = false;
         }
+        if (effect.b_judgeEffect)
+        {
+            b_haveJudgeEvent = true;
+        }
+        else
+        {
+            b_haveJudgeEvent = false;
+        }
     }
     public override void prepareEvent()
     {
@@ -137,6 +146,20 @@ public class EffectEvent : singleEvent
         if (b_haveChildEvent)
         {
             for (int i = 0; i < index; i++)
+            {
+                foreach (cardEffectBase effect in m_effect.childeffects)
+                {
+                    childEvents.Add(new EffectEvent(effect, this));
+                }
+            }
+            foreach (EffectEvent _event in childEvents)
+            {
+                _event.prepareEvent();
+            }
+        }
+        if (b_haveJudgeEvent)
+        {
+            if (m_effect.JudgeWhether(gameManager.Instance.battlemanager.battleInfo))
             {
                 foreach (cardEffectBase effect in m_effect.childeffects)
                 {

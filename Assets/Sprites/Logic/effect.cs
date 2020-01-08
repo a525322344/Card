@@ -73,6 +73,18 @@ public abstract class EffectBase
     //如果
     public bool b_judgeEffect = false;
     public List<judgeCondition> judgeConditions = new List<judgeCondition>();
+    public bool JudgeWhether(battleInfo battleinfo)
+    {
+        bool result = true;
+        foreach(judgeCondition judge in judgeConditions)
+        {
+            if (!judge.Whether(battleinfo))
+            {
+                result = false;
+            }
+        }
+        return result;
+    }
     public void AddJudge(judgeCondition judge)
     {
         judgeConditions.Add(judge);
@@ -303,17 +315,34 @@ public class Effect_Whether : EffectBase
         b_judgeEffect = true;   
     }
 }
-public class CardEffect_Whether : Effect_Whether
+public class CardEffect_Whether : cardEffectBase
 {
     public CardEffect_Whether(judgeCondition judge,EffectBase effect)
     {
         b_judgeEffect = true;
         judgeConditions.Add(judge);
         childeffects.Add(effect);
+        effectDele = new DeleCardEffect((a, b) => { });
+        eventkind = EventKind.Event_Whether;
     }
     public CardEffect_Whether()
     {
         b_judgeEffect = true;
+    }
+    public override string DescribeEffect()
+    {
+        string describe = "如果";
+        foreach(judgeCondition j in judgeConditions)
+        {
+            describe += j.describe + ",";
+        }
+        describe += "则";
+        foreach(EffectBase e in childeffects)
+        {
+            describe += e.DescribeEffect() + ",";
+        }
+        describe=describe.Substring(0, describe.Length - 1);
+        return describe;
     }
 }
 
