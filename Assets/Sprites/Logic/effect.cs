@@ -70,7 +70,7 @@ public abstract class EffectBase
     {
         childeffects.Add(effect);
     }
-    //如果
+    //条件效果
     public bool b_judgeEffect = false;
     public List<judgeCondition> judgeConditions = new List<judgeCondition>();
     public bool JudgeWhether(battleInfo battleinfo)
@@ -89,6 +89,10 @@ public abstract class EffectBase
     {
         judgeConditions.Add(judge);
     }
+    //停顿效果
+    public bool b_stopEffect = false;
+
+
 
     protected EventKind eventkind;          //该效果创建的事件类型
 }
