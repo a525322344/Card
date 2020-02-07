@@ -13,6 +13,7 @@ public enum ROUNDSTAGE
 {
     Start,
     Battle,
+    WaitInput,
     End,
 }
 //此场战斗的信息
@@ -23,7 +24,15 @@ public class battleInfo
     public pawnbase Player;            //玩家自己
     //已经链接了的部件
     public List<realpart> havenLinkParts = new List<realpart>();
+    //敌人的意图
+    public actionAbstract enemyAction;
+    //选择的手牌
+    public List<int> selectedHandCards = new List<int>();
+    //是否得到确认
+    public bool selectedConfirm = false;
+    //每回合抽卡数量
     public int roundStartDrawCardNum;
+    //手牌数量
     public int playerHandCardNum;
 
     public battleInfo(playerInfo info)
@@ -122,8 +131,10 @@ public class battleManager : MonoBehaviour
         eventManager.EndEventShows.Add(discardShowEvent);
         //注册怪物的下一次行动事件
         ///先注销enemuControll nowenemy
+        actionAbstract newaction = realenemy.chooseAction();
+        battleInfo.enemyAction = newaction;
         EventShow enemyNextActionEvent = new EventShow(
-            new ActionEvent(realenemy.chooseAction()),
+            new ActionEvent(newaction),
             eventManager.BattleEnemyShows);
         eventManager.BattleEnemyShows.Add(enemyNextActionEvent);
 
@@ -171,7 +182,7 @@ public class battleManager : MonoBehaviour
 
         }
     }
-
+    //根据强化动态更新卡牌描述
     public void setCardDescribe(MagicPart magicPart)
     {
         CardEvent cardevent = new CardEvent((playerCard)gameManager.Instance.battlemanager.selectedCard.thisCard, magicPart, new emplyPlayCard());
@@ -207,7 +218,7 @@ public class battleManager : MonoBehaviour
         gameManager.Instance.instantiatemanager.battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards.Remove(real);
         Destroy(real.transform.parent.gameObject);
     }
-    //回合结束的事
+    //怪物回合结束的事
     public void EndEnemyRound()
     {
         b_toEndRound = false;

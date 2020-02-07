@@ -4,15 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using AllAsset;
 
-public enum MAPSTAGE
-{
-    Shop,
-    Event,
-    Deck,
-    Battle
-}
-
-
 public class MapManager : MonoBehaviour
 {
     public int allplacenum;

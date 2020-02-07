@@ -24,11 +24,12 @@ public enum EventKind
     Event_EnemyGetBurn,         //获得灼烧  "抽象效果"
     Event_EnemyBurnDamage,      //灼烧伤害(穿透
     Event_LinkRandom,           //随机链接
+    Event_Whether               //条件效果
 }
 
 //对卡牌效果的委托
 public delegate void DeleCardEffect(int num,battleInfo battleinfo);
-//public delegate bool DeleIsorNot(int num, battleInfo battleInfo);
+
 
 //抽象效果类，派生出所有效果
 public abstract class EffectBase
@@ -60,9 +61,39 @@ public abstract class EffectBase
     public bool b_hideDesctibe = false;
     public string frontDesctibe;
     public string backDesctibe;
+
     protected DeleCardEffect effectDele;
+    
     public bool b_hasChildEffect = false;
     public List<EffectBase> childeffects = new List<EffectBase>();
+    public void AddChildEffect(EffectBase effect)
+    {
+        childeffects.Add(effect);
+    }
+    //条件效果
+    public bool b_judgeEffect = false;
+    public List<judgeCondition> judgeConditions = new List<judgeCondition>();
+    public bool JudgeWhether(battleInfo battleinfo)
+    {
+        bool result = true;
+        foreach(judgeCondition judge in judgeConditions)
+        {
+            if (!judge.Whether(battleinfo))
+            {
+                result = false;
+            }
+        }
+        return result;
+    }
+    public void AddJudge(judgeCondition judge)
+    {
+        judgeConditions.Add(judge);
+    }
+    //停顿效果
+    public bool b_stopEffect = false;
+
+
+
     protected EventKind eventkind;          //该效果创建的事件类型
 }
 //一个效果抽象基类，派生出每个卡牌效果
@@ -278,6 +309,56 @@ public class CardEffect_ToExitLink : cardEffectBase
         b_hideDesctibe = true;
         eventkind = EventKind.Event_NULL;
         effectDele = new DeleCardEffect(AllAsset.effectAsset.CreatState_ExitLinkPart);
+    }
+}
+//判断效果 
+public class Effect_Whether : EffectBase
+{
+    public Effect_Whether()
+    {
+        b_judgeEffect = true;   
+    }
+}
+public class CardEffect_Whether : cardEffectBase
+{
+    public CardEffect_Whether(judgeCondition judge,EffectBase effect)
+    {
+        b_judgeEffect = true;
+        judgeConditions.Add(judge);
+        childeffects.Add(effect);
+        effectDele = new DeleCardEffect((a, b) => { });
+        eventkind = EventKind.Event_Whether;
+    }
+    public CardEffect_Whether()
+    {
+        b_judgeEffect = true;
+    }
+    public override string DescribeEffect()
+    {
+        string describe = "如果";
+        foreach(judgeCondition j in judgeConditions)
+        {
+            describe += j.describe + ",";
+        }
+        describe += "则";
+        foreach(EffectBase e in childeffects)
+        {
+            describe += e.DescribeEffect() + ",";
+        }
+        describe=describe.Substring(0, describe.Length - 1);
+        return describe;
+    }
+}
+
+
+
+public class CardEffect_DisCard : cardEffectBase
+{
+    public CardEffect_DisCard(int _num)
+    {
+        num = _num;
+        mixnum = _num;
+
     }
 }
 ////

@@ -46,6 +46,12 @@ public class InitData : MonoBehaviour
         playerCard mozhulianhuan = new playerCard(7, "魔珠连环", CardKind.PlayerCard, 1);
         mozhulianhuan.AddEffect(new Repeat(3,new Damage(3)));
         cardAsset.AllIdCards.Add(mozhulianhuan);
+        //1费 降神 打7，如果敌人要攻击，则抽三张卡
+        playerCard xiangshen = new playerCard(8, "降神", CardKind.PlayerCard, 1);
+        xiangshen.AddEffect(new Damage(7));
+        cardEffectBase whethereffect = new CardEffect_Whether(new Judge_EnemyWillAttack(), new DrawCard(3));
+        xiangshen.AddEffect(whethereffect);
+        cardAsset.AllIdCards.Add(xiangshen);
     }
     //“手动”加载全部件 可能是暂定
     void MagicPartInit()

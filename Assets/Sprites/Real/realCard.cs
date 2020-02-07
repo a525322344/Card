@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+public enum RealCardState
+{
+    Other,
+    RealCard,
+    AwardCard,
+}
 public enum HandCardState
 {
     Draw,
@@ -50,6 +56,7 @@ public class realCard : MonoBehaviour
     /// 记录初始信息
     private Vector3 localpositionStart;
 
+    public RealCardState realCardState = RealCardState.Other;
     public HandCardState handCardState = HandCardState.Other;
 
     private Vector3 startmeshsalce;
@@ -58,7 +65,6 @@ public class realCard : MonoBehaviour
     {
         father = transform.parent;
         cardmesh = transform.GetChild(0);
-        //realCardMesh = GetComponent<RectTransform>();
         localpositionStart = transform.localPosition;
         handcardControll = father.parent.GetComponent<handcardControll>();
         startmeshsalce = cardmesh.localScale;
@@ -66,6 +72,20 @@ public class realCard : MonoBehaviour
     float timecount;
     // Update is called once per frame
     void Update()
+    {
+        switch (realCardState)
+        {
+            case RealCardState.RealCard:
+                realcardUpdate();
+                break;
+            case RealCardState.AwardCard:
+
+                break;
+        }
+
+    }
+
+    void realcardUpdate()
     {
         recesiveInfo();
         switch (handCardState)
@@ -77,7 +97,7 @@ public class realCard : MonoBehaviour
                 transform.DORotate(new Vector3(0, 0, adjustAngle), cardrotateTime);
                 transform.DOScale(Vector3.one, scalechangeTime);
                 //transform.localPosition = localpositionStart + Vector3.forward * handorder * deviationZ;
-                transform.DOLocalMove(localpositionStart+Vector3.forward*handorder*deviationZ, handswayTime);
+                transform.DOLocalMove(localpositionStart + Vector3.forward * handorder * deviationZ, handswayTime);
 
                 break;
             case HandCardState.Enter:
@@ -87,9 +107,9 @@ public class realCard : MonoBehaviour
                 transform.DOMoveY(init_cardLocalPosiY + enter_cardPosiYSet + enter_cardPosiYFloatUp, floatupTime);
                 break;
             case HandCardState.Select:
-                Vector3 mouseposition = Input.mousePosition; 
-                mouseposition = Camera.main.ScreenToWorldPoint(new Vector3(mouseposition.x,mouseposition.y,instantiateManager.instance.battleuiRoot.uiCanvas.planeDistance));
-                transform.DOMove(mouseposition+Vector3.back*1,0);
+                Vector3 mouseposition = Input.mousePosition;
+                mouseposition = Camera.main.ScreenToWorldPoint(new Vector3(mouseposition.x, mouseposition.y, instantiateManager.instance.battleuiRoot.uiCanvas.planeDistance));
+                transform.DOMove(mouseposition + Vector3.back * 1, 0);
                 transform.DOScale(Vector3.one, 0.1f);
 
                 cardmesh.localPosition = Vector3.zero;
@@ -98,7 +118,7 @@ public class realCard : MonoBehaviour
                 {
                     handCardState = HandCardState.SelectOut;
 
-                    cardmesh.SetParent(cardmesh.parent.parent,true);
+                    cardmesh.SetParent(cardmesh.parent.parent, true);
                     cardmesh.DOMove(handcardControll.showCardPosition.position, 0.1f);
                     cardmesh.DOScale(startmeshsalce * 2, 0.1f);
                     realcost.gameObject.SetActive(true);
@@ -111,13 +131,13 @@ public class realCard : MonoBehaviour
                 mouseposition = Input.mousePosition;
                 mouseposition = Camera.main.ScreenToWorldPoint(new Vector3(mouseposition.x, mouseposition.y, instantiateManager.instance.battleuiRoot.uiCanvas.planeDistance));
                 transform.DOMove(mouseposition + Vector3.back * 1, 0);
-                transform.DOScale(Vector3.one*1.1f, 0.1f);
+                transform.DOScale(Vector3.one * 1.1f, 0.1f);
 
                 if (IsOutOfHandPlace() == false)
                 {
                     handCardState = HandCardState.Select;
 
-                    cardmesh.SetParent(transform,true); 
+                    cardmesh.SetParent(transform, true);
                     cardmesh.localPosition = Vector3.zero;
                     cardmesh.localScale = startmeshsalce;
                     realcost.gameObject.SetActive(false);
@@ -126,8 +146,9 @@ public class realCard : MonoBehaviour
         }
     }
     //供创建时使用
-    public void SetThiscard(card playerCard)
+    public void SetThiscard(card playerCard,RealCardState _realCardState)
     {
+        realCardState = _realCardState;
         thisCard = playerCard;
         nameText.text = playerCard.Name;
         describeText.text = playerCard.Describe;
@@ -180,7 +201,7 @@ public class realCard : MonoBehaviour
         realcost.gameObject.SetActive(false);
 
     }
-
+    //牌从卡组抽出来、动画效果
     public void ShowDraw()
     {
         DOTween.To(() => timecount, a => timecount = a, 1, 0.1f).OnComplete(() =>
