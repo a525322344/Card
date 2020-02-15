@@ -46,6 +46,10 @@ public static class ReactionListController
                 return reactListToLinkRandom;
             case EventKind.Event_Whether:
                 return reactListToWhether;
+            case EventKind.Event_DisOneCard:
+                return reactListToDisOneCard;
+            case EventKind.Event_DisSomeCard:
+                return reactListToDisSomeCard;
             //更新
             default:
                 Debug.Log("错误，没有写这个效果的额外效果表");
@@ -74,6 +78,8 @@ public static class ReactionListController
     private static List<Reaction> reactListToRoundEndDisCard = new List<Reaction>();
     private static List<Reaction> reactListToLinkRandom = new List<Reaction>();
     private static List<Reaction> reactListToWhether = new List<Reaction>();
+    private static List<Reaction> reactListToDisOneCard = new List<Reaction>();
+    private static List<Reaction> reactListToDisSomeCard = new List<Reaction>();
     //更新
 }
 

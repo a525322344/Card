@@ -24,3 +24,12 @@ public class Judge_EnemyWillAttack : judgeCondition
         describe = "敌人意图攻击";
     }
 }
+
+public class Judge_HaveSelectedHandCard : judgeCondition
+{
+    public Judge_HaveSelectedHandCard()
+    {
+        param = 0;
+        whetherDele = AllAsset.judgeAsset.HaveSelectHandCard;
+    }
+}

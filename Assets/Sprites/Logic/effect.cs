@@ -11,7 +11,7 @@ public enum EventKind
     Event_Damage,               //伤害
     Event_Armor,                //护甲
     Event_PlayCard,             //打出卡片,"抽象效果"
-    Event_Discard,              //弃牌     "抽象效果"
+    Event_Discard,              //弃牌     "系统抽象效果"
     Event_DrawCard,             //抽牌(repeat)
     Event_DrawACard,            //抽一张牌
     Event_RoundStartDrawCard,   //回合开始抽牌
@@ -24,7 +24,9 @@ public enum EventKind
     Event_EnemyGetBurn,         //获得灼烧  "抽象效果"
     Event_EnemyBurnDamage,      //灼烧伤害(穿透
     Event_LinkRandom,           //随机链接
-    Event_Whether               //条件效果
+    Event_Whether,              //条件效果
+    Event_DisOneCard,           //弃一张卡
+    Event_DisSomeCard           //卡牌弃卡
 }
 
 //对卡牌效果的委托
@@ -72,6 +74,9 @@ public abstract class EffectBase
     }
     //条件效果
     public bool b_judgeEffect = false;
+    //停顿效果
+    public bool b_stopEffect = false;
+    public DeleCardEffect preEffect;
     public List<judgeCondition> judgeConditions = new List<judgeCondition>();
     public bool JudgeWhether(battleInfo battleinfo)
     {
@@ -89,9 +94,6 @@ public abstract class EffectBase
     {
         judgeConditions.Add(judge);
     }
-    //停顿效果
-    public bool b_stopEffect = false;
-
 
 
     protected EventKind eventkind;          //该效果创建的事件类型
@@ -254,6 +256,7 @@ public class DrawCard : Repeat
         frontDesctibe = "抽";
         backDesctibe = "张牌";
     }
+
     public override string DescribeEffect()
     {
         string result = "";
@@ -350,6 +353,58 @@ public class CardEffect_Whether : cardEffectBase
     }
 }
 
+//停顿（选择）效果
+//选择弃一张卡
+public class CardEffect_DisACard : cardEffectBase
+{
+    public CardEffect_DisACard()
+    {
+        effectDele = AllAsset.effectAsset.DisCardASelectedCard;
+        num = 0;
+        eventkind = EventKind.Event_DisOneCard;
+    }
+    public override string DescribeEffect()
+    {
+        return "子效果，弃一张卡";
+    }
+}
+public class CardEffect_DisSomeCard : Repeat
+{
+    public CardEffect_DisSomeCard(int _num)
+    {
+        num = _num;
+        b_stopEffect = true;
+        b_hasChildEffect = true;
+        judgeConditions.Add(new Judge_HaveSelectedHandCard());
+        preEffect = AllAsset.effectAsset.PreSelectCard;
+        effectDele = AllAsset.effectAsset.PreSelectCard;
+        childeffects.Add(new CardEffect_DisACard());
+        eventkind = EventKind.Event_DisSomeCard;
+
+        frontDesctibe = "弃";
+        backDesctibe = "张卡";
+    }
+
+    public override string DescribeEffect()
+    {
+        string result = "";
+        result += frontDesctibe;
+        if (mixnum > num)
+        {
+            result += colorGreen + mixnum + colorEnd;
+        }
+        else if (mixnum < num)
+        {
+            result += colorRed + mixnum + colorEnd;
+        }
+        else
+        {
+            result += mixnum;
+        }
+        result += backDesctibe;
+        return result;
+    }
+}
 
 
 public class CardEffect_DisCard : cardEffectBase

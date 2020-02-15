@@ -10,6 +10,7 @@ public abstract class singleEvent
     public virtual void prepareEvent() { }
     public virtual void insertEvent() { }
     public virtual void dealEvent(battleInfo battleInfo) { }
+    public virtual bool isStopEffect() { return m_effect.b_stopEffect; }
 
     public abstract void recesiveNotice();
     public bool b_logoutAfterDeal = true;
@@ -19,6 +20,8 @@ public abstract class singleEvent
     public bool b_haveJudgeEvent;
     public List<singleEvent> childEvents = new List<singleEvent>();
     public List<Reaction> EventReactionList = new List<Reaction>();
+    //效果类
+    public EffectBase m_effect;
 }
 
 //系统事件，比如回合开始抽卡；回合结束弃卡；回合开始护甲归零
@@ -92,8 +95,8 @@ public class SystemEvent : singleEvent
         insertEvent();
         m_effect.DealEffect(m_effect.mixnum, battleInfo);
     }
-    //效果类
-    private EffectBase m_effect;
+
+
     //强化效果表
     private List<extraEffectBase> m_extraEffectList = new List<extraEffectBase>();
     //场景战场信息
@@ -242,8 +245,6 @@ public class EffectEvent : singleEvent
         }
     }
 
-    //效果类
-    public EffectBase m_effect;
     //强化效果表
     private List<extraEffectBase> m_extraEffectList = new List<extraEffectBase>();
     //父类事件
@@ -331,6 +332,11 @@ public class CardEvent : singleEvent
             }                    
         }
     }
+
+    public override bool isStopEffect()
+    {
+        return false;
+    }
     public string EventCardDescribe()
     {
         return playercard.CardDescribe();
@@ -390,6 +396,10 @@ public class ActionEvent:singleEvent
         prepareEvent();
         insertEvent();
     }
+    public override bool isStopEffect()
+    {
+        return false;
+    }
 }
 //状态事件
 public class StateEvent : singleEvent
@@ -444,7 +454,6 @@ public class StateEvent : singleEvent
         }
     }
 
-    public EffectBase m_effect;
     public stateAbstarct m_state;
     public List<extraEffectBase> m_extraEffectList = new List<extraEffectBase>();
 }

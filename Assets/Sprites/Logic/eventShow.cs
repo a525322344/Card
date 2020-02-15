@@ -6,7 +6,8 @@ public enum EVENTSTATE
 {
     Wait,
     Do,
-    Over
+    Stop,
+    Over,
 }
 public abstract class ShowAbstract
 {
@@ -23,24 +24,36 @@ public class EventShow
         belongEventShows = belongList;
         state = EVENTSTATE.Wait;
 
-        //if (thisevent.b_haveChildEvent)
-        //{
-        //    foreach (singleEvent childevent in thisevent.childEvents)
-        //    {
-        //        childevent.b_logoutAfterDeal = false;
-        //        belongEventShows.Add(new EventShow(childevent,belongEventShows));
-        //    }
-        //}
         StartToDo = new deleToDo(() => { });
         EndToDo = new deleToDo(() => { });
     }
-    public bool upDateEvent()
+    public bool upDateEvent(battleInfo battleinfo)
     {
         switch (state)
         {
             case EVENTSTATE.Wait:
+                Debug.Log("wait");
                 StartToDo();
-                state = EVENTSTATE.Do;
+                
+                if (thisevent.isStopEffect())
+                {
+                    //要去控制总输入暂时停止
+                    state = EVENTSTATE.Stop;
+                }
+                else
+                {
+                    Debug.Log("do");
+                    state = EVENTSTATE.Do;
+                }
+                break;
+            case EVENTSTATE.Stop:
+                //如果达成停顿条件，结束Stop状态
+                Debug.Log("wait");
+                if (thisevent.m_effect.JudgeWhether(battleinfo))
+                {
+                    Debug.Log("do");
+                    state = EVENTSTATE.Do;
+                }
                 break;
             case EVENTSTATE.Do:
                 if (timecursor < 1)
@@ -53,6 +66,7 @@ public class EventShow
                 }
                 break;
             case EVENTSTATE.Over:
+                Debug.Log("end");
                 EndToDo();
                 return true;
         }
@@ -61,7 +75,7 @@ public class EventShow
 
     public deleToDo StartToDo;
     public deleToDo EndToDo;
-    public float lasttime=5;
+    public float lasttime=0.1f;
     public float timecursor;
     public singleEvent thisevent;
     private List<EventShow> belongEventShows = new List<EventShow>();

@@ -145,6 +145,15 @@ namespace AllAsset
                 rp.exitLinkPart();
             }
         }
+
+        public static void PreSelectCard(int num,battleInfo battleinfo)//准备弃卡
+        {
+
+        }
+        public static void DisCardASelectedCard(int num,battleInfo battleinfo)
+        {
+            gameManager.Instance.battlemanager.deleteHandCard(num);
+        }
     }
     //声明所有的额外强化效果
     public static class extraAsset
@@ -159,6 +168,10 @@ namespace AllAsset
         public static bool EnemyWillAttack(int num,battleInfo battleinfo)
         {
             return ActionOperation.IsActionHasAttack(gameManager.Instance.battlemanager.battleInfo.enemyAction);
+        }
+        public static bool HaveSelectHandCard(int num,battleInfo battleinfo)
+        {
+            return false;//battleinfo.selectHandCard != -1;
         }
     }
     //声明所有的卡牌

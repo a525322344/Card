@@ -96,28 +96,21 @@ public class EventManager
     {
         nowEventShowList = eventShows;
         nowEventShow = eventShows[eventCursor];
-        switch (eventShows[eventCursor].state)
+
+        if (eventShows[eventCursor].upDateEvent(battleManager.battleInfo))
         {
-            case EVENTSTATE.Wait:
-                eventShows[eventCursor].state = EVENTSTATE.Do;
-                eventShows[eventCursor].thisevent.dealEvent(battleManager.battleInfo);
-                break;
-            case EVENTSTATE.Do:
-                eventShows[eventCursor].upDateEvent();
-                eventShows[eventCursor].state = EVENTSTATE.Over;
-                break;
-            case EVENTSTATE.Over:
-                if (eventShows[eventCursor].thisevent.b_logoutAfterDeal)
-                {
-                    eventShows.Remove(eventShows[eventCursor]);
-                }
-                else
-                {
-                    eventShows[eventCursor].state = EVENTSTATE.Wait;
-                    eventCursor++;
-                }
-                break;
+            eventShows[eventCursor].thisevent.dealEvent(battleManager.battleInfo);
+            if (eventShows[eventCursor].thisevent.b_logoutAfterDeal)
+            {
+                eventShows.Remove(eventShows[eventCursor]);
+            }
+            else
+            {
+                eventShows[eventCursor].state = EVENTSTATE.Wait;
+                eventCursor++;
+            }
         }
+
     }
 
     public void InsertEvent(singleEvent singleevent){

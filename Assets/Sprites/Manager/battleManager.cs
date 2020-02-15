@@ -27,6 +27,7 @@ public class battleInfo
     //敌人的意图
     public actionAbstract enemyAction;
     //选择的手牌
+    public int selectHandCard = -1;
     public List<int> selectedHandCards = new List<int>();
     //是否得到确认
     public bool selectedConfirm = false;
@@ -117,6 +118,9 @@ public class battleManager : MonoBehaviour
         //初始化battleinfo
         battleInfo=new battleInfo(playerinfo);
         battleInfo.Enemy = realenemy.enemy;
+
+        realCardList = gameManager.Instance.instantiatemanager.battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards;
+
         //battleInfoShow.Init(playerinfo);
         //SetEnemyShow();
         //注册回合抽牌事件
@@ -200,13 +204,12 @@ public class battleManager : MonoBehaviour
     //丢弃全部手牌
     public void deleteAllHandCard()
     {
-        List<realCard> realCards = gameManager.Instance.instantiatemanager.battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards;
-        for(int i = realCards.Count - 1; i >= 0; i--)
+        for(int i = realCardList.Count - 1; i >= 0; i--)
         {
-            realCard indexrealcard = realCards[i];
-            dickHandCard.Remove((playerCard)realCards[i].thisCard);
-            dickDiscard.Add((playerCard)realCards[i].thisCard);
-            realCards.Remove(realCards[i]);
+            realCard indexrealcard = realCardList[i];
+            dickHandCard.Remove((playerCard)realCardList[i].thisCard);
+            dickDiscard.Add((playerCard)realCardList[i].thisCard);
+            realCardList.Remove(realCardList[i]);
             Destroy(indexrealcard.transform.parent.gameObject);
         }
     }
@@ -215,8 +218,16 @@ public class battleManager : MonoBehaviour
     {
         dickHandCard.Remove((playerCard)real.thisCard);
         dickDiscard.Add((playerCard)real.thisCard);
-        gameManager.Instance.instantiatemanager.battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards.Remove(real);
+        realCardList.Remove(real);
         Destroy(real.transform.parent.gameObject);
+    }
+    public void deleteHandCard(int num)
+    {
+        realCard todiscard = realCardList[num];
+        dickHandCard.Remove((playerCard)todiscard.thisCard);
+        dickDiscard.Add((playerCard)todiscard.thisCard);
+        realCardList.Remove(todiscard);
+        Destroy(todiscard.transform.parent.gameObject);
     }
     //怪物回合结束的事
     public void EndEnemyRound()
