@@ -17,4 +17,6 @@ public class battleUIRoot : MonoBehaviour
     //意图的位置
     public Transform actionTran;
     public List<Transform> parttransforms = new List<Transform>();
+    //弃卡选择框的位置
+    public Transform waitSelectCard;
 }

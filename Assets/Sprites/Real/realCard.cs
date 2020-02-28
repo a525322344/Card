@@ -14,13 +14,18 @@ public enum HandCardState
     Draw,
     DisCard,
     Freedom,
-    Enter,
-    Select,
+    Enter,                  //光标飘在卡上，卡片放大
+    Select,                 //点选到
     SelectOut,
+    WaitToSelectFree,       //等待点选到选卡区
+    WaitToSelectEnter,      //等待点选到选卡区，光标漂浮
+    InSelectBoard,          //处于选卡区
     Other
 }
 public class realCard : MonoBehaviour
 {
+    public int handorder;
+
     public handcardControll handcardControll;
     public realCost realcost;
     public Transform costtran;
@@ -29,13 +34,15 @@ public class realCard : MonoBehaviour
     //public RectTransform realCardMesh;
     public Text nameText;
     public Text describeText;
-
+    #region 表现参数
     // 旋转节点
     Transform father;
     Transform cardmesh;
+
+    Transform toSelectPointTran;
+    public Selection selection;
     // 根节点旋转角度
     private float adjustAngle;
-    public int handorder;
     private const float deviationZ = 10;
     //
 
@@ -55,7 +62,7 @@ public class realCard : MonoBehaviour
 
     /// 记录初始信息
     private Vector3 localpositionStart;
-
+    #endregion
     public RealCardState realCardState = RealCardState.Other;
     public HandCardState handCardState = HandCardState.Other;
 
@@ -93,14 +100,15 @@ public class realCard : MonoBehaviour
             case HandCardState.Draw:
                 break;
             case HandCardState.Freedom:
+            case HandCardState.WaitToSelectFree:
                 father.DORotate(new Vector3(0, 0, adjustAngle), handswayTime);
                 transform.DORotate(new Vector3(0, 0, adjustAngle), cardrotateTime);
                 transform.DOScale(Vector3.one, scalechangeTime);
                 //transform.localPosition = localpositionStart + Vector3.forward * handorder * deviationZ;
                 transform.DOLocalMove(localpositionStart + Vector3.forward * handorder * deviationZ, handswayTime);
-
                 break;
             case HandCardState.Enter:
+            case HandCardState.WaitToSelectEnter:
                 father.DORotate(new Vector3(0, 0, adjustAngle), handswayTime);
                 transform.DORotate(Vector3.zero, cardrotateTime);
                 transform.DOScale(Vector3.one * enter_cardScaleMultiple, scalechangeTime);
@@ -126,6 +134,9 @@ public class realCard : MonoBehaviour
                     handcardControll.SelectCardOut();
                 }
 
+                break;
+            case HandCardState.InSelectBoard:
+                //卡牌飘到选择区
                 break;
             case HandCardState.SelectOut:
                 mouseposition = Input.mousePosition;
@@ -211,7 +222,11 @@ public class realCard : MonoBehaviour
         transform.position = gameManager.Instance.instantiatemanager.battleuiRoot.dicktran.position;
         handCardState = HandCardState.Draw;
     }
-
+    //用于进入等待选择状态
+    public void EnterStateWaitSelect()
+    {
+        handCardState = HandCardState.WaitToSelectFree;
+    }
     private bool IsOutOfHandPlace()
     {
         if (Vector3.Distance(transform.position, handcardControll.handPlace.position) > handcardControll.handPlace.localScale.x / 2 * handcardControll.handPlace.parent.parent.localScale.x)
@@ -236,7 +251,11 @@ public class realCard : MonoBehaviour
                 {
                     handCardState = HandCardState.Enter;
                     transform.position = new Vector3(transform.position.x, init_cardLocalPosiY + enter_cardPosiYSet, transform.position.z);
-                }               
+                }
+                break;
+            case HandCardState.WaitToSelectFree:
+                handCardState = HandCardState.WaitToSelectEnter;
+                transform.position = new Vector3(transform.position.x, init_cardLocalPosiY + enter_cardPosiYSet, transform.position.z);
                 break;
             case HandCardState.Select:
 
@@ -255,8 +274,11 @@ public class realCard : MonoBehaviour
                     handCardState = HandCardState.Freedom;
                 }               
                 break;
+            case HandCardState.WaitToSelectEnter:
+            case HandCardState.WaitToSelectFree:
+                handCardState = HandCardState.WaitToSelectFree;
+                break;
             case HandCardState.Select:
-
                 break;
         }
     }
@@ -268,8 +290,19 @@ public class realCard : MonoBehaviour
                 handCardState = HandCardState.Select;
                 handcardControll.SetSelectCard(this);
                 break;
-            case HandCardState.Freedom:
-                
+            case HandCardState.WaitToSelectEnter:
+                //被选到
+                gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard.selectOne(handorder, out selection);
+                handCardState = HandCardState.InSelectBoard;
+                break;
+            case HandCardState.InSelectBoard:
+                //取消选择
+                selection.b_isNull = true;
+                selection.saveCardnum = -1;
+                selection = null;
+                handCardState = HandCardState.WaitToSelectFree;
+                break;
+            case HandCardState.Freedom:               
                 break;
             case HandCardState.Select:
 

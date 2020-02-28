@@ -376,7 +376,7 @@ public class CardEffect_DisSomeCard : Repeat
         b_stopEffect = true;
         b_hasChildEffect = true;
         judgeConditions.Add(new Judge_HaveSelectedHandCard());
-        preEffect = AllAsset.effectAsset.PreSelectCard;
+        //preEffect = AllAsset.effectAsset.PreSelectCard;
         effectDele = AllAsset.effectAsset.PreSelectCard;
         childeffects.Add(new CardEffect_DisACard());
         eventkind = EventKind.Event_DisSomeCard;

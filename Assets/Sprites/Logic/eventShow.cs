@@ -32,7 +32,7 @@ public class EventShow
         switch (state)
         {
             case EVENTSTATE.Wait:
-                Debug.Log("wait");
+                //Debug.Log("wait");
                 StartToDo();
                 
                 if (thisevent.isStopEffect())
@@ -42,16 +42,16 @@ public class EventShow
                 }
                 else
                 {
-                    Debug.Log("do");
+                    //Debug.Log("do");
                     state = EVENTSTATE.Do;
                 }
                 break;
             case EVENTSTATE.Stop:
                 //如果达成停顿条件，结束Stop状态
-                Debug.Log("wait");
+                //Debug.Log("wait");
                 if (thisevent.m_effect.JudgeWhether(battleinfo))
                 {
-                    Debug.Log("do");
+                    //Debug.Log("do");
                     state = EVENTSTATE.Do;
                 }
                 break;
@@ -66,7 +66,7 @@ public class EventShow
                 }
                 break;
             case EVENTSTATE.Over:
-                Debug.Log("end");
+               // Debug.Log("end");
                 EndToDo();
                 return true;
         }

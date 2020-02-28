@@ -28,6 +28,9 @@ public class instantiateManager : MonoBehaviour
     public List<GameObject> placeGOs = new List<GameObject>();
     public List<GameObject> MonsterAll = new List<GameObject>();
 
+    //弃卡选择框
+    public GameObject waitSelectBoardGO;
+
     public Camera Encamera;
     public Camera UIcamera;
 
@@ -65,5 +68,13 @@ public class instantiateManager : MonoBehaviour
         realEnemy realenemy = monster.GetComponent<realEnemy>();
         realenemy.Init(moninfo);
         realEnemy = realenemy;
+    }
+
+    public void instanWaitSelectCardBoard(int num)
+    {
+        GameObject wscb = Instantiate(waitSelectBoardGO, battleuiRoot.waitSelectCard);
+        realWaitSelectBoard realWSB = wscb.GetComponent<realWaitSelectBoard>();
+        gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard = realWSB;
+        realWSB.InitWaitSelectCard(num);
     }
 }

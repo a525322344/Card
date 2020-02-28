@@ -97,9 +97,16 @@ public class EventManager
         nowEventShowList = eventShows;
         nowEventShow = eventShows[eventCursor];
 
+        //先执行一次效果
+        if (eventShows[eventCursor].state == EVENTSTATE.Wait)
+        {
+            //
+            eventShows[eventCursor].thisevent.dealEvent(battleManager.battleInfo);
+        }
+        //在做事件结束判断
         if (eventShows[eventCursor].upDateEvent(battleManager.battleInfo))
         {
-            eventShows[eventCursor].thisevent.dealEvent(battleManager.battleInfo);
+            
             if (eventShows[eventCursor].thisevent.b_logoutAfterDeal)
             {
                 eventShows.Remove(eventShows[eventCursor]);

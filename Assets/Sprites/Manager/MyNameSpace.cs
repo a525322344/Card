@@ -148,7 +148,7 @@ namespace AllAsset
 
         public static void PreSelectCard(int num,battleInfo battleinfo)//准备弃卡
         {
-
+            gameManager.Instance.battlemanager.preWaitToDiscard(num);
         }
         public static void DisCardASelectedCard(int num,battleInfo battleinfo)
         {

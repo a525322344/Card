@@ -27,6 +27,7 @@ public class battleInfo
     //敌人的意图
     public actionAbstract enemyAction;
     //选择的手牌
+    public realWaitSelectAB realWaitSelectCard;
     public int selectHandCard = -1;
     public List<int> selectedHandCards = new List<int>();
     //是否得到确认
@@ -228,6 +229,17 @@ public class battleManager : MonoBehaviour
         dickDiscard.Add((playerCard)todiscard.thisCard);
         realCardList.Remove(todiscard);
         Destroy(todiscard.transform.parent.gameObject);
+    }
+
+    public void preWaitToDiscard(int num)
+    {
+        //生成选卡框
+        instantiatemanager.instanWaitSelectCardBoard(num);
+        //使所有手牌成为等待丢弃状态
+        foreach(realCard rc in realCardList)
+        {
+            rc.EnterStateWaitSelect();
+        }
     }
     //怪物回合结束的事
     public void EndEnemyRound()

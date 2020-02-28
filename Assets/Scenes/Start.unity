@@ -133,7 +133,6 @@ GameObject:
   - component: {fileID: 828882826}
   - component: {fileID: 828882827}
   - component: {fileID: 828882828}
-  - component: {fileID: 828882829}
   m_Layer: 0
   m_Name: gamemanager
   m_TagString: Untagged
@@ -212,6 +211,8 @@ MonoBehaviour:
   - {fileID: 3287210646327940154, guid: b614d08c43a888f45be886bd5c48019f, type: 3}
   MonsterAll:
   - {fileID: 5888839611947553217, guid: b8a1fffdee2d37643b90617a01b8d310, type: 3}
+  waitSelectBoardGO: {fileID: 8728863353477294464, guid: 7babce6b90d3596479f89d6c1d6a1df6,
+    type: 3}
   Encamera: {fileID: 0}
   UIcamera: {fileID: 0}
 --- !u!114 &828882827
@@ -240,21 +241,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roundEndButton: {fileID: 0}
---- !u!114 &828882829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 828882823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 370e5fcf8d802a2499e1a297f780774e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  a: 0
-  show: []
-  other: []
 --- !u!1 &864516335
 GameObject:
   m_ObjectHideFlags: 0

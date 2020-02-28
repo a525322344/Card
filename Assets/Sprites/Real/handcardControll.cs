@@ -108,7 +108,7 @@ public class handcardControll : MonoBehaviour
         for (int i = 0; i < playerHandCards.Count; i++)
         {
             float angle;
-            if (playerHandCards[i].handCardState == HandCardState.Enter)
+            if (playerHandCards[i].handCardState == HandCardState.Enter||playerHandCards[i].handCardState==HandCardState.WaitToSelectEnter)
             {
                 needAbdicate = true;
                 angle = (angleIndex + i) * betweenAngle;

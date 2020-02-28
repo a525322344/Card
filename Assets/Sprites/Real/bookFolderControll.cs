@@ -22,25 +22,28 @@ public class bookFolderControll : MonoBehaviour
     void Update()
     {
         //to update gamestate
-        if (gameManager.Instance.battlemanager)
+        if (gameManager.Instance)
         {
-            if (gameManager.Instance.battlemanager.b_isSelectCard)
+            if (gameManager.Instance.battlemanager)
             {
-                if (b_alreadyToShow)
+                if (gameManager.Instance.battlemanager.b_isSelectCard)
                 {
-                    b_alreadyToShow = false;
-                    StopCoroutine("IEtoShow");
+                    if (b_alreadyToShow)
+                    {
+                        b_alreadyToShow = false;
+                        StopCoroutine("IEtoShow");
+                    }
+                    b_toshow = true;
                 }
-                b_toshow = true;
-            }
-            else
-            {
-                if (!b_alreadyToShow)
+                else
                 {
-                    b_alreadyToShow = true;
-                    StartCoroutine("IEtoShow");
+                    if (!b_alreadyToShow)
+                    {
+                        b_alreadyToShow = true;
+                        StartCoroutine("IEtoShow");
+                    }
+                    //b_toshow = false;
                 }
-                //b_toshow = false;
             }
         }
 
