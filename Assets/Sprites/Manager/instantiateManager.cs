@@ -30,6 +30,7 @@ public class instantiateManager : MonoBehaviour
 
     //弃卡选择框
     public GameObject waitSelectBoardGO;
+    public GameObject waitSelectBoard;
 
     public Camera Encamera;
     public Camera UIcamera;
@@ -70,11 +71,19 @@ public class instantiateManager : MonoBehaviour
         realEnemy = realenemy;
     }
 
-    public void instanWaitSelectCardBoard(int num)
+    public void instanWaitSelectCardBoard(int num,singleEvent single)
     {
-        GameObject wscb = Instantiate(waitSelectBoardGO, battleuiRoot.waitSelectCard);
-        realWaitSelectBoard realWSB = wscb.GetComponent<realWaitSelectBoard>();
-        gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard = realWSB;
-        realWSB.InitWaitSelectCard(num);
+        if (waitSelectBoard)
+        {
+            waitSelectBoard.SetActive(true);
+            waitSelectBoard.GetComponent<realWaitSelectBoard>().InitWaitSelectCard(num, single);
+        }
+        else
+        {
+            waitSelectBoard = Instantiate(waitSelectBoardGO, battleuiRoot.waitSelectCard);
+            realWaitSelectBoard realWSB = waitSelectBoard.GetComponent<realWaitSelectBoard>();
+            gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard = realWSB;
+            realWSB.InitWaitSelectCard(num, single);
+        }
     }
 }

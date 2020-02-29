@@ -190,7 +190,14 @@ public class EffectEvent : singleEvent
     public override void dealEvent(battleInfo battleInfo)
     {
         m_effect.DealEffect(m_effect.mixnum, battleInfo);
-        Debug.Log("效果：" + m_effect.DescribeEffect());
+        if (m_effect.b_hasChildEffect)
+        {
+            Debug.Log("描述：" + m_effect.DescribeEffect());
+        }
+        else
+        {
+            Debug.Log("效果：" + m_effect.DescribeEffect());
+        }
     }
     //设置影响效果，执行反应事件
     public override void recesiveNotice()

@@ -97,6 +97,7 @@ public class EventManager
         nowEventShowList = eventShows;
         nowEventShow = eventShows[eventCursor];
 
+        battleManager.battleInfo.nowEvent = eventShows[eventCursor].thisevent;
         //先执行一次效果
         if (eventShows[eventCursor].state == EVENTSTATE.Wait)
         {

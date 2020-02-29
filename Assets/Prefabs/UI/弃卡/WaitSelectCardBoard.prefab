@@ -167,7 +167,7 @@ Transform:
   m_GameObject: {fileID: 8728863353279585646}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 200, y: 300, z: 1}
+  m_LocalScale: {x: 250, y: 340, z: 1}
   m_Children: []
   m_Father: {fileID: 8728863352151064224}
   m_RootOrder: 0
@@ -264,9 +264,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitSelectNum: 3
-  distance: 160
+  distance: 200
   CardPointGB: {fileID: 3222686186703433092, guid: 4f27dc99ccfc46147a58cf0decf8ad8a,
     type: 3}
   board: {fileID: 8728863352151064224}
   cardPosition: {fileID: 8728863353143148993}
-  cardpointTrans: []

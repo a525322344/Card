@@ -52,6 +52,7 @@ public class EventShow
                 if (thisevent.m_effect.JudgeWhether(battleinfo))
                 {
                     //Debug.Log("do");
+                    battleinfo.realWaitSelectCard.OnComplete();
                     state = EVENTSTATE.Do;
                 }
                 break;

@@ -137,6 +137,11 @@ public class realCard : MonoBehaviour
                 break;
             case HandCardState.InSelectBoard:
                 //卡牌飘到选择区
+                father.DORotate(new Vector3(0, 0, 0), 0.1f);
+                transform.DORotate(new Vector3(0, 0, 0), 0.1f);
+                transform.DOScale(Vector3.one, 0.1f);
+                //transform.localPosition = localpositionStart + Vector3.forward * handorder * deviationZ;
+                transform.DOMove(selection.PositionTran.position, 0.15f);
                 break;
             case HandCardState.SelectOut:
                 mouseposition = Input.mousePosition;
@@ -227,6 +232,10 @@ public class realCard : MonoBehaviour
     {
         handCardState = HandCardState.WaitToSelectFree;
     }
+    public void ExitStateWaitSelect()
+    {
+        handCardState = HandCardState.Freedom;
+    }
     private bool IsOutOfHandPlace()
     {
         if (Vector3.Distance(transform.position, handcardControll.handPlace.position) > handcardControll.handPlace.localScale.x / 2 * handcardControll.handPlace.parent.parent.localScale.x)
@@ -292,8 +301,10 @@ public class realCard : MonoBehaviour
                 break;
             case HandCardState.WaitToSelectEnter:
                 //被选到
-                gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard.selectOne(handorder, out selection);
-                handCardState = HandCardState.InSelectBoard;
+                if(gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard.SelectOne(handorder, out selection))
+                {
+                    handCardState = HandCardState.InSelectBoard;
+                }
                 break;
             case HandCardState.InSelectBoard:
                 //取消选择

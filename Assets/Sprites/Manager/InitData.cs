@@ -56,7 +56,7 @@ public class InitData : MonoBehaviour
         playerCard shanguangbaolie = new playerCard(9, "闪光爆裂", CardKind.PlayerCard, 1);
         shanguangbaolie.AddEffect(new Damage(8));
         shanguangbaolie.AddEffect(new DrawCard(1));
-        shanguangbaolie.AddEffect(new CardEffect_DisSomeCard(1));
+        shanguangbaolie.AddEffect(new CardEffect_DisSomeCard(3));
         cardAsset.AllIdCards.Add(shanguangbaolie);
         
     }

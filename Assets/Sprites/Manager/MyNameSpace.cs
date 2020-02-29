@@ -171,7 +171,7 @@ namespace AllAsset
         }
         public static bool HaveSelectHandCard(int num,battleInfo battleinfo)
         {
-            return false;//battleinfo.selectHandCard != -1;
+            return gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard.IsFinishSelect();
         }
     }
     //声明所有的卡牌

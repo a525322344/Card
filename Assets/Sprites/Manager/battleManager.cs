@@ -24,6 +24,8 @@ public class battleInfo
     public pawnbase Player;            //玩家自己
     //已经链接了的部件
     public List<realpart> havenLinkParts = new List<realpart>();
+    //当前事件
+    public singleEvent nowEvent;
     //敌人的意图
     public actionAbstract enemyAction;
     //选择的手牌
@@ -234,7 +236,7 @@ public class battleManager : MonoBehaviour
     public void preWaitToDiscard(int num)
     {
         //生成选卡框
-        instantiatemanager.instanWaitSelectCardBoard(num);
+        instantiatemanager.instanWaitSelectCardBoard(num,battleInfo.nowEvent);
         //使所有手牌成为等待丢弃状态
         foreach(realCard rc in realCardList)
         {
