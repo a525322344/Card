@@ -62,11 +62,13 @@ public class realCard : MonoBehaviour
 
     /// 记录初始信息
     private Vector3 localpositionStart;
+    private Vector3 localpositionMesh;
+    private Vector3 startmeshsalce;
     #endregion
     public RealCardState realCardState = RealCardState.Other;
     public HandCardState handCardState = HandCardState.Other;
 
-    private Vector3 startmeshsalce;
+
 
     void Start()
     {
@@ -75,6 +77,7 @@ public class realCard : MonoBehaviour
         localpositionStart = transform.localPosition;
         handcardControll = father.parent.GetComponent<handcardControll>();
         startmeshsalce = cardmesh.localScale;
+        localpositionMesh = cardmesh.localPosition;
     }
     float timecount;
     // Update is called once per frame
@@ -212,7 +215,7 @@ public class realCard : MonoBehaviour
         transform.position = cardmesh.position;
         handCardState = HandCardState.Freedom;
         cardmesh.SetParent(transform, true);
-        cardmesh.localPosition = Vector3.zero;
+        cardmesh.localPosition = localpositionMesh;
         cardmesh.localScale = startmeshsalce;
         realcost.gameObject.SetActive(false);
 

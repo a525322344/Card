@@ -52,7 +52,7 @@ public class InitData : MonoBehaviour
         cardEffectBase whethereffect = new CardEffect_Whether(new Judge_EnemyWillAttack(), new DrawCard(3));
         xiangshen.AddEffect(whethereffect);
         cardAsset.AllIdCards.Add(xiangshen);
-        //1费 闪光爆裂 打8，抽1，弃1
+        //1费 闪光爆裂 打8，抽1，弃3
         playerCard shanguangbaolie = new playerCard(9, "闪光爆裂", CardKind.PlayerCard, 1);
         shanguangbaolie.AddEffect(new Damage(8));
         shanguangbaolie.AddEffect(new DrawCard(1));
