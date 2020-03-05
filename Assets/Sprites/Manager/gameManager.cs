@@ -57,11 +57,6 @@ public class gameManager : MonoBehaviour
         GameStartInit();
     }
 
-    void Update()
-    {
-        
-    }
-
     private void GameStartInit()
     {
         //初始化玩家数据

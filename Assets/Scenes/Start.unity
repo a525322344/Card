@@ -211,8 +211,10 @@ MonoBehaviour:
   - {fileID: 3287210646327940154, guid: b614d08c43a888f45be886bd5c48019f, type: 3}
   MonsterAll:
   - {fileID: 5888839611947553217, guid: b8a1fffdee2d37643b90617a01b8d310, type: 3}
+  - {fileID: 9148584800839085505, guid: 0cd54c6528d633944a6091a594569c7e, type: 3}
   waitSelectBoardGO: {fileID: 8728863353477294464, guid: 7babce6b90d3596479f89d6c1d6a1df6,
     type: 3}
+  waitSelectBoard: {fileID: 0}
   Encamera: {fileID: 0}
   UIcamera: {fileID: 0}
 --- !u!114 &828882827
