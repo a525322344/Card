@@ -26,6 +26,7 @@ public class monInfo_Slima : monsterInfo
         actionList.Add(new actionHurt(6));
         actionList.Add(new actionHurt(9));
         actionList.Add(new actionAdmix(new actionArmor(5), new actionHurt(5)));
+        //随机选取，但大概率不会连续两次一样
         selectAction = new selectWay((int x) =>
           {
               
@@ -40,6 +41,34 @@ public class monInfo_Slima : monsterInfo
               return result;
           });
     }
+}
 
-
+public class monInfo_Cat : monsterInfo
+{
+    private int actionorder = 0;
+    public monInfo_Cat()
+    {
+        name = "火云猫";
+        health = 60;
+        Id = 1;
+        monsterLevel = 1;
+        actionList.Add(new actionHurt(6));
+        actionList.Add(new actionHurt(9));
+        //顺序选择
+        selectAction = new selectWay((int x) =>
+          {
+              actionAbstract action;
+              if (actionorder < actionList.Count - 1)
+              {
+                  action = actionList[actionorder];
+                  actionorder++;
+              }
+              else
+              {
+                  action = actionList[0];
+                  actionorder = 1;
+              }
+              return action;
+          });
+    }
 }

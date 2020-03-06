@@ -192,10 +192,14 @@ namespace AllAsset
         {
             switch (id)
             {
-                case 1:
-                    return "myFirstBattle";
-                case 2:
+                case 0:
                     return "battleTest0";
+                case 1:
+                    return "battleScene_mounton";
+                case 2:
+                    return "battleScene_forest";
+                case 3:
+                    return "battleScene_snow";
                 default:
                     Debug.Log("没有设置");
                     return "";
