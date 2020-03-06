@@ -30,7 +30,7 @@ public class MapManager : MonoBehaviour
             Quaternion.identity,
             maprootinfo.placefolder
         );
-        place newplace = new battlePlace(new monInfo_Cat(), 3);
+        place newplace = new battlePlace(new monInfo_Cat(), 0);
         place.GetComponent<realPlace>().thisplace = newplace;
         placeList.Add(newplace);
         Debug.Log("init map");

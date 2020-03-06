@@ -192,6 +192,8 @@ namespace AllAsset
         {
             switch (id)
             {
+                case 0:
+                    return "battleTest0";
                 case 1:
                     return "battleScene_mounton";
                 case 2:

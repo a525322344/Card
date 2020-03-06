@@ -178,6 +178,7 @@ MonoBehaviour:
   instantiatemanager: {fileID: 0}
   mapmanager: {fileID: 0}
   uimanager: {fileID: 0}
+  InitControllBoard: {fileID: 11400000, guid: f2b122f796562a34d9e784dadc3b696c, type: 2}
 --- !u!114 &828882826
 MonoBehaviour:
   m_ObjectHideFlags: 0
