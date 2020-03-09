@@ -2,24 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cameraDown : MonoBehaviour
+public class ClickToStart : MonoBehaviour
 {
-    private Animator camDown;
-
+    private Animator start;
     void Start()
     {
-        camDown = gameObject.GetComponent<Animator>();
+        start = gameObject.GetComponent<Animator>();
     }
 
-
+    
     void Update()
     {
-        //按左键摄像机往下拉
+        //按下鼠标左键将动画机中的start设置为true；
         if (Input.GetMouseButton(0))
         {
             Debug.Log("按下左键");
-            camDown.SetBool("down", true);
+            start.SetBool("start",true);
         }
     }
 }
-
