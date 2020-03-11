@@ -50,9 +50,9 @@ public class shopPlace : place
     }
 }
 
-public class eventPlace : place
+public class befallPlace : place
 {
-    public eventPlace()
+    public befallPlace()
     {
 
     }

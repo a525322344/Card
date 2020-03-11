@@ -12,10 +12,17 @@ public class instantiateManager : MonoBehaviour
         }
     }
     private static instantiateManager _instance;
-
+    #region 实时获得隐藏
+    [HideInInspector]
     public battleUIRoot battleuiRoot;
+    [HideInInspector]
     public BattleEnvRoot battleEnvRoot;
+    [HideInInspector]
     public MapRootInfo mapRootInfo;
+
+    [HideInInspector]
+    public GameObject waitSelectBoard;
+    #endregion
 
     public Canvas uiCanvas;
     public GameObject partGO;
@@ -30,7 +37,7 @@ public class instantiateManager : MonoBehaviour
 
     //弃卡选择框
     public GameObject waitSelectBoardGO;
-    public GameObject waitSelectBoard;
+
 
     public Camera Encamera;
     public Camera UIcamera;

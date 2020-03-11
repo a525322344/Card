@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using AllAsset;
 
+public enum MapState
+{
+    MainMap,        //在主地图页面，主要可选行为：选择路径点
+    EventWindow,    //在事件子窗口上
+}
+
 public class MapManager : MonoBehaviour
 {
     public int allplacenum;
