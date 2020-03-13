@@ -166,7 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b73121ea4d121ce40a9fa60aa18943ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setInitCard: 00000000010000000200000003000000040000000500000006000000070000000800000009000000
   gameState: 0
   playerinfo:
     playerDick: []
@@ -194,6 +193,7 @@ MonoBehaviour:
   battleuiRoot: {fileID: 0}
   battleEnvRoot: {fileID: 0}
   mapRootInfo: {fileID: 0}
+  waitSelectBoard: {fileID: 0}
   uiCanvas: {fileID: 0}
   partGO: {fileID: 720710080346659454, guid: 673cb9c42b277c847a3874e73a951df3, type: 3}
   cardGO: {fileID: 3275276983107518619, guid: 33b522c1b475c084d851d50803293caa, type: 3}
@@ -206,16 +206,18 @@ MonoBehaviour:
   actionDefense: {fileID: 8073743595131508596, guid: 8f87929cb5db6b24184a4fb52379ee5b,
     type: 3}
   fireState: {fileID: 0}
-  placeGOs:
-  - {fileID: 7473912976335411382, guid: fb171f12859960f4c915f2e0ecc4b270, type: 3}
-  - {fileID: 3479683215994176773, guid: 098a55ca4c6ed5d4189632351b962652, type: 3}
-  - {fileID: 3287210646327940154, guid: b614d08c43a888f45be886bd5c48019f, type: 3}
   MonsterAll:
   - {fileID: 5888839611947553217, guid: b8a1fffdee2d37643b90617a01b8d310, type: 3}
   - {fileID: 9148584800839085505, guid: 0cd54c6528d633944a6091a594569c7e, type: 3}
+  placeGO: {fileID: 2426738077868084505, guid: 984eb8fafb51e3f40ad45e7a17dda140, type: 3}
+  beFallSprites:
+  - {fileID: 21300000, guid: fb4989e7e5d4d0f47ac63e102b591019, type: 3}
+  mapPlaceSprites:
+  - {fileID: 21300000, guid: d0d7574ba417a6049bd27c38cb033b21, type: 3}
+  - {fileID: 21300000, guid: 2e31a7ce20f061847b7df44a45870a03, type: 3}
+  - {fileID: 21300000, guid: db909e225d584a74da0fe7bb6060a298, type: 3}
   waitSelectBoardGO: {fileID: 8728863353477294464, guid: 7babce6b90d3596479f89d6c1d6a1df6,
     type: 3}
-  waitSelectBoard: {fileID: 0}
   Encamera: {fileID: 0}
   UIcamera: {fileID: 0}
 --- !u!114 &828882827
@@ -244,6 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roundEndButton: {fileID: 0}
+  uiBefallBoard: {fileID: 0}
 --- !u!1 &864516335
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,7 +748,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 828882828}
-        m_MethodName: InitEnterMap
+        m_MethodName: buttonEnterMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

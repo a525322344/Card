@@ -16,10 +16,15 @@ public class UImanager : MonoBehaviour
         gameManager.Instance.battlemanager.b_toEndRound = true;
     }
 
+    //加载地图场景时加载
+    public void InitMapUI()
+    {
+        uiBefallBoard = gameManager.Instance.instantiatemanager.mapRootInfo.uieventBoard;
+        uiBefallBoard.gameObject.SetActive(false);
+    }
 
-
-    //开始游戏
-    public void InitEnterMap()
+    //开始游戏按钮
+    public void buttonEnterMap()
     {
         //加载地图
         AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync("Map");
@@ -32,4 +37,5 @@ public class UImanager : MonoBehaviour
         });
         gameManager.Instance.mapManagerInit();
     }
+
 }

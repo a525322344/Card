@@ -9,20 +9,37 @@ public delegate void buttonTo();
 
 public class befallinfo
 {
-    public befallinfo()
+    public befallinfo(string _name,int textureint,string _describe)
     {
-
+        name = _name;
+        textureOrder = textureint;
+        describe = _describe;
     }
-    public string befallName;
+    public befallinfo(string _name, int textureint, string _describe,params buttoninfo[] buttoninfos)
+    {
+        name = _name;
+        textureOrder = textureint;
+        describe = _describe;
+        foreach(buttoninfo bi in buttoninfos)
+        {
+            buttons.Add(bi);
+        }
+    }
+
+    public string name;
     public int textureOrder;
-    public string befallDescribe;
+    public string describe;
     public List<buttoninfo> buttons = new List<buttoninfo>();
 }
 
 public abstract class buttoninfo
 {
     public string buttonDescribe;
-    public buttonTo buttonFun;
+    protected buttonTo buttonFun;
+    public void onclick()
+    {
+        buttonFun();
+    }
 }
 
 public class Button_ExitBefall : buttoninfo
@@ -33,7 +50,7 @@ public class Button_ExitBefall : buttoninfo
         //退出遭遇
         buttonFun = new buttonTo(() =>
         {
-
+            gameManager.Instance.uimanager.uiBefallBoard.ExitEventBoard();
         });
     }
     public Button_ExitBefall()
@@ -42,7 +59,7 @@ public class Button_ExitBefall : buttoninfo
         //退出遭遇
         buttonFun = new buttonTo(() =>
         {
-
+            gameManager.Instance.uimanager.uiBefallBoard.ExitEventBoard();
         });
     }
 }

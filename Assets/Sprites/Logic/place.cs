@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 
 public abstract class place
 {
-
+    public int imageorder;
     public abstract void onclick();
-    public abstract void onover();
 }
 
 public class battlePlace : place
@@ -18,6 +17,7 @@ public class battlePlace : place
     {
         monsterInfo = monsterinfo;
         sceneId = sceneid;
+        imageorder = 1;
     }
     public override void onclick()
     {
@@ -25,10 +25,6 @@ public class battlePlace : place
         gameManager.Instance.mapmanager.EnterBattle(this);
     }
 
-    public override void onover()
-    {
-        //图标高亮
-    }
 }
 
 public class shopPlace : place
@@ -42,29 +38,21 @@ public class shopPlace : place
         //进入商店
         Debug.Log("进入商店");
     }
-
-    public override void onover()
-    {
-        //图标高亮
-        Debug.Log("图标高亮");
-    }
 }
 
 public class befallPlace : place
 {
-    public befallPlace()
+    public befallinfo m_befallinfo;
+    public befallPlace(befallinfo beffalinfo)
     {
-
+        m_befallinfo = beffalinfo;
+        imageorder = 2;
     }
     public override void onclick()
     {
-        //触发事件
-        Debug.Log("触发事件");
-    }
-    public override void onover()
-    {
-        //图标高亮
-        Debug.Log("图标高亮");
+        //打开二级事件窗口
+        gameManager.Instance.uimanager.uiBefallBoard.EnterEventBoard(m_befallinfo);
+        gameManager.Instance.mapmanager.mapState = MapState.EventWindow;
     }
 
     public int eventnum;
@@ -81,9 +69,5 @@ public class deckPlace : place
         //查看卡组
         Debug.Log("查看卡组");
     }
-    public override void onover()
-    {
-        //图标高亮
-        Debug.Log("图标高亮");
-    }
+
 }

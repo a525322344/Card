@@ -32,8 +32,12 @@ public class instantiateManager : MonoBehaviour
     public GameObject actionAttack;
     public GameObject actionDefense;
     public GameObject fireState;
-    public List<GameObject> placeGOs = new List<GameObject>();
+
     public List<GameObject> MonsterAll = new List<GameObject>();
+    //map
+    public GameObject placeGO;
+    public List<Sprite> beFallSprites = new List<Sprite>();
+    public List<Sprite> mapPlaceSprites = new List<Sprite>();
 
     //弃卡选择框
     public GameObject waitSelectBoardGO;
