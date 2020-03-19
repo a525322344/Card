@@ -6,8 +6,9 @@ using UnityEditor;
 [CustomEditor(typeof(InitControllBoard))]
 public class EditorInitControllBoard : Editor
 {
-    bool cardflod = false;
-    bool knapsack = false;
+    bool cardflod = true;
+    bool knapsack = true;
+    int cardorder = 0;
     public override void OnInspectorGUI()
     {
         InitControllBoard initcontroll = (InitControllBoard)target;
@@ -26,7 +27,12 @@ public class EditorInitControllBoard : Editor
             OnInspectorKnapsack(initcontroll);
         }
         EditorGUILayout.Space();
-        
+
+
+        if (GUI.changed)
+        {
+            EditorUtility.SetDirty(initcontroll);
+        }
     }
 
     private void OnInspectorKnapsack(InitControllBoard initcontroll)
@@ -98,10 +104,14 @@ public class EditorInitControllBoard : Editor
             initcontroll.carddeckInit.Remove(initcontroll.carddeckInit[toremove]);
             toremove = -1;
         }
+        EditorGUILayout.BeginHorizontal();
+        cardorder = EditorGUILayout.IntField(cardorder,GUILayout.Width(50));
         if (GUILayout.Button("添加"))
         {
-            initcontroll.carddeckInit.Add(0);
+            initcontroll.carddeckInit.Add(cardorder);
         }
+        EditorGUILayout.EndHorizontal();
         EditorGUILayout.EndVertical();
     }
+
 }

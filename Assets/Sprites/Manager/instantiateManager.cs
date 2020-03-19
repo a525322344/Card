@@ -12,10 +12,17 @@ public class instantiateManager : MonoBehaviour
         }
     }
     private static instantiateManager _instance;
-
+    #region 实时获得隐藏
+    [HideInInspector]
     public battleUIRoot battleuiRoot;
+    [HideInInspector]
     public BattleEnvRoot battleEnvRoot;
+    [HideInInspector]
     public MapRootInfo mapRootInfo;
+
+    [HideInInspector]
+    public GameObject waitSelectBoard;
+    #endregion
 
     public Canvas uiCanvas;
     public GameObject partGO;
@@ -25,12 +32,16 @@ public class instantiateManager : MonoBehaviour
     public GameObject actionAttack;
     public GameObject actionDefense;
     public GameObject fireState;
-    public List<GameObject> placeGOs = new List<GameObject>();
+
     public List<GameObject> MonsterAll = new List<GameObject>();
+    //map
+    public GameObject placeGO;
+    public List<Sprite> beFallSprites = new List<Sprite>();
+    public List<Sprite> mapPlaceSprites = new List<Sprite>();
 
     //弃卡选择框
     public GameObject waitSelectBoardGO;
-    public GameObject waitSelectBoard;
+
 
     public Camera Encamera;
     public Camera UIcamera;

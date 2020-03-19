@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //latice 栅格
+[System.Serializable]
 public class latice
 {
     public latice(int xposi,int yposi,bool isexploit)
     {
         position = new Vector2(xposi, yposi);
+        b_exploit = isexploit;
+    }
+    public latice(Vector2 posi, bool isexploit)
+    {
+        position = posi;
         b_exploit = isexploit;
     }
     //储存位置
@@ -24,10 +30,43 @@ public class realKnapsack : MonoBehaviour
     public Transform pointtran;
     public float distance;
 
-    public Dictionary<Vector2, latice> laticePairs = new Dictionary<Vector2, latice>();
+    bool[] ise = new bool[25];
 
-    public void Init()
+    public Dictionary<Vector2, realLatice> laticePairs = new Dictionary<Vector2, realLatice>();
+    public Dictionary<Vector2, latice> lactices = new Dictionary<Vector2, latice>();
+
+    private void Start()
     {
-        //laticePairs
+        Init(gameManager.Instance.InitControllBoard.knapsackLaticInit);
+    }
+
+    public void Init(bool[] isexploits)
+    {
+        for(int i = 0; i < 25; i++)
+        {
+            int posx = i % 5+1;
+            int posy = i / 5+1;
+            Vector2 posi = new Vector2(posx, posy);
+            latice newLatice = new latice(posi, isexploits[i]);
+            //GameObject laticeGO = GameObject.Instantiate(LaticeGO, pointtran);
+            //LaticeGO.transform.localPosition = new Vector3(posi.x - 3, posi.y - 3, 0) * distance;
+            //LaticeGO.name = "" + i;
+
+            //realLatice newreallaitce = laticeGO.GetComponent<realLatice>();
+            //newreallaitce.Init(newLatice);
+
+            lactices.Add(posi, newLatice);
+        }
+        foreach (var pl in lactices)
+        {
+            GameObject realLaticeGO = Instantiate(LaticeGO, pointtran);
+            //realLaticeGO.name = "realLatice";
+            Vector2 posi = pl.Key;
+            realLaticeGO.transform.localPosition = new Vector3(posi.x - 3, posi.y - 3, 0) * distance;
+            realLatice realLatice = realLaticeGO.GetComponent<realLatice>();
+            realLatice.Init(pl.Value);
+
+            laticePairs.Add(posi, realLatice);
+        }
     }
 }

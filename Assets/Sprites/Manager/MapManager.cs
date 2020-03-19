@@ -4,36 +4,51 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using AllAsset;
 
+public enum MapState
+{
+    MainMap,        //在主地图页面，主要可选行为：选择路径点
+    EventWindow,    //在事件子窗口上
+}
+
 public class MapManager : MonoBehaviour
 {
-    public int allplacenum;
-    public int battleplacenum;
-    public int shopplacenum;
-    public int ralexplacenum;
-
-    public List<place> placeList = new List<place>();
-    float width = 15;
-    float height = 8;
-
+    public MapState mapState = MapState.MainMap;
+    public List<realPlace> realplaceList = new List<realPlace>();
     private MapRootInfo maprootinfo;
 
+    float width = 15;
+    float height = 8;
     public void InitMap()
     {
-        //mapRootInfo = GameObject.Find("root").GetComponent<MapRootInfo>();
+        Debug.Log("init map");
         maprootinfo = gameManager.Instance.instantiatemanager.mapRootInfo;
 
+        place newplace;
+        //战斗地点
+        newplace = new battlePlace(new monInfo_Cat(), 2);      
+        realplaceList.Add(instantiatePlace(newplace));
+
+        //事件地点
+        befallinfo newbefallinfo = new befallinfo("休整片刻", 0, "时不时得整理下装备，或许可以在战斗中得优势",
+            new Button_ExitBefall("现在只能选择不这么做"));
+        newplace = new befallPlace(newbefallinfo);
+        realplaceList.Add(instantiatePlace(newplace));
+    }
+
+    //实例生成地点
+    private realPlace instantiatePlace(place place)
+    {
         float x = Random.Range(-width, width);
         float y = Random.Range(-height, height);
-        GameObject place = Instantiate(
-            gameManager.Instance.instantiatemanager.placeGOs[0],
-            new Vector3(x,y, maprootinfo.placefolder.position.z),
+        GameObject placego = Instantiate(
+            gameManager.Instance.instantiatemanager.placeGO,
+            new Vector3(x, y, maprootinfo.placefolder.position.z),
             Quaternion.identity,
             maprootinfo.placefolder
         );
-        place newplace = new battlePlace(new monInfo_Cat(), 2);
-        place.GetComponent<realPlace>().thisplace = newplace;
-        placeList.Add(newplace);
-        Debug.Log("init map");
+        realPlace result = placego.GetComponent<realPlace>();
+        result.Init(place);
+        return result;
     }
 
     public void EnterBattle(battlePlace battle)
