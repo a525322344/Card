@@ -6,7 +6,7 @@ using Constant;
 public class realgrid : MonoBehaviour
 {
     public realpart fatherPart;
-    public grid thisgrig;
+    public grid thisgrid;
     private Part part;
     private MeshRenderer _renderer;
     private Material mr_black;
@@ -30,23 +30,18 @@ public class realgrid : MonoBehaviour
         changeMaterial();
     }
 
-
-    public void setThisGrid(grid _grid)
+    public void Init(grid _thisgrid,realpart fatherpart)
     {
-        thisgrig = _grid;
-    }
-    void Start()
-    {
-        _renderer = GetComponent<MeshRenderer>();
+        thisgrid = _thisgrid;
+        fatherPart = fatherpart;
         
-    }
-    public void Init()
-    {
         _renderer = GetComponent<MeshRenderer>();
         mr_black = Resources.Load<Material>(Path.GRID_MATERIAL_BLACK);
         mr_cyan = Resources.Load<Material>(Path.GRID_MATERIAL_CYAN);
         mr_gray = Resources.Load<Material>(Path.GRID_MATERIAL_GRAY);
         mr_write = Resources.Load<Material>(Path.GRID_MATERIAL_WRITE);
+
+        changeMaterial();
     }
     // Update is called once per frame
     void Update()
@@ -55,9 +50,9 @@ public class realgrid : MonoBehaviour
     }
     public void changeMaterial()
     {
-        if (thisgrig.Opening)
+        if (thisgrid.Opening)
         {
-            if (thisgrig.Power)
+            if (thisgrid.Power)
             {
                 if (b_DownCard)
                 {
@@ -83,7 +78,7 @@ public class realgrid : MonoBehaviour
 
     public bool CanOverCostPlay(card selectcard)
     {
-        return fatherPart.CanCostPlay(thisgrig, selectcard);
+        return fatherPart.CanCostPlay(thisgrid, selectcard);
     }
     public void ToSetPart(card _selectcard)
     {

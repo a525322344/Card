@@ -41,6 +41,13 @@ public class uiEventBoard : MonoBehaviour
         }
         gameObject.SetActive(false);
     }
-
-
+    //关闭窗口但是没有结束事件，目前同上
+    public void CloseBoardButContinue()
+    {
+        foreach (Button button in buttons)
+        {
+            button.gameObject.SetActive(false);
+        }
+        gameObject.SetActive(false);
+    }
 }

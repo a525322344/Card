@@ -41,7 +41,7 @@ public abstract class buttoninfo
         buttonFun();
     }
 }
-
+//退出
 public class Button_ExitBefall : buttoninfo
 {
     public Button_ExitBefall(string buttondes)
@@ -51,6 +51,7 @@ public class Button_ExitBefall : buttoninfo
         buttonFun = new buttonTo(() =>
         {
             gameManager.Instance.uimanager.uiBefallBoard.ExitEventBoard();
+            gameManager.Instance.mapmanager.mapState = MapState.MainMap;
         });
     }
     public Button_ExitBefall()
@@ -60,6 +61,20 @@ public class Button_ExitBefall : buttoninfo
         buttonFun = new buttonTo(() =>
         {
             gameManager.Instance.uimanager.uiBefallBoard.ExitEventBoard();
+            gameManager.Instance.mapmanager.mapState = MapState.MainMap;
+        });
+    }
+}
+//整理背包
+public class Button_SortPart : buttoninfo
+{
+    public Button_SortPart()
+    {
+        buttonDescribe = "好，做好准备";
+        buttonFun = new buttonTo(() =>
+        {
+            gameManager.Instance.uimanager.uiBefallBoard.CloseBoardButContinue();
+            gameManager.Instance.instantiatemanager.instanSortPart(gameManager.Instance.playerinfo.MagicPartDick);
         });
     }
 }

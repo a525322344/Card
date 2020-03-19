@@ -20,11 +20,15 @@ public class instantiateManager : MonoBehaviour
     [HideInInspector]
     public MapRootInfo mapRootInfo;
 
+    //储存对象
     [HideInInspector]
     public GameObject waitSelectBoard;
+    [HideInInspector]
+    public GameObject knapsack;
     #endregion
 
     public Canvas uiCanvas;
+    public GameObject knapsackGO;
     public GameObject partGO;
     public GameObject cardGO;
     public GameObject gridGO;
@@ -58,10 +62,33 @@ public class instantiateManager : MonoBehaviour
         {
             GameObject part = Instantiate(partGO, battleuiRoot.parttransforms[i]);
             realpart realpart = part.GetComponent<realpart>();
-            realpart.setThisMagicPart(magicParts[i]);
+            realpart.Init(magicParts[i],RealPartState.Play);
             battleuiRoot.parttransforms[0].parent.GetComponent<bookFolderControll>().realparts.Add(realpart);
         }
         gameManager.Instance.battlemanager.realPartList = battleuiRoot.parttransforms[0].parent.GetComponent<bookFolderControll>().realparts;
+    }
+    //地图遭遇——生成整理背包页面
+    public void instanSortPart(List<MagicPart> magicParts)
+    {
+        //把部件生成
+        for(int i = 0; i < magicParts.Count; i++)
+        {
+            GameObject part = Instantiate(partGO, mapRootInfo.sortPartPosition);
+            part.transform.localPosition = Vector3.down * mapRootInfo.sortPartDistance * i;
+            realpart rp = part.GetComponent<realpart>();
+            rp.Init(magicParts[i],RealPartState.Sort);
+        }
+        //把背包生成
+        if (knapsack)
+        {
+
+        }
+        else
+        {
+            knapsack = Instantiate(knapsackGO, mapRootInfo.knapsackPosition);
+            realKnapsack rk = knapsack.GetComponent<realKnapsack>();
+            rk.Init(gameManager.Instance.InitControllBoard.knapsackLaticInit);
+        }
     }
 
     public void instanDrawACard(card playercard)
@@ -73,7 +100,7 @@ public class instantiateManager : MonoBehaviour
         battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards.Add(realcard);
     }
 
-
+    //战斗——生成怪物
     public void instanMonster(monsterInfo moninfo,out realEnemy realEnemy)
     {
         GameObject monster = Instantiate(MonsterAll[moninfo.Id], battleEnvRoot.monsterPosi);
@@ -81,7 +108,7 @@ public class instantiateManager : MonoBehaviour
         realenemy.Init(moninfo);
         realEnemy = realenemy;
     }
-
+    //战斗——生成弃牌框
     public void instanWaitSelectCardBoard(int num,singleEvent single)
     {
         if (waitSelectBoard)

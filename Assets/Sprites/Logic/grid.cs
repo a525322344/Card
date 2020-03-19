@@ -18,9 +18,8 @@ public class grid
         }
     }
     //坐标
-    public void setPosition(int x,int y,int set)
+    public void setPosition(int x,int y)
     {
-        posnum = set;
         m_PositionX = x;
         m_PositionY = y;
     }
@@ -28,7 +27,7 @@ public class grid
     {
         get
         {
-            return m_PositionX+posnum*4;
+            return m_PositionX;
         }
     }
     public int PositionY
@@ -40,7 +39,7 @@ public class grid
     }
     public Vector3 getPosition()
     {
-        Vector3 result = new Vector3(m_PositionX - 1, m_PositionY - 1, 0);
+        Vector3 result = new Vector3(m_PositionX, m_PositionY, 0);
         return result;
     }
 
@@ -56,10 +55,10 @@ public class grid
 
     private int m_PositionX;
     private int m_PositionY;
-    public int posnum;
+
     private bool m_Opening;
     private bool m_Power;
-    private gridCover m_gridcover;
+
     public MagicPart fatherPart;
 }
 

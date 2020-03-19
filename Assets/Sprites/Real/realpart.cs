@@ -2,10 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
+public enum RealPartState
+{
+    Play,
+    Sort,
+}
+public enum SortState
+{
+    Free,
+    Select,
+    Install,
+}
 public class realpart : MonoBehaviour
 {
     public MagicPart thisMagicPart;
+    public RealPartState realPartState;
     #region linkPart
     private MagicPart linkSavePart;
     public void enterLinkPart(MagicPart linkPart)
@@ -20,33 +32,60 @@ public class realpart : MonoBehaviour
     public GameObject realgridMode;
     public float distance = 0.333f;
 
+    public Transform meshTran;
     public Text text;
 
     private Dictionary<grid, realgrid> gridRealgridPairs = new Dictionary<grid, realgrid>();
 
     private bool b_readyToPlayACard = false;
     private card selectedCard;
+
+    //Sort
+    public SortState sortState;
+
     //用于创建时调用初始化
-    public void setThisMagicPart(MagicPart magicPart)
+    public void Init(MagicPart magicPart,RealPartState state)
     {
-        thisMagicPart = magicPart;
-        linkSavePart = thisMagicPart;
-        //根据magicpart中的grid表，创建realgird
-        foreach(var g in thisMagicPart.getGridDic())
+        if (state == RealPartState.Play)
         {
-            //创建realgril实例添加realgril
-            GameObject realgridObject = Instantiate(realgridMode, transform);
-            realgrid newrealgrid = realgridObject.GetComponent<realgrid>();
-            newrealgrid.setThisGrid(g.Value);
-            newrealgrid.fatherPart = this;
-            realgridObject.GetComponent<RectTransform>().localPosition = g.Value.getPosition()*distance;
+            realPartState = state;
+            thisMagicPart = magicPart;
+            linkSavePart = thisMagicPart;
+            //根据magicpart中的grid表，创建realgird
+            foreach (var g in thisMagicPart.Vector2GridRotate)
+            {
+                //创建realgril实例添加realgril
+                GameObject realgridObject = Instantiate(realgridMode, transform);
+                realgrid newrealgrid = realgridObject.GetComponent<realgrid>();
+                newrealgrid.Init(g.Value, this);
+                realgridObject.GetComponent<Transform>().localPosition = g.Value.getPosition() * distance;
 
-            newrealgrid.Init();
-            newrealgrid.changeMaterial();
 
-            gridRealgridPairs.Add(g.Value, newrealgrid);
+                newrealgrid.changeMaterial();
+
+                gridRealgridPairs.Add(g.Value, newrealgrid);
+            }
+            text.text = thisMagicPart.describe;
         }
-        text.text = thisMagicPart.describe;
+        else if(state == RealPartState.Sort)
+        {
+            realPartState = state;
+            thisMagicPart = magicPart;
+            //根据magicpart中的grid表，创建realgird
+            foreach (var g in thisMagicPart.Vector2GridRotate)
+            {
+                //创建realgril实例添加realgril
+                GameObject realgridObject = Instantiate(realgridMode, transform);
+                realgrid newrealgrid = realgridObject.GetComponent<realgrid>();
+                newrealgrid.Init(g.Value, this);
+                realgridObject.GetComponent<Transform>().localPosition = g.Value.getPosition() * distance;
+                newrealgrid.changeMaterial();
+
+                gridRealgridPairs.Add(g.Value, newrealgrid);
+            }
+            text.text = thisMagicPart.describe;
+        }
+
     }
 
     private List<realgrid> selectgrids = new List<realgrid>();
@@ -67,9 +106,9 @@ public class realpart : MonoBehaviour
                     int costy = i - 1;
                     int fitx = gridx + costx;
                     int fity = gridy + costy;
-                    if (thisMagicPart.getGridDic().ContainsKey(new Vector2(fitx, fity)))
+                    if (thisMagicPart.Vector2GridRotate.ContainsKey(new Vector2(fitx, fity)))
                     {
-                        grid fitgrid = thisMagicPart.getGridDic()[new Vector2(fitx, fity)];
+                        grid fitgrid = thisMagicPart.Vector2GridRotate[new Vector2(fitx, fity)];
                         if (fitgrid.Opening && fitgrid.Power)
                         {
                             selectgrids.Add(gridRealgridPairs[fitgrid]);
@@ -126,7 +165,7 @@ public class realpart : MonoBehaviour
     {
         for(int i = 0; i < selectgrids.Count; i++)
         {
-            selectgrids[i].thisgrig.Power = false;
+            selectgrids[i].thisgrid.Power = false;
             selectgrids[i].changeMaterial();
         }
     }
@@ -142,13 +181,73 @@ public class realpart : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (b_readyToPlayACard)
+        switch (realPartState)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                b_readyToPlayACard = false;
-                gameManager.Instance.battlemanager.PlayCard();
-            }
+            case RealPartState.Play:
+                if (b_readyToPlayACard)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        b_readyToPlayACard = false;
+                        gameManager.Instance.battlemanager.PlayCard();
+                    }
+                }
+                break;
+            case RealPartState.Sort:
+                switch (sortState)
+                {
+                    case SortState.Free:
+                        break;
+                    case SortState.Select:
+                        Vector3 mouseposition = Input.mousePosition;
+                        mouseposition = Camera.main.ScreenToWorldPoint(mouseposition);
+                        mouseposition=new Vector3(mouseposition.x,mouseposition.y, gameManager.Instance.instantiatemanager.mapRootInfo.sortPositionZ());
+                        Debug.Log(mouseposition);
+                        transform.DOMove(mouseposition , 0);
+                        if(Input.GetAxis("Mouse ScrollWheel") < 0)
+                        {
+                            Debug.Log("<0");
+                        }
+                        if(Input.GetAxis("Mouse ScrollWhell") > 0)
+                        {
+                            Debug.Log(">0");
+                        }
+                        break;
+                    case SortState.Install:
+                        break;
+                }
+                break;
+        }
+    }
+
+    private void OnMouseDown()
+    {
+        switch (sortState)
+        {
+            case SortState.Free:
+                sortState = SortState.Select;
+                meshTran.gameObject.SetActive(false);
+                break;
+            case SortState.Select:
+                break;
+            case SortState.Install:
+                sortState = SortState.Select;
+                break;
+        }
+    }
+    private void OnMouseUp()
+    {
+        switch (sortState)
+        {
+            case SortState.Free:        
+                break;
+            case SortState.Select:
+                sortState = SortState.Free;
+                meshTran.gameObject.SetActive(true);
+                break;
+            case SortState.Install:
+                
+                break;
         }
     }
 }

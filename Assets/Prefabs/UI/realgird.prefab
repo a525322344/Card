@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8051217446520927319}
+  - component: {fileID: 3667361777318822973}
   - component: {fileID: 3388992489644583905}
   - component: {fileID: 139278716423516455}
   - component: {fileID: 6782531100421716063}
@@ -20,8 +20,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &8051217446520927319
-RectTransform:
+--- !u!4 &3667361777318822973
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -29,16 +29,11 @@ RectTransform:
   m_GameObject: {fileID: 1972082160367306617}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 98, y: 98, z: 5}
+  m_LocalScale: {x: 90, y: 90, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.000015258789}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!33 &3388992489644583905
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -93,7 +88,7 @@ BoxCollider:
   m_GameObject: {fileID: 1972082160367306617}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -109,7 +104,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b51cd46d0ce1f46a1590f311d6dfe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mr_black: {fileID: 2100000, guid: 33193caf66a075a4d8d1724e56d99922, type: 2}
-  mr_write: {fileID: 2100000, guid: 0806cc36eb8a4824e8462aae1af752ff, type: 2}
-  mr_gray: {fileID: 2100000, guid: 7814228cbf8eec841904fc141d2207c2, type: 2}
-  mr_cyan: {fileID: 2100000, guid: dba73bd45b58ea5488a01406f5e231d5, type: 2}
+  fatherPart: {fileID: 0}
+  thisgrid:
+    fatherPart:
+      name: 
+      id: 0
+      gridsum: 0
+      gridpower: 0
+      describe: 

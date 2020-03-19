@@ -71,7 +71,7 @@ public class InitData : MonoBehaviour
 
         AllAsset.magicpartAsset.AllMagicParts.Add(Init_ATTACKUP_1);
 
-        a[4] = 0;
+        a[1] = 0;
         reaction = new Reaction_Affect("护甲增加",new extraDeffenceUp(1), EventKind.Event_Armor);
         MagicPart Init_DefenceUp_1 = new MagicPart(a,1);
         Init_DefenceUp_1.describe = "护甲+1";

@@ -73,14 +73,19 @@ public class MagicPart : Part
     //暂定：数组a应该是9位
     public MagicPart(int[] a,int set)
     {
+        rotateInt = 0;
         Vector2GridPairs = new Dictionary<Vector2, grid>();
         gridsum = 0;
         for(int i = 0; i < a.Length; i++)
         {
+            //1
+            //0
+            //-1  
+            //  -1  0  1
             grid newgrid = new grid(true);
-            int posy = i / 3 ;
-            int posx = i % 3 ;
-            newgrid.setPosition(posx, posy,set);
+            int posy = i / 3-1 ;
+            int posx = i % 3-1 ;
+            newgrid.setPosition(posx, posy);
             newgrid.fatherPart = this;
             if (a[i] == 1)
             {
@@ -91,8 +96,9 @@ public class MagicPart : Part
             {
                 newgrid.Opening = false;
             }
-            Vector2GridPairs.Add(new Vector2(posx+set*4, posy), newgrid);
+            Vector2GridPairs.Add(new Vector2(posx, posy), newgrid);
         }
+        Vector2GridRotate = new Dictionary<Vector2, grid>(Vector2GridPairs);
     }
     public override void addReaction(Reaction reaction)
     {
@@ -105,7 +111,7 @@ public class MagicPart : Part
         reaction.Active = false;
         base.addAndSetin(reaction);
     }
-    //
+
     //激活部件
     //  卡牌在该部件打出时，使该部件的reaction可以响应effect(reaction.Active=true)
     public void activatePart()
@@ -134,14 +140,54 @@ public class MagicPart : Part
             }
         }
     }
-    public Dictionary<Vector2, grid> getGridDic()
-    {
-        return Vector2GridPairs;
-    }
+
     //7 8 9
     //4 5 6
     //1 2 3
+    //储存初始grid信息
     public Dictionary<Vector2, grid> Vector2GridPairs;
+    //储存旋转后的信息
+    public int rotateInt;
+    public Dictionary<Vector2, grid> Vector2GridRotate;
+    //参数只能是1，或-1，表示正方向旋转与负方向旋转
+    //二维旋转矩阵
+    // |X| =|cos  -sin|*|x|
+    // |Y|  |sin  con | |y|
+    public void RotatePart(int r)
+    {
+        if (r == 1)
+        {
+            if (rotateInt == 3)
+            {
+                rotateInt = 0;
+            }
+            else
+            {
+                rotateInt++;
+            }
+        }
+        else if(r == -1)
+        {
+            if (rotateInt == 0)
+            {
+                rotateInt = 3;
+            }
+            else
+            {
+                rotateInt--;
+            }
+        }
+        Vector2GridRotate.Clear();
+        foreach (var vg in Vector2GridPairs)
+        {
+            float angle = rotateInt * Mathf.PI/2;
+            Vector2 newvec = new Vector2(
+                Mathf.Cos(angle) * vg.Key.x - Mathf.Sin(angle) * vg.Key.y,
+                Mathf.Sin(angle) * vg.Key.x + Mathf.Cos(angle) * vg.Key.y);
+            Vector2GridRotate.Add(newvec, vg.Value);
+        }
+    }
+
 
     public string describe;
 }

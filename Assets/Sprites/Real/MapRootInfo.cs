@@ -5,5 +5,17 @@ using UnityEngine;
 public class MapRootInfo : MonoBehaviour
 {
     public Transform placefolder;
+
+    public Transform sortPartPosition;
+    public float sortPartDistance;
+    public Transform knapsackPosition;
+    public Transform UI3D;
     public uiEventBoard uieventBoard;
+
+    public float sortPositionZ()
+    {
+        Debug.Log(sortPartPosition.localPosition.z);
+        Debug.Log(UI3D.localScale.x);
+        return sortPartPosition.localPosition.z * UI3D.localScale.x;
+    }
 }
