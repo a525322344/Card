@@ -16,8 +16,16 @@ public enum SortState
 }
 public class realpart : MonoBehaviour
 {
+    //实例化相关
+    public GameObject realgridMode;
+    public float distance = 0.333f;
+    public Transform meshTran;
+    public Transform gridFolder;
+    public Text text;
+    //战斗相关类
     public MagicPart thisMagicPart;
     public RealPartState realPartState;
+    public SortState sortState;
     #region linkPart
     private MagicPart linkSavePart;
     public void enterLinkPart(MagicPart linkPart)
@@ -29,19 +37,18 @@ public class realpart : MonoBehaviour
         thisMagicPart = linkSavePart;
     }
     #endregion
-    public GameObject realgridMode;
-    public float distance = 0.333f;
-
-    public Transform meshTran;
-    public Text text;
-
-    private Dictionary<grid, realgrid> gridRealgridPairs = new Dictionary<grid, realgrid>();
-
     private bool b_readyToPlayACard = false;
     private card selectedCard;
+    //sort相关类
+    public realLatice lastRealLatice;
+    public bool b_caninstall;
+    public bool b_rotate;
+    public Transform installPosiTran;
+    private Dictionary<grid, realgrid> gridRealgridPairs = new Dictionary<grid, realgrid>();
 
-    //Sort
-    public SortState sortState;
+
+
+
 
     //用于创建时调用初始化
     public void Init(MagicPart magicPart,RealPartState state)
@@ -52,15 +59,13 @@ public class realpart : MonoBehaviour
             thisMagicPart = magicPart;
             linkSavePart = thisMagicPart;
             //根据magicpart中的grid表，创建realgird
-            foreach (var g in thisMagicPart.Vector2GridRotate)
+            foreach (var g in thisMagicPart.Vector2GridPairs)
             {
                 //创建realgril实例添加realgril
-                GameObject realgridObject = Instantiate(realgridMode, transform);
+                GameObject realgridObject = Instantiate(realgridMode, gridFolder);
                 realgrid newrealgrid = realgridObject.GetComponent<realgrid>();
                 newrealgrid.Init(g.Value, this);
-                realgridObject.GetComponent<Transform>().localPosition = g.Value.getPosition() * distance;
-
-
+                realgridObject.GetComponent<Transform>().localPosition = new Vector3(g.Key.x, g.Key.y, 0) * distance;
                 newrealgrid.changeMaterial();
 
                 gridRealgridPairs.Add(g.Value, newrealgrid);
@@ -72,28 +77,28 @@ public class realpart : MonoBehaviour
             realPartState = state;
             thisMagicPart = magicPart;
             //根据magicpart中的grid表，创建realgird
-            foreach (var g in thisMagicPart.Vector2GridRotate)
+            foreach (var g in thisMagicPart.Vector2GridPairs)
             {
                 //创建realgril实例添加realgril
-                GameObject realgridObject = Instantiate(realgridMode, transform);
+                GameObject realgridObject = Instantiate(realgridMode, gridFolder);
                 realgrid newrealgrid = realgridObject.GetComponent<realgrid>();
                 newrealgrid.Init(g.Value, this);
-                realgridObject.GetComponent<Transform>().localPosition = g.Value.getPosition() * distance;
+                realgridObject.GetComponent<Transform>().localPosition = new Vector3(g.Key.x, g.Key.y, 0) * distance;
                 newrealgrid.changeMaterial();
 
                 gridRealgridPairs.Add(g.Value, newrealgrid);
             }
             text.text = thisMagicPart.describe;
         }
-
+        RotateRealPart(thisMagicPart.rotateInt);
     }
 
     private List<realgrid> selectgrids = new List<realgrid>();
     public bool CanCostPlay(grid bygrid,card selectcard)
     {
         bool result=true;
-        int gridx = bygrid.PositionX;
-        int gridy = bygrid.PositionY;
+        int gridx = (int)bygrid.position.x;
+        int gridy = (int)bygrid.position.y;
         //遍历selectcard,找到有1的cost块
         for(int i = 0; i < 3; i++)
         {
@@ -199,18 +204,65 @@ public class realpart : MonoBehaviour
                     case SortState.Free:
                         break;
                     case SortState.Select:
+                        //跟随鼠标部分
                         Vector3 mouseposition = Input.mousePosition;
                         mouseposition = Camera.main.ScreenToWorldPoint(mouseposition);
                         mouseposition=new Vector3(mouseposition.x,mouseposition.y, gameManager.Instance.instantiatemanager.mapRootInfo.sortPositionZ());
-                        Debug.Log(mouseposition);
                         transform.DOMove(mouseposition , 0);
-                        if(Input.GetAxis("Mouse ScrollWheel") < 0)
+                        //旋转部分
+                        if(Input.GetAxis("Mouse ScrollWheel") < 0)//下
                         {
-                            Debug.Log("<0");
+                            thisMagicPart.RotatePart(-1);
+                            RotateRealPart(thisMagicPart.rotateInt);
+                            b_rotate = true;
                         }
-                        if(Input.GetAxis("Mouse ScrollWhell") > 0)
+                        if(Input.GetAxis("Mouse ScrollWheel") > 0)//上
                         {
-                            Debug.Log(">0");
+                            thisMagicPart.RotatePart(1);
+                            RotateRealPart(thisMagicPart.rotateInt);
+                            b_rotate = true;
+                        }
+                        //映射位置部分
+                        RaycastHit hit;
+                        realLatice downRealLatice;
+                        if (Physics.Raycast(transform.position, Vector3.forward, out hit, 100, 1 << 10))
+                        {
+                            downRealLatice = hit.transform.GetComponent<realLatice>();
+                            //if (lastRealLatice)
+                            //{
+                            //    if (lastRealLatice != downRealLatice)
+                            //    {
+                            //        //初始化lastRealLatice
+                            //    }
+                            //}
+                            //只有检测的latice与上次不同时，才会进行判断
+                            if (downRealLatice != lastRealLatice||b_rotate)
+                            {
+                                b_rotate = false;
+                                if (lastRealLatice)
+                                {
+                                    lastRealLatice.ExitCanInstall();
+                                }
+                                lastRealLatice = downRealLatice;
+                                //如果可以安置
+                                if (downRealLatice.CanInstallPart(thisMagicPart))
+                                {
+                                    b_caninstall = true;
+                                }
+                                else
+                                {
+                                    b_caninstall = false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (lastRealLatice)
+                            {
+                                b_caninstall = false;
+                                lastRealLatice.ExitCanInstall();
+                                lastRealLatice = null;
+                            }
                         }
                         break;
                     case SortState.Install:
@@ -218,6 +270,11 @@ public class realpart : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    private void RotateRealPart(int i)
+    {
+        gridFolder.rotation = Quaternion.Euler(0,0,i*90);
     }
 
     private void OnMouseDown()
@@ -242,8 +299,20 @@ public class realpart : MonoBehaviour
             case SortState.Free:        
                 break;
             case SortState.Select:
-                sortState = SortState.Free;
-                meshTran.gameObject.SetActive(true);
+                if (b_caninstall)
+                {
+                    //install
+                    lastRealLatice.InstallPart(thisMagicPart,out installPosiTran);
+
+                    transform.position = installPosiTran.position;
+                    transform.parent = installPosiTran;
+                    sortState = SortState.Install;
+                }
+                else
+                {
+                    sortState = SortState.Free;
+                    meshTran.gameObject.SetActive(true);
+                }
                 break;
             case SortState.Install:
                 

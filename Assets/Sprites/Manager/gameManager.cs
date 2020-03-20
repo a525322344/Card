@@ -50,6 +50,7 @@ public class gameManager : MonoBehaviour
         instantiatemanager = GetComponent<instantiateManager>();
         uimanager = GetComponent<UImanager>();
         DontDestroyOnLoad(gameObject);
+        float pi = Mathf.PI;
     }
     void Start()
     {
@@ -63,6 +64,7 @@ public class gameManager : MonoBehaviour
         playerinfo = new playerInfo();
         playerinfo.PlayerDickInit(InitControllBoard.carddeckInit);
         playerinfo.MagicPartDickInit();
+        playerinfo.KnapSackInit(InitControllBoard.knapsackLaticInit);
     }
 
     public void mapManagerInit()

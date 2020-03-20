@@ -87,7 +87,7 @@ public class instantiateManager : MonoBehaviour
         {
             knapsack = Instantiate(knapsackGO, mapRootInfo.knapsackPosition);
             realKnapsack rk = knapsack.GetComponent<realKnapsack>();
-            rk.Init(gameManager.Instance.InitControllBoard.knapsackLaticInit);
+            rk.Init(gameManager.Instance.playerinfo.playerKnapsack);
         }
     }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
+//grid应该不储存位置信息，位置信息就该存在part中，残留先留着
 public class grid 
 {
     //构造函数
@@ -17,31 +18,6 @@ public class grid
             m_Power = false;
         }
     }
-    //坐标
-    public void setPosition(int x,int y)
-    {
-        m_PositionX = x;
-        m_PositionY = y;
-    }
-    public int PositionX
-    {
-        get
-        {
-            return m_PositionX;
-        }
-    }
-    public int PositionY
-    {
-        get
-        {
-            return m_PositionY;
-        }
-    }
-    public Vector3 getPosition()
-    {
-        Vector3 result = new Vector3(m_PositionX, m_PositionY, 0);
-        return result;
-    }
 
     public bool Opening {
         get;
@@ -53,12 +29,11 @@ public class grid
         set { m_Power = value; }
     }
 
-    private int m_PositionX;
-    private int m_PositionY;
-
     private bool m_Opening;
     private bool m_Power;
 
+
+    public Vector2 position;
     public MagicPart fatherPart;
 }
 

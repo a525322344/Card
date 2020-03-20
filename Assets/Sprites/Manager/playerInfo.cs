@@ -10,6 +10,8 @@ public class playerInfo
     public List<playerCard> playerDick=new List<playerCard>();
     //玩家的魔纹部件
     public List<MagicPart> MagicPartDick = new List<MagicPart>();
+    //玩家的魔法书
+    public knapsack playerKnapsack;
     public int roundStartDrawCardNum = 5;
     public int playerHealthMax = 100;
     public int playerHealth = 100;
@@ -30,5 +32,9 @@ public class playerInfo
     {
         MagicPartDick.Add(magicpartAsset.AllMagicParts[0]);
         MagicPartDick.Add(magicpartAsset.AllMagicParts[1]);
+    }
+    public void KnapSackInit(bool[] ise)
+    {
+        playerKnapsack = new knapsack(ise);
     }
 }

@@ -6,8 +6,13 @@ public class realLatice : MonoBehaviour
 {
     public Material black_lock;
     public Material white_unlock;
+    public Material green_caninstall;
+
+    [HideInInspector]
+    public realKnapsack realknapsack;
     public latice thislatice;
 
+    public grid grid;
     private MeshRenderer renderer;
 
     private void Awake()
@@ -15,21 +20,41 @@ public class realLatice : MonoBehaviour
         renderer =transform.GetChild(0).GetComponent<MeshRenderer>();
     }
 
-    public void Init(latice l)
+    public void Init(latice l,realKnapsack father)
     {
         thislatice = l;
+        realknapsack = father;
         changeColor();
+    }
+
+    public bool CanInstallPart(MagicPart magicPart)
+    {
+        return realknapsack.CanInstallPart(magicPart,thislatice.position);
+    }
+    public void InstallPart(MagicPart magicPart,out Transform positionTran)
+    {
+        realknapsack.InstallPart(magicPart, thislatice.position,out positionTran);
+    }
+    public void ExitCanInstall()
+    {
+        realknapsack.ExitCanInstall();
     }
 
     public void changeColor()
     {
-        if (thislatice.b_exploit)
+        switch (thislatice.state)
         {
-            renderer.material = white_unlock;
-        }
-        else
-        {
-            renderer.material = black_lock;
+            case LaticeState.NotActive:
+                renderer.material = black_lock;            
+                break;
+            case LaticeState.Exploit:
+                renderer.material = white_unlock;
+                break;
+            case LaticeState.CanInstall:
+                renderer.material = green_caninstall;
+                break;
+            case LaticeState.Install:
+                break;
         }
     }
 }

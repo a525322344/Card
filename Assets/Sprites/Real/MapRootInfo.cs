@@ -14,8 +14,8 @@ public class MapRootInfo : MonoBehaviour
 
     public float sortPositionZ()
     {
-        Debug.Log(sortPartPosition.localPosition.z);
-        Debug.Log(UI3D.localScale.x);
+        //Debug.Log(sortPartPosition.localPosition.z);
+        //Debug.Log(UI3D.localScale.x);
         return sortPartPosition.localPosition.z * UI3D.localScale.x;
     }
 }

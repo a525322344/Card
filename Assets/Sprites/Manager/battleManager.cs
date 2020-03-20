@@ -270,11 +270,11 @@ public class battleManager : MonoBehaviour
     #region 临时的
     public showcontroll showcontroll;
 
-    public void SetEnemyShow()
-    {
-        //battleInfo.Enemy = nowenemy.pikaqiu;
-        showcontroll.init();
-    }
+    //public void SetEnemyShow()
+    //{
+    //    //battleInfo.Enemy = nowenemy.pikaqiu;
+    //    showcontroll.init();
+    //}
 
     public Slider healthSlider;
     public Text healthText;

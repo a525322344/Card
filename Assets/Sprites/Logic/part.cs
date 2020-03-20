@@ -85,7 +85,7 @@ public class MagicPart : Part
             grid newgrid = new grid(true);
             int posy = i / 3-1 ;
             int posx = i % 3-1 ;
-            newgrid.setPosition(posx, posy);
+            newgrid.position = new Vector2(posx, posy);
             newgrid.fatherPart = this;
             if (a[i] == 1)
             {
@@ -180,10 +180,12 @@ public class MagicPart : Part
         Vector2GridRotate.Clear();
         foreach (var vg in Vector2GridPairs)
         {
-            float angle = rotateInt * Mathf.PI/2;
+            float angle = (float)rotateInt*90 * Mathf.Deg2Rad;
             Vector2 newvec = new Vector2(
-                Mathf.Cos(angle) * vg.Key.x - Mathf.Sin(angle) * vg.Key.y,
-                Mathf.Sin(angle) * vg.Key.x + Mathf.Cos(angle) * vg.Key.y);
+                (int)Mathf.Cos(angle) * vg.Key.x - (int)Mathf.Sin(angle) * vg.Key.y,
+                (int)Mathf.Sin(angle) * vg.Key.x + (int)Mathf.Cos(angle) * vg.Key.y);
+            
+            vg.Value.position = newvec;
             Vector2GridRotate.Add(newvec, vg.Value);
         }
     }
