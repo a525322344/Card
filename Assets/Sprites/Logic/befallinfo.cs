@@ -66,15 +66,43 @@ public class Button_ExitBefall : buttoninfo
     }
 }
 //整理背包
-public class Button_SortPart : buttoninfo
+public class Button_SortPart : Button_NextBeffal
 {
-    public Button_SortPart()
+
+    public Button_SortPart(befallinfo nextBefallInfo)
     {
+        Debug.Log("sort");
+        nextBefall = nextBefallInfo;
         buttonDescribe = "好，做好准备";
+        buttonFun += new buttonTo(() =>
+        {
+            gameManager.Instance.instantiatemanager.instanSortPart(gameManager.Instance.playerinfo.MagicPartDick,gameManager.Instance.playerinfo.playerKnapsack);
+        });
+    }
+}
+public class Button_NextBeffal:buttoninfo
+{
+    public befallinfo nextBefall;
+    public Button_NextBeffal()
+    {
+        Debug.Log("nextbutton");
         buttonFun = new buttonTo(() =>
         {
-            gameManager.Instance.uimanager.uiBefallBoard.CloseBoardButContinue();
-            gameManager.Instance.instantiatemanager.instanSortPart(gameManager.Instance.playerinfo.MagicPartDick);
+            gameManager.Instance.uimanager.uiBefallBoard.EnterEventBoard(nextBefall);
+        });
+    }
+}
+
+public class Button_OverSortPart : buttoninfo
+{
+    public Button_OverSortPart()
+    {
+        buttonDescribe = "完成！";
+        buttonFun=new buttonTo(() =>
+        {
+            gameManager.Instance.uimanager.uiBefallBoard.ExitEventBoard();
+            gameManager.Instance.instantiatemanager.ExitSortPart();
+            gameManager.Instance.mapmanager.mapState = MapState.MainMap;
         });
     }
 }

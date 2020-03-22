@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-public enum RealPartState
-{
-    Play,
-    Sort,
-}
+
 public enum SortState
 {
     Free,
@@ -24,7 +20,7 @@ public class realpart : MonoBehaviour
     public Text text;
     //战斗相关类
     public MagicPart thisMagicPart;
-    public RealPartState realPartState;
+    public GameState realPartState;
     public SortState sortState;
     #region linkPart
     private MagicPart linkSavePart;
@@ -40,6 +36,7 @@ public class realpart : MonoBehaviour
     private bool b_readyToPlayACard = false;
     private card selectedCard;
     //sort相关类
+    public Transform freeFater;
     public realLatice lastRealLatice;
     public bool b_caninstall;
     public bool b_rotate;
@@ -51,10 +48,12 @@ public class realpart : MonoBehaviour
 
 
     //用于创建时调用初始化
-    public void Init(MagicPart magicPart,RealPartState state)
+    public void Init(MagicPart magicPart,GameState state,Transform father)
     {
-        if (state == RealPartState.Play)
+        freeFater = father;
+        if (state == GameState.BattleSence)
         {
+            meshTran.gameObject.SetActive(false);
             realPartState = state;
             thisMagicPart = magicPart;
             linkSavePart = thisMagicPart;
@@ -72,7 +71,7 @@ public class realpart : MonoBehaviour
             }
             text.text = thisMagicPart.describe;
         }
-        else if(state == RealPartState.Sort)
+        else if(state == GameState.MapSence)
         {
             realPartState = state;
             thisMagicPart = magicPart;
@@ -90,7 +89,7 @@ public class realpart : MonoBehaviour
             }
             text.text = thisMagicPart.describe;
         }
-        RotateRealPart(thisMagicPart.rotateInt);
+        RotateRealPart();
     }
 
     private List<realgrid> selectgrids = new List<realgrid>();
@@ -188,7 +187,7 @@ public class realpart : MonoBehaviour
     {
         switch (realPartState)
         {
-            case RealPartState.Play:
+            case GameState.BattleSence:
                 if (b_readyToPlayACard)
                 {
                     if (Input.GetMouseButtonDown(0))
@@ -198,7 +197,7 @@ public class realpart : MonoBehaviour
                     }
                 }
                 break;
-            case RealPartState.Sort:
+            case GameState.MapSence:
                 switch (sortState)
                 {
                     case SortState.Free:
@@ -213,13 +212,13 @@ public class realpart : MonoBehaviour
                         if(Input.GetAxis("Mouse ScrollWheel") < 0)//下
                         {
                             thisMagicPart.RotatePart(-1);
-                            RotateRealPart(thisMagicPart.rotateInt);
+                            RotateRealPart();
                             b_rotate = true;
                         }
                         if(Input.GetAxis("Mouse ScrollWheel") > 0)//上
                         {
                             thisMagicPart.RotatePart(1);
-                            RotateRealPart(thisMagicPart.rotateInt);
+                            RotateRealPart();
                             b_rotate = true;
                         }
                         //映射位置部分
@@ -228,14 +227,7 @@ public class realpart : MonoBehaviour
                         if (Physics.Raycast(transform.position, Vector3.forward, out hit, 100, 1 << 10))
                         {
                             downRealLatice = hit.transform.GetComponent<realLatice>();
-                            //if (lastRealLatice)
-                            //{
-                            //    if (lastRealLatice != downRealLatice)
-                            //    {
-                            //        //初始化lastRealLatice
-                            //    }
-                            //}
-                            //只有检测的latice与上次不同时，才会进行判断
+
                             if (downRealLatice != lastRealLatice||b_rotate)
                             {
                                 b_rotate = false;
@@ -266,17 +258,26 @@ public class realpart : MonoBehaviour
                         }
                         break;
                     case SortState.Install:
+                        //莫名的，再次进入后，就不能一次触发了，临时在这里添加
+                        transform.position = installPosiTran.position;
+                        transform.parent = installPosiTran.parent;
                         break;
                 }
                 break;
         }
     }
 
-    private void RotateRealPart(int i)
+    public void RotateRealPart()
     {
-        gridFolder.rotation = Quaternion.Euler(0,0,i*90);
+        gridFolder.rotation = Quaternion.Euler(0,0, thisMagicPart.rotateInt * 90);
     }
-
+    public void InitInstall(Transform tran)
+    {
+        sortState = SortState.Install;
+        installPosiTran = tran;
+        transform.position = installPosiTran.position;
+        transform.parent = installPosiTran.parent;
+    }
     private void OnMouseDown()
     {
         switch (sortState)
@@ -288,10 +289,21 @@ public class realpart : MonoBehaviour
             case SortState.Select:
                 break;
             case SortState.Install:
-                sortState = SortState.Select;
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position+new Vector3(0,0,-5), Vector3.forward, out hit, 100, 1 << 10))
+                {
+                    hit.transform.GetComponent<realLatice>().ExitInstall();
+                    transform.parent = freeFater;
+                    sortState = SortState.Select;
+                }
+                else
+                {
+                    Debug.Log("没有检测到latice");
+                }
                 break;
         }
     }
+
     private void OnMouseUp()
     {
         switch (sortState)
@@ -303,9 +315,8 @@ public class realpart : MonoBehaviour
                 {
                     //install
                     lastRealLatice.InstallPart(thisMagicPart,out installPosiTran);
-
                     transform.position = installPosiTran.position;
-                    transform.parent = installPosiTran;
+                    transform.parent = installPosiTran.parent;
                     sortState = SortState.Install;
                 }
                 else

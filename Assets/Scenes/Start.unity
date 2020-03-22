@@ -194,7 +194,6 @@ MonoBehaviour:
   battleEnvRoot: {fileID: 0}
   mapRootInfo: {fileID: 0}
   waitSelectBoard: {fileID: 0}
-  knapsack: {fileID: 0}
   uiCanvas: {fileID: 0}
   knapsackGO: {fileID: 7434392110554996642, guid: f466bcdbd4775154c8186a83ba61b741,
     type: 3}

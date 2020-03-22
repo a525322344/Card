@@ -113,8 +113,9 @@ public class battleManager : MonoBehaviour
         dickInGame = new List<playerCard>(playerinfo.playerDick);
         dickInGame = ListOperation.Shufle<playerCard>(dickInGame);
 
-        //实例化部件
-        instantiatemanager.instanBattleStartPart(playerinfo.MagicPartDick);
+        //实例化部件(战斗纸板)
+        instantiatemanager.instanBattleKnapsack(playerinfo.playerKnapsack);
+        //instantiatemanager.instanBattleStartPart(playerinfo.MagicPartDick);
         //注册玩家的部件
         playerinfo.MagicPartDick[0].SetinReactions();
         playerinfo.MagicPartDick[1].SetinReactions();

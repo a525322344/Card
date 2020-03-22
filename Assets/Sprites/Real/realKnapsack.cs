@@ -11,6 +11,7 @@ public class realKnapsack : MonoBehaviour
     public float distance;
 
     public knapsack thisknapsack;
+    public GameState KnapsackState;
 
     public Dictionary<Vector2, realLatice> laticePairs = new Dictionary<Vector2, realLatice>();
 #region 用于中转
@@ -18,33 +19,82 @@ public class realKnapsack : MonoBehaviour
 #endregion
 
 
-    public void Init(knapsack _knapsack)
+    public void Init(knapsack _knapsack,GameState state)
     {
+        KnapsackState = state;
         thisknapsack = _knapsack;
-        for(int i = 0; i < 25; i++)
+        if (KnapsackState == GameState.MapSence)
         {
-            //0 1 2 3 4
-            int posx = i % 5;
-            int posy = i / 5;
-            Vector2 posi = new Vector2(posx, posy);
-            latice newLatice = new latice(posi, thisknapsack.isexploits[i]);
-            lactices.Add(posi, newLatice);
-        }
-        foreach (var pl in lactices)
-        {
-            GameObject realLaticeGO = Instantiate(LaticeGO, pointtran);
-            //realLaticeGO.name = "realLatice";
-            Vector2 posi = pl.Key;
-            realLaticeGO.transform.localPosition = new Vector3(posi.x - 2, posi.y - 2, 0) * distance;
-            realLatice realLatice = realLaticeGO.GetComponent<realLatice>();
-            realLatice.Init(pl.Value,this);
+            //生成实例Latice
+            for (int i = 0; i < 25; i++)
+            {
+                //0 1 2 3 4
+                int posx = i % 5;
+                int posy = i / 5;
+                Vector2 posi = new Vector2(posx, posy);
+                latice newLatice = new latice(posi, thisknapsack.isexploits[i]);
+                lactices.Add(posi, newLatice);
+            }
+            foreach (var pl in lactices)
+            {
+                GameObject realLaticeGO = Instantiate(LaticeGO, pointtran);
+                //realLaticeGO.name = "realLatice";
+                Vector2 posi = pl.Key;
+                realLaticeGO.transform.localPosition = new Vector3(posi.x - 2, posi.y - 2, 0) * distance;
+                realLatice realLatice = realLaticeGO.GetComponent<realLatice>();
+                realLatice.Init(pl.Value, this,GameState.MapSence);
 
-            laticePairs.Add(posi, realLatice);
+                laticePairs.Add(posi, realLatice);
+            }
+            //初始化部件数据
+            InitInstallPart();
+        }
+        else if (KnapsackState == GameState.BattleSence)
+        {
+            //生成实例Latice
+            for (int i = 0; i < 25; i++)
+            {
+                //0 1 2 3 4
+                int posx = i % 5;
+                int posy = i / 5;
+                Vector2 posi = new Vector2(posx, posy);
+                latice newLatice = new latice(posi, thisknapsack.isexploits[i]);
+                lactices.Add(posi, newLatice);
+            }
+            foreach (var pl in lactices)
+            {
+                GameObject realLaticeGO = Instantiate(LaticeGO, pointtran);
+                //realLaticeGO.name = "realLatice";
+                Vector2 posi = pl.Key;
+                realLaticeGO.transform.localPosition = new Vector3(posi.x - 2, posi.y - 2, 0) * distance;
+                realLatice realLatice = realLaticeGO.GetComponent<realLatice>();
+                realLatice.Init(pl.Value, this,GameState.BattleSence);
+
+                laticePairs.Add(posi, realLatice);
+            }
+            //初始化部件
         }
     }
-    public List<realLatice> onLatices;
+    private void InitInstallPart()
+    {
+        foreach (var centerPart in thisknapsack.installParts)
+        {
+            foreach (var vecGrid in thisknapsack.installParts[centerPart.Key].Vector2GridRotate)
+            {
+                if (vecGrid.Value.Opening)
+                {
+                    laticePairs[vecGrid.Key + centerPart.Key].grid = vecGrid.Value;
+                    laticePairs[vecGrid.Key + centerPart.Key].thislatice.state = LaticeState.Install;
+                }
+            }
+        }
+    }
+
+
+    private List<realLatice> onLatices;
     public bool CanInstallPart(MagicPart magicPart,Vector2 center)
     {
+        Debug.Log("Can");
         onLatices = new List<realLatice>();
         bool result = true;
         foreach(var vg in magicPart.Vector2GridRotate)
@@ -84,16 +134,32 @@ public class realKnapsack : MonoBehaviour
     }
     public void ExitCanInstall()
     {
+        Debug.Log("ExitCanInstall");
+
         foreach (realLatice rl in onLatices)
         {
             rl.thislatice.state = LaticeState.Exploit;
             rl.changeColor();
         }
     }
+    public void ExitInstall(Vector2 center)
+    {
+        Debug.Log("ExitInstall");
+        foreach(var g in thisknapsack.installParts[center].Vector2GridRotate)
+        {
+            if (g.Value.Opening)
+            {
+                laticePairs[g.Key + center].grid = null;
+                laticePairs[g.Key + center].thislatice.state = LaticeState.Exploit;
+            }
+        }
+        thisknapsack.installParts.Remove(center);
+    }
     public void InstallPart(MagicPart magicPart,Vector2 center,out Transform positionTran)
     {
+        Debug.Log("Install");
         ExitCanInstall();
-        thisknapsack.installParts.Add(center, magicPart);
+        
         Dictionary<realLatice, grid> rLGPairs = new Dictionary<realLatice, grid>();
         bool caninstall = true;
         //检测能否安装
@@ -123,7 +189,8 @@ public class realKnapsack : MonoBehaviour
         }
         if (caninstall)
         {
-            foreach(var rlg in rLGPairs)
+            thisknapsack.installParts.Add(center, magicPart);
+            foreach (var rlg in rLGPairs)
             {
                 //将grid储存在对应的latice上
                 rlg.Key.grid = rlg.Value;
@@ -138,4 +205,5 @@ public class realKnapsack : MonoBehaviour
             positionTran = null;
         }
     }
+
 }

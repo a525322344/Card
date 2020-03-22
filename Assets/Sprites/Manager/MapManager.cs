@@ -25,12 +25,13 @@ public class MapManager : MonoBehaviour
 
         place newplace;
         //战斗地点
-        newplace = new battlePlace(new monInfo_Cat(), 1);      
+        newplace = new battlePlace(new monInfo_Cat(), 0);      
         realplaceList.Add(instantiatePlace(newplace));
 
         //事件地点
+        befallinfo secondbefall = new befallinfo("整理背包", -1, null, new Button_OverSortPart());
         befallinfo newbefallinfo = new befallinfo("休整片刻", 0, "时不时得整理下装备，或许可以在战斗中得优势",
-            new Button_ExitBefall("现在只能选择不这么做"),new Button_SortPart());
+            new Button_ExitBefall("现在只能选择不这么做"),new Button_SortPart(secondbefall));
         newplace = new befallPlace(newbefallinfo);
         realplaceList.Add(instantiatePlace(newplace));
     }

@@ -12,11 +12,11 @@ public class battleUIRoot : MonoBehaviour
     public Transform bookFolderTran;
     //牌库的位置
     public Transform dicktran;
-    //储存部件的坐标
-    public List<Vector3> partPositionList = new List<Vector3>();
+    //纸板的位置
+    public Transform cardBoardPosition;
     //意图的位置
     public Transform actionTran;
-    public List<Transform> parttransforms = new List<Transform>();
+
     //弃卡选择框的位置
     public Transform waitSelectCard;
 }

@@ -19,10 +19,34 @@ public class uiEventBoard : MonoBehaviour
 
     public void EnterEventBoard(befallinfo befall)
     {
-        befallImage.sprite = gameManager.Instance.instantiatemanager.beFallSprites[befall.textureOrder];
+        //初始化
+        for (int i = 0; i < 4; i++)
+        {
+            buttons[i].onClick.RemoveAllListeners();
+            buttons[i].gameObject.SetActive(false);
+        }
+        //设置数据
+        if (befall.textureOrder == -1)
+        {
+            befallImage.gameObject.SetActive(false);
+        }
+        else
+        {
+            befallImage.gameObject.SetActive(true);
+            befallImage.sprite = gameManager.Instance.instantiatemanager.beFallSprites[befall.textureOrder];
+        }
+        if (befall.describe == null)
+        {
+            befallDescribe.gameObject.SetActive(false);
+        }
+        else
+        {
+            befallDescribe.gameObject.SetActive(true);
+            befallDescribe.text = befall.describe;
+        }
         befallName.text = befall.name;
-        befallDescribe.text = befall.describe;
 
+        //设置按钮
         for(int i = 0; i < befall.buttons.Count; i++)
         {
             buttons[i].onClick.AddListener(befall.buttons[i].onclick);

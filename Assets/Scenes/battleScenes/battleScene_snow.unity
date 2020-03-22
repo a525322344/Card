@@ -499,6 +499,31 @@ PrefabInstance:
       propertyPath: waitSelectCard
       value: 
       objectReference: {fileID: 648757908}
+    - target: {fileID: 8519204322471580252, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8519204321364685153, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8519204322221406571, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8519204321545788387, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054822151982551918, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5734015392561880935, guid: b0be205746ae69d43bee4138c9635c17,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -529,45 +554,20 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    - target: {fileID: 8519204322221406571, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8519204321545788387, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8519204322471580252, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8519204321364685153, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054822151982551918, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 8519204321364685154, guid: b0be205746ae69d43bee4138c9635c17,
         type: 3}
       propertyPath: m_Name
       value: otherRoot
       objectReference: {fileID: 0}
-    - target: {fileID: 8519204322671859913, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_Name
-      value: deck
-      objectReference: {fileID: 0}
     - target: {fileID: 8519204322221406570, guid: b0be205746ae69d43bee4138c9635c17,
         type: 3}
       propertyPath: enter_cardPosiYSet
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8519204322671859913, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: m_Name
+      value: deck
       objectReference: {fileID: 0}
     - target: {fileID: 8519204321711115404, guid: b0be205746ae69d43bee4138c9635c17,
         type: 3}
@@ -812,7 +812,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 23
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

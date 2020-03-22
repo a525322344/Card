@@ -28,7 +28,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8519204321364685153}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4970815217886664244
 GameObject:
@@ -230,36 +230,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!1 &8519204321297583241
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8519204321297583240}
-  m_Layer: 5
-  m_Name: bookfoderposition1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8519204321297583240
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8519204321297583241}
-  m_LocalRotation: {x: 0.45318174, y: 0.0067014643, z: 0.0026863618, w: 0.89138895}
-  m_LocalPosition: {x: 0, y: -87, z: 337.99988}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8519204321364685153}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8519204321364685154
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +257,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8519204321297583240}
   - {fileID: 8519204321526334925}
   - {fileID: 8519204322569162037}
   - {fileID: 8519204321778173833}
@@ -330,7 +299,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8519204321364685153}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -347,7 +316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8519204321526334925}
   m_Layer: 5
-  m_Name: bookfoderposition2
+  m_Name: "\u6218\u6597\u7EB8\u677F\u4F4D\u7F6E"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -361,11 +330,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8519204321526334926}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.000002, y: 82, z: 44}
-  m_LocalScale: {x: 1.22, y: 1.22, z: 1.22}
+  m_LocalPosition: {x: 0, y: -65, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8519204321364685153}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8519204321545788380
 GameObject:
@@ -383,7 +352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8519204321545788387
 Transform:
   m_ObjectHideFlags: 0
@@ -407,13 +376,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8519204321545788380}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 678ed0ccc67148b4fab02501e67dd01c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   realparts: []
-  positionStart: {fileID: 8519204321297583240}
+  positionStart: {fileID: 0}
   positionShow: {fileID: 8519204321526334925}
   time: 0.2
 --- !u!1 &8519204321557936137
@@ -481,7 +450,7 @@ Transform:
   m_LocalScale: {x: 3160.9248, y: 3160.9248, z: 3160.9248}
   m_Children: []
   m_Father: {fileID: 8519204321364685153}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8519204321778173834
 MeshFilter:
@@ -625,11 +594,8 @@ MonoBehaviour:
   handCardControll: {fileID: 8519204322221406571}
   bookFolderTran: {fileID: 8519204321545788387}
   dicktran: {fileID: 8519204322671859912}
-  partPositionList: []
+  cardBoardPosition: {fileID: 8519204321526334925}
   actionTran: {fileID: 0}
-  parttransforms:
-  - {fileID: 8519204322914497608}
-  - {fileID: 8519204321557936136}
   waitSelectCard: {fileID: 648757908}
 --- !u!1 &8519204322221406564
 GameObject:
@@ -818,7 +784,7 @@ Transform:
   m_LocalScale: {x: 3528.1594, y: 3528.1594, z: 3528.1594}
   m_Children: []
   m_Father: {fileID: 8519204321364685153}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8519204322569162043
 MeshFilter:
@@ -869,7 +835,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8519204321364685153}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

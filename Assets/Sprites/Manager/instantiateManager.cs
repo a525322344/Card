@@ -23,8 +23,7 @@ public class instantiateManager : MonoBehaviour
     //储存对象
     [HideInInspector]
     public GameObject waitSelectBoard;
-    [HideInInspector]
-    public GameObject knapsack;
+
     #endregion
 
     public Canvas uiCanvas;
@@ -56,41 +55,54 @@ public class instantiateManager : MonoBehaviour
     }
 
 
-    public void instanBattleStartPart(List<MagicPart> magicParts)
-    {
-        for(int i=0;i<magicParts.Count;i++)
-        {
-            GameObject part = Instantiate(partGO, battleuiRoot.parttransforms[i]);
-            realpart realpart = part.GetComponent<realpart>();
-            realpart.Init(magicParts[i],RealPartState.Play);
-            battleuiRoot.parttransforms[0].parent.GetComponent<bookFolderControll>().realparts.Add(realpart);
-        }
-        gameManager.Instance.battlemanager.realPartList = battleuiRoot.parttransforms[0].parent.GetComponent<bookFolderControll>().realparts;
-    }
+
     //地图遭遇——生成整理背包页面
-    public void instanSortPart(List<MagicPart> magicParts)
+    List<realpart> realparts = new List<realpart>();
+    GameObject knapscak;
+    public void instanSortPart(List<MagicPart> magicParts,knapsack _knapsack)
     {
-        //把部件生成
+        //外部生成还没有安装的部件
+        int j = 0;
         for(int i = 0; i < magicParts.Count; i++)
         {
-            GameObject part = Instantiate(partGO, mapRootInfo.sortPartPosition);
-            part.transform.localPosition = Vector3.down * mapRootInfo.sortPartDistance * i;
-            realpart rp = part.GetComponent<realpart>();
-            rp.Init(magicParts[i],RealPartState.Sort);
+            if (!_knapsack.installParts.ContainsValue(magicParts[i]))
+            {
+                GameObject part = Instantiate(partGO, mapRootInfo.sortPartPosition);
+                part.transform.localPosition = Vector3.right * mapRootInfo.sortPartDistance * j;
+                realpart rp = part.GetComponent<realpart>();
+                rp.Init(magicParts[i], GameState.MapSence, mapRootInfo.sortPartPosition);
+                j++;
+                realparts.Add(rp);
+            }
         }
         //把背包生成
-        if (knapsack)
+        knapscak = Instantiate(knapsackGO, mapRootInfo.knapsackPosition);
+        realKnapsack rk = knapscak.GetComponent<realKnapsack>();
+        rk.Init(_knapsack,GameState.MapSence);
+        //生成安装了的部件
+        foreach (var i in _knapsack.installParts)
         {
+            GameObject part = Instantiate(partGO, rk.laticePairs[i.Key].transform.parent);
+            realpart rp = part.GetComponent<realpart>();
+            rp.meshTran.gameObject.SetActive(false);
+            realparts.Add(rp);
+            rp.InitInstall(rk.laticePairs[i.Key].transform);
+            //lastRealLatice.InstallPart(thisMagicPart, out installPosiTran);
+            rp.Init(i.Value, GameState.MapSence, mapRootInfo.sortPartPosition);
+        }
 
-        }
-        else
+    }
+    public void ExitSortPart()
+    {
+        for(int i = realparts.Count - 1; i >= 0; i--)
         {
-            knapsack = Instantiate(knapsackGO, mapRootInfo.knapsackPosition);
-            realKnapsack rk = knapsack.GetComponent<realKnapsack>();
-            rk.Init(gameManager.Instance.playerinfo.playerKnapsack);
+            Destroy(realparts[i].gameObject);
         }
+        realparts.Clear();
+        Destroy(knapscak);
     }
 
+    //战斗——抽卡
     public void instanDrawACard(card playercard)
     {
         GameObject card = Instantiate(cardGO, battleuiRoot.handCardControll);
@@ -99,7 +111,27 @@ public class instantiateManager : MonoBehaviour
         realcard.ShowDraw();
         battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards.Add(realcard);
     }
+    //战斗——部件
+    public void instanBattleKnapsack(knapsack _knapsack)
+    {
+        //创建纸板
+        knapscak = Instantiate(knapsackGO, battleuiRoot.cardBoardPosition);
+        realKnapsack rk = knapscak.GetComponent<realKnapsack>();
+        rk.Init(_knapsack,GameState.BattleSence);
 
+        
+    }
+    //public void instanBattleStartPart(List<MagicPart> magicParts)
+    //{
+    //    for (int i = 0; i < magicParts.Count; i++)
+    //    {
+    //        GameObject part = Instantiate(partGO, battleuiRoot.parttransforms[i]);
+    //        realpart realpart = part.GetComponent<realpart>();
+    //        realpart.Init(magicParts[i], GameState.BattleSence, battleuiRoot.parttransforms[i]);
+    //        battleuiRoot.parttransforms[0].parent.GetComponent<bookFolderControll>().realparts.Add(realpart);
+    //    }
+    //    gameManager.Instance.battlemanager.realPartList = battleuiRoot.parttransforms[0].parent.GetComponent<bookFolderControll>().realparts;
+    //}
     //战斗——生成怪物
     public void instanMonster(monsterInfo moninfo,out realEnemy realEnemy)
     {

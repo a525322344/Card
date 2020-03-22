@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum LaticeState
 {
-    NotActive,      //未开发的
+    NotExploit,      //未开发的
     Exploit,        //已解锁的
     CanInstall,     //可以安装
     Install,        //安装
@@ -22,7 +22,7 @@ public class latice
         }
         else
         {
-            state = LaticeState.NotActive;
+            state = LaticeState.NotExploit;
         }
     }
     public latice(Vector2 posi, bool isexploit)
@@ -34,7 +34,7 @@ public class latice
         }
         else
         {
-            state = LaticeState.NotActive;
+            state = LaticeState.NotExploit;
         }
     }
     //储存位置

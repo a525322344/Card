@@ -47,6 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe9430b8948095742b5b71100fc2e8b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  realgridMode: {fileID: 1972082160367306617, guid: 0e76362a6d8d6fe4aa1bea608aacda58,
+    type: 3}
+  distance: 95
+  meshTran: {fileID: 4227206178624639679}
+  gridFolder: {fileID: 5087272682893854245}
+  text: {fileID: 7143876590591219265}
   thisMagicPart:
     name: 
     id: 0
@@ -55,13 +61,12 @@ MonoBehaviour:
     rotateInt: 0
     describe: 
   realPartState: 0
-  realgridMode: {fileID: 1972082160367306617, guid: 0e76362a6d8d6fe4aa1bea608aacda58,
-    type: 3}
-  distance: 95
-  meshTran: {fileID: 4227206178624639679}
-  gridFolder: {fileID: 5087272682893854245}
-  text: {fileID: 7143876590591219265}
   sortState: 0
+  freeFater: {fileID: 0}
+  lastRealLatice: {fileID: 0}
+  b_caninstall: 0
+  b_rotate: 0
+  installPosiTran: {fileID: 0}
 --- !u!65 &8559162314691492144
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -73,7 +78,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 100, y: 100, z: 1}
+  m_Size: {x: 100, y: 100, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1520981386356546477
 GameObject:
@@ -102,7 +107,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1520981386356546477}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7916078360145239691}
@@ -208,7 +213,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 217, y: 3}
+  m_AnchoredPosition: {x: 0, y: -184}
   m_SizeDelta: {x: 231.7, y: 85.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8153149738069563882
