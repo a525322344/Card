@@ -189,14 +189,6 @@ public class realpart : MonoBehaviour
         switch (realPartState)
         {
             case GameState.BattleSence:
-                //if (b_readyToPlayACard)
-                //{
-                //    if (Input.GetMouseButtonDown(0))
-                //    {
-                //        b_readyToPlayACard = false;
-                //        gameManager.Instance.battlemanager.PlayCard();
-                //    }
-                //}
                 break;
             case GameState.MapSence:
                 switch (sortState)

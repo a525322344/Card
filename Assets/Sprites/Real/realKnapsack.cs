@@ -322,7 +322,7 @@ public class realKnapsack : MonoBehaviour
                             {
                                 if (selectPart != laticePairs[position].realpart.thisMagicPart)
                                 {
-                                    selectPart = null;
+                                    selectPart = nullpart;
                                     b_samePart = false;
                                     selecRealParts.Clear();
                                 }

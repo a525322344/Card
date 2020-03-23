@@ -55,7 +55,14 @@ public class realCost : MonoBehaviour
                     lastRealLatice = nowRealLatice;
                     nowRealLatice.ToSetPart(thiscard);
 
-                    gameManager.Instance.battlemanager.setCardDescribe(nowRealLatice.realknapsack.selectPart);
+                    if (nowRealLatice.realknapsack.selectPart == null)
+                    {
+                        Debug.Log("selectpart==null");
+                    }
+                    else
+                    {
+                        gameManager.Instance.battlemanager.setCardDescribe(nowRealLatice.realknapsack.selectPart);
+                    }
                 }
                 else
                 {
@@ -105,7 +112,7 @@ public class realCost : MonoBehaviour
     public void Init(card _playercard)
     {
         initVecInt = _playercard.vecCostPairs;
-        VecIntRotate = initVecInt;
+        VecIntRotate = new Dictionary<Vector2, int>(initVecInt);
         thiscard = _playercard;
 
         costMode = 1;

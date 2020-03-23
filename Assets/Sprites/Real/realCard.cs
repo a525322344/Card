@@ -152,6 +152,15 @@ public class realCard : MonoBehaviour
                 transform.DOMove(mouseposition + Vector3.back * 1, 0);
                 transform.DOScale(Vector3.one * 1.1f, 0.1f);
 
+                if (Input.GetAxis("Mouse ScrollWheel") < 0)//下
+                {
+                    realcost.RotateCost(-1);
+                }
+                if (Input.GetAxis("Mouse ScrollWheel") > 0)//上
+                {
+                    realcost.RotateCost(1);
+                }
+
                 if (IsOutOfHandPlace() == false)
                 {
                     handCardState = HandCardState.Select;
