@@ -54,10 +54,10 @@ public class LinkPart : MagicPart
             {
                 base.addReaction(r);
             }
-            foreach(var p in magicpart.Vector2GridPairs)
-            {
-                Vector2GridPairs.Add(p.Key,p.Value);
-            }
+            //foreach(var p in magicpart.Vector2GridPairs)
+            //{
+            //    Vector2GridPairs.Add(p.Key,p.Value);
+            //}
         }
         //debugReactionList();
     }

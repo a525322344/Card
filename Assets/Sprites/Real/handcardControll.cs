@@ -67,10 +67,10 @@ public class handcardControll : MonoBehaviour
             if (selectedCard)
             {
                 selectedCard.StateSelect_Freedom();
-                if (selectedCard.realcost.lastrealgrid)
+                if (selectedCard.realcost.lastRealLatice)
                 {
-                    selectedCard.realcost.lastrealgrid.fatherPart.SetDownCard(null);
-                    selectedCard.realcost.lastrealgrid = null;
+                    selectedCard.realcost.lastRealLatice.realknapsack.ToSetPart(null);
+                    selectedCard.realcost.lastRealLatice = null;
                 }
 
                 gameManager.Instance.battlemanager.setCardDescribe(new MagicPart());

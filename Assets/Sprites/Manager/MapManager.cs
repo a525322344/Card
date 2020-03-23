@@ -25,7 +25,7 @@ public class MapManager : MonoBehaviour
 
         place newplace;
         //战斗地点
-        newplace = new battlePlace(new monInfo_Cat(), 0);      
+        newplace = new battlePlace(new monInfo_Cat(), 1);      
         realplaceList.Add(instantiatePlace(newplace));
 
         //事件地点

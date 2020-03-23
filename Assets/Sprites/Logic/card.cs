@@ -14,14 +14,9 @@ public class card
     public int Id;
     public CardKind Kind;
     public int Cost;
-    protected int[,] priCostVector2;
-    public int[,] costVector2
-    {
-        get
-        {
-            return priCostVector2;
-        }
-    }
+
+    public Dictionary<Vector2, int> vecCostPairs = new Dictionary<Vector2, int>();
+
     public string Describe;
     protected bool canplay;
     public void SetCanPlay(bool b)
@@ -62,12 +57,12 @@ public class playerCard : card
                 SetCanPlay(true);
                 break;
         }
-        priCostVector2 = new int[3,3];
-        for (int i = 0; i < 3; i++)
+
+        for (int i = -1; i < 2; i++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int j = -1; j < 2; j++)
             {
-                priCostVector2[i, j] = 0;
+                vecCostPairs.Add(new Vector2(i, j), 0);
             }
         }
         switch (Cost)
@@ -75,11 +70,11 @@ public class playerCard : card
             case 0:
                 break;
             case 1:
-                priCostVector2[1, 1] = 1;
+                vecCostPairs[new Vector2(0,0)] = 1;
                 break;
             case 2:
-                priCostVector2[1, 1] = 1;
-                priCostVector2[2, 1] = 1;
+                vecCostPairs[new Vector2(0, 0)] = 1;
+                vecCostPairs[new Vector2(0, -1)] = 1;
                 break;
                 //other
         }
@@ -104,12 +99,11 @@ public class playerCard : card
                 SetCanPlay(true);
                 break;
         }
-        priCostVector2 = new int[3, 3];
-        for (int i = 0; i < 3; i++)
+        for (int i = -1; i < 2; i++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int j = -1; j < 2; j++)
             {
-                priCostVector2[i, j] = 0;
+                vecCostPairs.Add(new Vector2(i, j), 0);
             }
         }
         switch (Cost)
@@ -117,11 +111,11 @@ public class playerCard : card
             case 0:
                 break;
             case 1:
-                priCostVector2[1, 1] = 1;
+                vecCostPairs[new Vector2(0, 0)] = 1;
                 break;
             case 2:
-                priCostVector2[1, 1] = 1;
-                priCostVector2[2, 1] = 1;
+                vecCostPairs[new Vector2(0, 0)] = 1;
+                vecCostPairs[new Vector2(0, -1)] = 1;
                 break;
                 //other
         }

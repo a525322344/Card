@@ -106,9 +106,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fatherPart: {fileID: 0}
   thisgrid:
+    position: {x: 0, y: 0}
     fatherPart:
       name: 
       id: 0
       gridsum: 0
       gridpower: 0
+      rotateInt: 0
       describe: 
+  gridState: 1
+  mr_black: {fileID: 2100000, guid: 33193caf66a075a4d8d1724e56d99922, type: 2}
+  mr_write: {fileID: 2100000, guid: 0806cc36eb8a4824e8462aae1af752ff, type: 2}
+  mr_gray: {fileID: 2100000, guid: 7814228cbf8eec841904fc141d2207c2, type: 2}
+  mr_cyan: {fileID: 2100000, guid: dba73bd45b58ea5488a01406f5e231d5, type: 2}

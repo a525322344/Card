@@ -125,12 +125,25 @@ MonoBehaviour:
   black_lock: {fileID: 2100000, guid: 4f1f2c485364f8c45bbc66257be3b337, type: 2}
   white_unlock: {fileID: 2100000, guid: 54f82a2fc3c25f04794b546e44478da9, type: 2}
   green_caninstall: {fileID: 2100000, guid: 8ef59570d26a6f140a8e7556e27b854c, type: 2}
+  grid_lock: {fileID: 2100000, guid: 33193caf66a075a4d8d1724e56d99922, type: 2}
+  grid_power: {fileID: 2100000, guid: 0806cc36eb8a4824e8462aae1af752ff, type: 2}
+  grid_can: {fileID: 2100000, guid: dba73bd45b58ea5488a01406f5e231d5, type: 2}
+  grid_used: {fileID: 2100000, guid: 7814228cbf8eec841904fc141d2207c2, type: 2}
   realknapsack: {fileID: 0}
   thislatice:
     position: {x: 0, y: 0}
-    b_exploit: 0
-    b_use: 0
-  b_caninstall: 0
+    state: 0
+  gameState: 0
+  gridState: 0
+  grid:
+    position: {x: 0, y: 0}
+    fatherPart:
+      name: 
+      id: 0
+      gridsum: 0
+      gridpower: 0
+      rotateInt: 0
+      describe: 
 --- !u!65 &2545112351662160459
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -5,70 +5,80 @@ using Constant;
 
 public class realCost : MonoBehaviour
 {
-    public Transform[] costchildrens = new Transform[9];
-    public card thiscard;
+    #region 外部引用
+    public Material mr_cyan;
+    public Material mr_blue;
+    private Transform[] costchildrens = new Transform[9];
+    #endregion
+    private List<MeshRenderer> _renderers = new List<MeshRenderer>();
 
+    public card thiscard;
+    public Dictionary<Vector2, int> initVecInt;
+    public Dictionary<Vector2, int> VecIntRotate;
+    public int rotateInt;
     //  costMode
     //1:当前位置不合适安放cost
     //2:当前位置合适
+    public bool b_rotate;
     public int costMode = 0;
     private int nextCostMode = 0;
 
-    private List<MeshRenderer> _renderers = new List<MeshRenderer>();
-    private Material mr_cyan;
-    private Material mr_blue;
+    ///public realgrid lastrealgrid;
+    public realLatice lastRealLatice;
 
-    public realgrid lastrealgrid;
-    //public Transform lastrealgridTran=null;
     public void Update()
     {
         //射线检测当前选中的是哪格
         RaycastHit hit;
-        realgrid downRealgrid; 
-        if(Physics.Raycast(transform.position, Vector3.forward,out hit, 100, 1 << 9)){
-            downRealgrid = hit.transform.GetComponent<realgrid>();
+        ///realgrid downRealgrid;
+        realLatice nowRealLatice;
+        
+        if(Physics.Raycast(transform.position, Vector3.forward,out hit, 100, 1 << 10)){
+            nowRealLatice = hit.transform.GetComponent<realLatice>();
             //判断是否切换格子，如若切换，reset last readgrid
-            if (lastrealgrid)
+            if (lastRealLatice)
             {
-                if (lastrealgrid != downRealgrid)
+                if (lastRealLatice != nowRealLatice)
                 {
-                    lastrealgrid.ToSetPart(null);
-                    lastrealgrid = null;
+                    lastRealLatice.ToSetPart(null);
+                    lastRealLatice = null;
                 }
             }
             //如若没有过改变，则不用再次检测
-            if (downRealgrid != lastrealgrid)
+            if (nowRealLatice != lastRealLatice||b_rotate)
             {
-                if (downRealgrid.CanOverCostPlay(thiscard))
+                b_rotate = false;
+                if (nowRealLatice.CanCostPlay(VecIntRotate))
                 {
                     //Debug.Log("canovercostPlay");
                     nextCostMode = 2;
-                    lastrealgrid = downRealgrid;
-                    downRealgrid.ToSetPart(thiscard);
+                    lastRealLatice = nowRealLatice;
+                    nowRealLatice.ToSetPart(thiscard);
 
-                    gameManager.Instance.battlemanager.setCardDescribe(downRealgrid.fatherPart.thisMagicPart);
+                    gameManager.Instance.battlemanager.setCardDescribe(nowRealLatice.realknapsack.selectPart);
                 }
                 else
                 {
                     nextCostMode = 1;
-                    if (lastrealgrid)
+                    if (lastRealLatice)
                     {
-                        lastrealgrid.ToSetPart(null);
+                        lastRealLatice.ToSetPart(null);
                         gameManager.Instance.battlemanager.setCardDescribe(new MagicPart());
-                        lastrealgrid = null;
+                        lastRealLatice = null;
                     }
                 }
             }
         }
         else
         {
-            if (lastrealgrid)
+            if (lastRealLatice)
             {
-                lastrealgrid.ToSetPart(null);
-                lastrealgrid = null;
+                lastRealLatice.ToSetPart(null);
+                lastRealLatice = null;
                 gameManager.Instance.battlemanager.setCardDescribe(new MagicPart());
             }
         }
+        
         //根据costMode进行切换
         if (costMode != nextCostMode)
         {
@@ -92,35 +102,69 @@ public class realCost : MonoBehaviour
     }
 
     //初始化调用
-    public void setCost(card _playercard)
+    public void Init(card _playercard)
     {
+        initVecInt = _playercard.vecCostPairs;
+        VecIntRotate = initVecInt;
+        thiscard = _playercard;
+
         costMode = 1;
         nextCostMode = 1;
+
         for (int i = 0; i < 9; i++)
         {
             costchildrens[i] = transform.GetChild(i);
-
         }
-        thiscard = _playercard;
-        foreach (Transform costchild in costchildrens)
+        foreach (var vecint in initVecInt)
         {
-            costchild.gameObject.SetActive(false);
-        }
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
+            int order = (int)vecint.Key.x + (int)vecint.Key.y * 3 + 4;
+            if (vecint.Value == 1)
             {
-                if (thiscard.costVector2[i, j] == 0)
-                {
-                    costchildrens[i * 3 + j].gameObject.SetActive(false);
-                }
-                else if(thiscard.costVector2[i, j] == 1)
-                {
-                    costchildrens[i * 3 + j].gameObject.SetActive(true);
-                    _renderers.Add(costchildrens[i * 3 + j].GetComponent<MeshRenderer>());
-                }
+                costchildrens[order].gameObject.SetActive(true);
+                _renderers.Add(costchildrens[order].GetComponent<MeshRenderer>());
+            }
+            else if (vecint.Value == 0)
+            {
+                costchildrens[order].gameObject.SetActive(false);
             }
         }
+    }
+
+    public void RotateCost(int r)
+    {
+        if (r == 1)
+        {
+            if (rotateInt == 3)
+            {
+                rotateInt = 0;
+            }
+            else
+            {
+                rotateInt++;
+            }
+        }
+        else if (r == -1)
+        {
+            if (rotateInt == 0)
+            {
+                rotateInt = 3;
+            }
+            else
+            {
+                rotateInt--;
+            }
+        }
+        VecIntRotate.Clear();
+        foreach(var vg in initVecInt)
+        {
+            float angle = (float)rotateInt * 90 * Mathf.Deg2Rad;
+            Vector2 newvec=new Vector2(
+                (int)Mathf.Cos(angle) * vg.Key.x - (int)Mathf.Sin(angle) * vg.Key.y,
+                (int)Mathf.Sin(angle) * vg.Key.x + (int)Mathf.Cos(angle) * vg.Key.y);
+            VecIntRotate.Add(newvec, vg.Value);
+        }
+        transform.rotation = Quaternion.Euler(0, 0, rotateInt * 90);
+        b_rotate = true;
     }
     private void Start()
     {

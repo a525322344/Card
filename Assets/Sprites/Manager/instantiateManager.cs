@@ -112,14 +112,13 @@ public class instantiateManager : MonoBehaviour
         battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards.Add(realcard);
     }
     //战斗——部件
-    public void instanBattleKnapsack(knapsack _knapsack)
+    public realKnapsack instanBattleKnapsack(knapsack _knapsack)
     {
         //创建纸板
         knapscak = Instantiate(knapsackGO, battleuiRoot.cardBoardPosition);
         realKnapsack rk = knapscak.GetComponent<realKnapsack>();
         rk.Init(_knapsack,GameState.BattleSence);
-
-        
+        return rk;
     }
     //public void instanBattleStartPart(List<MagicPart> magicParts)
     //{

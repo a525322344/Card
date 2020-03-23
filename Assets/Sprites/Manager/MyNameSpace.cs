@@ -79,7 +79,7 @@ namespace AllAsset
         }
         public static void RandomLinkPart(int num,battleInfo battleinfo)
         {
-            List<realpart> copyrealparts = new List<realpart>(gameManager.Instance.battlemanager.realPartList);
+            List<realpart> copyrealparts = new List<realpart>(gameManager.Instance.battlemanager.realknapsack.realparts);
             int partnum= copyrealparts.Count;
             List<realpart> getlist = new List<realpart>();
             if (partnum > num)
@@ -113,7 +113,7 @@ namespace AllAsset
         }
         public static void LinkAllPart(int num,battleInfo battleinfo)
         {
-            List<realpart> getlist = gameManager.Instance.battlemanager.realPartList;
+            List<realpart> getlist = gameManager.Instance.battlemanager.realknapsack.realparts;
             List<MagicPart> getmagicParts = new List<MagicPart>();
             foreach (realpart rp in getlist)
             {

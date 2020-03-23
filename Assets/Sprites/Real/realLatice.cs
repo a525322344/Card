@@ -11,6 +11,7 @@ public enum GridState
 }
 public class realLatice : MonoBehaviour
 {
+    #region 外部资源
     public Material black_lock;
     public Material white_unlock;
     public Material green_caninstall;
@@ -19,22 +20,22 @@ public class realLatice : MonoBehaviour
     public Material grid_power;
     public Material grid_can;
     public Material grid_used;
+    #endregion
     [HideInInspector]
     public realKnapsack realknapsack;
     public latice thislatice;
     public GameState gameState;
     public GridState gridState;
 
-    public grid grid;
-    private MeshRenderer renderer;
 
-    private void Awake()
-    {
-        renderer =transform.GetChild(0).GetComponent<MeshRenderer>();
-    }
+    public realpart realpart;
+    public realgrid realgrid;
+    private MeshRenderer renderer;
 
     public void Init(latice l,realKnapsack father,GameState state)
     {
+        renderer = transform.GetChild(0).GetComponent<MeshRenderer>();
+
         gameState = state;
         thislatice = l;
         realknapsack = father;
@@ -64,7 +65,7 @@ public class realLatice : MonoBehaviour
             changeColor();
         }
     }
-
+    //地图操作
     public bool CanInstallPart(MagicPart magicPart)
     {
         return realknapsack.CanInstallPart(magicPart,thislatice.position);
@@ -80,6 +81,33 @@ public class realLatice : MonoBehaviour
     public void ExitCanInstall()
     {
         realknapsack.ExitCanInstall();
+    }
+    //战斗操作
+    public bool CanCostPlay(Dictionary<Vector2, int> vectorInts)
+    {
+        return realknapsack.CanCostPlay(thislatice.position, vectorInts);
+    }
+    public void ToSetPart(card _selectcard)
+    {
+        realknapsack.ToSetPart(_selectcard);
+    }
+    public void BackSetLitice(bool canplay)
+    {
+        if (gridState != GridState.Used)
+        {
+            if (canplay)
+            {
+                gridState = GridState.Can;
+                realgrid.gridState = GridState.Can;
+            }
+            else
+            {
+                gridState = GridState.Power;
+                realgrid.gridState = GridState.Power;
+            }
+            realgrid.changeMaterial();
+            changeColor();
+        }
     }
 
     public void changeColor()
@@ -106,7 +134,49 @@ public class realLatice : MonoBehaviour
             switch (gridState)
             {
                 case GridState.NotExploit:
-                    Debug.Log("gridstate.NotExploit不该触发改变颜色");
+                    //Debug.Log("gridstate.NotExploit不该触发改变颜色");
+                    break;
+                case GridState.NotActive:
+                    renderer.material = grid_lock;
+                    break;
+                case GridState.Power:
+                    renderer.material = grid_power;
+                    break;
+                case GridState.Can:
+                    renderer.material = grid_can;
+                    break;
+                case GridState.Used:
+                    renderer.material = grid_used;
+                    break;
+            }
+        }
+    }
+    public void changeColor(GridState state)
+    {
+        gridState = state;
+        if (gameState == GameState.MapSence)
+        {
+            switch (thislatice.state)
+            {
+                case LaticeState.NotExploit:
+                    renderer.material = black_lock;
+                    break;
+                case LaticeState.Exploit:
+                    renderer.material = white_unlock;
+                    break;
+                case LaticeState.CanInstall:
+                    renderer.material = green_caninstall;
+                    break;
+                case LaticeState.Install:
+                    break;
+            }
+        }
+        else if (gameState == GameState.BattleSence)
+        {
+            switch (gridState)
+            {
+                case GridState.NotExploit:
+                    //Debug.Log("gridstate.NotExploit不该触发改变颜色");
                     break;
                 case GridState.NotActive:
                     renderer.material = grid_lock;

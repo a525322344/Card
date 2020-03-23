@@ -8,12 +8,14 @@ public class realKnapsack : MonoBehaviour
     //创建5X5预备背包格，初始开放6格，中心点为3，3
     public GameObject LaticeGO;
     public Transform pointtran;
+    public Transform BoardMesh;
     public float distance;
 
     public knapsack thisknapsack;
     public GameState KnapsackState;
 
     public Dictionary<Vector2, realLatice> laticePairs = new Dictionary<Vector2, realLatice>();
+    public List<realpart> realparts = new List<realpart>();
 #region 用于中转
     private Dictionary<Vector2, latice> lactices = new Dictionary<Vector2, latice>();
 #endregion
@@ -47,10 +49,11 @@ public class realKnapsack : MonoBehaviour
                 laticePairs.Add(posi, realLatice);
             }
             //初始化部件数据
-            InitInstallPart();
+            InitInstallPart(GameState.MapSence);
         }
         else if (KnapsackState == GameState.BattleSence)
         {
+            BoardMesh.gameObject.SetActive(false);
             //生成实例Latice
             for (int i = 0; i < 25; i++)
             {
@@ -73,24 +76,83 @@ public class realKnapsack : MonoBehaviour
                 laticePairs.Add(posi, realLatice);
             }
             //初始化部件
+            InitInstallPart(GameState.BattleSence);
+            selectPart = nullpart;
         }
     }
-    private void InitInstallPart()
+    private void InitInstallPart(GameState state)
     {
-        foreach (var centerPart in thisknapsack.installParts)
+        if (state == GameState.MapSence)
         {
-            foreach (var vecGrid in thisknapsack.installParts[centerPart.Key].Vector2GridRotate)
+            foreach (var centerPart in thisknapsack.installParts)
             {
-                if (vecGrid.Value.Opening)
+                foreach (var vecGrid in thisknapsack.installParts[centerPart.Key].Vector2GridRotate)
                 {
-                    laticePairs[vecGrid.Key + centerPart.Key].grid = vecGrid.Value;
-                    laticePairs[vecGrid.Key + centerPart.Key].thislatice.state = LaticeState.Install;
+                    if (vecGrid.Value.Opening)
+                    {
+                        //laticePairs[vecGrid.Key + centerPart.Key].grid = vecGrid.Value;
+                        laticePairs[vecGrid.Key + centerPart.Key].thislatice.state = LaticeState.Install;
+                        
+                    }
+                }
+            }
+        }
+        else if (state == GameState.BattleSence)
+        {
+            foreach (var centerPart in thisknapsack.installParts)
+            {
+                foreach (var vecGrid in thisknapsack.installParts[centerPart.Key].Vector2GridRotate)
+                {
+                    if (vecGrid.Value.Opening)
+                    {
+                        //laticePairs[vecGrid.Key + centerPart.Key].grid = vecGrid.Value;
+                        //laticePairs[vecGrid.Key+centerPart.Key].realpart=
+                        laticePairs[vecGrid.Key + centerPart.Key].thislatice.state = LaticeState.Install;
+                        laticePairs[vecGrid.Key + centerPart.Key].Init(laticePairs[vecGrid.Key + centerPart.Key].thislatice, this, GameState.BattleSence);
+                    }
+                }
+            }
+            //生成安装了的部件
+            instantiateManager instantiate = gameManager.Instance.instantiatemanager;
+            foreach (var centerPart in thisknapsack.installParts)
+            {
+                GameObject part = Instantiate(instantiate.partGO, laticePairs[centerPart.Key].transform);
+                realpart rp = part.GetComponent<realpart>();
+                rp.meshTran.gameObject.SetActive(false);
+                //rp.InitInstall(rk.laticePairs[centerPart.Key].transform);
+                //lastRealLatice.InstallPart(thisMagicPart, out installPosiTran);
+                rp.Init(centerPart.Value, GameState.BattleSence,null);
+                realparts.Add(rp);
+                foreach (var vecGrid in thisknapsack.installParts[centerPart.Key].Vector2GridRotate)
+                {
+                    if (vecGrid.Value.Opening)
+                    {
+                        laticePairs[vecGrid.Key + centerPart.Key].realpart = rp;
+                        laticePairs[vecGrid.Key + centerPart.Key].realgrid = rp.gridRealgridPairs[vecGrid.Value];
+                        laticePairs[vecGrid.Key + centerPart.Key].thislatice.state = LaticeState.Install;
+                        laticePairs[vecGrid.Key + centerPart.Key].Init(laticePairs[vecGrid.Key + centerPart.Key].thislatice, this, GameState.BattleSence);
+                    }
                 }
             }
         }
     }
-
-
+    private void Update()
+    {
+        switch (KnapsackState)
+        {
+            case GameState.BattleSence:
+                if (b_readyToPlayCard)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        b_readyToPlayCard = false;
+                        gameManager.Instance.battlemanager.PlayCard();
+                    }
+                }
+                break;
+        }
+    }
+    //地图操作
     private List<realLatice> onLatices;
     public bool CanInstallPart(MagicPart magicPart,Vector2 center)
     {
@@ -149,7 +211,7 @@ public class realKnapsack : MonoBehaviour
         {
             if (g.Value.Opening)
             {
-                laticePairs[g.Key + center].grid = null;
+                //laticePairs[g.Key + center].grid = null;
                 laticePairs[g.Key + center].thislatice.state = LaticeState.Exploit;
             }
         }
@@ -193,7 +255,7 @@ public class realKnapsack : MonoBehaviour
             foreach (var rlg in rLGPairs)
             {
                 //将grid储存在对应的latice上
-                rlg.Key.grid = rlg.Value;
+                //rlg.Key.grid = rlg.Value;
                 //设置状态
                 rlg.Key.thislatice.state = LaticeState.Install;
             }
@@ -205,5 +267,135 @@ public class realKnapsack : MonoBehaviour
             positionTran = null;
         }
     }
+    //战斗操作
+    public bool b_readyToPlayCard;
+    public card selectCard;
+    MagicPart nullpart = new MagicPart();
+    public MagicPart selectPart;
+    List<realLatice> selectLatices = new List<realLatice>();
+    List<realpart> selecRealParts = new List<realpart>();
+    public void SetinPart()
+    {
+        foreach(var v in thisknapsack.installParts)
+        {
+            v.Value.SetinReactions();
+        }
+    }
+    public bool CanCostPlay(Vector2 center, Dictionary<Vector2, int> vectorInts)
+    {
+        bool result = true;
+        bool b_samePart = true;
+        //selectPart = laticePairs[center].realpart.thisMagicPart;
+        foreach(var vecint in vectorInts)
+        {
+            if (vecint.Value == 1)//cost块符合
+            {
+                Vector2 position = center + vecint.Key;
+                if (laticePairs.ContainsKey(position))//纸板上有
+                {
+                    if (laticePairs[position].gridState == GridState.Power | laticePairs[position].gridState == GridState.Can)
+                    {
+                        //储存用到的latice
+                        selectLatices.Add(laticePairs[position]);
+                        //储存部件
+                        if (b_samePart)
+                        {
+                            //第一次
+                            if (selectPart == nullpart)
+                            {
+                                if (laticePairs[position].realpart.thisMagicPart != null)
+                                {
+                                    selectPart = laticePairs[position].realpart.thisMagicPart;
+                                    if (!selecRealParts.Contains(laticePairs[position].realpart))
+                                    {
+                                        selecRealParts.Add(laticePairs[position].realpart);
+                                    }
+                                }
+                                else
+                                {
+                                    selectPart = nullpart;
+                                    b_samePart = false;
+                                    selecRealParts.Clear();
+                                }
+                            }
+                            else
+                            {
+                                if (selectPart != laticePairs[position].realpart.thisMagicPart)
+                                {
+                                    selectPart = null;
+                                    b_samePart = false;
+                                    selecRealParts.Clear();
+                                }
+                                else
+                                {
+                                    if (!selecRealParts.Contains(laticePairs[position].realpart))
+                                    {
+                                        selecRealParts.Add(laticePairs[position].realpart);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        result = false;
+                        break;
+                    }
+                }
+                else
+                {
+                    result = false;
+                    break;
+                }
+            }
+        }
+        b_readyToPlayCard = result;
+        return result;
+    }
+    public void ToSetPart(card _selectcard)
+    {
+        if (_selectcard == null)
+        {
+            for (int i = 0; i < selectLatices.Count; i++)
+            {
+                selectLatices[i].BackSetLitice(false);
+            }
+            selectLatices.Clear();
+            b_readyToPlayCard = false;
+            selectCard = null;
+            selectPart = nullpart;
+            gameManager.Instance.battlemanager.SetSelectPart(null);
+        }
+        else
+        {
+            for(int i = 0; i < selectLatices.Count; i++)
+            {
+                selectLatices[i].BackSetLitice(true);
+            }
+            b_readyToPlayCard = true;
+            selectCard = _selectcard;
 
+            gameManager.Instance.battlemanager.SetSelectPart(selectPart);
+            //部件的激活与睡眠转移到了CardEvent中
+        }
+    }
+    public void UseSelectLatices()
+    {
+        for (int i = 0; i < selectLatices.Count; i++)
+        {
+            selectLatices[i].changeColor(GridState.Used);
+            selectLatices[i].realgrid.changeMaterial(GridState.Used);
+        }
+    }
+    public void PowerLatices()
+    {
+        foreach(var v in laticePairs)
+        {
+            if (v.Value.gridState == GridState.Used || v.Value.gridState == GridState.Power)
+            {
+                v.Value.changeColor(GridState.Power);
+                v.Value.realgrid.changeMaterial(GridState.Power);
+            }
+        }
+    }
 }

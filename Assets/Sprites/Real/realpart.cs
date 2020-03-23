@@ -41,7 +41,7 @@ public class realpart : MonoBehaviour
     public bool b_caninstall;
     public bool b_rotate;
     public Transform installPosiTran;
-    private Dictionary<grid, realgrid> gridRealgridPairs = new Dictionary<grid, realgrid>();
+    public Dictionary<grid, realgrid> gridRealgridPairs = new Dictionary<grid, realgrid>();
 
 
 
@@ -93,86 +93,87 @@ public class realpart : MonoBehaviour
     }
 
     private List<realgrid> selectgrids = new List<realgrid>();
-    public bool CanCostPlay(grid bygrid,card selectcard)
-    {
-        bool result=true;
-        int gridx = (int)bygrid.position.x;
-        int gridy = (int)bygrid.position.y;
-        //遍历selectcard,找到有1的cost块
-        for(int i = 0; i < 3; i++)
-        {
-            for(int j = 0; j < 3; j++)
-            {
-                //
-                if (selectcard.costVector2[i, j] == 1)
-                {
-                    int costx = j - 1;
-                    int costy = i - 1;
-                    int fitx = gridx + costx;
-                    int fity = gridy + costy;
-                    if (thisMagicPart.Vector2GridRotate.ContainsKey(new Vector2(fitx, fity)))
-                    {
-                        grid fitgrid = thisMagicPart.Vector2GridRotate[new Vector2(fitx, fity)];
-                        if (fitgrid.Opening && fitgrid.Power)
-                        {
-                            selectgrids.Add(gridRealgridPairs[fitgrid]);
-                        }
-                        else
-                        {
-                            result = false;
-                        }
-                    }
-                    else
-                    {
-                        result = false;
-                    }
-                }
-            }
-        }
-        if (!result)
-        {
-            selectgrids.Clear();
-        }
-        return result;
-    }
-    public void SetDownCard(card _selectcard)
-    {
-        if (_selectcard == null)
-        {
-            for(int i = 0; i < selectgrids.Count; i++)
-            {
-                selectgrids[i].SetDownCard(null);
-            }
-            selectgrids.Clear();
-            b_readyToPlayACard = false;
-            selectedCard = null;
-            //部件的激活与睡眠转移到了CardEvent中
-            //thisMagicPart.sleepPart();
+    //public bool CanCostPlay(grid bygrid,card selectcard)
+    //{
+    //    bool result=true;
+    //    int gridx = (int)bygrid.position.x;
+    //    int gridy = (int)bygrid.position.y;
+    //    //遍历selectcard,找到有1的cost块
+    //    for(int i = 0; i < 3; i++)
+    //    {
+    //        for(int j = 0; j < 3; j++)
+    //        {
+    //            //
+    //            if (selectcard.costVector2[i, j] == 1)
+    //            {
+    //                int costx = j - 1;
+    //                int costy = i - 1;
+    //                int fitx = gridx + costx;
+    //                int fity = gridy + costy;
+    //                if (thisMagicPart.Vector2GridRotate.ContainsKey(new Vector2(fitx, fity)))
+    //                {
+    //                    grid fitgrid = thisMagicPart.Vector2GridRotate[new Vector2(fitx, fity)];
+    //                    if (fitgrid.Opening && fitgrid.Power)
+    //                    {
+    //                        selectgrids.Add(gridRealgridPairs[fitgrid]);
+    //                    }
+    //                    else
+    //                    {
+    //                        result = false;
+    //                    }
+    //                }
+    //                else
+    //                {
+    //                    result = false;
+    //                }
+    //            }
+    //        }
+    //    }
+    //    if (!result)
+    //    {
+    //        selectgrids.Clear();
+    //    }
+    //    return result;
+    //}
 
-        }
-        else
-        {
-            for (int i = 0; i < selectgrids.Count; i++)
-            {
-                selectgrids[i].SetDownCard(_selectcard);
-            }
-            b_readyToPlayACard = true;
-            selectedCard = _selectcard;
+    //public void SetDownCard(card _selectcard)
+    //{
+    //    if (_selectcard == null)
+    //    {
+    //        for(int i = 0; i < selectgrids.Count; i++)
+    //        {
+    //            selectgrids[i].SetDownCard(null);
+    //        }
+    //        selectgrids.Clear();
+    //        b_readyToPlayACard = false;
+    //        selectedCard = null;
+    //        //部件的激活与睡眠转移到了CardEvent中
+    //        //thisMagicPart.sleepPart();
 
-            gameManager.Instance.battlemanager.SetSelectPart(this);
-            //部件的激活与睡眠转移到了CardEvent中
-            //thisMagicPart.activatePart();
+    //    }
+    //    else
+    //    {
+    //        for (int i = 0; i < selectgrids.Count; i++)
+    //        {
+    //            selectgrids[i].SetDownCard(_selectcard);
+    //        }
+    //        b_readyToPlayACard = true;
+    //        selectedCard = _selectcard;
+
+    //        gameManager.Instance.battlemanager.SetSelectPart(this);
+    //        //部件的激活与睡眠转移到了CardEvent中
+    //        //thisMagicPart.activatePart();
            
-        }
-    }
-    public void UseSelectGrids()
-    {
-        for(int i = 0; i < selectgrids.Count; i++)
-        {
-            selectgrids[i].thisgrid.Power = false;
-            selectgrids[i].changeMaterial();
-        }
-    }
+    //    }
+    //}
+    //public void UseSelectGrids()
+    //{
+    //    for(int i = 0; i < selectgrids.Count; i++)
+    //    {
+    //        selectgrids[i].thisgrid.Power = false;
+    //        selectgrids[i].changeMaterial();
+    //    }
+    //}
     public void PowerRealPart()
     {
         thisMagicPart.PowerAllGrid();
@@ -188,14 +189,14 @@ public class realpart : MonoBehaviour
         switch (realPartState)
         {
             case GameState.BattleSence:
-                if (b_readyToPlayACard)
-                {
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        b_readyToPlayACard = false;
-                        gameManager.Instance.battlemanager.PlayCard();
-                    }
-                }
+                //if (b_readyToPlayACard)
+                //{
+                //    if (Input.GetMouseButtonDown(0))
+                //    {
+                //        b_readyToPlayACard = false;
+                //        gameManager.Instance.battlemanager.PlayCard();
+                //    }
+                //}
                 break;
             case GameState.MapSence:
                 switch (sortState)
@@ -280,54 +281,60 @@ public class realpart : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        switch (sortState)
+        if (realPartState == GameState.MapSence)
         {
-            case SortState.Free:
-                sortState = SortState.Select;
-                meshTran.gameObject.SetActive(false);
-                break;
-            case SortState.Select:
-                break;
-            case SortState.Install:
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position+new Vector3(0,0,-5), Vector3.forward, out hit, 100, 1 << 10))
-                {
-                    hit.transform.GetComponent<realLatice>().ExitInstall();
-                    transform.parent = freeFater;
+            switch (sortState)
+            {
+                case SortState.Free:
                     sortState = SortState.Select;
-                }
-                else
-                {
-                    Debug.Log("没有检测到latice");
-                }
-                break;
+                    meshTran.gameObject.SetActive(false);
+                    break;
+                case SortState.Select:
+                    break;
+                case SortState.Install:
+                    RaycastHit hit;
+                    if (Physics.Raycast(transform.position + new Vector3(0, 0, -5), Vector3.forward, out hit, 100, 1 << 10))
+                    {
+                        hit.transform.GetComponent<realLatice>().ExitInstall();
+                        transform.parent = freeFater;
+                        sortState = SortState.Select;
+                    }
+                    else
+                    {
+                        Debug.Log("没有检测到latice");
+                    }
+                    break;
+            }
         }
     }
 
     private void OnMouseUp()
     {
-        switch (sortState)
+        if (realPartState == GameState.MapSence)
         {
-            case SortState.Free:        
-                break;
-            case SortState.Select:
-                if (b_caninstall)
-                {
-                    //install
-                    lastRealLatice.InstallPart(thisMagicPart,out installPosiTran);
-                    transform.position = installPosiTran.position;
-                    transform.parent = installPosiTran.parent;
-                    sortState = SortState.Install;
-                }
-                else
-                {
-                    sortState = SortState.Free;
-                    meshTran.gameObject.SetActive(true);
-                }
-                break;
-            case SortState.Install:
-                
-                break;
+            switch (sortState)
+            {
+                case SortState.Free:
+                    break;
+                case SortState.Select:
+                    if (b_caninstall)
+                    {
+                        //install
+                        lastRealLatice.InstallPart(thisMagicPart, out installPosiTran);
+                        transform.position = installPosiTran.position;
+                        transform.parent = installPosiTran.parent;
+                        sortState = SortState.Install;
+                    }
+                    else
+                    {
+                        sortState = SortState.Free;
+                        meshTran.gameObject.SetActive(true);
+                    }
+                    break;
+                case SortState.Install:
+
+                    break;
+            }
         }
     }
 }

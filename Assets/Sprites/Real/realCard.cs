@@ -172,7 +172,7 @@ public class realCard : MonoBehaviour
         nameText.text = playerCard.Name;
         describeText.text = playerCard.Describe;
 
-        realcost.setCost(thisCard);
+        realcost.Init(thisCard);
         realcost.gameObject.SetActive(false);
 
         Instantiate(gameManager.Instance.instantiatemanager.costs[thisCard.Cost - 1],costtran);

@@ -74,6 +74,7 @@ public class battleManager : MonoBehaviour
     //战场信息
     public battleInfo battleInfo;
     public realEnemy realenemy;
+    public realKnapsack realknapsack;
     public List<realpart> realPartList;
     public List<realCard> realCardList;
     //public battleInfo battleInfoShow;
@@ -91,8 +92,8 @@ public class battleManager : MonoBehaviour
     }
     //当前选择的部件
     //[HideInInspector]
-    public realpart selectedPart;
-    public void SetSelectPart(realpart _magicPart)
+    public MagicPart selectedPart;
+    public void SetSelectPart(MagicPart _magicPart)
     {
         selectedPart = _magicPart;
     }
@@ -114,11 +115,9 @@ public class battleManager : MonoBehaviour
         dickInGame = ListOperation.Shufle<playerCard>(dickInGame);
 
         //实例化部件(战斗纸板)
-        instantiatemanager.instanBattleKnapsack(playerinfo.playerKnapsack);
-        //instantiatemanager.instanBattleStartPart(playerinfo.MagicPartDick);
+        realknapsack = instantiatemanager.instanBattleKnapsack(playerinfo.playerKnapsack);
         //注册玩家的部件
-        playerinfo.MagicPartDick[0].SetinReactions();
-        playerinfo.MagicPartDick[1].SetinReactions();
+        realknapsack.SetinPart();
         //初始化battleinfo
         battleInfo=new battleInfo(playerinfo);
         battleInfo.Enemy = realenemy.enemy;
@@ -176,14 +175,14 @@ public class battleManager : MonoBehaviour
     {
         if (RoundStage == ROUNDSTAGE.Battle)
         {
-            selectedPart.UseSelectGrids();
-            CardEvent newevent = new CardEvent((playerCard)selectedCard.thisCard, selectedPart.thisMagicPart, new emplyPlayCard());
+            realknapsack.UseSelectLatices();
+            CardEvent newevent = new CardEvent((playerCard)selectedCard.thisCard, selectedPart, new emplyPlayCard());
             EventShow neweventshow = new EventShow(newevent, eventManager.BattleEventShows);
             eventManager.BattleEventShows.Add(neweventshow);
             newevent.prepareEvent();
             newevent.insertEvent();
 
-            selectedCard.realcost.lastrealgrid.fatherPart.SetDownCard(null);
+            realknapsack.ToSetPart(null);
             gameManager.Instance.battlemanager.b_isSelectCard = false;
             //从手牌删掉这张卡
             deleteHandCard(selectedCard);
@@ -248,10 +247,8 @@ public class battleManager : MonoBehaviour
     public void EndEnemyRound()
     {
         b_toEndRound = false;
+        realknapsack.PowerLatices();
 
-        foreach(realpart rp in gameManager.Instance.instantiatemanager.battleuiRoot.bookFolderTran.GetComponent<bookFolderControll>().realparts){
-            rp.PowerRealPart();
-        }
         //注册怪物的下一次行动事件
         EventShow enemyNextActionEvent = new EventShow(
             new ActionEvent(realenemy.chooseAction()),

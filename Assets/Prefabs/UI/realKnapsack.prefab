@@ -155,4 +155,6 @@ MonoBehaviour:
   LaticeGO: {fileID: 7670818580128765354, guid: eea8312dad39d4045a874b4682dabe4a,
     type: 3}
   pointtran: {fileID: 7434392110454665590}
+  BoardMesh: {fileID: 7434392109379930141}
   distance: 95
+  KnapsackState: 0
