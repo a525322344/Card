@@ -119,15 +119,15 @@ public class InitData : MonoBehaviour
     void MagicPartInit()
     {
         int[] a = { 0, 1, 0, 0, 1, 0, 0, 0, 0 };
-        Reaction reaction = new Reaction_Affect("伤害增加",new extraAttackUp(2), EventKind.Event_Damage);
-        MagicPart Init_ATTACKUP_1 = new MagicPart(a,0);
-        Init_ATTACKUP_1.describe = "伤害+2";
-        Init_ATTACKUP_1.addReaction(reaction);
+        Reaction reaction = new Reaction_Affect("增加灼烧",new extraBurnUp(1), EventKind.Event_Damage);
+        MagicPart Init_BURNUP_1 = new MagicPart(a,0);
+        Init_BURNUP_1.describe = "灼烧+1";
+        Init_BURNUP_1.addReaction(reaction);
 
-        AllAsset.magicpartAsset.AllMagicParts.Add(Init_ATTACKUP_1);
+        AllAsset.magicpartAsset.AllMagicParts.Add(Init_BURNUP_1);
 
         a[1] = 0;
-        reaction = new Reaction_Affect("护甲增加",new extraDeffenceUp(1), EventKind.Event_Armor);
+        reaction = new Reaction_Affect("敏捷增加",new extraDeffenceUp(2), EventKind.Event_Armor);
         MagicPart Init_DefenceUp_1 = new MagicPart(a,1);
         Init_DefenceUp_1.describe = "敏捷+2";
         Init_DefenceUp_1.addReaction(reaction);
