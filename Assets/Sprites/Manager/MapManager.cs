@@ -10,6 +10,7 @@ public enum MapState
     EventWindow,    //在事件子窗口上
 }
 
+
 public class MapManager : MonoBehaviour
 {
     public MapState mapState = MapState.MainMap;
@@ -35,15 +36,15 @@ public class MapManager : MonoBehaviour
         newplace = new befallPlace(newbefallinfo);
         realplaceList.Add(instantiatePlace(newplace));
     }
-
     //实例生成地点
     private realPlace instantiatePlace(place place)
     {
-        float x = Random.Range(-width, width);
-        float y = Random.Range(-height, height);
+        Vector3[] a = new Vector3[] { new Vector3(7.44f, 4.11f), new Vector3(0.28f, -1.18f), new Vector3(-8.67f, -3.65f), new Vector3(1.01f, -8.83f) };
+        List<Vector3> list = new List<Vector3>(a);
+        Vector3 vec = ListOperation.RandomValue<Vector3>(list);
         GameObject placego = Instantiate(
             gameManager.Instance.instantiatemanager.placeGO,
-            new Vector3(x, y, maprootinfo.placefolder.position.z),
+            vec,
             Quaternion.identity,
             maprootinfo.placefolder
         );
