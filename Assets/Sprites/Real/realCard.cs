@@ -24,16 +24,27 @@ public enum HandCardState
 }
 public class realCard : MonoBehaviour
 {
-    public int handorder;
+    //外部引用
+    public Transform costtran;
+    public SpriteRenderer cardTexture;
+    public SpriteRenderer cardBoard;
+    public SpriteRenderer cardKindIcon;
+    //资源引用
+    public Sprite[] cardBoardSprites;
+    public Sprite[] cardKindIconSprites;
+    public GameObject[] costGO;
 
+    public Text nameText;
+    public Text describeText;
+    //资源
+    public int handorder;
     public handcardControll handcardControll;
     public realCost realcost;
-    public Transform costtran;
+
     public card thisCard;
     //UI
     //public RectTransform realCardMesh;
-    public Text nameText;
-    public Text describeText;
+
     #region 表现参数
     // 旋转节点
     Transform father;
@@ -43,7 +54,7 @@ public class realCard : MonoBehaviour
     public Selection selection;
     // 根节点旋转角度
     private float adjustAngle;
-    private const float deviationZ = 10;
+    private const float deviationZ = 30;
     //
 
     ///进入状态设置的值
@@ -174,17 +185,31 @@ public class realCard : MonoBehaviour
         }
     }
     //供创建时使用
-    public void SetThiscard(card playerCard,RealCardState _realCardState)
+    public void Init(card playerCard,RealCardState _realCardState)
     {
         realCardState = _realCardState;
         thisCard = playerCard;
         nameText.text = playerCard.Name;
         describeText.text = playerCard.Describe;
 
+        //cardTexture.sprite = gameManager.Instance.instantiatemanager.cardSprites[playerCard.TextureId];
+        switch (playerCard.Kind)
+        {
+            case CardKind.AttackCard:
+                cardBoard.sprite = cardBoardSprites[0];
+                cardKindIcon.sprite = cardKindIconSprites[0];
+                break;
+            case CardKind.SkillCard:
+                cardBoard.sprite = cardBoardSprites[1];
+                cardKindIcon.sprite = cardKindIconSprites[1];
+                break;
+        }
+        GameObject.Instantiate(costGO[playerCard.Cost], costtran);
+
         realcost.Init(thisCard);
         realcost.gameObject.SetActive(false);
 
-        Instantiate(gameManager.Instance.instantiatemanager.costs[thisCard.Cost - 1],costtran);
+        //Instantiate(gameManager.Instance.instantiatemanager.costs[thisCard.Cost - 1],costtran);
         gameManager.Instance.battlemanager.setCardDescribe(this,new MagicPart());
     }
 
@@ -220,7 +245,7 @@ public class realCard : MonoBehaviour
     public void StateSelect_Freedom()
     {
         handCardState = HandCardState.Other;
-
+        cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 0;
         transform.position = cardmesh.position;
         handCardState = HandCardState.Freedom;
         cardmesh.SetParent(transform, true);
@@ -309,6 +334,7 @@ public class realCard : MonoBehaviour
         {
             case HandCardState.Enter:
                 handCardState = HandCardState.Select;
+                cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 1;
                 handcardControll.SetSelectCard(this);
                 break;
             case HandCardState.WaitToSelectEnter:

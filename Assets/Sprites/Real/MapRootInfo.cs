@@ -11,6 +11,9 @@ public class MapRootInfo : MonoBehaviour
     public Transform knapsackPosition;
     public Transform UI3D;
     public uiEventBoard uieventBoard;
+    public Light maplight;
+
+    public Camera mapCamera;
 
     public float sortPositionZ()
     {

@@ -4,6 +4,8 @@ using UnityEngine;
 public enum CardKind
 {
     PlayerCard,
+    AttackCard,
+    SkillCard,
     StateCard,
     CurseCard
 }
@@ -14,6 +16,8 @@ public class card
     public int Id;
     public CardKind Kind;
     public int Cost;
+    public int Rank;        //基本0，普通1，稀有2，罕见3，
+    public int TextureId;
 
     public Dictionary<Vector2, int> vecCostPairs = new Dictionary<Vector2, int>();
 
@@ -83,12 +87,14 @@ public class playerCard : card
         setEffect();
         CardDescribe();
     }
-    public playerCard(int id, string name, CardKind kind, int cost)
+    public playerCard(int id, string name, CardKind kind, int cost,int rank)
     {
+        TextureId = 0;
         Id = id;
         Name = name;
         Kind = kind;
         Cost = cost;
+        Rank = rank;
         switch (kind)
         {
             case CardKind.CurseCard:
@@ -156,7 +162,10 @@ public class playerCard : card
                 Describe += effect.DescribeEffect() + ",";
             }
         }
-        Describe = Describe.Substring(0, Describe.Length - 1);
+        if (Describe.Length != 0)
+        {
+            Describe = Describe.Substring(0, Describe.Length - 1);
+        }
         return Describe;
     }
 

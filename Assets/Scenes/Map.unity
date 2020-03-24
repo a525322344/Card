@@ -396,6 +396,8 @@ MonoBehaviour:
   knapsackPosition: {fileID: 364283234}
   UI3D: {fileID: 617935442}
   uieventBoard: {fileID: 1087340693}
+  maplight: {fileID: 1455067479}
+  mapCamera: {fileID: 1246670622}
 --- !u!1 &1289986533
 GameObject:
   m_ObjectHideFlags: 0
