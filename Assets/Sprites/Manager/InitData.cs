@@ -90,12 +90,15 @@ public class InitData : MonoBehaviour
         huoyanpingzhang.AddEffect(new Burn(8));
         cardAsset.AllIdCards.Add(huoyanpingzhang);
         //0费 火花 使敌人获得2点灼烧 
-        playerCard huohua = new playerCard(17, "火花", CardKind.PlayerCard, 0);
+        playerCard huohua = new playerCard(17, "火花", CardKind.PlayerCard, 1);
         huohua.AddEffect(new Burn(2));
         cardAsset.AllIdCards.Add(huohua);
         //2费 炎爆 使敌人的灼烧层数翻倍
+        playerCard yanbao = new playerCard(18, "炎爆", CardKind.PlayerCard, 2);
+        yanbao.AddEffect(new Burn(8));
+        cardAsset.AllIdCards.Add(yanbao);
         //0费 临时媒介 在本回合使两个部件处于连接状态
-        playerCard linshimeijie = new playerCard(19, "临时媒介", CardKind.PlayerCard, 0);
+        playerCard linshimeijie = new playerCard(19, "临时媒介", CardKind.PlayerCard, 1);
         linshimeijie.AddEffect(new LinkRandom());
         linshimeijie.AddEffect(new CardEffect_ToExitLink());
         cardAsset.AllIdCards.Add(linshimeijie);
@@ -109,7 +112,7 @@ public class InitData : MonoBehaviour
         dianran.AddEffect(new Repeat(3, new Damage(3)));
         cardAsset.AllIdCards.Add(fengbao);
         //0费 充能 抽一张牌，弃置一张牌，如果敌人灼烧层数大于等于5，额外抽两张牌
-        playerCard chongneng = new playerCard(22, "充能", CardKind.PlayerCard, 0);
+        playerCard chongneng = new playerCard(22, "充能", CardKind.PlayerCard, 1);
         chongneng.AddEffect(new DrawCard(1));
         chongneng.AddEffect(new CardEffect_DisSomeCard(3));
         cardEffectBase extraeffect = new CardEffect_Whether(new Judge_EnemyWillAttack(), new DrawCard(3));
@@ -119,14 +122,14 @@ public class InitData : MonoBehaviour
     void MagicPartInit()
     {
         int[] a = { 0, 1, 0, 0, 1, 0, 0, 0, 0 };
-        Reaction reaction = new Reaction_Affect("增加灼烧",new extraBurnUp(1), EventKind.Event_Damage);
+        Reaction reaction = new Reaction_Create(new EffectEvent(new Burn(1),null), EventKind.Event_PlayCard);
         MagicPart Init_BURNUP_1 = new MagicPart(a,0);
         Init_BURNUP_1.describe = "灼烧+1";
         Init_BURNUP_1.addReaction(reaction);
 
         AllAsset.magicpartAsset.AllMagicParts.Add(Init_BURNUP_1);
 
-        a[1] = 0;
+        a[1] = 1;
         reaction = new Reaction_Affect("敏捷增加",new extraDeffenceUp(2), EventKind.Event_Armor);
         MagicPart Init_DefenceUp_1 = new MagicPart(a,1);
         Init_DefenceUp_1.describe = "敏捷+2";

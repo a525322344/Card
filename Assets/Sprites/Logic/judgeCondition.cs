@@ -33,3 +33,13 @@ public class Judge_HaveSelectedHandCard : judgeCondition
         whetherDele = AllAsset.judgeAsset.HaveSelectHandCard;
     }
 }
+
+
+public class Judge_BrunNumber : judgeCondition
+{
+    public Judge_BrunNumber(int num)
+    { 
+      param = 0;     
+      whetherDele = AllAsset.judgeAsset.EnemyBurnNumber;
+    }
+}

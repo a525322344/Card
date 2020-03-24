@@ -173,6 +173,25 @@ namespace AllAsset
         {
             return gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard.IsFinishSelect();
         }
+        public static bool EnemyBurnNumber(int num, battleInfo battleinfo)
+        {
+            bool EnemyBurnnumber;
+            stateAbstarct burnstate = new StateBurn(num);
+            if (battleinfo.Enemy.nameStatePairs.ContainsKey(burnstate.key))
+            {
+                if (battleinfo.Enemy.nameStatePairs[burnstate.key].num >= num)
+                    EnemyBurnnumber = true;
+                else
+                    EnemyBurnnumber = false;
+            }
+            else
+            {
+                burnstate.SetInState();
+                battleinfo.Enemy.nameStatePairs.Add(burnstate.key, burnstate);
+                battleinfo.Enemy.stateList.Add(burnstate);
+            }
+            return battleinfo.Enemy.nameStatePairs.ContainsKey(burnstate.key);
+        }
     }
     //声明所有的卡牌
     public static class cardAsset
