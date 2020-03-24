@@ -10,6 +10,7 @@ public enum MapState
     EventWindow,    //在事件子窗口上
 }
 
+
 public class MapManager : MonoBehaviour
 {
     public MapState mapState = MapState.MainMap;
@@ -25,28 +26,51 @@ public class MapManager : MonoBehaviour
 
         place newplace;
         //战斗地点
-        newplace = new battlePlace(new monInfo_Cat(), 3);      
-        realplaceList.Add(instantiatePlace(newplace));
+        newplace = new battlePlace(new monInfo_usagi(), 3);      
+        realplaceList.Add(instantiatePlace(newplace)); 
 
         //事件地点
-        befallinfo secondbefall = new befallinfo("整理背包", -1, null, new Button_OverSortPart());
-        befallinfo newbefallinfo = new befallinfo("休整片刻", 0, "时不时得整理下装备，或许可以在战斗中得优势",
-            new Button_ExitBefall("现在只能选择不这么做"),new Button_SortPart(secondbefall));
+        befallinfo secondbefall = new befallinfo("整装待发", -1, null, new Button_OverSortPart());
+        befallinfo newbefallinfo = new befallinfo("整装待发", 0, "英雄征途的第一步：整理背包",
+            new Button_ExitBefall("直接出发"),new Button_SortPart(secondbefall));
         newplace = new befallPlace(newbefallinfo);
         realplaceList.Add(instantiatePlace(newplace));
+        
+        befallinfo newbefallinfo1 = new befallinfo("神秘山泉", 0, "有点甜的神秘泉水",
+            new Button_ExitBefall("喝（回复15点血量）"), new Button_ExitBefall("洗涤身体"));
+        newplace = new befallPlace(newbefallinfo1);
+        realplaceList.Add(instantiatePlace(newplace));
+
+        befallinfo newbefallinfo2 = new befallinfo("微笑的果农", 0, "“哎呀呀年轻人，你想尝尝哪种水果呢？”",
+            new Button_ExitBefall("梨子（最大生命值+5））"), new Button_ExitBefall("苹果（回复15点血量）"), new Button_ExitBefall("西瓜（获得卡牌“西瓜种子”）"));
+        newplace = new befallPlace(newbefallinfo2);
+        realplaceList.Add(instantiatePlace(newplace));
+
+        befallinfo newbefallinfo3 = new befallinfo("微笑的果农", 0, "“哎呀呀年轻人，你想尝尝哪种水果呢？”",
+    new Button_ExitBefall("梨子（最大生命值+5））"), new Button_ExitBefall("苹果（回复15点血量）"), new Button_ExitBefall("西瓜（获得卡牌“西瓜种子”）"));
+        newplace = new befallPlace(newbefallinfo3);
+        realplaceList.Add(instantiatePlace(newplace));
+
+        befallinfo newbefallinfo4 = new befallinfo("微笑的果农", 0, "“哎呀呀年轻人，你想尝尝哪种水果呢？”",
+    new Button_ExitBefall("梨子（最大生命值+5））"), new Button_ExitBefall("苹果（回复15点血量）"), new Button_ExitBefall("西瓜（获得卡牌“西瓜种子”）"));
+        newplace = new befallPlace(newbefallinfo4);
+        realplaceList.Add(instantiatePlace(newplace));
     }
+
+    //地点位置数据
+    public List<Vector3> vector3list = new List<Vector3>() { new Vector3(7.44f, 4.11f), new Vector3(0.28f, -1.18f), new Vector3(-8.67f, -3.65f), new Vector3(1.01f, -8.83f) ,new Vector3(-13.68f, 4.02f),new Vector3(-3.61f, 5.29f) };
 
     //实例生成地点
     private realPlace instantiatePlace(place place)
     {
-        float x = Random.Range(-width, width);
-        float y = Random.Range(-height, height);
+        Vector3 vec = ListOperation.RandomValue<Vector3>(vector3list);
         GameObject placego = Instantiate(
             gameManager.Instance.instantiatemanager.placeGO,
-            new Vector3(x, y, maprootinfo.placefolder.position.z),
+            vec,
             Quaternion.identity,
             maprootinfo.placefolder
         );
+        vector3list.Remove(vec);
         realPlace result = placego.GetComponent<realPlace>();
         result.Init(place);
         return result;
