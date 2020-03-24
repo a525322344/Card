@@ -45,10 +45,20 @@ public class MapManager : MonoBehaviour
             new Button_ExitBefall("梨子（最大生命值+5））"), new Button_ExitBefall("苹果（回复15点血量）"), new Button_ExitBefall("西瓜（获得卡牌“西瓜种子”）"));
         newplace = new befallPlace(newbefallinfo2);
         realplaceList.Add(instantiatePlace(newplace));
+
+        befallinfo newbefallinfo3 = new befallinfo("微笑的果农", 0, "“哎呀呀年轻人，你想尝尝哪种水果呢？”",
+    new Button_ExitBefall("梨子（最大生命值+5））"), new Button_ExitBefall("苹果（回复15点血量）"), new Button_ExitBefall("西瓜（获得卡牌“西瓜种子”）"));
+        newplace = new befallPlace(newbefallinfo3);
+        realplaceList.Add(instantiatePlace(newplace));
+
+        befallinfo newbefallinfo4 = new befallinfo("微笑的果农", 0, "“哎呀呀年轻人，你想尝尝哪种水果呢？”",
+    new Button_ExitBefall("梨子（最大生命值+5））"), new Button_ExitBefall("苹果（回复15点血量）"), new Button_ExitBefall("西瓜（获得卡牌“西瓜种子”）"));
+        newplace = new befallPlace(newbefallinfo4);
+        realplaceList.Add(instantiatePlace(newplace));
     }
 
     //地点位置数据
-    public List<Vector3> vector3list = new List<Vector3>() { new Vector3(7.44f, 4.11f), new Vector3(0.28f, -1.18f), new Vector3(-8.67f, -3.65f), new Vector3(1.01f, -8.83f) };
+    public List<Vector3> vector3list = new List<Vector3>() { new Vector3(7.44f, 4.11f), new Vector3(0.28f, -1.18f), new Vector3(-8.67f, -3.65f), new Vector3(1.01f, -8.83f) ,new Vector3(-13.68f, 4.02f),new Vector3(-3.61f, 5.29f) };
 
     //实例生成地点
     private realPlace instantiatePlace(place place)
