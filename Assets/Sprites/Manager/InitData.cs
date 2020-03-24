@@ -94,8 +94,9 @@ public class InitData : MonoBehaviour
         playerCard huohua = new playerCard(17, "火花", CardKind.SkillCard, 0,1);
         huohua.AddEffect(new Burn(2));
         cardAsset.AllIdCards.Add(huohua);
-        //2费 炎爆 使敌人的灼烧层数翻倍  //空白
-        playerCard yanbao = new playerCard(18, "炎爆", CardKind.SkillCard, 2, 2);
+        //2费 炎爆 使敌人的灼烧层数翻倍
+        playerCard yanbao = new playerCard(18, "炎爆", CardKind.SkillCard, 2，2);
+        yanbao.AddEffect(new DoubleBurn(2));
         cardAsset.AllIdCards.Add(yanbao);
         //0费 临时媒介 在本回合使两个部件处于连接状态
         playerCard linshimeijie = new playerCard(19, "临时媒介", CardKind.SkillCard, 0,2);
@@ -122,14 +123,14 @@ public class InitData : MonoBehaviour
     void MagicPartInit()
     {
         int[] a = { 0, 1, 0, 0, 1, 0, 0, 0, 0 };
-        Reaction reaction = new Reaction_Affect("增加灼烧",new extraBurnUp(1), EventKind.Event_Damage);
+        Reaction reaction = new Reaction_Create(new EffectEvent(new Burn(1),null), EventKind.Event_PlayCard);
         MagicPart Init_BURNUP_1 = new MagicPart(a,0);
         Init_BURNUP_1.describe = "灼烧+1";
         Init_BURNUP_1.addReaction(reaction);
 
         AllAsset.magicpartAsset.AllMagicParts.Add(Init_BURNUP_1);
 
-        a[1] = 0;
+        a[1] = 1;
         reaction = new Reaction_Affect("敏捷增加",new extraDeffenceUp(2), EventKind.Event_Armor);
         MagicPart Init_DefenceUp_1 = new MagicPart(a,1);
         Init_DefenceUp_1.describe = "敏捷+2";

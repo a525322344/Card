@@ -464,3 +464,4 @@ public class StateEvent : singleEvent
     public stateAbstarct m_state;
     public List<extraEffectBase> m_extraEffectList = new List<extraEffectBase>();
 }
+
