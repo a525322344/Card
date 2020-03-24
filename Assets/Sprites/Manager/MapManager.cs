@@ -26,8 +26,8 @@ public class MapManager : MonoBehaviour
 
         place newplace;
         //战斗地点
-        newplace = new battlePlace(new monInfo_usagi(), 3);      
-        realplaceList.Add(instantiatePlace(newplace));
+        newplace = new battlePlace(new monInfo_Cat(), 3);      
+        realplaceList.Add(instantiatePlace(newplace)); 
 
         //事件地点
         befallinfo secondbefall = new befallinfo("整装待发", -1, null, new Button_OverSortPart());
@@ -46,18 +46,21 @@ public class MapManager : MonoBehaviour
         newplace = new befallPlace(newbefallinfo2);
         realplaceList.Add(instantiatePlace(newplace));
     }
+
+    //地点位置数据
+    public List<Vector3> vector3list = new List<Vector3>() { new Vector3(7.44f, 4.11f), new Vector3(0.28f, -1.18f), new Vector3(-8.67f, -3.65f), new Vector3(1.01f, -8.83f) };
+
     //实例生成地点
     private realPlace instantiatePlace(place place)
     {
-        Vector3[] a = new Vector3[] { new Vector3(7.44f, 4.11f), new Vector3(0.28f, -1.18f), new Vector3(-8.67f, -3.65f), new Vector3(1.01f, -8.83f) };
-        List<Vector3> list = new List<Vector3>(a);
-        Vector3 vec = ListOperation.RandomValue<Vector3>(list);
+        Vector3 vec = ListOperation.RandomValue<Vector3>(vector3list);
         GameObject placego = Instantiate(
             gameManager.Instance.instantiatemanager.placeGO,
             vec,
             Quaternion.identity,
             maprootinfo.placefolder
         );
+        vector3list.Remove(vec);
         realPlace result = placego.GetComponent<realPlace>();
         result.Init(place);
         return result;
