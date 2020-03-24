@@ -25,7 +25,7 @@ public class EventManager
     public void EventListUpdate()
     {
         testbattleeventnum = BattleEventShows.Count;
-        if (battleManager.BattleRound == ROUND.PlayerRound)
+        if (battleManager.BattleRound == BattleState.PlayerRound)
         {
             switch (battleManager.RoundStage)
             {
@@ -62,7 +62,7 @@ public class EventManager
                 case ROUNDSTAGE.End:
                     if (eventCursor >= EndEventShows.Count)
                     {
-                        battleManager.BattleRound = ROUND.EnemyRound;
+                        battleManager.BattleRound = BattleState.EnemyRound;
                         eventCursor = 0;
                         nowEventShowList = BattleEnemyShows;
                         //
@@ -75,7 +75,7 @@ public class EventManager
                     break;
             }
         }
-        else if (battleManager.BattleRound == ROUND.EnemyRound)
+        else if (battleManager.BattleRound == BattleState.EnemyRound)
         {
             //只进行怪物的
             if (eventCursor >= BattleEnemyShows.Count)
@@ -89,6 +89,10 @@ public class EventManager
                 advanceEventList(BattleEnemyShows);
             }
             
+        }
+        else if (battleManager.BattleRound == BattleState.Vectory)
+        {
+            //停止执行事件
         }
     }
 
@@ -107,7 +111,6 @@ public class EventManager
         //在做事件结束判断
         if (eventShows[eventCursor].upDateEvent(battleManager.battleInfo))
         {
-            
             if (eventShows[eventCursor].thisevent.b_logoutAfterDeal)
             {
                 eventShows.Remove(eventShows[eventCursor]);
@@ -118,7 +121,13 @@ public class EventManager
                 eventCursor++;
             }
         }
-
+        //做胜利判断
+        if (battleManager.battleInfo.Enemy.healthnow <= 0)
+        {
+            battleManager.BattleRound = BattleState.Vectory;
+            gameManager.Instance.uimanager.roundEndButton.interactable = false;
+            gameManager.Instance.uimanager.uiVectorBoard.EnterVectorBoard();
+        }
     }
 
     public void InsertEvent(singleEvent singleevent){

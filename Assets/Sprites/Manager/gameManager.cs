@@ -104,7 +104,12 @@ public class gameManager : MonoBehaviour
         battlemanager = gameObject.AddComponent<battleManager>();
         instantiatemanager.battleuiRoot = GameObject.Find("CameraUI").GetComponent<battleUIRoot>();
         instantiatemanager.battleEnvRoot = GameObject.Find("Environment").GetComponent<BattleEnvRoot>();
+        uimanager.uiVectorBoard = instantiatemanager.battleuiRoot.uiVectorBoard;
         uimanager.roundEndButton = instantiatemanager.battleuiRoot.RoundEndButton;
         uimanager.roundEndButton.onClick.AddListener(()=> { uimanager.EndRound(); });
+    }
+    public void exitBattlescene()
+    {
+        SceneManager.UnloadSceneAsync(battleScene);
     }
 }

@@ -6,11 +6,16 @@ using UnityEngine.UI;
 
 public class UImanager : MonoBehaviour
 {
+    //开始场景
+    public startMuneControll startMuneControll;
+    //地图场景
+    [HideInInspector]
+    public uiEventBoard uiBefallBoard;
+    //战斗场景
     [HideInInspector]
     public Button roundEndButton;
     [HideInInspector]
-    public uiEventBoard uiBefallBoard;
-    public startMuneControll startMuneControll;
+    public uiVectorBoard uiVectorBoard;
     //战斗场景回合结束按钮
     public void EndRound()
     {

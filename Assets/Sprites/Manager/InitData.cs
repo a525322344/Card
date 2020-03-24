@@ -110,7 +110,7 @@ public class InitData : MonoBehaviour
         cardAsset.AllIdCards.Add(xiuzheng);
         //1费 风暴 造成3点伤害3次
         playerCard fengbao = new playerCard(21, "风暴", CardKind.AttackCard, 1,1);
-        dianran.AddEffect(new Repeat(3, new Damage(3)));
+        fengbao.AddEffect(new Repeat(3, new Damage(3)));
         cardAsset.AllIdCards.Add(fengbao);
         //0费 充能 抽一张牌，弃置一张牌，如果敌人灼烧层数大于等于5，额外抽两张牌
         playerCard chongneng = new playerCard(22, "充能", CardKind.SkillCard, 0,2);

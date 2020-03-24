@@ -188,29 +188,54 @@ public class realCard : MonoBehaviour
     public void Init(card playerCard,RealCardState _realCardState)
     {
         realCardState = _realCardState;
-        thisCard = playerCard;
-        nameText.text = playerCard.Name;
-        describeText.text = playerCard.Describe;
-
-        //cardTexture.sprite = gameManager.Instance.instantiatemanager.cardSprites[playerCard.TextureId];
-        switch (playerCard.Kind)
+        if (realCardState == RealCardState.RealCard)
         {
-            case CardKind.AttackCard:
-                cardBoard.sprite = cardBoardSprites[0];
-                cardKindIcon.sprite = cardKindIconSprites[0];
-                break;
-            case CardKind.SkillCard:
-                cardBoard.sprite = cardBoardSprites[1];
-                cardKindIcon.sprite = cardKindIconSprites[1];
-                break;
+            thisCard = playerCard;
+            nameText.text = playerCard.Name;
+            describeText.text = playerCard.Describe;
+
+            //cardTexture.sprite = gameManager.Instance.instantiatemanager.cardSprites[playerCard.TextureId];
+            switch (playerCard.Kind)
+            {
+                case CardKind.AttackCard:
+                    cardBoard.sprite = cardBoardSprites[0];
+                    cardKindIcon.sprite = cardKindIconSprites[0];
+                    break;
+                case CardKind.SkillCard:
+                    cardBoard.sprite = cardBoardSprites[1];
+                    cardKindIcon.sprite = cardKindIconSprites[1];
+                    break;
+            }
+            GameObject.Instantiate(costGO[playerCard.Cost], costtran);
+
+            realcost.Init(thisCard);
+            realcost.gameObject.SetActive(false);
+
+            //Instantiate(gameManager.Instance.instantiatemanager.costs[thisCard.Cost - 1],costtran);
+            gameManager.Instance.battlemanager.setCardDescribe(this, new MagicPart());
         }
-        GameObject.Instantiate(costGO[playerCard.Cost], costtran);
+        else if (realCardState == RealCardState.AwardCard)
+        {
+            thisCard = playerCard;
+            nameText.text = playerCard.Name;
+            describeText.text = playerCard.Describe;
 
-        realcost.Init(thisCard);
-        realcost.gameObject.SetActive(false);
-
-        //Instantiate(gameManager.Instance.instantiatemanager.costs[thisCard.Cost - 1],costtran);
-        gameManager.Instance.battlemanager.setCardDescribe(this,new MagicPart());
+            //cardTexture.sprite = gameManager.Instance.instantiatemanager.cardSprites[playerCard.TextureId];
+            switch (playerCard.Kind)
+            {
+                case CardKind.AttackCard:
+                    cardBoard.sprite = cardBoardSprites[0];
+                    cardKindIcon.sprite = cardKindIconSprites[0];
+                    break;
+                case CardKind.SkillCard:
+                    cardBoard.sprite = cardBoardSprites[1];
+                    cardKindIcon.sprite = cardKindIconSprites[1];
+                    break;
+            }
+            cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 0;
+            GameObject.Instantiate(costGO[playerCard.Cost], costtran);
+            gameManager.Instance.battlemanager.setCardDescribe(this, new MagicPart());
+        }
     }
 
     /// <summary>
@@ -339,7 +364,7 @@ public class realCard : MonoBehaviour
                 break;
             case HandCardState.WaitToSelectEnter:
                 //被选到
-                if(gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard.SelectOne(handorder, out selection))
+                if(gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard.SelectOne(handorder-1, out selection))
                 {
                     handCardState = HandCardState.InSelectBoard;
                 }

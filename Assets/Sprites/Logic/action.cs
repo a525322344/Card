@@ -27,6 +27,7 @@ public static class ActionOperation
     }
 }
 //怪物行动的抽象类
+[System.Serializable]
 public abstract class actionAbstract
 {
     public ACTIONKIND Kind;

@@ -19,4 +19,6 @@ public class battleUIRoot : MonoBehaviour
 
     //弃卡选择框的位置
     public Transform waitSelectCard;
+    //胜利结算面板
+    public uiVectorBoard uiVectorBoard;
 }

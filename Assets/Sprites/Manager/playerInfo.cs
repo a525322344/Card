@@ -17,7 +17,10 @@ public class playerInfo
     public int playerHealth = 100;
 
 
-    
+    public void AddNewCard(playerCard card)
+    {
+        playerDick.Add(card);
+    }
     //初始化玩家的开局卡组
     public void PlayerDickInit(List<int> ts)
     {

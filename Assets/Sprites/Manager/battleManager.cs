@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum ROUND
+public enum BattleState
 {
     OutOfRound,
     PlayerRound,
-    EnemyRound
+    EnemyRound,
+    Vectory,
 }
 public enum ROUNDSTAGE
 {
@@ -61,7 +62,7 @@ public class battleManager : MonoBehaviour
     public EventManager eventManager;
     
     //战斗回合状态
-    public ROUND BattleRound = ROUND.OutOfRound;
+    public BattleState BattleRound = BattleState.OutOfRound;
     public ROUNDSTAGE RoundStage = ROUNDSTAGE.Start;
     //玩家数据类
     public playerInfo playerinfo;
@@ -146,7 +147,7 @@ public class battleManager : MonoBehaviour
         eventManager.BattleEnemyShows.Add(enemyNextActionEvent);
 
         RoundStage = ROUNDSTAGE.Start;
-        BattleRound = ROUND.PlayerRound;
+        BattleRound = BattleState.PlayerRound;
     }
     
     public void BattleStartEnemySet(monsterInfo monsterinfo)
@@ -256,7 +257,7 @@ public class battleManager : MonoBehaviour
             );
         eventManager.BattleEnemyShows.Add(enemyNextActionEvent);
         RoundStage = ROUNDSTAGE.Start;
-        BattleRound = ROUND.PlayerRound;
+        BattleRound = BattleState.PlayerRound;
     }
 
 
