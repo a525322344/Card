@@ -8,6 +8,7 @@ public enum AffectEffectKind
 {
     Affect_DamageUp,
     Affect_ArmorUp,
+    Affect_BurnUp
 
 }
 public abstract class extraEffectBase
@@ -66,4 +67,23 @@ public class extraDeffenceUp : extraEffectBase
         return _cardEffectBase.GetType() == CanInffenceEffect.GetType();
     }
     
+}
+public class extraBurnUp : extraEffectBase
+{
+    public extraBurnUp(int adjust)
+    {
+        priority = 5;
+        adjustnum = adjust;
+        CanInffenceEffect = new Burn();
+        deleAdjust = new DeleExtraEffect(AllAsset.extraAsset.addSubNum);
+    }
+    public override int AdjustEffect(int _cardnum)
+    {
+        return deleAdjust(_cardnum, adjustnum);
+    }
+    public override bool canInfluence(cardEffectBase _cardEffectBase)
+    {
+        return _cardEffectBase.GetType() == CanInffenceEffect.GetType();
+    }
+
 }
