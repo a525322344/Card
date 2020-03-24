@@ -277,6 +277,20 @@ public class DrawCard : Repeat
         return result;
     }
 }
+//敌人灼烧层数加倍
+public class DoubleBurn : cardEffectBase
+{
+    public DoubleBurn(int _num = 0)
+    {
+        num = _num;
+        mixnum = num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.EnemyDoubleBurn);
+        eventkind = EventKind.Event_EnemyGetBurn;
+
+        frontDesctibe = "给与敌人";
+        backDesctibe = "倍灼烧";
+    }
+}
 //敌人获得灼伤
 public class Burn : cardEffectBase
 {

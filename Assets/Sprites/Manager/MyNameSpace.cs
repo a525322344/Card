@@ -61,6 +61,22 @@ namespace AllAsset
             }
             battleinfo.Enemy.GetArmor(num);
         }
+        public static void EnemyDoubleBurn(int num, battleInfo battleinfo)
+        {
+            stateAbstarct burnstate = new StateBurn(num);
+            if (battleinfo.Enemy.nameStatePairs.ContainsKey(burnstate.key))
+            {
+                battleinfo.Enemy.nameStatePairs[burnstate.key].num *= num;
+                //gameManager.Instance.battlemanager.showcontroll.ShowFire(battleinfo.Enemy.nameStatePairs["Burn"].num);
+            }
+            else
+            {
+                burnstate.SetInState();
+                battleinfo.Enemy.nameStatePairs.Add(burnstate.key, burnstate);
+                battleinfo.Enemy.stateList.Add(burnstate);
+                //gameManager.Instance.battlemanager.showcontroll.ShowFire(battleinfo.Enemy.nameStatePairs["Burn"].num);
+            }
+        }
         public static void EnemyGetBurn(int num,battleInfo battleinfo)
         {
             stateAbstarct burnstate = new StateBurn(num);
