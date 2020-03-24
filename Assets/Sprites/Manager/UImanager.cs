@@ -10,6 +10,7 @@ public class UImanager : MonoBehaviour
     public Button roundEndButton;
     [HideInInspector]
     public uiEventBoard uiBefallBoard;
+    public startMuneControll startMuneControll;
     //战斗场景回合结束按钮
     public void EndRound()
     {
@@ -22,20 +23,4 @@ public class UImanager : MonoBehaviour
         uiBefallBoard = gameManager.Instance.instantiatemanager.mapRootInfo.uieventBoard;
         uiBefallBoard.gameObject.SetActive(false);
     }
-
-    //开始游戏按钮
-    public void buttonEnterMap()
-    {
-        //加载地图
-        AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync("Map");
-        StartCoroutine(IEenterMap(_asyncOperation));
-    }
-    IEnumerator IEenterMap(AsyncOperation _asyncOperation)
-    {
-        yield return new WaitUntil(() => {
-            return _asyncOperation.isDone;
-        });
-        gameManager.Instance.mapManagerInit();
-    }
-
 }

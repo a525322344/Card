@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 19395602722312749}
   - component: {fileID: 1946705615420777831}
   - component: {fileID: 6218228638378737758}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: smok
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4784,7 +4784,6 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

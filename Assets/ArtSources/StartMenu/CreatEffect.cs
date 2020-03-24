@@ -5,25 +5,20 @@ using UnityEngine;
 public class CreatEffect : MonoBehaviour
 {
     public GameObject smokEffct;
-    private Transform HeroTrans;
-    private GameObject Hero;
-
-    void Start()
-    {
-
-        HeroTrans = gameObject.GetComponent<Transform>();
-        Hero = gameObject;
-
-    }
+    public GameObject hero;
 
     private void SmokEffect()
     {
-        Vector3 position = HeroTrans.position;
-        GameObject.Destroy(Hero);
+        Vector3 position = transform.position;
+        hero.SetActive(false);
         GameObject.Instantiate(smokEffct, position, Quaternion.identity);
-        Invoke("CreateIcon", 1.0f);
+        //Invoke("CreateIcon", 1.0f);
         
     }
-   
+    private void MapEnter()
+    {
+        Debug.Log("mapEnter");
+        gameManager.Instance.uimanager.startMuneControll.b_animaOver = true;
+    }
 
 }
