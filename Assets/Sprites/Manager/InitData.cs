@@ -95,7 +95,7 @@ public class InitData : MonoBehaviour
         huohua.AddEffect(new Burn(2));
         cardAsset.AllIdCards.Add(huohua);
         //2费 炎爆 使敌人的灼烧层数翻倍
-        playerCard yanbao = new playerCard(18, "炎爆", CardKind.SkillCard, 2，2);
+        playerCard yanbao = new playerCard(18, "炎爆", CardKind.SkillCard, 2,2);
         yanbao.AddEffect(new DoubleBurn(2));
         cardAsset.AllIdCards.Add(yanbao);
         //0费 临时媒介 在本回合使两个部件处于连接状态
