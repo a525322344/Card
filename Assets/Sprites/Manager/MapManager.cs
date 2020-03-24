@@ -30,10 +30,20 @@ public class MapManager : MonoBehaviour
         realplaceList.Add(instantiatePlace(newplace));
 
         //事件地点
-        befallinfo secondbefall = new befallinfo("整理背包", -1, null, new Button_OverSortPart());
-        befallinfo newbefallinfo = new befallinfo("休整片刻", 0, "时不时得整理下装备，或许可以在战斗中得优势",
-            new Button_ExitBefall("现在只能选择不这么做"),new Button_SortPart(secondbefall));
+        befallinfo secondbefall = new befallinfo("整装待发", -1, null, new Button_OverSortPart());
+        befallinfo newbefallinfo = new befallinfo("整装待发", 0, "英雄征途的第一步：整理背包",
+            new Button_ExitBefall("直接出发"),new Button_SortPart(secondbefall));
         newplace = new befallPlace(newbefallinfo);
+        realplaceList.Add(instantiatePlace(newplace));
+        
+        befallinfo newbefallinfo1 = new befallinfo("神秘山泉", 0, "有点甜的神秘泉水",
+            new Button_ExitBefall("喝（回复15点血量）"), new Button_ExitBefall("洗涤身体"));
+        newplace = new befallPlace(newbefallinfo1);
+        realplaceList.Add(instantiatePlace(newplace));
+
+        befallinfo newbefallinfo2 = new befallinfo("微笑的果农", 0, "“哎呀呀年轻人，你想尝尝哪种水果呢？”",
+            new Button_ExitBefall("梨子（最大生命值+5））"), new Button_ExitBefall("苹果（回复15点血量）"), new Button_ExitBefall("西瓜（获得卡牌“西瓜种子”）"));
+        newplace = new befallPlace(newbefallinfo2);
         realplaceList.Add(instantiatePlace(newplace));
     }
     //实例生成地点
