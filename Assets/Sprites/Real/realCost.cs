@@ -8,7 +8,7 @@ public class realCost : MonoBehaviour
     #region 外部引用
     public Material mr_cyan;
     public Material mr_blue;
-    private Transform[] costchildrens = new Transform[9];
+    private Transform[] costchildrens = new Transform[10];
     #endregion
     private List<MeshRenderer> _renderers = new List<MeshRenderer>();
 
@@ -118,21 +118,35 @@ public class realCost : MonoBehaviour
         costMode = 1;
         nextCostMode = 1;
 
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < 10; i++)
         {
             costchildrens[i] = transform.GetChild(i);
         }
-        foreach (var vecint in initVecInt)
+        if (thiscard.Cost == 0)
         {
-            int order = (int)vecint.Key.x + (int)vecint.Key.y * 3 + 4;
-            if (vecint.Value == 1)
+            foreach (var vecint in initVecInt)
             {
-                costchildrens[order].gameObject.SetActive(true);
-                _renderers.Add(costchildrens[order].GetComponent<MeshRenderer>());
-            }
-            else if (vecint.Value == 0)
-            {
+                int order = (int)vecint.Key.x + (int)vecint.Key.y * 3 + 4;
                 costchildrens[order].gameObject.SetActive(false);
+            }
+            costchildrens[9].gameObject.SetActive(true);
+            _renderers.Add(costchildrens[9].GetComponent<MeshRenderer>());
+        }
+        else
+        {
+            costchildrens[9].gameObject.SetActive(false);
+            foreach (var vecint in initVecInt)
+            {
+                int order = (int)vecint.Key.x + (int)vecint.Key.y * 3 + 4;
+                if (vecint.Value == 1)
+                {
+                    costchildrens[order].gameObject.SetActive(true);
+                    _renderers.Add(costchildrens[order].GetComponent<MeshRenderer>());
+                }
+                else if (vecint.Value == 0)
+                {
+                    costchildrens[order].gameObject.SetActive(false);
+                }
             }
         }
     }

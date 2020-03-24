@@ -33,3 +33,4 @@ public class Judge_HaveSelectedHandCard : judgeCondition
         whetherDele = AllAsset.judgeAsset.HaveSelectHandCard;
     }
 }
+

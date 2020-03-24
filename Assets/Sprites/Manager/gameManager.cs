@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 
@@ -40,6 +41,8 @@ public class gameManager : MonoBehaviour
     public UImanager uimanager;
     public InitControllBoard InitControllBoard;
 
+    public Scene battleScene;
+    public Scene mapScene;
     //public Camera Encamera;
     //public Camera UIcamera;
 
@@ -56,6 +59,26 @@ public class gameManager : MonoBehaviour
     {
         //游戏开始
         GameStartInit();
+    }
+
+    public void SwitchScene(bool tobattle)
+    {
+        if (tobattle)
+        {
+            SceneManager.SetActiveScene(battleScene);
+            instantiatemanager.mapRootInfo.mapCamera.GetComponent<AudioListener>().enabled = false;
+            instantiatemanager.mapRootInfo.mapCamera.enabled = false;
+            instantiatemanager.mapRootInfo.maplight.enabled = false;
+            instantiatemanager.mapRootInfo.transform.gameObject.SetActive(false);
+        }
+        else
+        {
+            SceneManager.SetActiveScene(mapScene);
+            instantiatemanager.mapRootInfo.mapCamera.GetComponent<AudioListener>().enabled = true;
+            instantiatemanager.mapRootInfo.mapCamera.enabled = true;
+            instantiatemanager.mapRootInfo.maplight.enabled = true;
+            instantiatemanager.mapRootInfo.transform.gameObject.SetActive(true);
+        }
     }
 
     private void GameStartInit()
@@ -77,6 +100,7 @@ public class gameManager : MonoBehaviour
 
     public void battleManagerInit()
     {
+        SwitchScene(true);
         battlemanager = gameObject.AddComponent<battleManager>();
         instantiatemanager.battleuiRoot = GameObject.Find("CameraUI").GetComponent<battleUIRoot>();
         instantiatemanager.battleEnvRoot = GameObject.Find("Environment").GetComponent<BattleEnvRoot>();

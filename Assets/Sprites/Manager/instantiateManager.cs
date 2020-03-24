@@ -41,6 +41,7 @@ public class instantiateManager : MonoBehaviour
     public GameObject placeGO;
     public List<Sprite> beFallSprites = new List<Sprite>();
     public List<Sprite> mapPlaceSprites = new List<Sprite>();
+    public List<Sprite> cardSprites = new List<Sprite>();
 
     //弃卡选择框
     public GameObject waitSelectBoardGO;
@@ -107,7 +108,7 @@ public class instantiateManager : MonoBehaviour
     {
         GameObject card = Instantiate(cardGO, battleuiRoot.handCardControll);
         realCard realcard = card.GetComponentInChildren<realCard>();
-        realcard.SetThiscard(playercard,RealCardState.RealCard);
+        realcard.Init(playercard,RealCardState.RealCard);
         realcard.ShowDraw();
         battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards.Add(realcard);
     }

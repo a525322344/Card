@@ -43,6 +43,7 @@ public class startMuneControll : MonoBehaviour
     {
         //加载地图
         AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync("Map",LoadSceneMode.Additive);
+        gameManager.Instance.mapScene = SceneManager.GetSceneByName("Map");
         //_asyncOperation.allowSceneActivation = false;
         StartCoroutine(IEenterMap(_asyncOperation));
     }

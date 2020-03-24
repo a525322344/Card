@@ -25,7 +25,7 @@ public class MapManager : MonoBehaviour
 
         place newplace;
         //战斗地点
-        newplace = new battlePlace(new monInfo_Cat(), 1);      
+        newplace = new battlePlace(new monInfo_Cat(), 3);      
         realplaceList.Add(instantiatePlace(newplace));
 
         //事件地点
@@ -54,7 +54,8 @@ public class MapManager : MonoBehaviour
 
     public void EnterBattle(battlePlace battle)
     {
-        AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync(AllAsset.MapAsset.GetSceneStr(battle.sceneId));
+        AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync(AllAsset.MapAsset.GetSceneStr(battle.sceneId),LoadSceneMode.Additive);
+        gameManager.Instance.battleScene = SceneManager.GetSceneByName(AllAsset.MapAsset.GetSceneStr(battle.sceneId));
         StartCoroutine(IEenterBattle(_asyncOperation, battle.monsterInfo));
     }
     IEnumerator IEenterBattle(AsyncOperation asyncOperation,monsterInfo monster)
