@@ -72,3 +72,34 @@ public class monInfo_Cat : monsterInfo
           });
     }
 }
+
+public class monInfo_usagi : monsterInfo
+{
+    private int actionorder = 0;
+    public monInfo_usagi()
+    {
+        name = "耳兔";
+        health = 150;
+        Id = 2;
+        monsterLevel = 1;
+        actionList.Add(new actionAdmix(new actionArmor(12), new actionHurt(9)));
+        actionList.Add(new actionHurt(6));
+        actionList.Add(new actionAdmix(new actionHurt(5), new actionHurt(5)));
+        //顺序选择
+        selectAction = new selectWay((int x) =>
+        {
+            actionAbstract action;
+            if (actionorder < actionList.Count - 1)
+            {
+                action = actionList[actionorder];
+                actionorder++;
+            }
+            else
+            {
+                action = actionList[0];
+                actionorder = 1;
+            }
+            return action;
+        });
+    }
+}
