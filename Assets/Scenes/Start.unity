@@ -185,6 +185,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 639981050623430475}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &351785931 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7708002611452953119, guid: 374a2634be695d746b571878ce7d517c,
+    type: 3}
+  m_PrefabInstance: {fileID: 7068954691501731757}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &828882823
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,7 +568,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1142008310}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30ab61b38befccc4d9afbc72fdf58f37, type: 3}
   m_Name: 
@@ -73710,6 +73716,7 @@ MonoBehaviour:
   - {fileID: 639981048897764390}
   - {fileID: 639981050369694120}
   - {fileID: 1030879870}
+  - {fileID: 351785931}
   waitLoadPlay:
   - {fileID: 639981049224179781}
   startToDestorys:
