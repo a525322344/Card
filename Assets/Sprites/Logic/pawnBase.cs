@@ -12,9 +12,9 @@ public class pawnbase
     public List<stateAbstarct> stateList = new List<stateAbstarct>();///展示用链表
     public Dictionary<string, stateAbstarct> nameStatePairs = new Dictionary<string, stateAbstarct>();
     
-    public void hurtHealth(int i)
+    public virtual void hurtHealth(int i)
     {
-        if(nameStatePairs.ContainsKey("Burn"))
+        //if(nameStatePairs.ContainsKey("Burn"))
         if (i > 0)
         {
             if (armor > i)
@@ -41,13 +41,13 @@ public class enemybase : pawnbase
         {
             armor += i;
         }
-        //gameManager.Instance.battlemanager.showcontroll.ShowArmor(armor);
+        gameManager.Instance.battlemanager.realenemy.changeHealthAndArmor(armor,healthnow);
     }
     public override void destoryArmor(int i)
     {
 
         armor -= i;
-        //gameManager.Instance.battlemanager.showcontroll.ShowArmor(armor);
+        gameManager.Instance.battlemanager.realenemy.changeHealthAndArmor(armor, healthnow);
     }
 }
 [System.Serializable]
@@ -59,12 +59,29 @@ public class playerpawn : pawnbase
         {
             armor += i;
         }
-        //gameManager.Instance.battlemanager.showcontroll.ShowPlayerArmor(armor);
+        gameManager.Instance.battlemanager.realplayer.changeHealthAndArmor(armor, healthnow);
     }
     public override void destoryArmor(int i)
     {
 
         armor -= i;
-        //gameManager.Instance.battlemanager.showcontroll.ShowPlayerArmor(armor);
+        gameManager.Instance.battlemanager.realplayer.changeHealthAndArmor(armor, healthnow);
+    }
+    public override void hurtHealth(int i)
+    {
+        //if(nameStatePairs.ContainsKey("Burn"))
+        if (i > 0)
+        {
+            if (armor > i)
+            {
+                destoryArmor(i);
+            }
+            else
+            {
+                healthnow -= (i - armor);
+                destoryArmor(armor);
+            }
+        }
+        gameManager.Instance.battlemanager.realplayer.changeHealthAndArmor(armor, healthnow);
     }
 }

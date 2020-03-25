@@ -80,7 +80,7 @@ public class monInfo_usagi : monsterInfo
     {
         name = "耳兔";
         health = 150;
-        Id = 2;
+        Id = 1;
         monsterLevel = 1;
         actionList.Add(new actionAdmix(new actionArmor(12), new actionHurt(9)));
         actionList.Add(new actionHurt(6));

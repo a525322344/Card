@@ -243,6 +243,10 @@ MonoBehaviour:
   mapmanager: {fileID: 0}
   uimanager: {fileID: 0}
   InitControllBoard: {fileID: 11400000, guid: f2b122f796562a34d9e784dadc3b696c, type: 2}
+  battleScene:
+    m_Handle: 0
+  mapScene:
+    m_Handle: 0
 --- !u!114 &828882826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +287,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d0d7574ba417a6049bd27c38cb033b21, type: 3}
   - {fileID: 21300000, guid: 2e31a7ce20f061847b7df44a45870a03, type: 3}
   - {fileID: 21300000, guid: db909e225d584a74da0fe7bb6060a298, type: 3}
+  cardSprites: []
+  stateSprites:
+  - {fileID: 21300000, guid: 0108e999384aa354c8b59f76ac7a01d8, type: 3}
   waitSelectBoardGO: {fileID: 8728863353477294464, guid: 7babce6b90d3596479f89d6c1d6a1df6,
     type: 3}
   Encamera: {fileID: 0}
@@ -312,9 +319,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3b52f45279c814f9e8fe8d7cb1c4c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundEndButton: {fileID: 0}
-  uiBefallBoard: {fileID: 0}
   startMuneControll: {fileID: 7778218340182681180}
+  uiBefallBoard: {fileID: 0}
+  roundEndButton: {fileID: 0}
+  uiVectorBoard: {fileID: 0}
 --- !u!1 &1025505283
 GameObject:
   m_ObjectHideFlags: 0

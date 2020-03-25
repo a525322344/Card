@@ -75,6 +75,7 @@ public class battleManager : MonoBehaviour
     //战场信息
     public battleInfo battleInfo;
     public realEnemy realenemy;
+    public realPlayer realplayer;
     public realKnapsack realknapsack;
     public List<realpart> realPartList;
     public List<realCard> realCardList;
@@ -121,6 +122,8 @@ public class battleManager : MonoBehaviour
         realknapsack.SetinPart();
         //初始化battleinfo
         battleInfo=new battleInfo(playerinfo);
+        realplayer = instantiatemanager.battleEnvRoot.realplayer;
+        realplayer.Init(battleInfo.Player);
         battleInfo.Enemy = realenemy.enemy;
 
         realCardList = gameManager.Instance.instantiatemanager.battleuiRoot.handCardControll.GetComponent<handcardControll>().playerHandCards;
@@ -154,6 +157,7 @@ public class battleManager : MonoBehaviour
     {
         //实例化怪物
         instantiatemanager.instanMonster(monsterinfo, out realenemy);
+
     }
 
     public void DrawACard()
@@ -255,6 +259,7 @@ public class battleManager : MonoBehaviour
             new ActionEvent(realenemy.chooseAction()),
             eventManager.BattleEnemyShows
             );
+        battleInfo.Player.destoryArmor(battleInfo.Player.armor);
         eventManager.BattleEnemyShows.Add(enemyNextActionEvent);
         RoundStage = ROUNDSTAGE.Start;
         BattleRound = BattleState.PlayerRound;

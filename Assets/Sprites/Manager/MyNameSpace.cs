@@ -17,7 +17,7 @@ namespace AllAsset
                 num = 0;
             }
             battleInfo.Enemy.hurtHealth(num);
-            //gameManager.Instance.battlemanager.showcontroll.gethurt(num);
+            gameManager.Instance.battlemanager.realenemy.showGetHurt(num);
         }
         public static void EnemyGetRealHurt(int num,battleInfo battleInfo)
         {
@@ -26,7 +26,7 @@ namespace AllAsset
                 num = 0;
             }
             battleInfo.Enemy.healthnow -= num;
-            //gameManager.Instance.battlemanager.showcontroll.gethurt(num);
+            gameManager.Instance.battlemanager.realenemy.showGetHurt(num);
         }
         public static void PlayerGetArmor(int num, battleInfo battleInfo)
         {
@@ -67,14 +67,14 @@ namespace AllAsset
             if (battleinfo.Enemy.nameStatePairs.ContainsKey(burnstate.key))
             {
                 battleinfo.Enemy.nameStatePairs[burnstate.key].num *= num;
-                //gameManager.Instance.battlemanager.showcontroll.ShowFire(battleinfo.Enemy.nameStatePairs["Burn"].num);
+                gameManager.Instance.battlemanager.realenemy.StateUpdtae();
             }
             else
             {
                 burnstate.SetInState();
                 battleinfo.Enemy.nameStatePairs.Add(burnstate.key, burnstate);
                 battleinfo.Enemy.stateList.Add(burnstate);
-                //gameManager.Instance.battlemanager.showcontroll.ShowFire(battleinfo.Enemy.nameStatePairs["Burn"].num);
+                gameManager.Instance.battlemanager.realenemy.StateUpdtae();
             }
         }
         public static void EnemyGetBurn(int num,battleInfo battleinfo)
@@ -83,14 +83,14 @@ namespace AllAsset
             if (battleinfo.Enemy.nameStatePairs.ContainsKey(burnstate.key))
             {
                 battleinfo.Enemy.nameStatePairs[burnstate.key].num += num;
-                //gameManager.Instance.battlemanager.showcontroll.ShowFire(battleinfo.Enemy.nameStatePairs["Burn"].num);
+                gameManager.Instance.battlemanager.realenemy.StateUpdtae(); 
             }
             else
             {             
                 burnstate.SetInState();
                 battleinfo.Enemy.nameStatePairs.Add(burnstate.key, burnstate);
                 battleinfo.Enemy.stateList.Add(burnstate);
-                //gameManager.Instance.battlemanager.showcontroll.ShowFire(battleinfo.Enemy.nameStatePairs["Burn"].num);
+                gameManager.Instance.battlemanager.realenemy.StateUpdtae();
             }
         }
         public static void RandomLinkPart(int num,battleInfo battleinfo)

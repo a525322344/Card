@@ -42,6 +42,7 @@ public class instantiateManager : MonoBehaviour
     public List<Sprite> beFallSprites = new List<Sprite>();
     public List<Sprite> mapPlaceSprites = new List<Sprite>();
     public List<Sprite> cardSprites = new List<Sprite>();
+    public List<Sprite> stateSprites = new List<Sprite>();
 
     //弃卡选择框
     public GameObject waitSelectBoardGO;
