@@ -49,27 +49,44 @@ public class monInfo_Cat : monsterInfo
     public monInfo_Cat()
     {
         name = "火云猫";
-        health = 60;
+        health = 150;
         Id = 1;
         monsterLevel = 1;
+        actionList.Add(new actionAdmix(new actionArmor(12), new actionHurt(9)));
         actionList.Add(new actionHurt(6));
-        actionList.Add(new actionHurt(9));
+        actionList.Add(new actionAdmix(new actionHurt(5), new actionHurt(5)));
+        actionList.Add(new actionHurt(8));
+        actionList.Add(new actionAdmix(new actionHurt(7), new actionHurt(7)));
+        actionList.Add(new actionHurt(10));
+        actionList.Add(new actionAdmix(new actionHurt(7), new actionHurt(7)));
+        actionList.Add(new actionHurt(12));
+        actionList.Add(new actionAdmix(new actionHurt(9), new actionHurt(9)));
+        actionList.Add(new actionHurt(14));
+        actionList.Add(new actionAdmix(new actionHurt(11), new actionHurt(11)));
+        actionList.Add(new actionHurt(16));
+        actionList.Add(new actionAdmix(new actionHurt(13), new actionHurt(13)));
+        actionList.Add(new actionHurt(18));
+        actionList.Add(new actionAdmix(new actionHurt(15), new actionHurt(15)));
+        actionList.Add(new actionHurt(20));
+        actionList.Add(new actionAdmix(new actionHurt(17), new actionHurt(17)));
+
         //顺序选择
         selectAction = new selectWay((int x) =>
-          {
-              actionAbstract action;
-              if (actionorder < actionList.Count - 1)
-              {
-                  action = actionList[actionorder];
-                  actionorder++;
-              }
-              else
-              {
-                  action = actionList[0];
-                  actionorder = 1;
-              }
-              return action;
-          });
+        {
+            actionAbstract action;
+            if (actionorder < actionList.Count - 1)
+            {
+                action = actionList[actionorder];
+                actionorder++;
+            }
+            else
+            {
+                action = actionList[0];
+                actionorder = 1;
+            }
+            return action;
+            actionList.Remove(new actionAdmix(new actionArmor(12), new actionHurt(9)));
+        });
     }
 }
 
