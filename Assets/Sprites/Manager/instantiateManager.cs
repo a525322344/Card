@@ -70,7 +70,7 @@ public class instantiateManager : MonoBehaviour
             if (!_knapsack.installParts.ContainsValue(magicParts[i]))
             {
                 GameObject part = Instantiate(partGO, mapRootInfo.sortPartPosition);
-                part.transform.localPosition = Vector3.right * mapRootInfo.sortPartDistance * j;
+                part.transform.localPosition = Vector3.down * mapRootInfo.sortPartDistance * j;
                 realpart rp = part.GetComponent<realpart>();
                 rp.Init(magicParts[i], GameState.MapSence, mapRootInfo.sortPartPosition);
                 j++;
