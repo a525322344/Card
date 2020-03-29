@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 4b08229c25b860b41a706aec5d99d6bf
 ModelImporter:
-  serializedVersion: 25
+  serializedVersion: 26
   internalIDToNameTable:
   - first:
       74: 3477833215074588830
@@ -24,7 +24,17 @@ ModelImporter:
   - first:
       74: 4659437804184042788
     second: defense
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert10
+    second: {fileID: 2100000, guid: ef2397355bd68e743b2186eb2863ede0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert11
+    second: {fileID: 2100000, guid: ef2397355bd68e743b2186eb2863ede0, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -262,6 +272,7 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
