@@ -1851,6 +1851,7 @@ GameObject:
   m_Component:
   - component: {fileID: 882473707406512219}
   - component: {fileID: 331205891532413040}
+  - component: {fileID: 882473707406512220}
   m_Layer: 0
   m_Name: Environment
   m_TagString: Untagged
