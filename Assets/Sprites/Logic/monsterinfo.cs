@@ -85,7 +85,7 @@ public class monInfo_Cat : monsterInfo
                 actionorder = 1;
             }
             return action;
-            actionList.Remove(new actionAdmix(new actionArmor(12), new actionHurt(9)));
+            //actionList.Remove(new actionAdmix(new actionArmor(12), new actionHurt(9)));
         });
     }
 }

@@ -8,7 +8,8 @@ public class realKnapsack : MonoBehaviour
     //创建5X5预备背包格，初始开放6格，中心点为3，3
     public GameObject LaticeGO;
     public Transform pointtran;
-    public Transform BoardMesh;
+    //public Transform BoardMesh;
+    public Transform overcubeFolder;
     public float distance;
 
     public knapsack thisknapsack;
@@ -16,6 +17,7 @@ public class realKnapsack : MonoBehaviour
 
     public Dictionary<Vector2, realLatice> laticePairs = new Dictionary<Vector2, realLatice>();
     public List<realpart> realparts = new List<realpart>();
+    public List<Transform> overcubes = new List<Transform>();
 #region 用于中转
     private Dictionary<Vector2, latice> lactices = new Dictionary<Vector2, latice>();
 #endregion
@@ -53,7 +55,7 @@ public class realKnapsack : MonoBehaviour
         }
         else if (KnapsackState == GameState.BattleSence)
         {
-            BoardMesh.gameObject.SetActive(false);
+            //BoardMesh.gameObject.SetActive(false);
             //生成实例Latice
             for (int i = 0; i < 25; i++)
             {
@@ -78,6 +80,12 @@ public class realKnapsack : MonoBehaviour
             //初始化部件
             InitInstallPart(GameState.BattleSence);
             selectPart = nullpart;
+        }
+
+        for(int i = 0; i < thisknapsack.isexploits.Length; i++)
+        {
+            overcubes.Add(overcubeFolder.GetChild(i));
+            overcubes[i].gameObject.SetActive(!thisknapsack.isexploits[i]);
         }
     }
     private void InitInstallPart(GameState state)

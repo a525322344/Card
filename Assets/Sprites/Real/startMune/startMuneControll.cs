@@ -28,6 +28,11 @@ public class startMuneControll : MonoBehaviour
                 b_autoOver = true;
             }
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync("Map");
+            gameManager.Instance.mapScene = SceneManager.GetSceneByName("Map");
+        }
     }
 
     public void ToStart()
@@ -83,5 +88,13 @@ public class startMuneControll : MonoBehaviour
         SceneManager.UnloadSceneAsync(scene);
         //完全切换场景
 
+    }
+    IEnumerator IETestEnterMap(AsyncOperation _asyncOperation)
+    {
+        //后面地图加载好了
+        yield return new WaitUntil(() => {
+            return _asyncOperation.isDone;
+        });
+        gameManager.Instance.mapManagerInit();
     }
 }
