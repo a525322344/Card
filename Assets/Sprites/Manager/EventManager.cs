@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 public delegate void toDo();
-
+[System.Serializable]
 public class EventManager
 {
     public EventManager(battleManager _bm)

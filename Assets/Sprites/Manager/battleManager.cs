@@ -100,9 +100,9 @@ public class battleManager : MonoBehaviour
         selectedPart = _magicPart;
     }
     #endregion
-
-    private void Awake()
+    public void InitBattlemanaget()
     {
+        //初始化控制器
         playerinfo = gameManager.Instance.playerinfo;
         instantiatemanager = gameManager.Instance.instantiatemanager;
         eventManager = new EventManager(this);
@@ -160,6 +160,13 @@ public class battleManager : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        eventManager.EventListUpdate();
+    }
+
+
+    /// /////具体操作
     public void DrawACard()
     {
         if (dickInGame.Count == 0)
@@ -207,8 +214,6 @@ public class battleManager : MonoBehaviour
         cardevent.prepareEvent();
         realcard.describeText.text = cardevent.EventCardDescribe();
     }
-
-
     //丢弃全部手牌
     public void deleteAllHandCard()
     {
@@ -248,7 +253,7 @@ public class battleManager : MonoBehaviour
             rc.EnterStateWaitSelect();
         }
     }
-    //怪物回合结束的事
+    //(手动挡)怪物回合结束的事
     public void EndEnemyRound()
     {
         b_toEndRound = false;
@@ -271,25 +276,4 @@ public class battleManager : MonoBehaviour
     {
         b_toEndRound = true;
     }
-    #region 临时的
-    public showcontroll showcontroll;
-
-    //public void SetEnemyShow()
-    //{
-    //    //battleInfo.Enemy = nowenemy.pikaqiu;
-    //    showcontroll.init();
-    //}
-
-    public Slider healthSlider;
-    public Text healthText;
-    private void Update()
-    {
-        //healthSlider.value =(float) battleInfo.Player.healthnow/battleInfo.Player.healthmax;
-        //healthText.text = "" + battleInfo.Player.healthnow + " / " + battleInfo.Player.healthmax;
-
-
-        eventManager.EventListUpdate();
-    }
-    #endregion
-
 }

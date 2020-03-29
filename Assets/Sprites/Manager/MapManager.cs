@@ -88,6 +88,8 @@ public class MapManager : MonoBehaviour
             return asyncOperation.isDone;
         });
         gameManager.Instance.battleManagerInit();
+        gameManager.Instance.SwitchScene(true);
+        gameManager.Instance.battlemanager.InitBattlemanaget();
         gameManager.Instance.battlemanager.BattleStartEnemySet(monster);
         gameManager.Instance.battlemanager.startBattale();
     }

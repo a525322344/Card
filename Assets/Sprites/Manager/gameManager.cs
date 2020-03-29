@@ -9,7 +9,8 @@ public enum GameState
 {
     StartMenu,
     MapSence,
-    BattleSence
+    BattleSence,
+    BattleTest,
 }
 
 public class gameManager : MonoBehaviour
@@ -28,6 +29,8 @@ public class gameManager : MonoBehaviour
     //玩家信息管理记录类
     //[HideInInspector]
     public playerInfo playerinfo;
+    //数据加载类
+    public InitData initdata;
     //战斗管理器
     [HideInInspector]
     public battleManager battlemanager;
@@ -53,7 +56,9 @@ public class gameManager : MonoBehaviour
         instantiatemanager = GetComponent<instantiateManager>();
         uimanager = GetComponent<UImanager>();
         DontDestroyOnLoad(gameObject);
-        float pi = Mathf.PI;
+        //游戏数据
+        initdata = new InitData();
+        initdata.Awake();
     }
     void Start()
     {
@@ -81,7 +86,7 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    private void GameStartInit()
+    public void GameStartInit()
     {
         //初始化玩家数据
         playerinfo = new playerInfo();
@@ -100,7 +105,6 @@ public class gameManager : MonoBehaviour
 
     public void battleManagerInit()
     {
-        SwitchScene(true);
         battlemanager = gameObject.AddComponent<battleManager>();
         instantiatemanager.battleuiRoot = GameObject.Find("CameraUI").GetComponent<battleUIRoot>();
         instantiatemanager.battleEnvRoot = GameObject.Find("Environment").GetComponent<BattleEnvRoot>();
