@@ -3,7 +3,13 @@ guid: b73121ea4d121ce40a9fa60aa18943ae
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - battlemanager: {instanceID: 0}
+  - instantiatemanager: {instanceID: 0}
+  - mapmanager: {instanceID: 0}
+  - uimanager: {instanceID: 0}
+  - InitControllBoard: {fileID: 11400000, guid: f2b122f796562a34d9e784dadc3b696c,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
