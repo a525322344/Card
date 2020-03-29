@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using AllAsset;
 //读取数据，初始化数据类
-[System.Serializable]
-public class InitData
+public class InitData : MonoBehaviour
 {
     Dictionary<int, csvcard> csvcard = new Dictionary<int, csvcard>();
     public List<playerCard> ShowAllCards;
 
     public void Awake()
     {
-        CardInit();
+        CsvCardInit();
         MagicPartInit();
     }
     //数据加载全卡
-    void CardInit()
+    void CsvCardInit()
     {
         ShowAllCards = cardAsset.AllIdCards;
         csvcard = CSVLoader.LoadCsvData<csvcard>(Application.streamingAssetsPath + "/cardcsv.csv");
@@ -139,4 +138,6 @@ public class InitData
 
         AllAsset.magicpartAsset.AllMagicParts.Add(Init_DefenceUp_1);
     }
+
+
 }

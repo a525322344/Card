@@ -24,7 +24,6 @@ public class playerInfo
     //初始化玩家的开局卡组
     public void PlayerDickInit(List<int> ts)
     {
-        playerDick.Clear();
         foreach(int i in ts)
         {
             playerDick.Add(cardAsset.AllIdCards[i]);
@@ -34,7 +33,6 @@ public class playerInfo
     //初始化玩家的
     public void MagicPartDickInit()
     {
-        MagicPartDick.Clear();
         MagicPartDick.Add(magicpartAsset.AllMagicParts[0]);
         MagicPartDick.Add(magicpartAsset.AllMagicParts[1]);
     }

@@ -7,7 +7,6 @@ using UnityEngine;
 //打出卡牌受到各种加成，buff影响，怪物能力调整的事件——的基类
 public abstract class singleEvent
 {
-    public string eventDescribe;
     public virtual void prepareEvent() { }
     public virtual void insertEvent() { }
     public virtual void dealEvent(battleInfo battleInfo) { }
@@ -30,7 +29,6 @@ public class SystemEvent : singleEvent
 {
     public SystemEvent(EffectBase effect)
     {
-        eventDescribe = "(未强化)系统："+effect.DescribeEffect();
         m_eventKind = effect.GetEventKind();
         m_effect = effect;
         b_logoutAfterDeal = false;
@@ -116,7 +114,6 @@ public class EffectEvent : singleEvent
     /// <param name="fatherevent">事件父类</param>
     public EffectEvent(EffectBase effect,singleEvent fatherevent)
     {
-        eventDescribe = "(未强化)效果：" + effect.DescribeEffect();
         m_effect = effect;
         m_fatherEvent = fatherevent;
         m_eventKind = effect.GetEventKind();
@@ -277,7 +274,7 @@ public class CardEvent : singleEvent
         playercard = _playerCard;
         m_eventKind = cardkind.GetEventKind();
         m_magicPart = magicPart;
-        eventDescribe = "(未强化)卡牌：" + _playerCard.Name;
+
         b_logoutAfterDeal = true;
         b_haveChildEvent = true;
     }
@@ -368,7 +365,6 @@ public class ActionEvent:singleEvent
         m_eventKind = EventKind.Event_Action;
         b_haveChildEvent = true;
         b_logoutAfterDeal = true;
-        eventDescribe = "(未强化)行动：" + "以后补充";
     }
 
     public override void recesiveNotice()
@@ -420,7 +416,6 @@ public class StateEvent : singleEvent
         m_effect = effect;
         m_state = state;
         m_eventKind = effect.GetEventKind();
-        eventDescribe = "(未强化)状态：" + effect.DescribeEffect();
     }
     public override void prepareEvent()
     {

@@ -18,13 +18,11 @@ public abstract class ShowAbstract
 [System.Serializable]
 public class EventShow
 {
-    public string name;
     public EventShow(singleEvent _event,List<EventShow> belongList)
     {
         thisevent = _event;
         belongEventShows = belongList;
         state = EVENTSTATE.Wait;
-        name = _event.eventDescribe;
 
         StartToDo = new deleToDo(() => { });
         EndToDo = new deleToDo(() => { });

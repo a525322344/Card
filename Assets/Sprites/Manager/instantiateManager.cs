@@ -26,6 +26,7 @@ public class instantiateManager : MonoBehaviour
 
     #endregion
 
+    public Canvas uiCanvas;
     public GameObject knapsackGO;
     public GameObject partGO;
     public GameObject cardGO;
@@ -45,6 +46,10 @@ public class instantiateManager : MonoBehaviour
 
     //弃卡选择框
     public GameObject waitSelectBoardGO;
+
+
+    public Camera Encamera;
+    public Camera UIcamera;
 
     private void Awake()
     {
