@@ -1488,7 +1488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2771618447547086291
 Transform:
   m_ObjectHideFlags: 0
@@ -2080,6 +2080,8 @@ MonoBehaviour:
   pointtran: {fileID: 7434392110454665590}
   overcubeFolder: {fileID: 22058963474044361}
   distance: 95
+  thisknapsack:
+    isexploits: 
   KnapsackState: 0
   realparts: []
   overcubes: []

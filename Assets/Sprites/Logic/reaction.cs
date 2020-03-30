@@ -40,6 +40,8 @@ public static class ReactionListController
                 return reactListToSystemRepeat;
             case EventKind.Event_EnemyGetBurn:
                 return reactListToEnemyGetBurn;
+            case EventKind.Event_EnemyBurnMultiply:
+                return reactListToEnemyBurnMultiply;
             case EventKind.Event_EnemyBurnDamage:
                 return reactListToEnemyBurnDamage;
             case EventKind.Event_LinkRandom:
@@ -74,6 +76,7 @@ public static class ReactionListController
     private static List<Reaction> reactListToRepeat = new List<Reaction>();
     private static List<Reaction> reactListToSystemRepeat = new List<Reaction>();
     private static List<Reaction> reactListToEnemyGetBurn = new List<Reaction>();
+    private static List<Reaction> reactListToEnemyBurnMultiply = new List<Reaction>();
     private static List<Reaction> reactListToEnemyBurnDamage = new List<Reaction>();
     private static List<Reaction> reactListToRoundEndDisCard = new List<Reaction>();
     private static List<Reaction> reactListToLinkRandom = new List<Reaction>();
