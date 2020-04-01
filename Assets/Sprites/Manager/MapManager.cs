@@ -36,25 +36,25 @@ public class MapManager : MonoBehaviour
         newplace = new befallPlace(newbefallinfo);
         realplaceList.Add(instantiatePlace(newplace));
         
-        befallinfo newbefallinfo1 = new befallinfo("神秘山泉", 0, "有点甜的神秘泉水",
-            new Button_ExitBefall("喝（回复15点血量）"), new Button_ExitBefall("洗涤身体"));
-        newplace = new befallPlace(newbefallinfo1);
-        realplaceList.Add(instantiatePlace(newplace));
+    //    befallinfo newbefallinfo1 = new befallinfo("神秘山泉", 0, "有点甜的神秘泉水",
+    //        new Button_ExitBefall("喝（回复15点血量）"), new Button_ExitBefall("洗涤身体"));
+    //    newplace = new befallPlace(newbefallinfo1);
+    //    realplaceList.Add(instantiatePlace(newplace));
 
-        befallinfo newbefallinfo2 = new befallinfo("微笑的果农", 0, "“哎呀呀年轻人，你想尝尝哪种水果呢？”",
-            new Button_ExitBefall("梨子（最大生命值+5））"), new Button_ExitBefall("苹果（回复15点血量）"), new Button_ExitBefall("西瓜（获得卡牌“西瓜种子”）"));
-        newplace = new befallPlace(newbefallinfo2);
-        realplaceList.Add(instantiatePlace(newplace));
+    //    befallinfo newbefallinfo2 = new befallinfo("微笑的果农", 0, "“哎呀呀年轻人，你想尝尝哪种水果呢？”",
+    //        new Button_ExitBefall("梨子（最大生命值+5））"), new Button_ExitBefall("苹果（回复15点血量）"), new Button_ExitBefall("西瓜（获得卡牌“西瓜种子”）"));
+    //    newplace = new befallPlace(newbefallinfo2);
+    //    realplaceList.Add(instantiatePlace(newplace));
 
-        befallinfo newbefallinfo3 = new befallinfo("微笑的果农", 0, "“哎呀呀年轻人，你想尝尝哪种水果呢？”",
-    new Button_ExitBefall("梨子（最大生命值+5））"), new Button_ExitBefall("苹果（回复15点血量）"), new Button_ExitBefall("西瓜（获得卡牌“西瓜种子”）"));
-        newplace = new befallPlace(newbefallinfo3);
-        realplaceList.Add(instantiatePlace(newplace));
+    //    befallinfo newbefallinfo3 = new befallinfo("微笑的果农", 0, "“哎呀呀年轻人，你想尝尝哪种水果呢？”",
+    //new Button_ExitBefall("梨子（最大生命值+5））"), new Button_ExitBefall("苹果（回复15点血量）"), new Button_ExitBefall("西瓜（获得卡牌“西瓜种子”）"));
+    //    newplace = new befallPlace(newbefallinfo3);
+    //    realplaceList.Add(instantiatePlace(newplace));
 
-        befallinfo newbefallinfo4 = new befallinfo("微笑的果农", 0, "“哎呀呀年轻人，你想尝尝哪种水果呢？”",
-    new Button_ExitBefall("梨子（最大生命值+5））"), new Button_ExitBefall("苹果（回复15点血量）"), new Button_ExitBefall("西瓜（获得卡牌“西瓜种子”）"));
-        newplace = new befallPlace(newbefallinfo4);
-        realplaceList.Add(instantiatePlace(newplace));
+    //    befallinfo newbefallinfo4 = new befallinfo("微笑的果农", 0, "“哎呀呀年轻人，你想尝尝哪种水果呢？”",
+    //new Button_ExitBefall("梨子（最大生命值+5））"), new Button_ExitBefall("苹果（回复15点血量）"), new Button_ExitBefall("西瓜（获得卡牌“西瓜种子”）"));
+    //    newplace = new befallPlace(newbefallinfo4);
+    //    realplaceList.Add(instantiatePlace(newplace));
     }
 
     //地点位置数据
