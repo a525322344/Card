@@ -17,7 +17,6 @@ namespace AllAsset
                 num = 0;
             }
             battleInfo.Enemy.hurtHealth(num);
-            gameManager.Instance.battlemanager.realenemy.showGetHurt(num);
         }
         public static void EnemyGetRealHurt(int num,battleInfo battleInfo)
         {
@@ -25,8 +24,7 @@ namespace AllAsset
             {
                 num = 0;
             }
-            battleInfo.Enemy.healthnow -= num;
-            gameManager.Instance.battlemanager.realenemy.showGetHurt(num);
+            battleInfo.Enemy.realHurtHealth(num);
         }
         public static void PlayerGetArmor(int num, battleInfo battleInfo)
         {

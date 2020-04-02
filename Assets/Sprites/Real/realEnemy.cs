@@ -53,7 +53,7 @@ public class realEnemy : MonoBehaviour
     }
     public void showGetHurt(int num)
     {
-        Debug.Log("hurt");
+        StateUpdtae();
         GameObject damage = Instantiate(damageshow, damagePosi);
         Destroy(damage, 5);
         damage.GetComponent<damagePopup>().Init(num);

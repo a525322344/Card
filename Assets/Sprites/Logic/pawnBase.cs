@@ -14,7 +14,6 @@ public class pawnbase
     
     public virtual void hurtHealth(int i)
     {
-        //if(nameStatePairs.ContainsKey("Burn"))
         if (i > 0)
         {
             if (armor > i)
@@ -28,8 +27,21 @@ public class pawnbase
             }
         }
     }
-    public virtual void GetArmor(int i) { }
-    public virtual void destoryArmor(int i) { }
+    public virtual void realHurtHealth(int i)
+    {
+        healthnow -= 1;
+    }
+    public virtual void GetArmor(int i)
+    {
+        if (i >= 0)
+        {
+            armor += i;
+        }
+    }
+    public virtual void destoryArmor(int i)
+    {
+        armor -= i;
+    }
 }
 
 [System.Serializable]
@@ -37,17 +49,25 @@ public class enemybase : pawnbase
 {
     public override void GetArmor(int i)
     {
-        if (i >= 0)
-        {
-            armor += i;
-        }
+        base.GetArmor(i);
         gameManager.Instance.battlemanager.realenemy.changeHealthAndArmor(armor,healthnow);
     }
     public override void destoryArmor(int i)
     {
-
-        armor -= i;
+        base.destoryArmor(i);
         gameManager.Instance.battlemanager.realenemy.changeHealthAndArmor(armor, healthnow);
+    }
+    public override void hurtHealth(int i)
+    {
+        base.hurtHealth(i);
+        gameManager.Instance.battlemanager.realenemy.showGetHurt(i);
+        gameManager.Instance.battlemanager.realenemy.changeHealthAndArmor(armor, healthnow);
+    }
+    public override void realHurtHealth(int i)
+    {
+        base.realHurtHealth(i);
+        gameManager.Instance.battlemanager.realenemy.changeHealthAndArmor(armor, healthnow);
+        gameManager.Instance.battlemanager.realenemy.showGetHurt(i);
     }
 }
 [System.Serializable]
@@ -55,33 +75,22 @@ public class playerpawn : pawnbase
 {
     public override void GetArmor(int i)
     {
-        if (i >= 0)
-        {
-            armor += i;
-        }
+        base.GetArmor(i);
         gameManager.Instance.battlemanager.realplayer.changeHealthAndArmor(armor, healthnow);
     }
     public override void destoryArmor(int i)
     {
-
-        armor -= i;
+        base.destoryArmor(i);
         gameManager.Instance.battlemanager.realplayer.changeHealthAndArmor(armor, healthnow);
     }
     public override void hurtHealth(int i)
     {
-        //if(nameStatePairs.ContainsKey("Burn"))
-        if (i > 0)
-        {
-            if (armor > i)
-            {
-                destoryArmor(i);
-            }
-            else
-            {
-                healthnow -= (i - armor);
-                destoryArmor(armor);
-            }
-        }
+        base.hurtHealth(i);
+        gameManager.Instance.battlemanager.realplayer.changeHealthAndArmor(armor, healthnow);
+    }
+    public override void realHurtHealth(int i)
+    {
+        base.realHurtHealth(i);
         gameManager.Instance.battlemanager.realplayer.changeHealthAndArmor(armor, healthnow);
     }
 }

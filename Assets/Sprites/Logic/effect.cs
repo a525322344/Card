@@ -22,6 +22,7 @@ public enum EventKind
     Event_Repeat,               //重复，包含子效果
     Event_SystmeRepeat,         //系统重复
     Event_EnemyGetBurn,         //获得灼烧  "抽象效果"
+    Event_EnemyBurnMultiply,    //灼烧翻n倍
     Event_EnemyBurnDamage,      //灼烧伤害(穿透
     Event_LinkRandom,           //随机链接
     Event_Whether,              //条件效果
@@ -285,7 +286,7 @@ public class DoubleBurn : cardEffectBase
         num = _num;
         mixnum = num;
         effectDele = new DeleCardEffect(AllAsset.effectAsset.EnemyDoubleBurn);
-        eventkind = EventKind.Event_EnemyGetBurn;
+        eventkind = EventKind.Event_EnemyBurnMultiply;
 
         frontDesctibe = "给与敌人";
         backDesctibe = "倍灼烧";
@@ -326,6 +327,10 @@ public class CardEffect_ToExitLink : cardEffectBase
         b_hideDesctibe = true;
         eventkind = EventKind.Event_NULL;
         effectDele = new DeleCardEffect(AllAsset.effectAsset.CreatState_ExitLinkPart);
+    }
+    public override string DescribeEffect()
+    {
+        return "添加状态：回合结束取消链接效果";
     }
 }
 //判断效果 

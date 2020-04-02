@@ -164,7 +164,6 @@ public class realKnapsack : MonoBehaviour
     private List<realLatice> onLatices;
     public bool CanInstallPart(MagicPart magicPart,Vector2 center)
     {
-        Debug.Log("Can");
         onLatices = new List<realLatice>();
         bool result = true;
         foreach(var vg in magicPart.Vector2GridRotate)
@@ -204,8 +203,6 @@ public class realKnapsack : MonoBehaviour
     }
     public void ExitCanInstall()
     {
-        Debug.Log("ExitCanInstall");
-
         foreach (realLatice rl in onLatices)
         {
             rl.thislatice.state = LaticeState.Exploit;
@@ -291,11 +288,14 @@ public class realKnapsack : MonoBehaviour
     }
     public bool CanCostPlay(Vector2 center, Dictionary<Vector2, int> vectorInts)
     {
+        selecRealParts.Clear();
         bool result = true;
         bool b_samePart = true;
+        int cost=0;
         //selectPart = laticePairs[center].realpart.thisMagicPart;
         foreach(var vecint in vectorInts)
         {
+            cost += vecint.Value;
             if (vecint.Value == 1)//cost块符合
             {
                 Vector2 position = center + vecint.Key;
@@ -354,6 +354,19 @@ public class realKnapsack : MonoBehaviour
                 {
                     result = false;
                     break;
+                }
+            }
+        }
+        //额外判断零费牌触发的部件效果
+        
+        if (cost == 0)
+        {
+            if (laticePairs[center].gridState == GridState.Power | laticePairs[center].gridState == GridState.Can| laticePairs[center].gridState == GridState.Used)
+            {
+                if (laticePairs[center].realpart.thisMagicPart != null)
+                {
+                    selectPart = laticePairs[center].realpart.thisMagicPart;
+                    selecRealParts.Add(laticePairs[center].realpart);
                 }
             }
         }
