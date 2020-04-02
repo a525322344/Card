@@ -102,13 +102,13 @@ public class EventManager
         nowEventShow = eventShows[eventCursor];
 
         battleManager.battleInfo.nowEvent = eventShows[eventCursor].thisevent;
-        //先执行一次效果
+        //先执行效果
         if (eventShows[eventCursor].state == EVENTSTATE.Wait)
         {
             //
             eventShows[eventCursor].thisevent.dealEvent(battleManager.battleInfo);
         }
-        //在做事件结束判断
+        //做事件展示，做结束判断
         if (eventShows[eventCursor].upDateEvent(battleManager.battleInfo))
         {
             if (eventShows[eventCursor].thisevent.b_logoutAfterDeal)

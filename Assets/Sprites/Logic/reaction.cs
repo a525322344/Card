@@ -141,7 +141,7 @@ public class Reaction_Create : Reaction
     }
     public override void dealReaction()
     {
-        gameManager.Instance.battlemanager.eventManager.AddEvent(toCreateEvent);
+        gameManager.Instance.battlemanager.eventManager.InsertEvent(toCreateEvent);
     }
     private singleEvent toCreateEvent;
 }

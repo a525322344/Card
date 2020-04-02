@@ -14,6 +14,7 @@ public abstract class singleEvent
     public virtual bool isStopEffect() { return m_effect.b_stopEffect; }
 
     public abstract void recesiveNotice();
+    //处理事件后，是否从表中移除
     public bool b_logoutAfterDeal = true;
     //事件类型，用于枚举
     protected EventKind m_eventKind;
@@ -71,7 +72,7 @@ public class SystemEvent : singleEvent
             {
                 foreach (EffectBase childeffect in m_effect.childeffects)
                 {
-                    childEvents.Add(new EffectEvent(childeffect, this));
+                    childEvents.Add(new EffectEvent(childeffect, null));
                 }
             }
         }
@@ -83,10 +84,11 @@ public class SystemEvent : singleEvent
         {
             react.dealReaction();
         }
-        foreach (EffectEvent effectEvent in childEvents)
+        var antiChildEvents = new List<singleEvent>(childEvents);
+        antiChildEvents.Reverse();
+        foreach (EffectEvent effectEvent in antiChildEvents)
         {
             gameManager.Instance.battlemanager.eventManager.InsertEvent(effectEvent);
-            effectEvent.insertEvent();
         }
     }
     //处理事件
@@ -114,7 +116,7 @@ public class EffectEvent : singleEvent
     /// <param name="effect">效果</param>
     /// <param name="extralist">反应表</param>
     /// <param name="fatherevent">事件父类</param>
-    public EffectEvent(EffectBase effect,singleEvent fatherevent)
+    public EffectEvent(EffectBase effect, CardEvent fatherevent)
     {
         eventDescribe = "(未强化)效果：" + effect.DescribeEffect();
         m_effect = effect;
@@ -139,6 +141,10 @@ public class EffectEvent : singleEvent
     }
     public override void prepareEvent()
     {
+        if (m_fatherEvent != null)
+        {
+            m_fatherEvent.MagicPart.activatePart();
+        }
         childEvents.Clear();
 
         recesiveNotice();
@@ -155,13 +161,13 @@ public class EffectEvent : singleEvent
             {
                 foreach (cardEffectBase effect in m_effect.childeffects)
                 {
-                    childEvents.Add(new EffectEvent(effect, this));
+                    childEvents.Add(new EffectEvent(effect, m_fatherEvent));
                 }
             }
-            foreach (EffectEvent _event in childEvents)
-            {
-                _event.prepareEvent();
-            }
+            //foreach (EffectEvent _event in childEvents)
+            //{
+            //    _event.prepareEvent();
+            //}
         }
         if (b_haveJudgeEvent)
         {
@@ -169,14 +175,18 @@ public class EffectEvent : singleEvent
             {
                 foreach (cardEffectBase effect in m_effect.childeffects)
                 {
-                    childEvents.Add(new EffectEvent(effect, this));
+                    childEvents.Add(new EffectEvent(effect, m_fatherEvent));
                 }
             }
-            foreach (EffectEvent _event in childEvents)
-            {
-                _event.prepareEvent();
-            }
+            //foreach (EffectEvent _event in childEvents)
+            //{
+            //    _event.prepareEvent();
+            //}
         }
+        if (m_fatherEvent != null)
+        {
+            m_fatherEvent.MagicPart.sleepPart();
+        }      
     }
     public override void insertEvent()
     {
@@ -184,14 +194,17 @@ public class EffectEvent : singleEvent
         {
             react.dealReaction();
         }
-        foreach (EffectEvent effectEvent in childEvents)
+        var antiChildEvents = new List<singleEvent>(childEvents);
+        antiChildEvents.Reverse();
+        foreach (EffectEvent effectEvent in antiChildEvents)
         {
-            gameManager.Instance.battlemanager.eventManager.AddEvent(effectEvent);
-            effectEvent.insertEvent();
+            gameManager.Instance.battlemanager.eventManager.InsertEvent(effectEvent);
         }
     }
     public override void dealEvent(battleInfo battleInfo)
     {
+        prepareEvent();
+        insertEvent();
         m_effect.DealEffect(m_effect.mixnum, battleInfo);
         if (m_effect.b_hasChildEffect)
         {
@@ -243,7 +256,7 @@ public class EffectEvent : singleEvent
             {
                 foreach (cardEffectBase effect in m_effect.childeffects)
                 {
-                    childEvents.Add(new EffectEvent(effect, this));
+                    childEvents.Add(new EffectEvent(effect, m_fatherEvent));
                 }
             }
             //根据子事件表，创建添加EventShow
@@ -258,7 +271,7 @@ public class EffectEvent : singleEvent
     //强化效果表
     private List<extraEffectBase> m_extraEffectList = new List<extraEffectBase>();
     //父类事件
-    private singleEvent m_fatherEvent;
+    private CardEvent m_fatherEvent;
     //场景战场信息
     private battleInfo battleInfo;
 }
@@ -296,31 +309,37 @@ public class CardEvent : singleEvent
             childEvents.Add(effectevent);
         }
         recesiveNotice();
-        foreach (EffectEvent _event in childEvents)
-        {
-            _event.prepareEvent();
-        }
+
+        //++
+        //foreach (EffectEvent _event in childEvents)
+        //{
+        //    _event.prepareEvent();
+        //}
+
         //休眠之前的部件
         m_magicPart.sleepPart();
-
     }
-    //插入事件时，处理的事情
+    //插入事件时，处理的事情(插入子事件
     public override void insertEvent()
     {
         foreach(Reaction react in EventReactionList)
         {
             react.dealReaction();
         }
-        foreach(EffectEvent effectEvent in childEvents)
+        var antiChildEvents = new List<singleEvent>(childEvents);
+        antiChildEvents.Reverse();
+        foreach(EffectEvent effectEvent in antiChildEvents)
         {
-            gameManager.Instance.battlemanager.eventManager.AddEvent(effectEvent);
-            effectEvent.insertEvent();
+            gameManager.Instance.battlemanager.eventManager.InsertEvent(effectEvent);
+            //effectEvent.insertEvent();
         }
         m_magicPart.sleepPart();
     }
     //处理事件
     public override void dealEvent(battleInfo battleInfo)
     {
+        prepareEvent();
+        insertEvent();
         Debug.Log("卡牌:" + playercard.Name);
     }
     //接受反应表
@@ -347,12 +366,38 @@ public class CardEvent : singleEvent
     {
         return false;
     }
+    //预先展示效果
+    public void preCardDescribe()
+    {
+        //激活使用的部件
+        m_magicPart.activatePart();
+        childEvents.Clear();
+        //询问卡牌类的效果表，创建效果事件表
+        foreach (cardEffectBase effect in playercard.getEffectList())
+        {
+            //创建效果事件
+            singleEvent effectevent = new EffectEvent(effect, this);
+            //把这个效果添加到该卡牌事件的事件子表中
+            childEvents.Add(effectevent);
+        }
+        recesiveNotice();
+        foreach (EffectEvent _event in childEvents)
+        {
+            _event.prepareEvent();
+        }
+        //休眠之前的部件
+        m_magicPart.sleepPart();
+    }
     public string EventCardDescribe()
     {
         return playercard.CardDescribe();
     }
     //卡牌
     private MagicPart m_magicPart;
+    public MagicPart MagicPart
+    {
+        get { return m_magicPart; }
+    }
     private playerCard playercard;
 }
 
@@ -363,7 +408,7 @@ public class ActionEvent:singleEvent
     {
         foreach (EffectBase effect in actionAb.effects)
         {
-            childEvents.Add(new EffectEvent(effect, this));
+            childEvents.Add(new EffectEvent(effect, null));
         }            
         m_eventKind = EventKind.Event_Action;
         b_haveChildEvent = true;
@@ -396,10 +441,11 @@ public class ActionEvent:singleEvent
         {
             react.dealReaction();
         }
-        foreach (EffectEvent effectEvent in childEvents)
+        var antiChildEvents = new List<singleEvent>(childEvents);
+        antiChildEvents.Reverse();
+        foreach (EffectEvent effectEvent in antiChildEvents)
         {
             gameManager.Instance.battlemanager.eventManager.InsertEvent(effectEvent);
-            effectEvent.insertEvent();
         }
     }
     public override void dealEvent(battleInfo battleInfo)

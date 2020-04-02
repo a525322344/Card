@@ -191,8 +191,6 @@ public class battleManager : MonoBehaviour
             CardEvent newevent = new CardEvent((playerCard)selectedCard.thisCard, selectedPart, new emplyPlayCard());
             EventShow neweventshow = new EventShow(newevent, eventManager.BattleEventShows);
             eventManager.BattleEventShows.Add(neweventshow);
-            newevent.prepareEvent();
-            newevent.insertEvent();
 
             realknapsack.ToSetPart(null);
             gameManager.Instance.battlemanager.b_isSelectCard = false;
@@ -205,13 +203,13 @@ public class battleManager : MonoBehaviour
     public void setCardDescribe(MagicPart magicPart)
     {
         CardEvent cardevent = new CardEvent((playerCard)gameManager.Instance.battlemanager.selectedCard.thisCard, magicPart, new emplyPlayCard());
-        cardevent.prepareEvent();
+        cardevent.preCardDescribe();
         selectedCard.describeText.text = cardevent.EventCardDescribe();        
     }
     public void setCardDescribe(realCard realcard,MagicPart magicPart)
     {
         CardEvent cardevent = new CardEvent((playerCard)realcard.thisCard, magicPart, new emplyPlayCard());
-        cardevent.prepareEvent();
+        cardevent.preCardDescribe();
         realcard.describeText.text = cardevent.EventCardDescribe();
     }
     //丢弃全部手牌

@@ -29,7 +29,7 @@ public class pawnbase
     }
     public virtual void realHurtHealth(int i)
     {
-        healthnow -= 1;
+        healthnow -= i;
     }
     public virtual void GetArmor(int i)
     {
