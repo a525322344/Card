@@ -43,6 +43,7 @@ public class gameManager : MonoBehaviour
     [HideInInspector]
     public UImanager uimanager;
     public InitControllBoard InitControllBoard;
+    public CardEditorBoard CardEditorBoard;
 
     public Scene battleScene;
     public Scene mapScene;
@@ -59,6 +60,7 @@ public class gameManager : MonoBehaviour
         //游戏数据
         initdata = new InitData();
         initdata.Awake();
+        Debug.Log((int)GameState.StartMenu);
     }
     void Start()
     {

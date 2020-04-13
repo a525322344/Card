@@ -227,7 +227,7 @@ public class Armor : cardEffectBase
         backDesctibe = "点护甲";
     }
 }
-//抽一张卡
+//抽一张卡(不直接使用)
 public class drawACard : cardEffectBase
 {
     public drawACard()
@@ -354,6 +354,8 @@ public class CardEffect_Whether : cardEffectBase
     public CardEffect_Whether()
     {
         b_judgeEffect = true;
+        effectDele = new DeleCardEffect((a, b) => { });
+        eventkind = EventKind.Event_Whether;
     }
     public override string DescribeEffect()
     {
@@ -372,8 +374,7 @@ public class CardEffect_Whether : cardEffectBase
     }
 }
 
-//停顿（选择）效果
-//选择弃一张卡
+//选择弃一张卡(不直接使用)
 public class CardEffect_DisACard : cardEffectBase
 {
     public CardEffect_DisACard()
@@ -426,15 +427,7 @@ public class CardEffect_DisSomeCard : Repeat
 }
 
 
-public class CardEffect_DisCard : cardEffectBase
-{
-    public CardEffect_DisCard(int _num)
-    {
-        num = _num;
-        mixnum = _num;
 
-    }
-}
 ////
 //系统效果 一般排除在卡的影响效果外；
 //比如，“每当弃一张卡”，回合结束弃卡效果不触发这种reaction;

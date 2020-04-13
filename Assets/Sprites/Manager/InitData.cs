@@ -11,7 +11,8 @@ public class InitData
 
     public void Awake()
     {
-        CardInit();
+        //CardInit();
+        EditorCardInit(gameManager.Instance.CardEditorBoard);
         MagicPartInit();
     }
     //数据加载全卡
@@ -138,5 +139,104 @@ public class InitData
         Init_DefenceUp_1.addReaction(reaction);
 
         AllAsset.magicpartAsset.AllMagicParts.Add(Init_DefenceUp_1);
+    }
+
+    public void EditorCardInit(CardEditorBoard cardboard)
+    {
+        foreach(editorCard card in cardboard.AllCards)
+        {
+            playerCard newcard = new playerCard(card.id, card.name, card.Kind, card.cost, (int)card.Rank);
+            foreach(editorEffect eE in card.playEffects)
+            {
+                newcard.AddEffect(EffectFromInit(eE));
+                if (eE.effectKind == EnumEffect.LinkRandom)
+                {
+                    newcard.AddEffect(new CardEffect_ToExitLink());
+                }
+            }
+            cardAsset.AllIdCards.Add(newcard);
+        }
+    }
+    cardEffectBase EffectFromInit(editorEffect editorEffect)
+    {
+        cardEffectBase Effect = new emplyPlayCard();
+        switch (editorEffect.effectKind)
+        {
+            case EnumEffect.Damage:
+                Effect = new Damage(editorEffect.num);
+                break;
+            case EnumEffect.Armor:
+                Effect = new Armor(editorEffect.num);
+                break;
+            case EnumEffect.DrawCard:
+                Effect = new DrawCard(editorEffect.num);
+                break;
+            case EnumEffect.Repeat:
+                Effect = new Repeat(editorEffect.num);
+                foreach(editorEffect eE in editorEffect.childeffects)
+                {
+                    Effect.childeffects.Add(EffectFromInit(eE));
+                }
+                break;
+            case EnumEffect.Burn:
+                Effect = new Burn(editorEffect.num);
+                break;
+            case EnumEffect.LinkRandom:
+                Effect = new LinkRandom(editorEffect.num);
+                break;
+            case EnumEffect.DoubleBurn:
+                Effect = new DoubleBurn(editorEffect.num);
+                break;
+            case EnumEffect.Whether:
+                Effect = new CardEffect_Whether();
+                foreach(editorJudge ej in editorEffect.judges)
+                {
+                    Effect.judgeConditions.Add(JudgeFromInit(ej));
+                }
+                foreach (editorEffect eE in editorEffect.childeffects)
+                {
+                    Effect.childeffects.Add(EffectFromInit(eE));
+                }
+                break;
+            case EnumEffect.DisCard:
+                break;
+            default:
+                Debug.Log("没有该EditorEffect对应的Effect转换");
+                break;
+        }
+        return Effect;
+    }
+
+    judgeCondition JudgeFromInit(editorJudge ejudge)
+    {
+        judgeCondition Judge = new Judge_NullTrue();
+        switch (ejudge.judgeKind)
+        {
+            case EnumJudge.敌人意图攻击:
+                Judge = new Judge_EnemyWillAttack();
+                break;
+        }
+        return Judge;
+    }
+    public static List<perform> PerformListFromInit(editorCard card)
+    {
+        List<perform> performs = new List<perform>();
+        foreach(editorPerform eP in card.performlist)
+        {
+            perform newperform;
+            if (eP.performkind == PerformKind.动画)
+            {
+                newperform = new PerformAnima((int)eP.charactor,eP.animation,eP.animationSpeed);
+                newperform.timeTurn = eP.time;
+                performs.Add(newperform);
+            }
+            else if (eP.performkind == PerformKind.特效)
+            {
+                newperform = new PerformEffect((int)eP.effectWay, eP.effectGO, eP.movespeed,eP.effecttime);
+                newperform.timeTurn = eP.time;
+                performs.Add(newperform);
+            }
+        }
+        return performs;
     }
 }

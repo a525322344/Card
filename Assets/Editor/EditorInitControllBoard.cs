@@ -28,7 +28,7 @@ public class EditorInitControllBoard : Editor
         }
         EditorGUILayout.Space();
 
-
+        
         if (GUI.changed)
         {
             EditorUtility.SetDirty(initcontroll);

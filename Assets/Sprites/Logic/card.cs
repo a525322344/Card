@@ -22,15 +22,6 @@ public class card
     public Dictionary<Vector2, int> vecCostPairs = new Dictionary<Vector2, int>();
 
     public string Describe;
-    protected bool canplay;
-    public void SetCanPlay(bool b)
-    {
-        canplay = b;
-    }
-    public bool GetCanPlay()
-    {
-        return canplay;
-    }
 }
 
 //游戏卡牌数据类，负责：记录原始信息，字段数据，生成并保存效果类链表；不包含打出函数
@@ -55,10 +46,8 @@ public class playerCard : card
         {
             case CardKind.CurseCard:
             case CardKind.StateCard:
-                SetCanPlay(false);
                 break;
             case CardKind.PlayerCard:
-                SetCanPlay(true);
                 break;
         }
 
@@ -99,10 +88,8 @@ public class playerCard : card
         {
             case CardKind.CurseCard:
             case CardKind.StateCard:
-                SetCanPlay(false);
                 break;
             case CardKind.PlayerCard:
-                SetCanPlay(true);
                 break;
         }
         for (int i = -1; i < 2; i++)

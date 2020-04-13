@@ -15,6 +15,15 @@ public class judgeCondition
     }
 }
 
+public class Judge_NullTrue : judgeCondition
+{
+    public Judge_NullTrue()
+    {
+        param = 0;
+        whetherDele = (num, battle) => { return true; };
+        describe = "你想的话";
+    }
+}
 public class Judge_EnemyWillAttack : judgeCondition
 {
     public Judge_EnemyWillAttack()

@@ -47,7 +47,6 @@ public class extraAttackUp : extraEffectBase
     {
         return _cardEffectBase.GetType() == CanInffenceEffect.GetType();
     }
-
 }
 public class extraDeffenceUp : extraEffectBase
 {
@@ -65,8 +64,7 @@ public class extraDeffenceUp : extraEffectBase
     public override bool canInfluence(cardEffectBase _cardEffectBase)
     {
         return _cardEffectBase.GetType() == CanInffenceEffect.GetType();
-    }
-    
+    }   
 }
 public class extraBurnUp : extraEffectBase
 {

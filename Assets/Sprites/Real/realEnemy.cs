@@ -13,6 +13,8 @@ public class realEnemy : MonoBehaviour
     public GameObject realStateGO;
     public GameObject damageshow;
 
+    public Animator animator;
+
     Dictionary<string, realState> nameStatePairs = new Dictionary<string, realState>();
     List<GameObject> statego = new List<GameObject>();
 
@@ -57,5 +59,9 @@ public class realEnemy : MonoBehaviour
         GameObject damage = Instantiate(damageshow, damagePosi);
         Destroy(damage, 5);
         damage.GetComponent<damagePopup>().Init(num);
+    }
+    public void changeAnimation(int i)
+    {
+        animator.SetInteger("animaInt", i);
     }
 }

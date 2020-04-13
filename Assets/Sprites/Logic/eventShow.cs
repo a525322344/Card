@@ -28,6 +28,15 @@ public class EventShow
 
         StartToDo = new deleToDo(() => { });
         EndToDo = new deleToDo(() => { });
+
+        if (_event.m_eventKind == EventKind.Event_PlayCard)
+        {
+            CardEvent cardevent = _event as CardEvent;
+            lasttime = cardevent.alltime;
+            performList = cardevent.performList;
+            turn = 0;
+        }
+
     }
     public bool upDateEvent(battleInfo battleinfo)
     {
@@ -62,6 +71,14 @@ public class EventShow
                 if (timecursor < 1)
                 {
                     timecursor += Time.deltaTime / lasttime;
+                    if (turn + 1 <= performList.Count)
+                    {
+                        if(timecursor > performList[turn].timeTurn)
+                        {
+                            performList[turn].Play();
+                            turn++;
+                        }
+                    }
                 }
                 else
                 {
@@ -82,5 +99,7 @@ public class EventShow
     public float timecursor;
     public singleEvent thisevent;
     private List<EventShow> belongEventShows = new List<EventShow>();
+    private int turn;
+    private List<perform> performList = new List<perform>();
     public EVENTSTATE state;
 }

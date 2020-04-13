@@ -44,6 +44,7 @@ public class battleInfo
     {
         Enemy = new enemybase();
         Player = new playerpawn();
+        Player.name = "阿斯蒂芬";
         Player.healthmax = info.playerHealthMax;
         Player.healthnow = info.playerHealth;
         Player.armor = 0;
@@ -189,6 +190,7 @@ public class battleManager : MonoBehaviour
         {
             realknapsack.UseSelectLatices();
             CardEvent newevent = new CardEvent((playerCard)selectedCard.thisCard, selectedPart, new emplyPlayCard());
+            newevent.InitPerform();
             EventShow neweventshow = new EventShow(newevent, eventManager.BattleEventShows);
             eventManager.BattleEventShows.Add(neweventshow);
 
