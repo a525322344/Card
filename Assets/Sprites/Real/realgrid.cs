@@ -10,6 +10,7 @@ public class realgrid : MonoBehaviour
     public GridState gridState = GridState.NotActive;
     private MeshRenderer _renderer;
 
+    public CardOutlineShaderCS gridOutlineCS;
     public Material mr_black;
     public Material mr_write;
     public Material mr_gray;
@@ -19,7 +20,12 @@ public class realgrid : MonoBehaviour
     {
         thisgrid = _thisgrid;
         fatherPart = fatherpart;
-        
+
+        if (!fatherPart.b_ShowOutlineInMap)
+        {
+            gridOutlineCS.gameObject.SetActive(false);
+        }
+
         _renderer = GetComponent<MeshRenderer>();
         if (thisgrid.Opening)
         {

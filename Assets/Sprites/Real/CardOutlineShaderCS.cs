@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[ExecuteInEditMode]
+using DG.Tweening;
+//[ExecuteInEditMode]
 public class CardOutlineShaderCS : MonoBehaviour
 {
     public Vector4 Sides;
@@ -21,10 +22,33 @@ public class CardOutlineShaderCS : MonoBehaviour
     public float noiseDistance;
     public float noiseOffset;
     public float seed;
+    public MeshRenderer render;
     private Material material;
+
+    public int lineMode = 0;
+    public Vector3 trimVector;
+    public float powerline = 0.8f;
+    public float showline = 0.12f;
+    public float exitline = 0.05f;
+    private void Start()
+    {
+        material = render.material;
+    }
     // Update is called once per frame
     void Update()
     {
+        if (lineMode == 0)
+        {
+            DOTween.To(() => trimDistance, x => trimDistance = x, powerline, 0.2f);
+        }
+        else if(lineMode==1)
+        {
+            DOTween.To(() => trimDistance, x => trimDistance = x, showline, 0.2f);
+        }
+        else if(lineMode==2)
+        {
+            DOTween.To(() => trimDistance, x => trimDistance = x, exitline, 0.2f);
+        }
         if (material)
         {
             material.SetVector("_Sides", Sides);
