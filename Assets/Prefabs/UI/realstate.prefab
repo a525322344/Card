@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3581731010890882624}
   - component: {fileID: 2492259741418907340}
   - component: {fileID: 5666695300525280946}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 8901481391328039210}
   - component: {fileID: 1462051690245587316}
   - component: {fileID: 2653412243803495595}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: realstate
   m_TagString: Untagged
   m_Icon: {fileID: 0}

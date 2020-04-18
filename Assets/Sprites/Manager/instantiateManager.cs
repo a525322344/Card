@@ -122,6 +122,7 @@ public class instantiateManager : MonoBehaviour
     {
         GameObject monster = Instantiate(MonsterAll[moninfo.Id], battleEnvRoot.monsterPosi);
         realEnemy realenemy = monster.GetComponent<realEnemy>();
+        realenemy.healthslider = battleuiRoot.healthSlider;
         realenemy.Init(moninfo);
         realEnemy = realenemy;
     }

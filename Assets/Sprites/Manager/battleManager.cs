@@ -158,7 +158,7 @@ public class battleManager : MonoBehaviour
     {
         //实例化怪物
         instantiatemanager.instanMonster(monsterinfo, out realenemy);
-
+        
     }
 
     private void Update()
