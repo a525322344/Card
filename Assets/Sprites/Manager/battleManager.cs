@@ -23,6 +23,10 @@ public class battleInfo
 {
     public pawnbase Enemy;             //敌人
     public pawnbase Player;            //玩家自己
+    //当前打出卡牌位置信息
+    public List<Vector2> currentPos = new List<Vector2>();
+    //可用位置信息
+    public List<Vector2> canUsePos = new List<Vector2>();
     //已经链接了的部件
     public List<realpart> havenLinkParts = new List<realpart>();
     //当前事件
@@ -39,6 +43,8 @@ public class battleInfo
     public int roundStartDrawCardNum;
     //手牌数量
     public int playerHandCardNum;
+
+
 
     public battleInfo(playerInfo info)
     {

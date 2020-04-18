@@ -18,6 +18,7 @@ namespace AllAsset
             }
             battleInfo.Enemy.hurtHealth(num);
         }
+
         public static void EnemyGetRealHurt(int num,battleInfo battleInfo)
         {
             if (num < 0)
@@ -26,6 +27,7 @@ namespace AllAsset
             }
             battleInfo.Enemy.realHurtHealth(num);
         }
+
         public static void PlayerGetArmor(int num, battleInfo battleInfo)
         {
             //获得“num”点护甲。
@@ -35,14 +37,17 @@ namespace AllAsset
             }
             battleInfo.Player.GetArmor(num);
         }
+
         public static void drawACard(int num,battleInfo battleInfo)
         {
             gameManager.Instance.battlemanager.DrawACard();
         }
+
         public static void disAllCard(int num,battleInfo battleInfo)
         {
             gameManager.Instance.battlemanager.deleteAllHandCard();
         }
+
         public static void PlayerGetHurt(int num,battleInfo battleInfo)
         {
             if (num < 0)
@@ -51,6 +56,7 @@ namespace AllAsset
             }
             battleInfo.Player.hurtHealth(num);
         }
+
         public static void EnemyGetArmor(int num,battleInfo battleinfo)
         {
             if (num < 0)
@@ -59,6 +65,7 @@ namespace AllAsset
             }
             battleinfo.Enemy.GetArmor(num);
         }
+
         public static void EnemyDoubleBurn(int num, battleInfo battleinfo)
         {
             stateAbstarct burnstate = new StateBurn(num);
@@ -75,6 +82,7 @@ namespace AllAsset
                 gameManager.Instance.battlemanager.realenemy.StateUpdtae();
             }
         }
+
         public static void EnemyGetBurn(int num,battleInfo battleinfo)
         {
             stateAbstarct burnstate = new StateBurn(num);
@@ -91,6 +99,7 @@ namespace AllAsset
                 gameManager.Instance.battlemanager.realenemy.StateUpdtae();
             }
         }
+
         public static void RandomLinkPart(int num,battleInfo battleinfo)
         {
             List<realpart> copyrealparts = new List<realpart>(gameManager.Instance.battlemanager.realknapsack.realparts);

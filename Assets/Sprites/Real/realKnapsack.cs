@@ -18,7 +18,16 @@ public class realKnapsack : MonoBehaviour
     public Dictionary<Vector2, realLatice> laticePairs = new Dictionary<Vector2, realLatice>();
     public List<realpart> realparts = new List<realpart>();
     public List<Transform> overcubes = new List<Transform>();
-#region 用于中转
+
+
+
+    //当前打出卡牌位置信息
+    public List<Vector2> currentPos = new List<Vector2>();
+    //可用位置信息
+    public List<Vector2> canUsePos = new List<Vector2>();
+
+
+    #region 用于中转
     private Dictionary<Vector2, latice> lactices = new Dictionary<Vector2, latice>();
 #endregion
 
@@ -272,6 +281,9 @@ public class realKnapsack : MonoBehaviour
             positionTran = null;
         }
     }
+
+
+
     //战斗操作
     public bool b_readyToPlayCard;
     public card selectCard;
@@ -279,6 +291,8 @@ public class realKnapsack : MonoBehaviour
     public MagicPart selectPart;
     List<realLatice> selectLatices = new List<realLatice>();
     List<realpart> selecRealParts = new List<realpart>();
+
+
     public void SetinPart()
     {
         foreach(var v in thisknapsack.installParts)
@@ -286,6 +300,26 @@ public class realKnapsack : MonoBehaviour
             v.Value.SetinReactions();
         }
     }
+
+
+    //public void CurrentPos(Vector2 center, Vector2 shape)
+    //{
+    //    foreach()
+    //    {
+
+    //    }
+    //}
+
+
+    //public void CanUsePos(Vector2 center, Dictionary<Vector2, int> vectorInts)
+    //{
+    //    foreach(var vecint in vectorInts)
+    //    {
+
+    //    }
+    //}
+
+
     public bool CanCostPlay(Vector2 center, Dictionary<Vector2, int> vectorInts)
     {
         selecRealParts.Clear();
@@ -373,6 +407,8 @@ public class realKnapsack : MonoBehaviour
         b_readyToPlayCard = result;
         return result;
     }
+
+
     public void ToSetPart(card _selectcard)
     {
         if (_selectcard == null)
@@ -400,6 +436,8 @@ public class realKnapsack : MonoBehaviour
             //部件的激活与睡眠转移到了CardEvent中
         }
     }
+
+
     public void UseSelectLatices()
     {
         for (int i = 0; i < selectLatices.Count; i++)
