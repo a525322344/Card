@@ -30,11 +30,10 @@ public class realLatice : MonoBehaviour
 
     public realpart realpart;
     public realgrid realgrid;
-    private MeshRenderer renderer;
+    public MeshRenderer renderer;
 
     public void Init(latice l,realKnapsack father,GameState state)
     {
-        renderer = transform.GetChild(0).GetComponent<MeshRenderer>();
 
         gameState = state;
         thislatice = l;

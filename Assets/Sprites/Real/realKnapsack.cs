@@ -421,6 +421,10 @@ public class realKnapsack : MonoBehaviour
             b_readyToPlayCard = false;
             selectCard = null;
             selectPart = nullpart;
+            foreach (realpart rp in selecRealParts)
+            {
+                rp.OutlineShow(0);
+            }
             gameManager.Instance.battlemanager.SetSelectPart(null);
         }
         else
@@ -433,6 +437,10 @@ public class realKnapsack : MonoBehaviour
             selectCard = _selectcard;
 
             gameManager.Instance.battlemanager.SetSelectPart(selectPart);
+            foreach(realpart rp in selecRealParts)
+            {
+                rp.OutlineShow(1);
+            }
             //部件的激活与睡眠转移到了CardEvent中
         }
     }
