@@ -155,6 +155,7 @@ public class EffectEvent : singleEvent
         childEvents.Clear();
 
         recesiveNotice();
+        m_effect.InitNum();
         int index = m_effect.getNum();
         foreach (extraEffectBase extraEffect in m_extraEffectList)
         {
@@ -171,10 +172,6 @@ public class EffectEvent : singleEvent
                     childEvents.Add(new EffectEvent(effect, m_fatherEvent));
                 }
             }
-            //foreach (EffectEvent _event in childEvents)
-            //{
-            //    _event.prepareEvent();
-            //}
         }
         if (b_haveJudgeEvent)
         {
@@ -185,10 +182,6 @@ public class EffectEvent : singleEvent
                     childEvents.Add(new EffectEvent(effect, m_fatherEvent));
                 }
             }
-            //foreach (EffectEvent _event in childEvents)
-            //{
-            //    _event.prepareEvent();
-            //}
         }
         if (m_fatherEvent != null)
         {

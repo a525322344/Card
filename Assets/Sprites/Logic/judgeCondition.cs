@@ -7,6 +7,7 @@ public class judgeCondition
 {
     //条件
     public int param;
+    public int returnNum;
     public DeleWhether whetherDele;
     public string describe;
     public bool Whether(battleInfo battleinfo)
@@ -30,7 +31,7 @@ public class Judge_EnemyWillAttack : judgeCondition
     {
         param = 0;
         whetherDele = AllAsset.judgeAsset.EnemyWillAttack;
-        describe = "敌人意图攻击";
+        describe = "如果敌人意图攻击";
     }
 }
 

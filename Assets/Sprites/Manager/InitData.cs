@@ -11,8 +11,8 @@ public class InitData
 
     public void Awake()
     {
-        //CardInit();
-        EditorCardInit(gameManager.Instance.CardEditorBoard);
+        CardInit();
+        //EditorCardInit(gameManager.Instance.CardEditorBoard);
         MagicPartInit();
     }
     //数据加载全卡
@@ -122,8 +122,13 @@ public class InitData
         cardAsset.AllIdCards.Add(chongneng);
         //1费 攻守兼备 每补齐一个横行，造成6点伤害；每补齐一个纵列，获得6点格挡
         playerCard gongshoujianbei = new playerCard(23, "攻守兼备", CardKind.SkillCard, 0, 1);
-        cardEffectBase whethereffect3 = new CardEffect_Whether(new Judge_buqiheng(0), new Repeat(3, new Damage(3)));
-        cardEffectBase whethereffect4 = new CardEffect_Whether(new Judge_buqishu(0), new Repeat(3, new Damage(3)));
+        judgeCondition judgeFillH = new Judge_buqiheng(0);
+        judgeCondition judgeFillV = new Judge_buqishu(0);
+        cardEffectBase whethereffect3 = new CardEffect_Whether(judgeFillH, new CardEffect_RepeatByFill(judgeFillH, new Damage(6)));
+        cardEffectBase whethereffect4 = new CardEffect_Whether(judgeFillV, new CardEffect_RepeatByFill(judgeFillV, new Armor(6)));
+        gongshoujianbei.AddEffect(whethereffect3);
+        gongshoujianbei.AddEffect(whethereffect4);
+
         cardAsset.AllIdCards.Add(gongshoujianbei);
     }
     //“手动”加载全部件 可能是暂定

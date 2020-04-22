@@ -27,7 +27,8 @@ public enum EventKind
     Event_LinkRandom,           //随机链接
     Event_Whether,              //条件效果
     Event_DisOneCard,           //弃一张卡
-    Event_DisSomeCard           //卡牌弃卡
+    Event_DisSomeCard,          //卡牌弃卡
+    Event_Fill                  //触发补齐后的效果
 }
 
 //对卡牌效果的委托
@@ -42,6 +43,7 @@ public abstract class EffectBase
         effectDele(num, battleInfo);
     }
     public virtual string DescribeEffect() { return ""; }
+    public virtual void InitNum() { }
     public int getNum()
     {
         return num;
@@ -359,21 +361,60 @@ public class CardEffect_Whether : cardEffectBase
     }
     public override string DescribeEffect()
     {
-        string describe = "如果";
+        string describe = "";
         foreach(judgeCondition j in judgeConditions)
         {
             describe += j.describe + ",";
         }
-        describe += "则";
         foreach(EffectBase e in childeffects)
         {
-            describe += e.DescribeEffect() + ",";
+            describe += e.DescribeEffect() + "并";
         }
         describe=describe.Substring(0, describe.Length - 1);
         return describe;
     }
 }
+//重复效果，通过判断(弃用)
+public class CardEffect_RepeatByJudge:cardEffectBase
+{
+    judgeCondition numJudge;
+    public CardEffect_RepeatByJudge(judgeCondition judge,EffectBase effect)
+    {
+        b_hasChildEffect = true;
+        numJudge = judge;
+        childeffects.Add(effect);
+    }
+}
 
+//补齐后置效果
+public class CardEffect_RepeatByFill : cardEffectBase
+{
+    judgeCondition numJudge;
+    public CardEffect_RepeatByFill(judgeCondition judge, EffectBase effect)
+    {
+        b_hasChildEffect = true;
+        numJudge = judge;
+        childeffects.Add(effect);
+        eventkind = EventKind.Event_Fill;
+    }
+    public override void InitNum()
+    {
+        num = numJudge.returnNum;
+    }
+    public override string DescribeEffect()
+    {
+        string result = "";
+        foreach (EffectBase effect in childeffects)
+        {
+            result += effect.DescribeEffect() + "并";
+        }
+        if (result.Length != 0)
+        {
+            result.Substring(0, result.Length - 1);
+        }
+        return result;
+    }
+}
 //选择弃一张卡(不直接使用)
 public class CardEffect_DisACard : cardEffectBase
 {
