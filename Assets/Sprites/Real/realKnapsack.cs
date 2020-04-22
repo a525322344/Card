@@ -8,6 +8,7 @@ public class realKnapsack : MonoBehaviour
     //创建5X5预备背包格，初始开放6格，中心点为3，3
     public GameObject LaticeGO;
     public Transform pointtran;
+    public GameObject meshFolder;
     //public Transform BoardMesh;
     public Transform overcubeFolder;
     public float distance;
@@ -61,7 +62,7 @@ public class realKnapsack : MonoBehaviour
         }
         else if (KnapsackState == GameState.BattleSence)
         {
-            //BoardMesh.gameObject.SetActive(false);
+            meshFolder.gameObject.SetActive(false);
             //生成实例Latice
             for (int i = 0; i < 25; i++)
             {

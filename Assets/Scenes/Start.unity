@@ -73062,6 +73062,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 8927315ad9a26d74cab3dcdfb5b9e202,
         type: 2}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: stateSprites.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: stateSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: e0434b18f2c007f4eb559eb0dc7b9e6e,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 362da131cad69c3408bab7cc127cafeb, type: 3}
 --- !u!1001 &7068954691501731757

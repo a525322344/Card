@@ -233,3 +233,34 @@ MonoBehaviour:
         type: 3}
       effecttime: 0.32
       movespeed: 2
+  - name: "\u70B9\u71C3"
+    id: 8
+    cost: 1
+    Rank: 0
+    Kind: 1
+    rank: 0
+    textureId: 0
+    playEffects:
+    - name: Burn
+      num: 2
+      effectKind: 5
+      b_haveJudge: 0
+      judges: []
+      b_haveChildEffect: 0
+      childeffects: []
+    - name: Repeat
+      num: 2
+      effectKind: 3
+      b_haveJudge: 0
+      judges: []
+      b_haveChildEffect: 1
+      childeffects:
+      - name: Damage
+        num: 1
+        effectKind: 1
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    alltime: 0
+    performlist: []

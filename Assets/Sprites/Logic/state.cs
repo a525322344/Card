@@ -20,6 +20,11 @@ public class stateAbstarct
     {
         gameManager.Instance.battlemanager.realenemy.StateUpdtae();
     }
+    protected string ColorGold = "<color=#CFB53B>";
+    protected string ColorBlue = "<color=#007FFF>";
+    protected string ColorGreen = "<color=#32CD32>";
+    protected string ColorEnd = "</color>";
+    public virtual string DescribeState() { return ""; }
 }
 //反应类状态，包含reaction
 public class stateWithReaction:stateAbstarct
@@ -35,7 +40,7 @@ public class StateExitLinkPart : stateWithEvent
 {
     public StateExitLinkPart()
     {
-        name = "退出链接状态";
+        name = "退出链接";
         key = "ExitLinkPart";
         num = -999;
         texint = 1;
@@ -55,6 +60,14 @@ public class StateExitLinkPart : stateWithEvent
         gameManager.Instance.battlemanager.battleInfo.Player.nameStatePairs.Remove(key);
         gameManager.Instance.battlemanager.battleInfo.Player.stateList.Remove(this);
         base.SetOutState();
+    }
+    public override string DescribeState()
+    {
+        string result = "";
+        result += ColorGold + "退出连接" + ColorEnd;
+        result += "\n";
+        result += "回合结束时，取消所有连接状态";
+        return result;
     }
 }
 
@@ -81,6 +94,17 @@ public class StateBurn : stateWithReaction
         gameManager.Instance.battlemanager.battleInfo.Enemy.nameStatePairs.Remove("Burn");
         gameManager.Instance.battlemanager.battleInfo.Enemy.stateList.Remove(this);
         base.SetOutState();
+    }
+    public override string DescribeState()
+    {
+        string result = "";
+        result += ColorGold + "灼烧" + ColorEnd;
+        result += "\n";
+        result += "在其受到伤害时，生命值减";
+        result += ColorBlue + num + ColorEnd;
+        result += "，然后灼烧层数减少";
+        result += ColorBlue + "1" + ColorEnd;
+        return result;
     }
     public override void DealState()
     {

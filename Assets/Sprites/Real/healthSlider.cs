@@ -9,6 +9,9 @@ public class healthSlider : MonoBehaviour
     public Text healthText;
     public Image armorIcon;
     public Text armorText;
+    public Transform statePosi;
+    public float statedistance;
+    public float stateHNum;
     private float maxhealth;
     private float nowhealth;
     private float armor;

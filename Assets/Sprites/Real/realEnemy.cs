@@ -8,7 +8,7 @@ public class realEnemy : MonoBehaviour
     public monsterInfo monsterinfo;
     public healthSlider healthslider;
     public Transform intentPosi;
-    public Transform statePosi;
+
     public Transform damagePosi;
     public GameObject realStateGO;
     public GameObject damageshow;
@@ -47,8 +47,9 @@ public class realEnemy : MonoBehaviour
         int a = 0;
         foreach(var state in enemy.nameStatePairs)
         {
-            GameObject stateg = Instantiate(realStateGO, statePosi);
-            stateg.transform.localPosition = stateg.transform.localPosition + Vector3.right * 5*a;
+            GameObject stateg = Instantiate(realStateGO, healthslider.statePosi);
+            statego.Add(stateg);
+            stateg.transform.localPosition = stateg.transform.localPosition + Vector3.left * healthslider.statedistance*a;
             stateg.GetComponent<realState>().Init(state.Value);
             a++;
         }
