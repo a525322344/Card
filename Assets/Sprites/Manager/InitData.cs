@@ -118,8 +118,13 @@ public class InitData
         playerCard chongneng = new playerCard(22, "充能", CardKind.SkillCard, 0,2);
         chongneng.AddEffect(new DrawCard(1));
         chongneng.AddEffect(new CardEffect_DisSomeCard(1));
-        cardEffectBase extraeffect = new CardEffect_Whether(new Judge_EnemyWillAttack(), new DrawCard(3));
+        cardEffectBase whethereffect2 = new CardEffect_Whether(new Judge_BrunNumber(5), new DrawCard(2));
         cardAsset.AllIdCards.Add(chongneng);
+        //1费 攻守兼备 每补齐一个横行，造成6点伤害；每补齐一个纵列，获得6点格挡
+        playerCard gongshoujianbei = new playerCard(23, "攻守兼备", CardKind.SkillCard, 0, 1);
+        cardEffectBase whethereffect3 = new CardEffect_Whether(new Judge_buqiheng(0), new Repeat(3, new Damage(3)));
+        cardEffectBase whethereffect4 = new CardEffect_Whether(new Judge_buqishu(0), new Repeat(3, new Damage(3)));
+        cardAsset.AllIdCards.Add(gongshoujianbei);
     }
     //“手动”加载全部件 可能是暂定
     void MagicPartInit()

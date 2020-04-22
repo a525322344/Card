@@ -248,6 +248,19 @@ public class battleManager : MonoBehaviour
         realCardList.Remove(todiscard);
         Destroy(todiscard.transform.parent.gameObject);
     }
+    //储存当前打出卡牌位置信息
+    public void CurrentPos(realKnapsack real)
+    {
+
+    }
+
+    //储存所有可使用格子信息
+    public void CanUsrPos(realKnapsack real)
+    {
+        
+    }
+
+
 
     public void preWaitToDiscard(int num)
     {

@@ -22,10 +22,7 @@ public class realKnapsack : MonoBehaviour
 
 
 
-    //当前打出卡牌位置信息
-    public List<Vector2> currentPos = new List<Vector2>();
-    //可用位置信息
-    public List<Vector2> canUsePos = new List<Vector2>();
+
 
 
     #region 用于中转
@@ -292,6 +289,11 @@ public class realKnapsack : MonoBehaviour
     List<realLatice> selectLatices = new List<realLatice>();
     List<realpart> selecRealParts = new List<realpart>();
 
+    //当前打出卡牌位置信息
+    public List<Vector2> currentPos = new List<Vector2>();
+    //可用位置信息
+    public List<Vector2> canUsePos = new List<Vector2>();
+
 
     public void SetinPart()
     {
@@ -302,26 +304,10 @@ public class realKnapsack : MonoBehaviour
     }
 
 
-    //public void CurrentPos(Vector2 center, Vector2 shape)
-    //{
-    //    foreach()
-    //    {
-
-    //    }
-    //}
-
-
-    //public void CanUsePos(Vector2 center, Dictionary<Vector2, int> vectorInts)
-    //{
-    //    foreach(var vecint in vectorInts)
-    //    {
-
-    //    }
-    //}
-
 
     public bool CanCostPlay(Vector2 center, Dictionary<Vector2, int> vectorInts)
     {
+        selectLatices.Clear();
         selecRealParts.Clear();
         bool result = true;
         bool b_samePart = true;
