@@ -274,3 +274,20 @@ MonoBehaviour:
         childeffects: []
     alltime: 0
     performlist: []
+  - name: "\u4F4E\u9891\u5171\u9E23"
+    id: 9
+    cost: 0
+    Rank: 0
+    Kind: 0
+    rank: 0
+    textureId: 0
+    playEffects:
+    - name: LinkRandom
+      num: 2
+      effectKind: 7
+      b_haveJudge: 0
+      judges: []
+      b_haveChildEffect: 0
+      childeffects: []
+    alltime: 0
+    performlist: []

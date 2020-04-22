@@ -234,7 +234,6 @@ public class realKnapsack : MonoBehaviour
     }
     public void InstallPart(MagicPart magicPart,Vector2 center,out Transform positionTran)
     {
-        Debug.Log("Install");
         ExitCanInstall();
         
         Dictionary<realLatice, grid> rLGPairs = new Dictionary<realLatice, grid>();

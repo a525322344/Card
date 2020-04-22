@@ -74,13 +74,6 @@ namespace AllAsset
                 battleinfo.Enemy.nameStatePairs[burnstate.key].num *= num;
                 gameManager.Instance.battlemanager.realenemy.StateUpdtae();
             }
-            else
-            {
-                burnstate.SetInState();
-                battleinfo.Enemy.nameStatePairs.Add(burnstate.key, burnstate);
-                battleinfo.Enemy.stateList.Add(burnstate);
-                gameManager.Instance.battlemanager.realenemy.StateUpdtae();
-            }
         }
 
         public static void EnemyGetBurn(int num,battleInfo battleinfo)
@@ -159,6 +152,7 @@ namespace AllAsset
                 exitLinkState.SetInState();
                 battleinfo.Player.nameStatePairs.Add(exitLinkState.key, exitLinkState);
                 battleinfo.Player.stateList.Add(exitLinkState);
+                gameManager.Instance.battlemanager.realplayer.StateUpdtae();
             }
         }
         public static void ExitLinkPark(int num,battleInfo battleinfo)

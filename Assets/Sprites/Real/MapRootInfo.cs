@@ -12,6 +12,7 @@ public class MapRootInfo : MonoBehaviour
     public Transform UI3D;
     public uiEventBoard uieventBoard;
     public Light maplight;
+    public Transform placeBeginPosi;
 
     public Camera mapCamera;
 

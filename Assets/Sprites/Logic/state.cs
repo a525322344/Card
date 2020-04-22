@@ -11,14 +11,17 @@ public class stateAbstarct
     public virtual void SetInState()
     {
         gameManager.Instance.battlemanager.realenemy.StateUpdtae();
+        gameManager.Instance.battlemanager.realplayer.StateUpdtae();
     }
     public virtual void SetOutState()
     {
         gameManager.Instance.battlemanager.realenemy.StateUpdtae();
+        gameManager.Instance.battlemanager.realplayer.StateUpdtae();
     }
     public virtual void DealState()
     {
         gameManager.Instance.battlemanager.realenemy.StateUpdtae();
+        gameManager.Instance.battlemanager.realplayer.StateUpdtae();
     }
     protected string ColorGold = "<color=#CFB53B>";
     protected string ColorBlue = "<color=#007FFF>";

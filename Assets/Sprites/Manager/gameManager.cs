@@ -60,7 +60,6 @@ public class gameManager : MonoBehaviour
         //游戏数据
         initdata = new InitData();
         initdata.Awake();
-        Debug.Log((int)GameState.StartMenu);
     }
     void Start()
     {

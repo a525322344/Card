@@ -27,6 +27,18 @@ public class battlePlace : place
 
 }
 
+public class startPlace : place
+{
+    public startPlace()
+    {
+
+    }
+    public override void onclick()
+    {
+        
+    }
+}
+
 public class shopPlace : place
 {
     public shopPlace()
@@ -58,16 +70,54 @@ public class befallPlace : place
     public int eventnum;
 }
 
-public class deckPlace : place
+public class sleepPlace : place
 {
-    public deckPlace()
+    public sleepPlace() { }
+    public override void onclick()
     {
+        throw new System.NotImplementedException();
+    }
+}
 
+public class treasurePlace : place
+{
+    public treasurePlace()
+    {
+        imageorder = 2;
     }
     public override void onclick()
     {
-        //查看卡组
-        Debug.Log("查看卡组");
+    }
+}
+
+public enum PlaceState
+{
+    DenseFog,   //迷雾，还未解锁
+    ToGo,       //可选的
+    ToGoOut,    //事件中
+    NowOn,      //当前位置
+    Used,       //过去的
+}
+[System.Serializable]
+public class PlaceNode
+{
+    public Vector2 PointPosi;
+    public PlaceState placeState;
+    public place thisplace;
+    public Transform realplaceTran;
+    public PlaceNode(place nowplace,Vector2 posi)
+    {
+        thisplace = nowplace;
+        PointPosi = posi;
+        placeState = PlaceState.DenseFog;
     }
 
+
+    public List<PlaceNode> nextNodeList = new List<PlaceNode>();
+    public List<PlaceNode> lastNodeList = new List<PlaceNode>();
+    public void LinkNode(PlaceNode placenode)
+    {
+        nextNodeList.Add(placenode);
+        placenode.lastNodeList.Add(this);
+    }
 }

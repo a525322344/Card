@@ -71,7 +71,6 @@ public class Button_SortPart : Button_NextBeffal
 
     public Button_SortPart(befallinfo nextBefallInfo)
     {
-        Debug.Log("sort");
         nextBefall = nextBefallInfo;
         buttonDescribe = "好，做好准备";
         buttonFun += new buttonTo(() =>
@@ -85,7 +84,6 @@ public class Button_NextBeffal:buttoninfo
     public befallinfo nextBefall;
     public Button_NextBeffal()
     {
-        Debug.Log("nextbutton");
         buttonFun = new buttonTo(() =>
         {
             gameManager.Instance.uimanager.uiBefallBoard.EnterEventBoard(nextBefall);

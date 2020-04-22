@@ -16,7 +16,6 @@ public class realPlayer : MonoBehaviour
 
     public void Init(pawnbase pawn)
     {
-        Debug.Log(transform.GetChild(0).name);
         playerpawn = pawn;
         healthslider.Init(pawn);
     }
