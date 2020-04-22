@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 
-public delegate bool DeleWhether(int num, battleInfo battleInfo);
+public delegate bool DeleWhether(int num, battleInfo battleInfo,out int returnnum);
 
 public class judgeCondition
 {
@@ -12,7 +13,7 @@ public class judgeCondition
     public string describe;
     public bool Whether(battleInfo battleinfo)
     {
-        return whetherDele(param, battleinfo);
+        return whetherDele(param, battleinfo,out returnNum);
     }
 }
 
@@ -21,7 +22,11 @@ public class Judge_NullTrue : judgeCondition
     public Judge_NullTrue()
     {
         param = 0;
-        whetherDele = (num, battle) => { return true; };
+        whetherDele = (int num,battleInfo battle,out int a) => 
+        {
+            a = 0;
+            return true;
+        };
         describe = "你想的话";
     }
 }
@@ -49,8 +54,9 @@ public class Judge_BrunNumber : judgeCondition
 {
     public Judge_BrunNumber(int num)
     { 
-      param = 0;     
-      whetherDele = AllAsset.judgeAsset.EnemyBurnNumber;
+        param = num;     
+        whetherDele = AllAsset.judgeAsset.EnemyBurnNumber;
+        describe = "如果敌人灼烧有"+param+"层以上";
     }
 }
 
@@ -61,6 +67,7 @@ public class Judge_buqiheng : judgeCondition
     {
         param = 0;
         whetherDele = AllAsset.judgeAsset.BuQiHeng;
+        describe = "每补齐一横行";
     }
 }
 
@@ -72,5 +79,6 @@ public class Judge_buqishu : judgeCondition
     {
         param = 0;
         whetherDele = AllAsset.judgeAsset.BuQiShu;
+        describe = "每补齐一纵行";
     }
 }

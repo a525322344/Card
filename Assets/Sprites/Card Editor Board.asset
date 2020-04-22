@@ -233,6 +233,64 @@ MonoBehaviour:
         type: 3}
       effecttime: 0.32
       movespeed: 2
+  - name: "\u653B\u5B88\u517C\u5907"
+    id: 7
+    cost: 1
+    Rank: 1
+    Kind: 2
+    rank: 0
+    textureId: 0
+    playEffects:
+    - name: Whether
+      num: 0
+      effectKind: 8
+      b_haveJudge: 1
+      judges:
+      - num: 0
+        b_UseNum: 0
+        judgeKind: 2
+      b_haveChildEffect: 0
+      childeffects:
+      - name: RepeatByFill
+        num: 0
+        effectKind: 10
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 1
+        childeffects:
+        - name: Damage
+          num: 6
+          effectKind: 1
+          b_haveJudge: 0
+          judges: []
+          b_haveChildEffect: 0
+          childeffects: []
+    - name: Whether
+      num: 0
+      effectKind: 8
+      b_haveJudge: 1
+      judges:
+      - num: 0
+        b_UseNum: 0
+        judgeKind: 3
+      b_haveChildEffect: 0
+      childeffects:
+      - name: RepeatByFill
+        num: 0
+        effectKind: 10
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 1
+        childeffects:
+        - name: Armor
+          num: 6
+          effectKind: 2
+          b_haveJudge: 0
+          judges: []
+          b_haveChildEffect: 0
+          childeffects: []
+    alltime: 0
+    performlist: []
   - name: "\u70B9\u71C3"
     id: 8
     cost: 1

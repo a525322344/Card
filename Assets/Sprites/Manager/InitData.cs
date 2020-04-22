@@ -11,8 +11,8 @@ public class InitData
 
     public void Awake()
     {
-        CardInit();
-        //EditorCardInit(gameManager.Instance.CardEditorBoard);
+        //CardInit();
+        EditorCardInit(gameManager.Instance.CardEditorBoard);
         MagicPartInit();
     }
     //数据加载全卡
@@ -121,7 +121,7 @@ public class InitData
         cardEffectBase whethereffect2 = new CardEffect_Whether(new Judge_BrunNumber(5), new DrawCard(2));
         cardAsset.AllIdCards.Add(chongneng);
         //1费 攻守兼备 每补齐一个横行，造成6点伤害；每补齐一个纵列，获得6点格挡
-        playerCard gongshoujianbei = new playerCard(23, "攻守兼备", CardKind.SkillCard, 0, 1);
+        playerCard gongshoujianbei = new playerCard(23, "攻守兼备", CardKind.SkillCard, 1, 1);
         judgeCondition judgeFillH = new Judge_buqiheng(0);
         judgeCondition judgeFillV = new Judge_buqishu(0);
         cardEffectBase whethereffect3 = new CardEffect_Whether(judgeFillH, new CardEffect_RepeatByFill(judgeFillH, new Damage(6)));
@@ -167,7 +167,7 @@ public class InitData
             cardAsset.AllIdCards.Add(newcard);
         }
     }
-    cardEffectBase EffectFromInit(editorEffect editorEffect)
+    cardEffectBase EffectFromInit(editorEffect editorEffect,params judgeCondition[] judges)
     {
         cardEffectBase Effect = new emplyPlayCard();
         switch (editorEffect.effectKind)
@@ -205,10 +205,17 @@ public class InitData
                 }
                 foreach (editorEffect eE in editorEffect.childeffects)
                 {
-                    Effect.childeffects.Add(EffectFromInit(eE));
+                    Effect.childeffects.Add(EffectFromInit(eE,Effect.judgeConditions[0]));
                 }
                 break;
             case EnumEffect.DisCard:
+                break;
+            case EnumEffect.RepeatByFill:
+                Effect = new CardEffect_RepeatByFill(judges[0]);
+                foreach (editorEffect eE in editorEffect.childeffects)
+                {
+                    Effect.childeffects.Add(EffectFromInit(eE));
+                }
                 break;
             default:
                 Debug.Log("没有该EditorEffect对应的Effect转换");
@@ -224,6 +231,12 @@ public class InitData
         {
             case EnumJudge.敌人意图攻击:
                 Judge = new Judge_EnemyWillAttack();
+                break;
+            case EnumJudge.每补齐一横行:
+                Judge = new Judge_buqiheng(0);
+                break;
+            case EnumJudge.每补齐一纵行:
+                Judge = new Judge_buqishu(0);
                 break;
         }
         return Judge;

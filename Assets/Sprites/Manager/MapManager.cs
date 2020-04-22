@@ -18,7 +18,7 @@ public class MapManager : MonoBehaviour
     //public Dictionary<Vector2, PlaceNode> placeNodeDic = new Dictionary<Vector2, PlaceNode>();
     private MapRootInfo maprootinfo;
 
-    public float placedistance=5;
+    public float placedistance=5.5f;
 
     int storeyNum = 12;
     int placePerNum = 4;

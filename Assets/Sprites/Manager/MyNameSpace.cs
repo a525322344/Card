@@ -182,16 +182,19 @@ namespace AllAsset
     }
     public static class judgeAsset
     {
-        public static bool EnemyWillAttack(int num,battleInfo battleinfo)
+        public static bool EnemyWillAttack(int num,battleInfo battleinfo,out int returnnum)
         {
+            returnnum = 0;
             return ActionOperation.IsActionHasAttack(gameManager.Instance.battlemanager.battleInfo.enemyAction);
         }
-        public static bool HaveSelectHandCard(int num,battleInfo battleinfo)
+        public static bool HaveSelectHandCard(int num,battleInfo battleinfo, out int returnnum)
         {
+            returnnum = 0;
             return gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard.IsFinishSelect();
         }
-        public static bool EnemyBurnNumber(int num, battleInfo battleinfo)
+        public static bool EnemyBurnNumber(int num, battleInfo battleinfo, out int returnnum)
         {
+            returnnum = 0;
             bool EnemyBurnnumber = false;
             stateAbstarct burnstate = new StateBurn(num);
             if (battleinfo.Enemy.nameStatePairs.ContainsKey(burnstate.key))
@@ -209,42 +212,83 @@ namespace AllAsset
             }
             return EnemyBurnnumber;
         }
-        public static bool BuQiHeng(int num, battleInfo battleinfo)
+        public static bool BuQiHeng(int num, battleInfo battleinfo, out int returnnum)
         {
             bool isBuQiHeng = false;
-            foreach (Vector2 currentpos in battleinfo.currentPos)
+            returnnum = 0;
+            List<int> Vints = new List<int>();
+            foreach(Vector2 v in battleinfo.currentPos)
             {
-                foreach(Vector2 canusepos in battleinfo.canUsePos)
+                if (!Vints.Contains((int)v.y))
                 {
-                    battleinfo.canUsePos.Remove(currentpos);
-                    if (currentpos.x == canusepos.x)
+                    Vints.Add((int)v.y);
+
+                    bool hIsFill = true;
+                    foreach(var vRl in gameManager.Instance.battlemanager.realknapsack.usedLaticePairs)
                     {
+                        if (vRl.Key.y == v.y)
+                        {
+                            if (vRl.Value.gridState != GridState.Used)
+                            {
+                                hIsFill = false;
+                            }
+                        }
+                    }
+                    if (hIsFill)
+                    {
+                        returnnum++;
                         isBuQiHeng = true;
                     }
-                    else
-                        isBuQiHeng = false;
                 }
-                num++;
+                
             }
+
+            //foreach (Vector2 currentpos in battleinfo.currentPos)
+            //{
+            //    foreach(Vector2 canusepos in battleinfo.canUsePos)
+            //    {
+            //        battleinfo.canUsePos.Remove(currentpos);
+            //        if (currentpos.x == canusepos.x)
+            //        {
+            //            isBuQiHeng = true;
+            //        }
+            //        else
+            //            isBuQiHeng = false;
+            //    }
+            //    num++;
+            //}
             return isBuQiHeng;
         }
 
-        public static bool BuQiShu(int num, battleInfo battleinfo)
+        public static bool BuQiShu(int num, battleInfo battleinfo, out int returnnum)
         {
             bool isBuQiShu = false;
-            foreach (Vector2 currentpos in battleinfo.currentPos)
+            returnnum = 0;
+            List<int> Vints = new List<int>();
+            foreach (Vector2 v in battleinfo.currentPos)
             {
-                foreach (Vector2 canusepos in battleinfo.canUsePos)
+                if (!Vints.Contains((int)v.x))
                 {
-                    battleinfo.canUsePos.Remove(currentpos);
-                    if (currentpos.y == canusepos.y)
+                    Vints.Add((int)v.x);
+
+                    bool hIsFill = true;
+                    foreach (var vRl in gameManager.Instance.battlemanager.realknapsack.usedLaticePairs)
                     {
+                        if (vRl.Key.x == v.x)
+                        {
+                            if (vRl.Value.gridState != GridState.Used)
+                            {
+                                hIsFill = false;
+                            }
+                        }
+                    }
+                    if (hIsFill)
+                    {
+                        returnnum++;
                         isBuQiShu = true;
                     }
-                    else
-                        isBuQiShu = false;
                 }
-                num++;
+
             }
             return isBuQiShu;
         }

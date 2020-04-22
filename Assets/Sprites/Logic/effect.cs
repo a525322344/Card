@@ -393,8 +393,16 @@ public class CardEffect_RepeatByFill : cardEffectBase
     public CardEffect_RepeatByFill(judgeCondition judge, EffectBase effect)
     {
         b_hasChildEffect = true;
+        effectDele = new DeleCardEffect((a, b) => { });
         numJudge = judge;
         childeffects.Add(effect);
+        eventkind = EventKind.Event_Fill;
+    }
+    public CardEffect_RepeatByFill(judgeCondition judge)
+    {
+        numJudge = judge;
+        b_hasChildEffect = true;
+        effectDele = new DeleCardEffect((a, b) => { });
         eventkind = EventKind.Event_Fill;
     }
     public override void InitNum()
@@ -410,8 +418,9 @@ public class CardEffect_RepeatByFill : cardEffectBase
         }
         if (result.Length != 0)
         {
-            result.Substring(0, result.Length - 1);
+            result = result.Substring(0, result.Length - 1);
         }
+
         return result;
     }
 }

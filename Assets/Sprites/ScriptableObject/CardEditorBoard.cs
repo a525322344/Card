@@ -52,6 +52,8 @@ public enum EnumJudge
 {
     默认,
     敌人意图攻击,
+    每补齐一横行,
+    每补齐一纵行,
 }
 [System.Serializable]
 public class editorJudge
@@ -78,6 +80,7 @@ public enum EnumEffect
     LinkRandom,
     Whether,
     DisCard,
+    RepeatByFill,
 }
 [System.Serializable]
 public class editorEffect
@@ -164,6 +167,9 @@ public class CardEditorBoard : ScriptableObject
                 effect.b_haveJudge = true;
                 break;
             case EnumEffect.DisCard:
+                break;
+            case EnumEffect.RepeatByFill:
+                effect.b_haveChildEffect = true;
                 break;
         }
         return effect;
