@@ -52,3 +52,24 @@ public class Judge_BrunNumber : judgeCondition
       whetherDele = AllAsset.judgeAsset.EnemyBurnNumber;
     }
 }
+
+
+public class Judge_buqiheng : judgeCondition
+{
+    public Judge_buqiheng(int num)
+    {
+        param = 0;
+        whetherDele = AllAsset.judgeAsset.BuQiHeng;
+    }
+}
+
+
+
+public class Judge_buqishu : judgeCondition
+{
+    public Judge_buqishu(int num)
+    {
+        param = 0;
+        whetherDele = AllAsset.judgeAsset.BuQiShu;
+    }
+}

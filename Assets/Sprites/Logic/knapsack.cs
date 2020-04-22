@@ -10,4 +10,7 @@ public class knapsack
     }
     public bool[] isexploits;
     public Dictionary<Vector2, MagicPart> installParts = new Dictionary<Vector2, MagicPart>();
+
+
 }
+

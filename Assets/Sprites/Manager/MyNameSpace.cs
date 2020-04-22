@@ -198,7 +198,7 @@ namespace AllAsset
         }
         public static bool EnemyBurnNumber(int num, battleInfo battleinfo)
         {
-            bool EnemyBurnnumber;
+            bool EnemyBurnnumber = false;
             stateAbstarct burnstate = new StateBurn(num);
             if (battleinfo.Enemy.nameStatePairs.ContainsKey(burnstate.key))
             {
@@ -213,7 +213,46 @@ namespace AllAsset
                 battleinfo.Enemy.nameStatePairs.Add(burnstate.key, burnstate);
                 battleinfo.Enemy.stateList.Add(burnstate);
             }
-            return battleinfo.Enemy.nameStatePairs.ContainsKey(burnstate.key);
+            return EnemyBurnnumber;
+        }
+        public static bool BuQiHeng(int num, battleInfo battleinfo)
+        {
+            bool isBuQiHeng = false;
+            foreach (Vector2 currentpos in battleinfo.currentPos)
+            {
+                foreach(Vector2 canusepos in battleinfo.canUsePos)
+                {
+                    battleinfo.canUsePos.Remove(currentpos);
+                    if (currentpos.x == canusepos.x)
+                    {
+                        isBuQiHeng = true;
+                    }
+                    else
+                        isBuQiHeng = false;
+                }
+                num++;
+            }
+            return isBuQiHeng;
+        }
+
+        public static bool BuQiShu(int num, battleInfo battleinfo)
+        {
+            bool isBuQiShu = false;
+            foreach (Vector2 currentpos in battleinfo.currentPos)
+            {
+                foreach (Vector2 canusepos in battleinfo.canUsePos)
+                {
+                    battleinfo.canUsePos.Remove(currentpos);
+                    if (currentpos.y == canusepos.y)
+                    {
+                        isBuQiShu = true;
+                    }
+                    else
+                        isBuQiShu = false;
+                }
+                num++;
+            }
+            return isBuQiShu;
         }
     }
     //声明所有的卡牌

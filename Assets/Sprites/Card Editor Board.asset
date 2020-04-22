@@ -171,18 +171,8 @@ MonoBehaviour:
       childeffects: []
     alltime: 0
     performlist: []
-  - name: "\u9ED8\u8BA4\u540D\u79F0"
-    id: 6
-    cost: 0
-    Rank: 0
-    Kind: 0
-    rank: 0
-    textureId: 0
-    playEffects: []
-    alltime: 0
-    performlist: []
   - name: "\u964D\u795E"
-    id: 7
+    id: 6
     cost: 1
     Rank: 2
     Kind: 1
