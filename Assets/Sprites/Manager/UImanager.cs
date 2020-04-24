@@ -28,4 +28,20 @@ public class UImanager : MonoBehaviour
         uiBefallBoard = gameManager.Instance.instantiatemanager.mapRootInfo.uieventBoard;
         uiBefallBoard.gameObject.SetActive(false);
     }
+
+    public void ToStart(AsyncOperation _asyncOperation)
+    {
+        StartCoroutine(IETestEnterMap(_asyncOperation));
+    }
+
+    IEnumerator IETestEnterMap(AsyncOperation _asyncOperation)
+    {
+        //后面地图加载好了
+        yield return new WaitUntil(() => {
+            return _asyncOperation.isDone;
+        });
+        gameManager.Instance.mapManagerInit();
+        gameManager.Instance.mapScene = SceneManager.GetSceneByName("Map");
+
+    }
 }

@@ -21,4 +21,6 @@ public class battleUIRoot : MonoBehaviour
     public Transform waitSelectCard;
     //胜利结算面板
     public uiVectorBoard uiVectorBoard;
+    //敌人血条
+    public healthSlider healthSlider;
 }

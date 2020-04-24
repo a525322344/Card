@@ -11,7 +11,7 @@ public class pawnbase
     public int enemynum;
     public List<stateAbstarct> stateList = new List<stateAbstarct>();///展示用链表
     public Dictionary<string, stateAbstarct> nameStatePairs = new Dictionary<string, stateAbstarct>();
-    
+
     public virtual void hurtHealth(int i)
     {
         if (i > 0)

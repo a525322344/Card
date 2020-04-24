@@ -31,7 +31,7 @@ public class startMuneControll : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync("Map");
-            gameManager.Instance.mapScene = SceneManager.GetSceneByName("Map");
+            gameManager.Instance.uimanager.ToStart(_asyncOperation);
         }
     }
 
@@ -89,12 +89,5 @@ public class startMuneControll : MonoBehaviour
         //完全切换场景
 
     }
-    IEnumerator IETestEnterMap(AsyncOperation _asyncOperation)
-    {
-        //后面地图加载好了
-        yield return new WaitUntil(() => {
-            return _asyncOperation.isDone;
-        });
-        gameManager.Instance.mapManagerInit();
-    }
+
 }

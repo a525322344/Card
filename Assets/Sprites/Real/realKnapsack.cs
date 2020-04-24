@@ -8,6 +8,7 @@ public class realKnapsack : MonoBehaviour
     //创建5X5预备背包格，初始开放6格，中心点为3，3
     public GameObject LaticeGO;
     public Transform pointtran;
+    public GameObject meshFolder;
     //public Transform BoardMesh;
     public Transform overcubeFolder;
     public float distance;
@@ -16,9 +17,16 @@ public class realKnapsack : MonoBehaviour
     public GameState KnapsackState;
 
     public Dictionary<Vector2, realLatice> laticePairs = new Dictionary<Vector2, realLatice>();
+    public Dictionary<Vector2, realLatice> usedLaticePairs = new Dictionary<Vector2, realLatice>();
     public List<realpart> realparts = new List<realpart>();
     public List<Transform> overcubes = new List<Transform>();
-#region 用于中转
+
+
+
+
+
+
+    #region 用于中转
     private Dictionary<Vector2, latice> lactices = new Dictionary<Vector2, latice>();
 #endregion
 
@@ -39,7 +47,7 @@ public class realKnapsack : MonoBehaviour
                 latice newLatice = new latice(posi, thisknapsack.isexploits[i]);
                 lactices.Add(posi, newLatice);
             }
-            foreach (var pl in lactices)
+            foreach (KeyValuePair<Vector2,latice> pl in lactices)
             {
                 GameObject realLaticeGO = Instantiate(LaticeGO, pointtran);
                 //realLaticeGO.name = "realLatice";
@@ -55,7 +63,7 @@ public class realKnapsack : MonoBehaviour
         }
         else if (KnapsackState == GameState.BattleSence)
         {
-            //BoardMesh.gameObject.SetActive(false);
+            meshFolder.gameObject.SetActive(false);
             //生成实例Latice
             for (int i = 0; i < 25; i++)
             {
@@ -77,8 +85,18 @@ public class realKnapsack : MonoBehaviour
 
                 laticePairs.Add(posi, realLatice);
             }
+
+            Debug.Log(usedLaticePairs.Count);
             //初始化部件
             InitInstallPart(GameState.BattleSence);
+
+            foreach (var pl in laticePairs)
+            {
+                if (pl.Value.thislatice.state == LaticeState.Install)
+                {
+                    usedLaticePairs.Add(pl.Key, pl.Value);
+                }
+            }
             selectPart = nullpart;
         }
 
@@ -154,6 +172,7 @@ public class realKnapsack : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         b_readyToPlayCard = false;
+                        gameManager.Instance.battlemanager.battleInfo.currentPos = currentPos;
                         gameManager.Instance.battlemanager.PlayCard();
                     }
                 }
@@ -224,7 +243,6 @@ public class realKnapsack : MonoBehaviour
     }
     public void InstallPart(MagicPart magicPart,Vector2 center,out Transform positionTran)
     {
-        Debug.Log("Install");
         ExitCanInstall();
         
         Dictionary<realLatice, grid> rLGPairs = new Dictionary<realLatice, grid>();
@@ -272,6 +290,9 @@ public class realKnapsack : MonoBehaviour
             positionTran = null;
         }
     }
+
+
+
     //战斗操作
     public bool b_readyToPlayCard;
     public card selectCard;
@@ -279,6 +300,13 @@ public class realKnapsack : MonoBehaviour
     public MagicPart selectPart;
     List<realLatice> selectLatices = new List<realLatice>();
     List<realpart> selecRealParts = new List<realpart>();
+
+    //当前打出卡牌位置信息
+    public List<Vector2> currentPos = new List<Vector2>();
+    //可用位置信息
+    //public List<Vector2> canUsePos = new List<Vector2>();
+
+
     public void SetinPart()
     {
         foreach(var v in thisknapsack.installParts)
@@ -286,8 +314,21 @@ public class realKnapsack : MonoBehaviour
             v.Value.SetinReactions();
         }
     }
+
+
     public bool CanCostPlay(Vector2 center, Dictionary<Vector2, int> vectorInts)
     {
+        //储存费用坐标
+        currentPos.Clear();
+        foreach(var vi in vectorInts)
+        {
+            if (vi.Value == 1)
+            {
+                currentPos.Add(center + vi.Key);
+            }
+        }
+
+        selectLatices.Clear();
         selecRealParts.Clear();
         bool result = true;
         bool b_samePart = true;
@@ -299,24 +340,24 @@ public class realKnapsack : MonoBehaviour
             if (vecint.Value == 1)//cost块符合
             {
                 Vector2 position = center + vecint.Key;
-                if (laticePairs.ContainsKey(position))//纸板上有
+                if (usedLaticePairs.ContainsKey(position))//纸板上有
                 {
-                    if (laticePairs[position].gridState == GridState.Power | laticePairs[position].gridState == GridState.Can)
+                    if (usedLaticePairs[position].gridState == GridState.Power | usedLaticePairs[position].gridState == GridState.Can)
                     {
                         //储存用到的latice
-                        selectLatices.Add(laticePairs[position]);
+                        selectLatices.Add(usedLaticePairs[position]);
                         //储存部件
                         if (b_samePart)
                         {
                             //第一次
                             if (selectPart == nullpart)
                             {
-                                if (laticePairs[position].realpart.thisMagicPart != null)
+                                if (usedLaticePairs[position].realpart.thisMagicPart != null)
                                 {
-                                    selectPart = laticePairs[position].realpart.thisMagicPart;
-                                    if (!selecRealParts.Contains(laticePairs[position].realpart))
+                                    selectPart = usedLaticePairs[position].realpart.thisMagicPart;
+                                    if (!selecRealParts.Contains(usedLaticePairs[position].realpart))
                                     {
-                                        selecRealParts.Add(laticePairs[position].realpart);
+                                        selecRealParts.Add(usedLaticePairs[position].realpart);
                                     }
                                 }
                                 else
@@ -328,7 +369,7 @@ public class realKnapsack : MonoBehaviour
                             }
                             else
                             {
-                                if (selectPart != laticePairs[position].realpart.thisMagicPart)
+                                if (selectPart != usedLaticePairs[position].realpart.thisMagicPart)
                                 {
                                     selectPart = nullpart;
                                     b_samePart = false;
@@ -336,9 +377,9 @@ public class realKnapsack : MonoBehaviour
                                 }
                                 else
                                 {
-                                    if (!selecRealParts.Contains(laticePairs[position].realpart))
+                                    if (!selecRealParts.Contains(usedLaticePairs[position].realpart))
                                     {
-                                        selecRealParts.Add(laticePairs[position].realpart);
+                                        selecRealParts.Add(usedLaticePairs[position].realpart);
                                     }
                                 }
                             }
@@ -361,18 +402,20 @@ public class realKnapsack : MonoBehaviour
         
         if (cost == 0)
         {
-            if (laticePairs[center].gridState == GridState.Power | laticePairs[center].gridState == GridState.Can| laticePairs[center].gridState == GridState.Used)
+            if (usedLaticePairs[center].gridState == GridState.Power | usedLaticePairs[center].gridState == GridState.Can| usedLaticePairs[center].gridState == GridState.Used)
             {
-                if (laticePairs[center].realpart.thisMagicPart != null)
+                if (usedLaticePairs[center].realpart.thisMagicPart != null)
                 {
-                    selectPart = laticePairs[center].realpart.thisMagicPart;
-                    selecRealParts.Add(laticePairs[center].realpart);
+                    selectPart = usedLaticePairs[center].realpart.thisMagicPart;
+                    selecRealParts.Add(usedLaticePairs[center].realpart);
                 }
             }
         }
         b_readyToPlayCard = result;
         return result;
     }
+
+
     public void ToSetPart(card _selectcard)
     {
         if (_selectcard == null)
@@ -385,6 +428,10 @@ public class realKnapsack : MonoBehaviour
             b_readyToPlayCard = false;
             selectCard = null;
             selectPart = nullpart;
+            foreach (realpart rp in selecRealParts)
+            {
+                rp.OutlineShow(0);
+            }
             gameManager.Instance.battlemanager.SetSelectPart(null);
         }
         else
@@ -397,9 +444,15 @@ public class realKnapsack : MonoBehaviour
             selectCard = _selectcard;
 
             gameManager.Instance.battlemanager.SetSelectPart(selectPart);
+            foreach(realpart rp in selecRealParts)
+            {
+                rp.OutlineShow(1);
+            }
             //部件的激活与睡眠转移到了CardEvent中
         }
     }
+
+
     public void UseSelectLatices()
     {
         for (int i = 0; i < selectLatices.Count; i++)

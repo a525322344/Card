@@ -18,6 +18,7 @@ namespace AllAsset
             }
             battleInfo.Enemy.hurtHealth(num);
         }
+
         public static void EnemyGetRealHurt(int num,battleInfo battleInfo)
         {
             if (num < 0)
@@ -26,6 +27,7 @@ namespace AllAsset
             }
             battleInfo.Enemy.realHurtHealth(num);
         }
+
         public static void PlayerGetArmor(int num, battleInfo battleInfo)
         {
             //获得“num”点护甲。
@@ -35,14 +37,17 @@ namespace AllAsset
             }
             battleInfo.Player.GetArmor(num);
         }
+
         public static void drawACard(int num,battleInfo battleInfo)
         {
             gameManager.Instance.battlemanager.DrawACard();
         }
+
         public static void disAllCard(int num,battleInfo battleInfo)
         {
             gameManager.Instance.battlemanager.deleteAllHandCard();
         }
+
         public static void PlayerGetHurt(int num,battleInfo battleInfo)
         {
             if (num < 0)
@@ -51,6 +56,7 @@ namespace AllAsset
             }
             battleInfo.Player.hurtHealth(num);
         }
+
         public static void EnemyGetArmor(int num,battleInfo battleinfo)
         {
             if (num < 0)
@@ -59,6 +65,7 @@ namespace AllAsset
             }
             battleinfo.Enemy.GetArmor(num);
         }
+
         public static void EnemyDoubleBurn(int num, battleInfo battleinfo)
         {
             stateAbstarct burnstate = new StateBurn(num);
@@ -67,14 +74,8 @@ namespace AllAsset
                 battleinfo.Enemy.nameStatePairs[burnstate.key].num *= num;
                 gameManager.Instance.battlemanager.realenemy.StateUpdtae();
             }
-            else
-            {
-                burnstate.SetInState();
-                battleinfo.Enemy.nameStatePairs.Add(burnstate.key, burnstate);
-                battleinfo.Enemy.stateList.Add(burnstate);
-                gameManager.Instance.battlemanager.realenemy.StateUpdtae();
-            }
         }
+
         public static void EnemyGetBurn(int num,battleInfo battleinfo)
         {
             stateAbstarct burnstate = new StateBurn(num);
@@ -91,6 +92,7 @@ namespace AllAsset
                 gameManager.Instance.battlemanager.realenemy.StateUpdtae();
             }
         }
+
         public static void RandomLinkPart(int num,battleInfo battleinfo)
         {
             List<realpart> copyrealparts = new List<realpart>(gameManager.Instance.battlemanager.realknapsack.realparts);
@@ -150,6 +152,7 @@ namespace AllAsset
                 exitLinkState.SetInState();
                 battleinfo.Player.nameStatePairs.Add(exitLinkState.key, exitLinkState);
                 battleinfo.Player.stateList.Add(exitLinkState);
+                gameManager.Instance.battlemanager.realplayer.StateUpdtae();
             }
         }
         public static void ExitLinkPark(int num,battleInfo battleinfo)
@@ -179,17 +182,20 @@ namespace AllAsset
     }
     public static class judgeAsset
     {
-        public static bool EnemyWillAttack(int num,battleInfo battleinfo)
+        public static bool EnemyWillAttack(int num,battleInfo battleinfo,out int returnnum)
         {
+            returnnum = 0;
             return ActionOperation.IsActionHasAttack(gameManager.Instance.battlemanager.battleInfo.enemyAction);
         }
-        public static bool HaveSelectHandCard(int num,battleInfo battleinfo)
+        public static bool HaveSelectHandCard(int num,battleInfo battleinfo, out int returnnum)
         {
+            returnnum = 0;
             return gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard.IsFinishSelect();
         }
-        public static bool EnemyBurnNumber(int num, battleInfo battleinfo)
+        public static bool EnemyBurnNumber(int num, battleInfo battleinfo, out int returnnum)
         {
-            bool EnemyBurnnumber;
+            returnnum = 0;
+            bool EnemyBurnnumber = false;
             stateAbstarct burnstate = new StateBurn(num);
             if (battleinfo.Enemy.nameStatePairs.ContainsKey(burnstate.key))
             {
@@ -204,7 +210,87 @@ namespace AllAsset
                 battleinfo.Enemy.nameStatePairs.Add(burnstate.key, burnstate);
                 battleinfo.Enemy.stateList.Add(burnstate);
             }
-            return battleinfo.Enemy.nameStatePairs.ContainsKey(burnstate.key);
+            return EnemyBurnnumber;
+        }
+        public static bool BuQiHeng(int num, battleInfo battleinfo, out int returnnum)
+        {
+            bool isBuQiHeng = false;
+            returnnum = 0;
+            List<int> Vints = new List<int>();
+            foreach(Vector2 v in battleinfo.currentPos)
+            {
+                if (!Vints.Contains((int)v.y))
+                {
+                    Vints.Add((int)v.y);
+
+                    bool hIsFill = true;
+                    foreach(var vRl in gameManager.Instance.battlemanager.realknapsack.usedLaticePairs)
+                    {
+                        if (vRl.Key.y == v.y)
+                        {
+                            if (vRl.Value.gridState != GridState.Used)
+                            {
+                                hIsFill = false;
+                            }
+                        }
+                    }
+                    if (hIsFill)
+                    {
+                        returnnum++;
+                        isBuQiHeng = true;
+                    }
+                }
+                
+            }
+
+            //foreach (Vector2 currentpos in battleinfo.currentPos)
+            //{
+            //    foreach(Vector2 canusepos in battleinfo.canUsePos)
+            //    {
+            //        battleinfo.canUsePos.Remove(currentpos);
+            //        if (currentpos.x == canusepos.x)
+            //        {
+            //            isBuQiHeng = true;
+            //        }
+            //        else
+            //            isBuQiHeng = false;
+            //    }
+            //    num++;
+            //}
+            return isBuQiHeng;
+        }
+
+        public static bool BuQiShu(int num, battleInfo battleinfo, out int returnnum)
+        {
+            bool isBuQiShu = false;
+            returnnum = 0;
+            List<int> Vints = new List<int>();
+            foreach (Vector2 v in battleinfo.currentPos)
+            {
+                if (!Vints.Contains((int)v.x))
+                {
+                    Vints.Add((int)v.x);
+
+                    bool hIsFill = true;
+                    foreach (var vRl in gameManager.Instance.battlemanager.realknapsack.usedLaticePairs)
+                    {
+                        if (vRl.Key.x == v.x)
+                        {
+                            if (vRl.Value.gridState != GridState.Used)
+                            {
+                                hIsFill = false;
+                            }
+                        }
+                    }
+                    if (hIsFill)
+                    {
+                        returnnum++;
+                        isBuQiShu = true;
+                    }
+                }
+
+            }
+            return isBuQiShu;
         }
     }
     //声明所有的卡牌

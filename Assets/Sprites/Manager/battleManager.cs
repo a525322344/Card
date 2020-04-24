@@ -23,6 +23,9 @@ public class battleInfo
 {
     public pawnbase Enemy;             //敌人
     public pawnbase Player;            //玩家自己
+    //当前打出卡牌位置信息
+    public List<Vector2> currentPos = new List<Vector2>();
+
     //已经链接了的部件
     public List<realpart> havenLinkParts = new List<realpart>();
     //当前事件
@@ -40,10 +43,13 @@ public class battleInfo
     //手牌数量
     public int playerHandCardNum;
 
+
+
     public battleInfo(playerInfo info)
     {
         Enemy = new enemybase();
         Player = new playerpawn();
+        Player.name = "阿斯蒂芬";
         Player.healthmax = info.playerHealthMax;
         Player.healthnow = info.playerHealth;
         Player.armor = 0;
@@ -157,7 +163,7 @@ public class battleManager : MonoBehaviour
     {
         //实例化怪物
         instantiatemanager.instanMonster(monsterinfo, out realenemy);
-
+        
     }
 
     private void Update()
@@ -189,6 +195,7 @@ public class battleManager : MonoBehaviour
         {
             realknapsack.UseSelectLatices();
             CardEvent newevent = new CardEvent((playerCard)selectedCard.thisCard, selectedPart, new emplyPlayCard());
+            //newevent.InitPerform();
             EventShow neweventshow = new EventShow(newevent, eventManager.BattleEventShows);
             eventManager.BattleEventShows.Add(neweventshow);
 
@@ -240,6 +247,19 @@ public class battleManager : MonoBehaviour
         realCardList.Remove(todiscard);
         Destroy(todiscard.transform.parent.gameObject);
     }
+    //储存当前打出卡牌位置信息
+    public void CurrentPos(realKnapsack real)
+    {
+
+    }
+
+    //储存所有可使用格子信息
+    public void CanUsrPos(realKnapsack real)
+    {
+        
+    }
+
+
 
     public void preWaitToDiscard(int num)
     {

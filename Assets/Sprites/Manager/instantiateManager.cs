@@ -38,6 +38,7 @@ public class instantiateManager : MonoBehaviour
     public List<GameObject> MonsterAll = new List<GameObject>();
     //map
     public GameObject placeGO;
+    public GameObject loadGO;
     public List<Sprite> beFallSprites = new List<Sprite>();
     public List<Sprite> mapPlaceSprites = new List<Sprite>();
     public List<Sprite> cardSprites = new List<Sprite>();
@@ -117,22 +118,12 @@ public class instantiateManager : MonoBehaviour
         rk.Init(_knapsack,GameState.BattleSence);
         return rk;
     }
-    //public void instanBattleStartPart(List<MagicPart> magicParts)
-    //{
-    //    for (int i = 0; i < magicParts.Count; i++)
-    //    {
-    //        GameObject part = Instantiate(partGO, battleuiRoot.parttransforms[i]);
-    //        realpart realpart = part.GetComponent<realpart>();
-    //        realpart.Init(magicParts[i], GameState.BattleSence, battleuiRoot.parttransforms[i]);
-    //        battleuiRoot.parttransforms[0].parent.GetComponent<bookFolderControll>().realparts.Add(realpart);
-    //    }
-    //    gameManager.Instance.battlemanager.realPartList = battleuiRoot.parttransforms[0].parent.GetComponent<bookFolderControll>().realparts;
-    //}
     //战斗——生成怪物
     public void instanMonster(monsterInfo moninfo,out realEnemy realEnemy)
     {
         GameObject monster = Instantiate(MonsterAll[moninfo.Id], battleEnvRoot.monsterPosi);
         realEnemy realenemy = monster.GetComponent<realEnemy>();
+        realenemy.healthslider = battleuiRoot.healthSlider;
         realenemy.Init(moninfo);
         realEnemy = realenemy;
     }
@@ -151,5 +142,30 @@ public class instantiateManager : MonoBehaviour
             gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard = realWSB;
             realWSB.InitWaitSelectCard(num, single);
         }
+    }
+    //战斗——生成特效
+    public void instanPerformEffect(PerformEffect perform)
+    {
+        GameObject effectGO = perform.effect;
+        GameObject neweffect = Instantiate(effectGO);
+        switch (perform.kind)
+        {
+            case 0://主角位置
+                neweffect.transform.position = gameManager.Instance.battlemanager.realplayer.transform.position;
+                break;
+            case 1://怪物位置
+                neweffect.transform.position = gameManager.Instance.battlemanager.realenemy.transform.position;
+                break;
+            case 2://主》》怪
+                neweffect.transform.position = gameManager.Instance.battlemanager.realplayer.transform.position;
+                break;
+            case 3://怪》》主
+                neweffect.transform.position = gameManager.Instance.battlemanager.realenemy.transform.position;
+                break;
+            case 4://主角法杖位置
+                neweffect.transform.position = gameManager.Instance.battlemanager.realplayer.transform.position;
+                break;
+        }
+        neweffect.AddComponent<realEffect>().Init(perform.kind,perform.speed,perform.lasttime);
     }
 }

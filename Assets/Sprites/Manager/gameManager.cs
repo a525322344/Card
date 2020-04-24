@@ -43,6 +43,7 @@ public class gameManager : MonoBehaviour
     [HideInInspector]
     public UImanager uimanager;
     public InitControllBoard InitControllBoard;
+    public CardEditorBoard CardEditorBoard;
 
     public Scene battleScene;
     public Scene mapScene;

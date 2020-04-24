@@ -52,6 +52,8 @@ public static class ReactionListController
                 return reactListToDisOneCard;
             case EventKind.Event_DisSomeCard:
                 return reactListToDisSomeCard;
+            case EventKind.Event_Fill:
+                return reactListToFill;
             //更新
             default:
                 Debug.Log("错误，没有写这个效果的额外效果表");
@@ -83,6 +85,7 @@ public static class ReactionListController
     private static List<Reaction> reactListToWhether = new List<Reaction>();
     private static List<Reaction> reactListToDisOneCard = new List<Reaction>();
     private static List<Reaction> reactListToDisSomeCard = new List<Reaction>();
+    private static List<Reaction> reactListToFill = new List<Reaction>();
     //更新
 }
 

@@ -2,7 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+public enum EventClassKind
+{
+    Card,
+    Effect,
+    System,
+    State,
+    Action,
+}
 
 //打出卡牌受到各种加成，buff影响，怪物能力调整的事件——的基类
 public abstract class singleEvent
@@ -17,7 +24,7 @@ public abstract class singleEvent
     //处理事件后，是否从表中移除
     public bool b_logoutAfterDeal = true;
     //事件类型，用于枚举
-    protected EventKind m_eventKind;
+    public EventKind m_eventKind;
     public bool b_haveChildEvent;
     public bool b_haveJudgeEvent;
     public List<singleEvent> childEvents = new List<singleEvent>();
@@ -148,6 +155,7 @@ public class EffectEvent : singleEvent
         childEvents.Clear();
 
         recesiveNotice();
+        m_effect.InitNum();
         int index = m_effect.getNum();
         foreach (extraEffectBase extraEffect in m_extraEffectList)
         {
@@ -164,10 +172,6 @@ public class EffectEvent : singleEvent
                     childEvents.Add(new EffectEvent(effect, m_fatherEvent));
                 }
             }
-            //foreach (EffectEvent _event in childEvents)
-            //{
-            //    _event.prepareEvent();
-            //}
         }
         if (b_haveJudgeEvent)
         {
@@ -178,10 +182,6 @@ public class EffectEvent : singleEvent
                     childEvents.Add(new EffectEvent(effect, m_fatherEvent));
                 }
             }
-            //foreach (EffectEvent _event in childEvents)
-            //{
-            //    _event.prepareEvent();
-            //}
         }
         if (m_fatherEvent != null)
         {
@@ -399,6 +399,16 @@ public class CardEvent : singleEvent
         get { return m_magicPart; }
     }
     private playerCard playercard;
+
+    //演示
+    public float alltime;
+    public List<perform> performList = new List<perform>();
+    public void InitPerform()
+    {
+        editorCard editorCard = gameManager.Instance.CardEditorBoard.AllCards[playercard.Id];
+        alltime = editorCard.alltime;
+        performList = InitData.PerformListFromInit(editorCard);
+    }
 }
 
 //行动事件

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3581731010890882624}
   - component: {fileID: 2492259741418907340}
   - component: {fileID: 5666695300525280946}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,15 +28,15 @@ RectTransform:
   m_GameObject: {fileID: 1008577489937293556}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.76167, y: 0.76167, z: 0.76167}
+  m_LocalScale: {x: 0.28243485, y: 0.28243485, z: 0.28243485}
   m_Children: []
   m_Father: {fileID: 3094286527780377352}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 10}
+  m_AnchoredPosition: {x: -0.000090123, y: 0.00083131}
+  m_SizeDelta: {x: 177.03, y: 177.04}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3581731010890882624
 CanvasRenderer:
@@ -68,11 +68,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 1
+    m_FontSize: 92
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
-    m_MaxSize: 40
+    m_MaxSize: 136
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 0.03, y: 0.03}
+  m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!1 &4078464471184952067
 GameObject:
@@ -107,7 +107,8 @@ GameObject:
   - component: {fileID: 8901481391328039210}
   - component: {fileID: 1462051690245587316}
   - component: {fileID: 2653412243803495595}
-  m_Layer: 0
+  - component: {fileID: 7713706057281949319}
+  m_Layer: 5
   m_Name: realstate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +133,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 1}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8901481391328039210
 CanvasRenderer:
@@ -185,3 +186,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teximage: {fileID: 1462051690245587316}
   num: {fileID: 2492259741418907340}
+  uiInfoFrameGo: {fileID: 5017613993221021445, guid: d4b5c67f034534e4887ffde8ec81e544,
+    type: 3}
+  uiInfoFrameGoDownOffset: 0.6
+--- !u!65 &7713706057281949319
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4078464471184952067}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 50, y: 50, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

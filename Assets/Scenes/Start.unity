@@ -191,6 +191,49 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 7068954691501731757}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1003820379
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1003820381}
+  - component: {fileID: 1003820380}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1003820380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003820379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f161e50facab4149a02bbcab1a9e0b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1003820381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003820379}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.0209377, y: 2.5731559, z: -0.65514505}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1025505283
 GameObject:
   m_ObjectHideFlags: 0
@@ -73013,6 +73056,35 @@ PrefabInstance:
       propertyPath: startMuneControll
       value: 
       objectReference: {fileID: 7778218340182681180}
+    - target: {fileID: 6214252688899465388, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: CardEditorBoard
+      value: 
+      objectReference: {fileID: 11400000, guid: 8927315ad9a26d74cab3dcdfb5b9e202,
+        type: 2}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: stateSprites.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: stateSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: e0434b18f2c007f4eb559eb0dc7b9e6e,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: placeGO
+      value: 
+      objectReference: {fileID: 1280800841562665640, guid: ddd29dc69ea15c04f9a40d609ec65fde,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: loadGO
+      value: 
+      objectReference: {fileID: 1027311187460179986, guid: 169c93cef30b18f45850a8a57d59cf76,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 362da131cad69c3408bab7cc127cafeb, type: 3}
 --- !u!1001 &7068954691501731757

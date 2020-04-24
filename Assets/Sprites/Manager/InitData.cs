@@ -11,7 +11,8 @@ public class InitData
 
     public void Awake()
     {
-        CardInit();
+        //CardInit();
+        EditorCardInit(gameManager.Instance.CardEditorBoard);
         MagicPartInit();
     }
     //数据加载全卡
@@ -117,8 +118,18 @@ public class InitData
         playerCard chongneng = new playerCard(22, "充能", CardKind.SkillCard, 0,2);
         chongneng.AddEffect(new DrawCard(1));
         chongneng.AddEffect(new CardEffect_DisSomeCard(1));
-        cardEffectBase extraeffect = new CardEffect_Whether(new Judge_EnemyWillAttack(), new DrawCard(3));
+        cardEffectBase whethereffect2 = new CardEffect_Whether(new Judge_BrunNumber(5), new DrawCard(2));
         cardAsset.AllIdCards.Add(chongneng);
+        //1费 攻守兼备 每补齐一个横行，造成6点伤害；每补齐一个纵列，获得6点格挡
+        playerCard gongshoujianbei = new playerCard(23, "攻守兼备", CardKind.SkillCard, 1, 1);
+        judgeCondition judgeFillH = new Judge_buqiheng(0);
+        judgeCondition judgeFillV = new Judge_buqishu(0);
+        cardEffectBase whethereffect3 = new CardEffect_Whether(judgeFillH, new CardEffect_RepeatByFill(judgeFillH, new Damage(6)));
+        cardEffectBase whethereffect4 = new CardEffect_Whether(judgeFillV, new CardEffect_RepeatByFill(judgeFillV, new Armor(6)));
+        gongshoujianbei.AddEffect(whethereffect3);
+        gongshoujianbei.AddEffect(whethereffect4);
+
+        cardAsset.AllIdCards.Add(gongshoujianbei);
     }
     //“手动”加载全部件 可能是暂定
     void MagicPartInit()
@@ -138,5 +149,117 @@ public class InitData
         Init_DefenceUp_1.addReaction(reaction);
 
         AllAsset.magicpartAsset.AllMagicParts.Add(Init_DefenceUp_1);
+    }
+
+    public void EditorCardInit(CardEditorBoard cardboard)
+    {
+        foreach(editorCard card in cardboard.AllCards)
+        {
+            playerCard newcard = new playerCard(card.id, card.name, card.Kind, card.cost, (int)card.Rank);
+            foreach(editorEffect eE in card.playEffects)
+            {
+                newcard.AddEffect(EffectFromInit(eE));
+                if (eE.effectKind == EnumEffect.LinkRandom)
+                {
+                    newcard.AddEffect(new CardEffect_ToExitLink());
+                }
+            }
+            cardAsset.AllIdCards.Add(newcard);
+        }
+    }
+    cardEffectBase EffectFromInit(editorEffect editorEffect,params judgeCondition[] judges)
+    {
+        cardEffectBase Effect = new emplyPlayCard();
+        switch (editorEffect.effectKind)
+        {
+            case EnumEffect.Damage:
+                Effect = new Damage(editorEffect.num);
+                break;
+            case EnumEffect.Armor:
+                Effect = new Armor(editorEffect.num);
+                break;
+            case EnumEffect.DrawCard:
+                Effect = new DrawCard(editorEffect.num);
+                break;
+            case EnumEffect.Repeat:
+                Effect = new Repeat(editorEffect.num);
+                foreach(editorEffect eE in editorEffect.childeffects)
+                {
+                    Effect.childeffects.Add(EffectFromInit(eE));
+                }
+                break;
+            case EnumEffect.Burn:
+                Effect = new Burn(editorEffect.num);
+                break;
+            case EnumEffect.LinkRandom:
+                Effect = new LinkRandom(editorEffect.num);
+                break;
+            case EnumEffect.DoubleBurn:
+                Effect = new DoubleBurn(editorEffect.num);
+                break;
+            case EnumEffect.Whether:
+                Effect = new CardEffect_Whether();
+                foreach(editorJudge ej in editorEffect.judges)
+                {
+                    Effect.judgeConditions.Add(JudgeFromInit(ej));
+                }
+                foreach (editorEffect eE in editorEffect.childeffects)
+                {
+                    Effect.childeffects.Add(EffectFromInit(eE,Effect.judgeConditions[0]));
+                }
+                break;
+            case EnumEffect.DisCard:
+                break;
+            case EnumEffect.RepeatByFill:
+                Effect = new CardEffect_RepeatByFill(judges[0]);
+                foreach (editorEffect eE in editorEffect.childeffects)
+                {
+                    Effect.childeffects.Add(EffectFromInit(eE));
+                }
+                break;
+            default:
+                Debug.Log("没有该EditorEffect对应的Effect转换");
+                break;
+        }
+        return Effect;
+    }
+
+    judgeCondition JudgeFromInit(editorJudge ejudge)
+    {
+        judgeCondition Judge = new Judge_NullTrue();
+        switch (ejudge.judgeKind)
+        {
+            case EnumJudge.敌人意图攻击:
+                Judge = new Judge_EnemyWillAttack();
+                break;
+            case EnumJudge.每补齐一横行:
+                Judge = new Judge_buqiheng(0);
+                break;
+            case EnumJudge.每补齐一纵行:
+                Judge = new Judge_buqishu(0);
+                break;
+        }
+        return Judge;
+    }
+    public static List<perform> PerformListFromInit(editorCard card)
+    {
+        List<perform> performs = new List<perform>();
+        foreach(editorPerform eP in card.performlist)
+        {
+            perform newperform;
+            if (eP.performkind == PerformKind.动画)
+            {
+                newperform = new PerformAnima((int)eP.charactor,eP.animation,eP.animationSpeed);
+                newperform.timeTurn = eP.time;
+                performs.Add(newperform);
+            }
+            else if (eP.performkind == PerformKind.特效)
+            {
+                newperform = new PerformEffect((int)eP.effectWay, eP.effectGO, eP.movespeed,eP.effecttime);
+                newperform.timeTurn = eP.time;
+                performs.Add(newperform);
+            }
+        }
+        return performs;
     }
 }

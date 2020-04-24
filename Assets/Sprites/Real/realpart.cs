@@ -42,8 +42,8 @@ public class realpart : MonoBehaviour
     public bool b_rotate;
     public Transform installPosiTran;
     public Dictionary<grid, realgrid> gridRealgridPairs = new Dictionary<grid, realgrid>();
-
-
+    public bool b_ShowOutlineInMap;
+    public float installpartZOffset;
 
 
 
@@ -53,6 +53,7 @@ public class realpart : MonoBehaviour
         freeFater = father;
         if (state == GameState.BattleSence)
         {
+            b_ShowOutlineInMap = true;
             meshTran.gameObject.SetActive(false);
             realPartState = state;
             thisMagicPart = magicPart;
@@ -64,6 +65,7 @@ public class realpart : MonoBehaviour
                 GameObject realgridObject = Instantiate(realgridMode, gridFolder);
                 realgrid newrealgrid = realgridObject.GetComponent<realgrid>();
                 newrealgrid.Init(g.Value, this);
+                newrealgrid.gridOutlineCS.Sides = OutlineSides(g.Key);
                 realgridObject.GetComponent<Transform>().localPosition = new Vector3(g.Key.x, g.Key.y, 0) * distance;
                 newrealgrid.changeMaterial();
 
@@ -82,6 +84,7 @@ public class realpart : MonoBehaviour
                 GameObject realgridObject = Instantiate(realgridMode, gridFolder);
                 realgrid newrealgrid = realgridObject.GetComponent<realgrid>();
                 newrealgrid.Init(g.Value, this);
+                newrealgrid.gridOutlineCS.Sides = OutlineSides(g.Key);
                 realgridObject.GetComponent<Transform>().localPosition = new Vector3(g.Key.x, g.Key.y, 0) * distance;
                 newrealgrid.changeMaterial();
 
@@ -183,6 +186,43 @@ public class realpart : MonoBehaviour
         }
     }
 
+    public Vector4 OutlineSides(Vector2 posi)
+    {
+        float left = 1;
+        if (thisMagicPart.Vector2GridPairs.ContainsKey(posi + Vector2.left))
+        {
+            if (thisMagicPart.Vector2GridPairs[posi + Vector2.left].Opening)
+            {
+                left = 0;
+            }
+        }
+        float right = 1;
+        if (thisMagicPart.Vector2GridPairs.ContainsKey(posi + Vector2.right))
+        {
+            if (thisMagicPart.Vector2GridPairs[posi + Vector2.right].Opening)
+            {
+                right = 0;
+            }
+        }
+        float up = 1;
+        if (thisMagicPart.Vector2GridPairs.ContainsKey(posi + Vector2.up))
+        {
+            if (thisMagicPart.Vector2GridPairs[posi + Vector2.up].Opening)
+            {
+                up = 0;
+            }
+        }
+        float down = 1;
+        if (thisMagicPart.Vector2GridPairs.ContainsKey(posi + Vector2.down))
+        {
+            if (thisMagicPart.Vector2GridPairs[posi + Vector2.down].Opening)
+            {
+                down = 0;
+            }
+        }
+        return new Vector4(left, right, up, down);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -252,7 +292,7 @@ public class realpart : MonoBehaviour
                         break;
                     case SortState.Install:
                         //莫名的，再次进入后，就不能一次触发了，临时在这里添加
-                        transform.position = installPosiTran.position;
+                        transform.position = installPosiTran.position- new Vector3(0, 0, installpartZOffset);
                         transform.parent = installPosiTran.parent;
                         break;
                 }
@@ -268,9 +308,17 @@ public class realpart : MonoBehaviour
     {
         sortState = SortState.Install;
         installPosiTran = tran;
-        transform.position = installPosiTran.position;
+        transform.position = installPosiTran.position-new Vector3(0,0, installpartZOffset);
         transform.parent = installPosiTran.parent;
     }
+    public void OutlineShow(int mode)
+    {
+        foreach(var grg in gridRealgridPairs)
+        {
+            grg.Value.gridOutlineCS.lineMode = mode;
+        }
+    }
+
     private void OnMouseDown()
     {
         if (realPartState == GameState.MapSence)
