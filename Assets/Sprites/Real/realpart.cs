@@ -45,7 +45,7 @@ public class realpart : MonoBehaviour
     public bool b_ShowOutlineInMap;
     public float installpartZOffset;
 
-
+    private float initpositionZ;
 
     //用于创建时调用初始化
     public void Init(MagicPart magicPart,GameState state,Transform father)
@@ -75,6 +75,7 @@ public class realpart : MonoBehaviour
         }
         else if(state == GameState.MapSence)
         {
+            initpositionZ=transform.position.z;
             realPartState = state;
             thisMagicPart = magicPart;
             //根据magicpart中的grid表，创建realgird
@@ -239,7 +240,7 @@ public class realpart : MonoBehaviour
                         //跟随鼠标部分
                         Vector3 mouseposition = Input.mousePosition;
                         mouseposition = Camera.main.ScreenToWorldPoint(mouseposition);
-                        mouseposition=new Vector3(mouseposition.x,mouseposition.y, gameManager.Instance.instantiatemanager.mapRootInfo.sortPositionZ());
+                        mouseposition=new Vector3(mouseposition.x,mouseposition.y, initpositionZ);
                         transform.DOMove(mouseposition , 0);
                         //旋转部分
                         if(Input.GetAxis("Mouse ScrollWheel") < 0)//下

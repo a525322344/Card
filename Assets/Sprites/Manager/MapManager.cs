@@ -51,11 +51,13 @@ public class MapManager : MonoBehaviour
         place newplace;
         //战斗地点
         newplace = new battlePlace(new monInfo_Cat(), 3);      
-        realplaceList.Add(instantiatePlace(newplace)); 
+        realplaceList.Add(instantiatePlace(newplace));
         //事件地点
-        befallinfo secondbefall = new befallinfo("整装待发", -1, null, new Button_OverSortPart());
+        secondBoardInfo secondboard = new secondBoardInfo(0,"部件配置");
+
+        //befallinfo secondbefall = new befallinfo("整装待发", -1, null, new Button_OverSortPart());
         befallinfo newbefallinfo = new befallinfo("整装待发", 0, "英雄征途的第一步：整理背包",
-            new Button_ExitBefall("直接出发"),new Button_SortPart(secondbefall));
+            new Button_ExitBefall("直接出发"),new Button_SecondBoard(secondboard));
         newplace = new befallPlace(newbefallinfo);
         realplaceList.Add(instantiatePlace(newplace));
         /////////////////////////////分割线//////////////////////////////
@@ -397,10 +399,11 @@ public class MapManager : MonoBehaviour
         Vector3 vec = ListOperation.RandomValue<Vector3>(vector3list);
         GameObject placego = Instantiate(
             gameManager.Instance.instantiatemanager.placeGO,
-            vec,
+            new Vector3(vec.x,vec.y, maprootinfo.placeBeginPosi.position.z),
             Quaternion.identity,
             maprootinfo.placefolder
         );
+        
         vector3list.Remove(vec);
         realPlace result = placego.GetComponent<realPlace>();
         result.Init(place);

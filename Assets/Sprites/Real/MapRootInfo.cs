@@ -13,6 +13,7 @@ public class MapRootInfo : MonoBehaviour
     public uiEventBoard uieventBoard;
     public Light maplight;
     public Transform placeBeginPosi;
+    public Transform secondBoardPosi;
 
     public Camera mapCamera;
 

@@ -33,12 +33,12 @@ public class instantiateManager : MonoBehaviour
     public GameObject[] costs;
     public GameObject actionAttack;
     public GameObject actionDefense;
-    public GameObject fireState;
 
     public List<GameObject> MonsterAll = new List<GameObject>();
     //map
     public GameObject placeGO;
     public GameObject loadGO;
+    public List<GameObject> uiSecondBoardGOList;
     public List<Sprite> beFallSprites = new List<Sprite>();
     public List<Sprite> mapPlaceSprites = new List<Sprite>();
     public List<Sprite> cardSprites = new List<Sprite>();
@@ -54,7 +54,7 @@ public class instantiateManager : MonoBehaviour
 
 
 
-    //地图遭遇——生成整理背包页面
+    //地图遭遇——生成整理背包页面(功能下放)
     List<realpart> realparts = new List<realpart>();
     GameObject knapscak;
     public void instanSortPart(List<MagicPart> magicParts,knapsack _knapsack)
@@ -99,7 +99,18 @@ public class instantiateManager : MonoBehaviour
         realparts.Clear();
         Destroy(knapscak);
     }
-
+    GameObject secondBoard;
+    //生成二级菜单
+    public void instanSecondBoard(secondBoardInfo secondboardInfo)
+    {
+        secondBoard = Instantiate(uiSecondBoardGOList[secondboardInfo.order], mapRootInfo.secondBoardPosi);
+        uiSecondBoard uis = secondBoard.GetComponent<uiSecondBoard>();
+        uis.EnterInit(secondboardInfo);
+    }
+    public void exitSecondBoard()
+    {
+        Destroy(secondBoard);
+    }
     //战斗——抽卡
     public void instanDrawACard(card playercard)
     {

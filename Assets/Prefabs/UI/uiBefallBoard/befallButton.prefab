@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8671216331186258952}
   - component: {fileID: 8671216331186258955}
   m_Layer: 5
-  m_Name: Button
+  m_Name: befallButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 386, y: 29.8}
+  m_SizeDelta: {x: 107.54, y: 36.71}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8671216331186258953
 CanvasRenderer:
@@ -155,8 +155,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 44.53, y: 0}
+  m_SizeDelta: {x: 56.2, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8671216331905909973
 CanvasRenderer:
@@ -193,7 +193,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
