@@ -14,6 +14,7 @@ public class befallinfo
         name = _name;
         textureOrder = textureint;
         describe = _describe;
+        buttons.Add(new Button_ExitBefall("普通的退出"));
     }
     public befallinfo(string _name, int textureint, string _describe,params buttoninfo[] buttoninfos)
     {

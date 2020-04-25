@@ -77,10 +77,16 @@ public class realPlace : MonoBehaviour
         }
     }
 
-    public void Init(place _place)
+    public void Init(PlaceNode _placenode)
     {
-        thisplace = _place;
-        spriteRenderer.sprite = gameManager.Instance.instantiatemanager.mapPlaceSprites[_place.imageorder];
+        thisplace = _placenode.thisplace;
+        placeNode = _placenode;
+        spriteRenderer.sprite = gameManager.Instance.instantiatemanager.mapPlaceSprites[thisplace.imageorder];
+    }
+    public void Init(place _placenode)
+    {
+        thisplace = _placenode;
+        spriteRenderer.sprite = gameManager.Instance.instantiatemanager.mapPlaceSprites[thisplace.imageorder];
     }
 
     public void OnMouseDown()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public abstract class place
 {
@@ -13,11 +14,11 @@ public class battlePlace : place
 {
     public monsterInfo monsterInfo;
     public int sceneId;
-    public battlePlace(monsterInfo monsterinfo=null,int sceneid=1)
+    public battlePlace(monsterInfo monsterinfo=null,int sceneid=0,int battleRank=1)
     {
         monsterInfo = monsterinfo;
         sceneId = sceneid;
-        imageorder = 1;
+        imageorder = battleRank;
     }
     public override void onclick()
     {
@@ -27,6 +28,17 @@ public class battlePlace : place
 
 }
 
+public class spacePlace : place
+{
+    public spacePlace()
+    {
+        imageorder = 7;
+    }
+    public override void onclick()
+    {
+        
+    }
+}
 public class startPlace : place
 {
     public startPlace()
@@ -43,7 +55,7 @@ public class shopPlace : place
 {
     public shopPlace()
     {
-
+        imageorder = 5;
     }
     public override void onclick()
     {
@@ -58,7 +70,7 @@ public class befallPlace : place
     public befallPlace(befallinfo beffalinfo)
     {
         m_befallinfo = beffalinfo;
-        imageorder = 2;
+        imageorder = 4;
     }
     public override void onclick()
     {
@@ -72,7 +84,9 @@ public class befallPlace : place
 
 public class sleepPlace : place
 {
-    public sleepPlace() { }
+    public sleepPlace() {
+        imageorder = 0;
+    }
     public override void onclick()
     {
         throw new System.NotImplementedException();
@@ -83,7 +97,7 @@ public class treasurePlace : place
 {
     public treasurePlace()
     {
-        imageorder = 2;
+        imageorder = 6;
     }
     public override void onclick()
     {
@@ -99,7 +113,7 @@ public enum PlaceState
     Used,       //过去的
 }
 [System.Serializable]
-public class PlaceNode
+public class PlaceNode: IComparable
 {
     public Vector2 PointPosi;
     public PlaceState placeState;
@@ -119,5 +133,10 @@ public class PlaceNode
     {
         nextNodeList.Add(placenode);
         placenode.lastNodeList.Add(this);
+    }
+    public int CompareTo(object obj)
+    {
+        PlaceNode p = obj as PlaceNode;
+        return this.PointPosi.x.CompareTo(p.PointPosi.x);
     }
 }

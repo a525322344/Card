@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6214252688899465388}
   - component: {fileID: 6214252688899465391}
   - component: {fileID: 6214252688899465385}
+  - component: {fileID: 2922839077239334161}
   m_Layer: 0
   m_Name: gamemanager
   m_TagString: Untagged
@@ -49,6 +50,8 @@ MonoBehaviour:
   playerinfo:
     playerDick: []
     MagicPartDick: []
+    playerKnapsack:
+      isexploits: 
     roundStartDrawCardNum: 5
     playerHealthMax: 100
     playerHealth: 100
@@ -59,6 +62,7 @@ MonoBehaviour:
   mapmanager: {fileID: 0}
   uimanager: {fileID: 0}
   InitControllBoard: {fileID: 11400000, guid: f2b122f796562a34d9e784dadc3b696c, type: 2}
+  CardEditorBoard: {fileID: 0}
   battleScene:
     m_Handle: 0
   mapScene:
@@ -96,6 +100,7 @@ MonoBehaviour:
   - {fileID: 5888839611947553217, guid: b8a1fffdee2d37643b90617a01b8d310, type: 3}
   - {fileID: 9148584800839085505, guid: 0cd54c6528d633944a6091a594569c7e, type: 3}
   placeGO: {fileID: 2426738077868084505, guid: 984eb8fafb51e3f40ad45e7a17dda140, type: 3}
+  loadGO: {fileID: 0}
   beFallSprites:
   - {fileID: 21300000, guid: fb4989e7e5d4d0f47ac63e102b591019, type: 3}
   mapPlaceSprites:
@@ -123,3 +128,27 @@ MonoBehaviour:
   uiBefallBoard: {fileID: 0}
   roundEndButton: {fileID: 0}
   uiVectorBoard: {fileID: 0}
+--- !u!114 &2922839077239334161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6214252688899465378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe3488608fb4d344bdc52d036eef602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapState: 0
+  realplaceList: []
+  placedistance: 5.5
+  allStoreyNum: 12
+  placeNumPerStorey: 4
+  vector3list:
+  - {x: 7.44, y: 4.11, z: 0}
+  - {x: 0.28, y: -1.18, z: 0}
+  - {x: -8.67, y: -3.65, z: 0}
+  - {x: 1.01, y: -8.83, z: 0}
+  - {x: -13.68, y: 4.02, z: 0}
+  - {x: -3.61, y: 5.29, z: 0}

@@ -307,6 +307,7 @@ namespace AllAsset
     public static class MapAsset
     {
         public static List<monsterInfo> AllMonsters = new List<monsterInfo>();
+        //public static
         public static string GetSceneStr(int id)
         {
             switch (id)
