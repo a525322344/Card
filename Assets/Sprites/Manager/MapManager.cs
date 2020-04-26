@@ -54,11 +54,13 @@ public class MapManager : MonoBehaviour
         realplaceList.Add(instantiatePlace(newplace));
         //事件地点
         secondBoardInfo secondboard = new secondBoardInfo(0,"部件配置");
-
         //befallinfo secondbefall = new befallinfo("整装待发", -1, null, new Button_OverSortPart());
         befallinfo newbefallinfo = new befallinfo("整装待发", 0, "英雄征途的第一步：整理背包",
             new Button_ExitBefall("直接出发"),new Button_SecondBoard(secondboard));
         newplace = new befallPlace(newbefallinfo);
+        realplaceList.Add(instantiatePlace(newplace));
+        //商店地点
+        newplace = new shopPlace();
         realplaceList.Add(instantiatePlace(newplace));
         /////////////////////////////分割线//////////////////////////////
 

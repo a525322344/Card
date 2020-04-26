@@ -4,8 +4,9 @@ using UnityEngine;
 public enum CardKind
 {
     PlayerCard,
-    AttackCard,
+    AttackCard, 
     SkillCard,
+    AbilityCard,
     StateCard,
     CurseCard
 }

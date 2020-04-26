@@ -73155,6 +73155,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2177771786091131045, guid: cfecafc1b77695744919550c94377212,
         type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: shopUiGO
+      value: 
+      objectReference: {fileID: 5183457121522521435, guid: 001af75d1369921428a60becca0dc56e,
+        type: 3}
     - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: outPlaceNumRange.x

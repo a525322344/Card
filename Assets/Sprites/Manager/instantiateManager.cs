@@ -38,6 +38,7 @@ public class instantiateManager : MonoBehaviour
     //map
     public GameObject placeGO;
     public GameObject loadGO;
+    public GameObject shopUiGO;
     public List<GameObject> uiSecondBoardGOList;
     public List<Sprite> beFallSprites = new List<Sprite>();
     public List<Sprite> mapPlaceSprites = new List<Sprite>();
@@ -111,6 +112,14 @@ public class instantiateManager : MonoBehaviour
     {
         Destroy(secondBoard);
     }
+    //商店
+    public void instanShopBoard()
+    {
+        GameObject shopBoard = Instantiate(shopUiGO, mapRootInfo.secondBoardPosi);
+        uiShopBoard uiShop = shopBoard.GetComponent<uiShopBoard>();
+        uiShop.Init();
+    }
+
     //战斗——抽卡
     public void instanDrawACard(card playercard)
     {

@@ -8,6 +8,7 @@ public enum RealCardState
     Other,
     RealCard,
     AwardCard,
+    SelectCard,
 }
 public enum HandCardState
 {
@@ -42,8 +43,7 @@ public class realCard : MonoBehaviour
     public realCost realcost;
 
     public card thisCard;
-    //UI
-    //public RectTransform realCardMesh;
+    public cardsToSelect cardselects;
 
     #region 表现参数
     // 旋转节点
@@ -100,7 +100,17 @@ public class realCard : MonoBehaviour
                 realcardUpdate();
                 break;
             case RealCardState.AwardCard:
-
+                break;
+            case RealCardState.SelectCard:
+                switch (handCardState)
+                {
+                    case HandCardState.Freedom:
+                        transform.DOScale(Vector3.one, 0.1f);
+                        break;
+                    case HandCardState.Enter:
+                        transform.DOScale(Vector3.one * 1.1f, 0.1f);
+                        break;
+                }
                 break;
         }
 
@@ -236,6 +246,26 @@ public class realCard : MonoBehaviour
             GameObject.Instantiate(costGO[playerCard.Cost], costtran);
             gameManager.Instance.battlemanager.setCardDescribe(this, new MagicPart());
         }
+        else if (realCardState == RealCardState.SelectCard)
+        {
+            thisCard = playerCard;
+            nameText.text = playerCard.Name;
+            describeText.text = playerCard.Describe;
+            switch (playerCard.Kind)
+            {
+                case CardKind.AttackCard:
+                    cardBoard.sprite = cardBoardSprites[0];
+                    cardKindIcon.sprite = cardKindIconSprites[0];
+                    break;
+                case CardKind.SkillCard:
+                    cardBoard.sprite = cardBoardSprites[1];
+                    cardKindIcon.sprite = cardKindIconSprites[1];
+                    break;
+            }
+            cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 0;
+            GameObject.Instantiate(costGO[playerCard.Cost], costtran);
+            handCardState = HandCardState.Freedom;
+        }
     }
 
     /// <summary>
@@ -312,75 +342,123 @@ public class realCard : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        
-        switch (handCardState)
+        switch (realCardState)
         {
-            case HandCardState.Enter:
-                break;
-            case HandCardState.Freedom:
-                if (handcardControll.selectedCard == null)
+            case RealCardState.RealCard:
+                switch (handCardState)
                 {
-                    handCardState = HandCardState.Enter;
-                    transform.position = new Vector3(transform.position.x, init_cardLocalPosiY + enter_cardPosiYSet, transform.position.z);
+                    case HandCardState.Enter:
+                        break;
+                    case HandCardState.Freedom:
+                        if (handcardControll.selectedCard == null)
+                        {
+                            handCardState = HandCardState.Enter;
+                            transform.position = new Vector3(transform.position.x, init_cardLocalPosiY + enter_cardPosiYSet, transform.position.z);
+                        }
+                        break;
+                    case HandCardState.WaitToSelectFree:
+                        handCardState = HandCardState.WaitToSelectEnter;
+                        transform.position = new Vector3(transform.position.x, init_cardLocalPosiY + enter_cardPosiYSet, transform.position.z);
+                        break;
+                    case HandCardState.Select:
+
+                        break;
                 }
                 break;
-            case HandCardState.WaitToSelectFree:
-                handCardState = HandCardState.WaitToSelectEnter;
-                transform.position = new Vector3(transform.position.x, init_cardLocalPosiY + enter_cardPosiYSet, transform.position.z);
+            case RealCardState.AwardCard:
                 break;
-            case HandCardState.Select:
-
+            case RealCardState.SelectCard:
+                switch (handCardState)
+                {
+                    case HandCardState.Freedom:
+                    case HandCardState.Enter:
+                        handCardState = HandCardState.Enter;
+                        break;
+                }
                 break;
         }
-         
     }
     private void OnMouseExit()
     {
-        switch (handCardState)
+        switch (realCardState)
         {
-            case HandCardState.Enter:
-            case HandCardState.Freedom:
-                if (handcardControll.selectedCard == null)
+            case RealCardState.RealCard:
+                switch (handCardState)
                 {
-                    handCardState = HandCardState.Freedom;
-                }               
+                    case HandCardState.Enter:
+                    case HandCardState.Freedom:
+                        if (handcardControll.selectedCard == null)
+                        {
+                            handCardState = HandCardState.Freedom;
+                        }
+                        break;
+                    case HandCardState.WaitToSelectEnter:
+                    case HandCardState.WaitToSelectFree:
+                        handCardState = HandCardState.WaitToSelectFree;
+                        break;
+                    case HandCardState.Select:
+                        break;
+                }
                 break;
-            case HandCardState.WaitToSelectEnter:
-            case HandCardState.WaitToSelectFree:
-                handCardState = HandCardState.WaitToSelectFree;
+            case RealCardState.AwardCard:
                 break;
-            case HandCardState.Select:
+            case RealCardState.SelectCard:
+                switch (handCardState)
+                {
+                    case HandCardState.Freedom:
+                    case HandCardState.Enter:
+                        handCardState = HandCardState.Freedom;
+                        break;
+                }
                 break;
         }
+
     }
     private void OnMouseDown()
     {
-        switch (handCardState)
+        switch (realCardState)
         {
-            case HandCardState.Enter:
-                handCardState = HandCardState.Select;
-                cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 1;
-                handcardControll.SetSelectCard(this);
-                break;
-            case HandCardState.WaitToSelectEnter:
-                //被选到
-                if(gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard.SelectOne(handorder-1, out selection))
+            case RealCardState.RealCard:
+                switch (handCardState)
                 {
-                    handCardState = HandCardState.InSelectBoard;
+                    case HandCardState.Enter:
+                        handCardState = HandCardState.Select;
+                        cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                        handcardControll.SetSelectCard(this);
+                        break;
+                    case HandCardState.WaitToSelectEnter:
+                        //被选到
+                        if (gameManager.Instance.battlemanager.battleInfo.realWaitSelectCard.SelectOne(handorder - 1, out selection))
+                        {
+                            handCardState = HandCardState.InSelectBoard;
+                        }
+                        break;
+                    case HandCardState.InSelectBoard:
+                        //取消选择
+                        selection.b_isNull = true;
+                        selection.saveCardnum = -1;
+                        selection = null;
+                        handCardState = HandCardState.WaitToSelectFree;
+                        break;
+                    case HandCardState.Freedom:
+                        break;
+                    case HandCardState.Select:
+
+                        break;
                 }
                 break;
-            case HandCardState.InSelectBoard:
-                //取消选择
-                selection.b_isNull = true;
-                selection.saveCardnum = -1;
-                selection = null;
-                handCardState = HandCardState.WaitToSelectFree;
+            case RealCardState.AwardCard:
                 break;
-            case HandCardState.Freedom:               
-                break;
-            case HandCardState.Select:
-
+            case RealCardState.SelectCard:
+                switch (handCardState)
+                {
+                    case HandCardState.Freedom:
+                    case HandCardState.Enter:
+                        cardselects.selecThisCard(thisCard as playerCard);
+                        break;
+                }
                 break;
         }
+
     }
 }

@@ -298,6 +298,9 @@ namespace AllAsset
     {
         //从表格里获得的所有卡
         public static List<playerCard> AllIdCards = new List<playerCard>();
+        public static List<playerCard> AllUpgradeCards = new List<playerCard>();
+        public static List<playerCard> attactCards = new List<playerCard>();
+        public static List<playerCard> skillCards = new List<playerCard>();
     }
     //声明所有的魔力部件
     public static class magicpartAsset

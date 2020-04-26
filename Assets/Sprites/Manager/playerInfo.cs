@@ -15,7 +15,7 @@ public class playerInfo
     public int roundStartDrawCardNum = 5;
     public int playerHealthMax = 100;
     public int playerHealth = 100;
-
+    public int money = 80;
 
     public void AddNewCard(playerCard card)
     {

@@ -60,7 +60,8 @@ public class shopPlace : place
     public override void onclick()
     {
         //进入商店
-        Debug.Log("进入商店");
+        instantiateManager.instance.instanShopBoard();
+        gameManager.Instance.mapmanager.mapState = MapState.EventWindow;
     }
 }
 
