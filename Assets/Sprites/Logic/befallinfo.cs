@@ -14,6 +14,7 @@ public class befallinfo
         name = _name;
         textureOrder = textureint;
         describe = _describe;
+        buttons.Add(new Button_ExitBefall("普通的退出"));
     }
     public befallinfo(string _name, int textureint, string _describe,params buttoninfo[] buttoninfos)
     {
@@ -30,6 +31,23 @@ public class befallinfo
     public int textureOrder;
     public string describe;
     public List<buttoninfo> buttons = new List<buttoninfo>();
+}
+public class secondBoardInfo
+{
+    public int order;
+    public string describe;
+    public secondBoardInfo(int _o)
+    {
+        order = _o;
+    }
+    public secondBoardInfo(int _o,string str)
+    {
+        describe = str;
+        order = _o;
+    }
+    //作为second Board
+    public toDo onEnter;
+    public toDo onExit;
 }
 
 public abstract class buttoninfo
@@ -66,19 +84,20 @@ public class Button_ExitBefall : buttoninfo
     }
 }
 //整理背包
-public class Button_SortPart : Button_NextBeffal
-{
+//public class Button_SortPart : Button_NextBeffal
+//{
 
-    public Button_SortPart(befallinfo nextBefallInfo)
-    {
-        nextBefall = nextBefallInfo;
-        buttonDescribe = "好，做好准备";
-        buttonFun += new buttonTo(() =>
-        {
-            gameManager.Instance.instantiatemanager.instanSortPart(gameManager.Instance.playerinfo.MagicPartDick,gameManager.Instance.playerinfo.playerKnapsack);
-        });
-    }
-}
+//    public Button_SortPart(befallinfo nextBefallInfo)
+//    {
+//        nextBefall = nextBefallInfo;
+//        buttonDescribe = "好，做好准备";
+//        buttonFun += new buttonTo(() =>
+//        {
+//            gameManager.Instance.instantiatemanager.instanSortPart(gameManager.Instance.playerinfo.MagicPartDick,gameManager.Instance.playerinfo.playerKnapsack);
+//        });
+//    }
+//}
+//进入下一个事件
 public class Button_NextBeffal:buttoninfo
 {
     public befallinfo nextBefall;
@@ -88,6 +107,21 @@ public class Button_NextBeffal:buttoninfo
         {
             gameManager.Instance.uimanager.uiBefallBoard.EnterEventBoard(nextBefall);
         });
+    }
+}
+//进入下一级页面
+public class Button_SecondBoard : buttoninfo
+{
+    public secondBoardInfo secondInfo;
+    public Button_SecondBoard(secondBoardInfo secondBoardInfo)
+    {
+        secondInfo = secondBoardInfo;
+        buttonDescribe = secondBoardInfo.describe;
+        buttonFun = new buttonTo(() =>
+          {
+              gameManager.Instance.uimanager.uiBefallBoard.ExitEventBoard();
+              gameManager.Instance.instantiatemanager.instanSecondBoard(secondInfo);
+          });
     }
 }
 

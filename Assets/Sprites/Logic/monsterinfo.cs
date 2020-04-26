@@ -121,3 +121,35 @@ public class monInfo_usagi : monsterInfo
         });
     }
 }
+
+public class monInfo_Sample : monsterInfo
+{
+    private int actionorder = 0;
+    public monInfo_Sample(int damagenum)
+    {
+        name = "" + damagenum + "级怪物";
+        health = damagenum * 5+10;
+        monsterLevel = damagenum;
+        actionList.Add(new actionHurt(damagenum));
+        actionList.Add(new actionAdmix(new actionArmor(damagenum), new actionHurt(damagenum)));
+        actionList.Add(new actionHurt(damagenum * 2));
+
+        //顺序选择
+        selectAction = new selectWay((int x) =>
+        {
+            actionAbstract action;
+            if (actionorder < actionList.Count - 1)
+            {
+                action = actionList[actionorder];
+                actionorder++;
+            }
+            else
+            {
+                action = actionList[0];
+                actionorder = 1;
+            }
+            return action;
+            //actionList.Remove(new actionAdmix(new actionArmor(12), new actionHurt(9)));
+        });
+    }
+}

@@ -98,7 +98,7 @@ public class gameManager : MonoBehaviour
 
     public void mapManagerInit()
     {
-        mapmanager = gameObject.AddComponent<MapManager>();
+        mapmanager = gameObject.GetComponent<MapManager>();
         instantiatemanager.mapRootInfo= GameObject.Find("root").GetComponent<MapRootInfo>();
         mapmanager.InitMap();
         uimanager.InitMapUI();

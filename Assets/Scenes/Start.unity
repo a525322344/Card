@@ -73069,6 +73069,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
+      propertyPath: mapPlaceSprites.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: uiSecondBoardGOList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
       propertyPath: stateSprites.Array.data[1]
       value: 
       objectReference: {fileID: 21300000, guid: e0434b18f2c007f4eb559eb0dc7b9e6e,
@@ -73085,6 +73095,111 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1027311187460179986, guid: 169c93cef30b18f45850a8a57d59cf76,
         type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 799a4c4e1badb5f468f9475626c15884,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 5af8186575d130c44a76fe68cf732c7c,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 248c6b62186f3554c9e400c2a12d5e85,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: e4e5f7253bfaf764e89db144269b90cb,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceSprites.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300000, guid: 88e6611239d3c374aa6282e11009dd35,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceSprites.Array.data[6]
+      value: 
+      objectReference: {fileID: 21300000, guid: 692074a94d9d78246b1917150694294f,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceSprites.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: 328247feab3ba76478ab701bbab290c4,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceSprites.Array.data[7]
+      value: 
+      objectReference: {fileID: 21300000, guid: 7890fa5ff57ca8348bafd838b7c2b9d0,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: uiSecondBoard
+      value: 
+      objectReference: {fileID: 2468489462988522506, guid: 6ff2385ac850b9346860825373883278,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: uiSecondBoardGOList.Array.data[0]
+      value: 
+      objectReference: {fileID: 2177771786091131045, guid: cfecafc1b77695744919550c94377212,
+        type: 3}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: outPlaceNumRange.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: outPlaceNumRange.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: deleteNodeNumRange.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: deleteNodeNumRange.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: placedistanceRange.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: placedistanceRange.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: addLinklineNumRange.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: addLinklineNumRange.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: placeNumPerStorey
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 362da131cad69c3408bab7cc127cafeb, type: 3}
 --- !u!1001 &7068954691501731757
