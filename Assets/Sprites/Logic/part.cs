@@ -66,6 +66,7 @@ public class LinkPart : MagicPart
 [System.Serializable]
 public class MagicPart : Part
 {
+    public int rank;
     //功能信息
     public int gridsum;
     public int gridpower;

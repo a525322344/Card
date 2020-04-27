@@ -90,7 +90,7 @@ public class gameManager : MonoBehaviour
     public void GameStartInit()
     {
         //初始化玩家数据
-        playerinfo = new playerInfo();
+        //playerinfo = new playerInfo();
         playerinfo.PlayerDickInit(InitControllBoard.carddeckInit);
         playerinfo.MagicPartDickInit();
         playerinfo.KnapSackInit(InitControllBoard.knapsackLaticInit);

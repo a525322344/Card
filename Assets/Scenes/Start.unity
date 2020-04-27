@@ -73062,6 +73062,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 8927315ad9a26d74cab3dcdfb5b9e202,
         type: 2}
+    - target: {fileID: 6214252688899465388, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: playerinfo.money
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: stateSprites.Array.size

@@ -113,14 +113,21 @@ public class Button_NextBeffal:buttoninfo
 public class Button_SecondBoard : buttoninfo
 {
     public secondBoardInfo secondInfo;
-    public Button_SecondBoard(secondBoardInfo secondBoardInfo)
+    public Button_SecondBoard(secondBoardInfo secondBoardInfo,bool exitToMap=true)
     {
         secondInfo = secondBoardInfo;
         buttonDescribe = secondBoardInfo.describe;
         buttonFun = new buttonTo(() =>
           {
               gameManager.Instance.uimanager.uiBefallBoard.ExitEventBoard();
-              gameManager.Instance.instantiatemanager.instanSecondBoard(secondInfo);
+              GameObject sbui= gameManager.Instance.instantiatemanager.instanSecondBoard(secondInfo);
+              if (exitToMap)
+              {
+                  sbui.GetComponent<uiSecondBoard>().exitToDo += () =>
+                  {
+                      gameManager.Instance.mapmanager.mapState = MapState.MainMap;
+                  };
+              }
           });
     }
 }

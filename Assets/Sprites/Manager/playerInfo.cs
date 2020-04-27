@@ -15,11 +15,15 @@ public class playerInfo
     public int roundStartDrawCardNum = 5;
     public int playerHealthMax = 100;
     public int playerHealth = 100;
-    public int money = 80;
+    public int money=200;
 
     public void AddNewCard(playerCard card)
     {
         playerDick.Add(card);
+    }
+    public void AddNewPart(MagicPart magic)
+    {
+        MagicPartDick.Add(magic);
     }
     //初始化玩家的开局卡组
     public void PlayerDickInit(List<int> ts)

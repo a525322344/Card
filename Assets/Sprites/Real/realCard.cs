@@ -43,7 +43,7 @@ public class realCard : MonoBehaviour
     public realCost realcost;
 
     public card thisCard;
-    public cardsToSelect cardselects;
+    public thingToSelect<playerCard> cardselects;
 
     #region 表现参数
     // 旋转节点

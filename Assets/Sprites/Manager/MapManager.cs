@@ -63,25 +63,28 @@ public class MapManager : MonoBehaviour
         newplace = new shopPlace();
         realplaceList.Add(instantiatePlace(newplace));
         /////////////////////////////分割线//////////////////////////////
+        RandomGenerateMap();
+    }
 
-
+    private void RandomGenerateMap()
+    {
         PlaceNode startPlaceNode = new PlaceNode(new startPlace(), new Vector2(2.5f, 0));
         intListDic.Add(0, new List<PlaceNode>() { startPlaceNode });
         placeNodeDic.Add(startPlaceNode.PointPosi, startPlaceNode);
-        PlaceNode endPlaceNode = new PlaceNode(new battlePlace(new monInfo_Cat(), 0,3), new Vector2(2.5f, allStoreyNum));
+        PlaceNode endPlaceNode = new PlaceNode(new battlePlace(new monInfo_Cat(), 0, 3), new Vector2(2.5f, allStoreyNum));
         intListDic.Add(allStoreyNum, new List<PlaceNode>() { endPlaceNode });
         placeNodeDic.Add(endPlaceNode.PointPosi, endPlaceNode);
         //普通战斗
-        place battleplace = new battlePlace(new monInfo_Cat(), 3,1);
+        place battleplace = new battlePlace(new monInfo_Cat(), 3, 1);
         //普通事件
         place befallplace = new befallPlace(new befallinfo("普通事件", 0, "普通的事件"));
         //空白
         place spaceplace = new spacePlace();
-        for(int storey = 1; storey < allStoreyNum; storey++)
+        for (int storey = 1; storey < allStoreyNum; storey++)
         {
             List<PlaceNode> list = new List<PlaceNode>();
             intListDic.Add(storey, list);
-            for(int order = 1; order <= placeNumPerStorey; order++)
+            for (int order = 1; order <= placeNumPerStorey; order++)
             {
                 PlaceNode placeNode = new PlaceNode(spaceplace, new Vector2(order, storey));
                 placeNodeDic.Add(new Vector2(order, storey), placeNode);
@@ -109,12 +112,12 @@ public class MapManager : MonoBehaviour
 
         //改变节点
         //添加边路
-        int outplacenum = (int)Random.Range(outPlaceNumRange.x, outPlaceNumRange.y+1);
+        int outplacenum = (int)Random.Range(outPlaceNumRange.x, outPlaceNumRange.y + 1);
         //左边
         int startstorey = (int)Random.Range(2, allStoreyNum - 2 - outplacenum);
-        for(int i = 0; i < outplacenum;i++)
+        for (int i = 0; i < outplacenum; i++)
         {
-            Vector2 posi=new Vector2(0, startstorey +i);
+            Vector2 posi = new Vector2(0, startstorey + i);
             PlaceNode placeNode = new PlaceNode(spaceplace, posi);
             placeNodeDic.Add(posi, placeNode);
             intListDic[startstorey + i].Add(placeNode);
@@ -125,7 +128,7 @@ public class MapManager : MonoBehaviour
         PlaceNode outEndNode = placeNodeDic[new Vector2(0, startstorey + outplacenum - 1)];
         placeNodeDic[new Vector2(1, startstorey - 1)].LinkNode(outStartNode);
         outEndNode.LinkNode(placeNodeDic[new Vector2(1, startstorey + outplacenum)]);
-        for(int i = 0; i < outplacenum - 1; i++)
+        for (int i = 0; i < outplacenum - 1; i++)
         {
             Vector2 posi = new Vector2(0, startstorey + i);
             placeNodeDic[posi].LinkNode(placeNodeDic[posi + Vector2.up]);
@@ -135,15 +138,15 @@ public class MapManager : MonoBehaviour
         outplacenum = (int)Random.Range(outPlaceNumRange.x, outPlaceNumRange.y + 1);
         if (startstorey + lastoutnum / 2 < allStoreyNum / 2)
         {
-            startstorey = (int)Random.Range(startstorey+lastoutnum+2, allStoreyNum - 2 - outplacenum);
+            startstorey = (int)Random.Range(startstorey + lastoutnum + 2, allStoreyNum - 2 - outplacenum);
         }
         else
         {
-            startstorey = (int)Random.Range(2, startstorey-2);
+            startstorey = (int)Random.Range(2, startstorey - 2);
         }
         for (int i = 0; i < outplacenum; i++)
         {
-            Vector2 posi = new Vector2(placeNumPerStorey+1, startstorey + i);
+            Vector2 posi = new Vector2(placeNumPerStorey + 1, startstorey + i);
             PlaceNode placeNode = new PlaceNode(spaceplace, posi);
             placeNodeDic.Add(posi, placeNode);
             intListDic[startstorey + i].Add(placeNode);
@@ -228,14 +231,14 @@ public class MapManager : MonoBehaviour
         }
         //删除节点
         int deleteNodeNum = (int)Random.Range(deleteNodeNumRange.x, deleteNodeNumRange.y + 1);
-        for(int i = 0; i < deleteNodeNum;)
+        for (int i = 0; i < deleteNodeNum;)
         {
             PlaceNode todeleteNode = ListOperation.RandomValue<PlaceNode>(placeNodeList);
 
-            if (CanDeleteNode(todeleteNode))                                 
+            if (CanDeleteNode(todeleteNode))
             {
                 //之前
-                foreach(PlaceNode lastnode in todeleteNode.lastNodeList)
+                foreach (PlaceNode lastnode in todeleteNode.lastNodeList)
                 {
                     lastnode.nextNodeList.Remove(todeleteNode);
                     if (lastnode.nextNodeList.Count == 0)
@@ -245,7 +248,7 @@ public class MapManager : MonoBehaviour
                         nextvectors.Add(lastnode.PointPosi + new Vector2(0, 1));
                         nextvectors.Add(lastnode.PointPosi + new Vector2(1, 1));
                         nextvectors.Remove(todeleteNode.PointPosi);
-                        Vector2 tolinknextV=new Vector2(1,1);
+                        Vector2 tolinknextV = new Vector2(1, 1);
                         do
                         {
                             if (nextvectors.Count == 0)
@@ -261,7 +264,7 @@ public class MapManager : MonoBehaviour
                 }
                 //之后
                 Debug.Log(todeleteNode.nextNodeList.Count);
-                foreach(PlaceNode nextnode in todeleteNode.nextNodeList)
+                foreach (PlaceNode nextnode in todeleteNode.nextNodeList)
                 {
                     nextnode.lastNodeList.Remove(todeleteNode);
                     if (nextnode.lastNodeList.Count == 0)
@@ -312,10 +315,9 @@ public class MapManager : MonoBehaviour
                     vp.Value.realplaceTran);
                 LineRenderer linerender = line.GetComponent<LineRenderer>();
                 linerender.SetPosition(0, new Vector3(vp.Value.realplaceTran.position.x, vp.Value.realplaceTran.position.y, -0.5f));
-                linerender.SetPosition(1, new Vector3(placeNode.realplaceTran.position.x, placeNode.realplaceTran.position.y, -0.5f));         
+                linerender.SetPosition(1, new Vector3(placeNode.realplaceTran.position.x, placeNode.realplaceTran.position.y, -0.5f));
             }
         }
-
 
     }
     bool CanDeleteNode(PlaceNode placeNode)

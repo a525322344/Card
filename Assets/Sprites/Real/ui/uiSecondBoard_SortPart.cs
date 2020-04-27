@@ -34,7 +34,7 @@ public class uiSecondBoard_SortPart : uiSecondBoard
                 GameObject part = Instantiate(partGO, partPosition);
                 part.transform.localPosition = Vector3.right * partDistance * j;
                 realpart rp = part.GetComponent<realpart>();
-                rp.Init(magicParts[i], GameState.MapSence, partPosition);
+                rp.Init(magicParts[i], RealPartState.Sort, partPosition);
                 j++;
             }
         }
@@ -50,7 +50,7 @@ public class uiSecondBoard_SortPart : uiSecondBoard
             rp.meshTran.gameObject.SetActive(false);
             rp.InitInstall(rk.laticePairs[i.Key].transform);
             //lastRealLatice.InstallPart(thisMagicPart, out installPosiTran);
-            rp.Init(i.Value, GameState.MapSence, partPosition);
+            rp.Init(i.Value, RealPartState.Sort, partPosition);
         }
 
     }

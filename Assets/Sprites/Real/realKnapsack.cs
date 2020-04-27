@@ -21,11 +21,6 @@ public class realKnapsack : MonoBehaviour
     public List<realpart> realparts = new List<realpart>();
     public List<Transform> overcubes = new List<Transform>();
 
-
-
-
-
-
     #region 用于中转
     private Dictionary<Vector2, latice> lactices = new Dictionary<Vector2, latice>();
 #endregion
@@ -147,7 +142,7 @@ public class realKnapsack : MonoBehaviour
                 rp.meshTran.gameObject.SetActive(false);
                 //rp.InitInstall(rk.laticePairs[centerPart.Key].transform);
                 //lastRealLatice.InstallPart(thisMagicPart, out installPosiTran);
-                rp.Init(centerPart.Value, GameState.BattleSence,null);
+                rp.Init(centerPart.Value, RealPartState.Battle, null);
                 realparts.Add(rp);
                 foreach (var vecGrid in thisknapsack.installParts[centerPart.Key].Vector2GridRotate)
                 {

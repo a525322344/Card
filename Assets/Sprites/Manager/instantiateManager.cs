@@ -69,7 +69,7 @@ public class instantiateManager : MonoBehaviour
                 GameObject part = Instantiate(partGO, mapRootInfo.sortPartPosition);
                 part.transform.localPosition = Vector3.down * mapRootInfo.sortPartDistance * j;
                 realpart rp = part.GetComponent<realpart>();
-                rp.Init(magicParts[i], GameState.MapSence, mapRootInfo.sortPartPosition);
+                rp.Init(magicParts[i], RealPartState.Sort, mapRootInfo.sortPartPosition);
                 j++;
                 realparts.Add(rp);
             }
@@ -87,7 +87,7 @@ public class instantiateManager : MonoBehaviour
             realparts.Add(rp);
             rp.InitInstall(rk.laticePairs[i.Key].transform);
             //lastRealLatice.InstallPart(thisMagicPart, out installPosiTran);
-            rp.Init(i.Value, GameState.MapSence, mapRootInfo.sortPartPosition);
+            rp.Init(i.Value, RealPartState.Sort, mapRootInfo.sortPartPosition);
         }
 
     }
@@ -102,11 +102,12 @@ public class instantiateManager : MonoBehaviour
     }
     GameObject secondBoard;
     //生成二级菜单
-    public void instanSecondBoard(secondBoardInfo secondboardInfo)
+    public GameObject instanSecondBoard(secondBoardInfo secondboardInfo)
     {
         secondBoard = Instantiate(uiSecondBoardGOList[secondboardInfo.order], mapRootInfo.secondBoardPosi);
         uiSecondBoard uis = secondBoard.GetComponent<uiSecondBoard>();
         uis.EnterInit(secondboardInfo);
+        return secondBoard;
     }
     public void exitSecondBoard()
     {

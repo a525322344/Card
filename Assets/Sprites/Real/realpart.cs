@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-
+public enum RealPartState
+{
+    Battle,
+    Sort,
+    Select,
+}
 public enum SortState
 {
     Free,
+    Enter,
     Select,
     Install,
 }
@@ -20,7 +26,8 @@ public class realpart : MonoBehaviour
     public Text text;
     //战斗相关类
     public MagicPart thisMagicPart;
-    public GameState realPartState;
+    //public GameState realPartState;
+    public RealPartState realPartState;
     public SortState sortState;
     #region linkPart
     private MagicPart linkSavePart;
@@ -44,140 +51,52 @@ public class realpart : MonoBehaviour
     public Dictionary<grid, realgrid> gridRealgridPairs = new Dictionary<grid, realgrid>();
     public bool b_ShowOutlineInMap;
     public float installpartZOffset;
-
     private float initpositionZ;
+    //select
+    public thingToSelect<MagicPart> partToSelect;
 
     //用于创建时调用初始化
-    public void Init(MagicPart magicPart,GameState state,Transform father)
+    public void Init(MagicPart magicPart, RealPartState state,Transform father=null)
     {
         freeFater = father;
-        if (state == GameState.BattleSence)
+        realPartState = state;
+        thisMagicPart = magicPart;
+        //根据magicpart中的grid表，创建realgird
+        foreach (var g in thisMagicPart.Vector2GridPairs)
+        {
+            //创建realgril实例添加realgril
+            GameObject realgridObject = Instantiate(realgridMode, gridFolder);
+            realgrid newrealgrid = realgridObject.GetComponent<realgrid>();
+            newrealgrid.Init(g.Value, this);
+            newrealgrid.gridOutlineCS.Sides = OutlineSides(g.Key);
+            realgridObject.GetComponent<Transform>().localPosition = new Vector3(g.Key.x, g.Key.y, 0) * distance;
+            newrealgrid.changeMaterial();
+
+            gridRealgridPairs.Add(g.Value, newrealgrid);
+        }
+        text.text = thisMagicPart.describe;
+
+        if (state == RealPartState.Battle)
         {
             b_ShowOutlineInMap = true;
             meshTran.gameObject.SetActive(false);
-            realPartState = state;
-            thisMagicPart = magicPart;
             linkSavePart = thisMagicPart;
-            //根据magicpart中的grid表，创建realgird
-            foreach (var g in thisMagicPart.Vector2GridPairs)
-            {
-                //创建realgril实例添加realgril
-                GameObject realgridObject = Instantiate(realgridMode, gridFolder);
-                realgrid newrealgrid = realgridObject.GetComponent<realgrid>();
-                newrealgrid.Init(g.Value, this);
-                newrealgrid.gridOutlineCS.Sides = OutlineSides(g.Key);
-                realgridObject.GetComponent<Transform>().localPosition = new Vector3(g.Key.x, g.Key.y, 0) * distance;
-                newrealgrid.changeMaterial();
-
-                gridRealgridPairs.Add(g.Value, newrealgrid);
-            }
-            text.text = thisMagicPart.describe;
         }
-        else if(state == GameState.MapSence)
+        else if(state == RealPartState.Sort)
         {
             initpositionZ=transform.position.z;
-            realPartState = state;
-            thisMagicPart = magicPart;
-            //根据magicpart中的grid表，创建realgird
-            foreach (var g in thisMagicPart.Vector2GridPairs)
-            {
-                //创建realgril实例添加realgril
-                GameObject realgridObject = Instantiate(realgridMode, gridFolder);
-                realgrid newrealgrid = realgridObject.GetComponent<realgrid>();
-                newrealgrid.Init(g.Value, this);
-                newrealgrid.gridOutlineCS.Sides = OutlineSides(g.Key);
-                realgridObject.GetComponent<Transform>().localPosition = new Vector3(g.Key.x, g.Key.y, 0) * distance;
-                newrealgrid.changeMaterial();
-
-                gridRealgridPairs.Add(g.Value, newrealgrid);
-            }
-            text.text = thisMagicPart.describe;
+            GetComponent<BoxCollider>().size = new Vector3(100, 100, 2);
+        }
+        else if (state == RealPartState.Select)
+        {
+            b_ShowOutlineInMap = false;
+            sortState = SortState.Free;
+            GetComponent<BoxCollider>().size = new Vector3(300, 300, 2);
         }
         RotateRealPart();
     }
 
     private List<realgrid> selectgrids = new List<realgrid>();
-    //public bool CanCostPlay(grid bygrid,card selectcard)
-    //{
-    //    bool result=true;
-    //    int gridx = (int)bygrid.position.x;
-    //    int gridy = (int)bygrid.position.y;
-    //    //遍历selectcard,找到有1的cost块
-    //    for(int i = 0; i < 3; i++)
-    //    {
-    //        for(int j = 0; j < 3; j++)
-    //        {
-    //            //
-    //            if (selectcard.costVector2[i, j] == 1)
-    //            {
-    //                int costx = j - 1;
-    //                int costy = i - 1;
-    //                int fitx = gridx + costx;
-    //                int fity = gridy + costy;
-    //                if (thisMagicPart.Vector2GridRotate.ContainsKey(new Vector2(fitx, fity)))
-    //                {
-    //                    grid fitgrid = thisMagicPart.Vector2GridRotate[new Vector2(fitx, fity)];
-    //                    if (fitgrid.Opening && fitgrid.Power)
-    //                    {
-    //                        selectgrids.Add(gridRealgridPairs[fitgrid]);
-    //                    }
-    //                    else
-    //                    {
-    //                        result = false;
-    //                    }
-    //                }
-    //                else
-    //                {
-    //                    result = false;
-    //                }
-    //            }
-    //        }
-    //    }
-    //    if (!result)
-    //    {
-    //        selectgrids.Clear();
-    //    }
-    //    return result;
-    //}
-
-    //public void SetDownCard(card _selectcard)
-    //{
-    //    if (_selectcard == null)
-    //    {
-    //        for(int i = 0; i < selectgrids.Count; i++)
-    //        {
-    //            selectgrids[i].SetDownCard(null);
-    //        }
-    //        selectgrids.Clear();
-    //        b_readyToPlayACard = false;
-    //        selectedCard = null;
-    //        //部件的激活与睡眠转移到了CardEvent中
-    //        //thisMagicPart.sleepPart();
-
-    //    }
-    //    else
-    //    {
-    //        for (int i = 0; i < selectgrids.Count; i++)
-    //        {
-    //            selectgrids[i].SetDownCard(_selectcard);
-    //        }
-    //        b_readyToPlayACard = true;
-    //        selectedCard = _selectcard;
-
-    //        gameManager.Instance.battlemanager.SetSelectPart(this);
-    //        //部件的激活与睡眠转移到了CardEvent中
-    //        //thisMagicPart.activatePart();
-           
-    //    }
-    //}
-    //public void UseSelectGrids()
-    //{
-    //    for(int i = 0; i < selectgrids.Count; i++)
-    //    {
-    //        selectgrids[i].thisgrid.Power = false;
-    //        selectgrids[i].changeMaterial();
-    //    }
-    //}
     public void PowerRealPart()
     {
         thisMagicPart.PowerAllGrid();
@@ -229,9 +148,9 @@ public class realpart : MonoBehaviour
     {
         switch (realPartState)
         {
-            case GameState.BattleSence:
+            case RealPartState.Battle:
                 break;
-            case GameState.MapSence:
+            case RealPartState.Sort:
                 switch (sortState)
                 {
                     case SortState.Free:
@@ -298,6 +217,17 @@ public class realpart : MonoBehaviour
                         break;
                 }
                 break;
+            case RealPartState.Select:
+                switch (sortState)
+                {
+                    case SortState.Free:
+                        transform.DOScale(Vector3.one, 0.1f);
+                        break;
+                    case SortState.Enter:
+                        transform.DOScale(Vector3.one*1.1f, 0.1f);
+                        break;
+                }
+                break;
         }
     }
 
@@ -322,7 +252,7 @@ public class realpart : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (realPartState == GameState.MapSence)
+        if (realPartState == RealPartState.Sort)
         {
             switch (sortState)
             {
@@ -347,11 +277,46 @@ public class realpart : MonoBehaviour
                     break;
             }
         }
+        else if (realPartState == RealPartState.Select)
+        {
+            switch (sortState)
+            {
+                case SortState.Free:
+                case SortState.Enter:
+                    partToSelect.onSelectcard(thisMagicPart);
+                    break;
+            }
+        }
     }
-
+    private void OnMouseEnter()
+    {
+        if (realPartState == RealPartState.Select)
+        {
+            switch (sortState)
+            {
+                case SortState.Free:
+                case SortState.Enter:
+                    sortState = SortState.Enter;
+                    break;
+            }
+        }
+    }
+    private void OnMouseExit()
+    {
+        if (realPartState == RealPartState.Select)
+        {
+            switch (sortState)
+            {
+                case SortState.Free:
+                case SortState.Enter:
+                    sortState = SortState.Free;
+                    break;
+            }
+        }
+    }
     private void OnMouseUp()
     {
-        if (realPartState == GameState.MapSence)
+        if (realPartState == RealPartState.Sort)
         {
             switch (sortState)
             {
