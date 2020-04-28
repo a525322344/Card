@@ -73080,7 +73080,7 @@ PrefabInstance:
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: uiSecondBoardGOList.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
@@ -73165,6 +73165,12 @@ PrefabInstance:
       propertyPath: shopUiGO
       value: 
       objectReference: {fileID: 5183457121522521435, guid: 001af75d1369921428a60becca0dc56e,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: uiSecondBoardGOList.Array.data[1]
+      value: 
+      objectReference: {fileID: 675200926777136499, guid: 01e6895b355a38946bb58f6fcb7434d2,
         type: 3}
     - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}

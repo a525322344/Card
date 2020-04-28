@@ -15,6 +15,7 @@ public enum SortState
     Enter,
     Select,
     Install,
+    Other,
 }
 public class realpart : MonoBehaviour
 {

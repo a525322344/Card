@@ -119,7 +119,7 @@ public class battleManager : MonoBehaviour
     public void startBattale()
     {
         //初始化战斗卡组/洗牌
-        dickInGame = new List<playerCard>(playerinfo.playerDick);
+        dickInGame = new List<playerCard>(playerinfo.playerDeck);
         dickInGame = ListOperation.Shufle<playerCard>(dickInGame);
 
         //实例化部件(战斗纸板)
@@ -211,13 +211,15 @@ public class battleManager : MonoBehaviour
     {
         CardEvent cardevent = new CardEvent((playerCard)gameManager.Instance.battlemanager.selectedCard.thisCard, magicPart, new emplyPlayCard());
         cardevent.preCardDescribe();
-        selectedCard.describeText.text = cardevent.EventCardDescribe();        
+        selectedCard.describeText.text = cardevent.EventCardDescribe();
+        selectedCard.describeTextPro.text = cardevent.EventCardDescribe();
     }
     public void setCardDescribe(realCard realcard,MagicPart magicPart)
     {
         CardEvent cardevent = new CardEvent((playerCard)realcard.thisCard, magicPart, new emplyPlayCard());
         cardevent.preCardDescribe();
         realcard.describeText.text = cardevent.EventCardDescribe();
+        realcard.describeTextPro.text= cardevent.EventCardDescribe();
     }
     //丢弃全部手牌
     public void deleteAllHandCard()

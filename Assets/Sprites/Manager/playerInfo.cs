@@ -7,7 +7,7 @@ using AllAsset;
 public class playerInfo
 {
     //玩家的牌库
-    public List<playerCard> playerDick=new List<playerCard>();
+    public List<playerCard> playerDeck=new List<playerCard>();
     //玩家的魔纹部件
     public List<MagicPart> MagicPartDick = new List<MagicPart>();
     //玩家的魔法书
@@ -19,19 +19,26 @@ public class playerInfo
 
     public void AddNewCard(playerCard card)
     {
-        playerDick.Add(card);
+        playerDeck.Add(card);
     }
     public void AddNewPart(MagicPart magic)
     {
         MagicPartDick.Add(magic);
     }
+    public void RemoveCard(playerCard card)
+    {
+        if (playerDeck.Contains(card))
+        {
+            playerDeck.Remove(card);
+        }
+    }
     //初始化玩家的开局卡组
     public void PlayerDickInit(List<int> ts)
     {
-        playerDick.Clear();
+        playerDeck.Clear();
         foreach(int i in ts)
         {
-            playerDick.Add(cardAsset.AllIdCards[i]);
+            playerDeck.Add(cardAsset.AllIdCards[i]);
         }
     }
 

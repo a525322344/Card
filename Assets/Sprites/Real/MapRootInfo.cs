@@ -14,6 +14,7 @@ public class MapRootInfo : MonoBehaviour
     public Light maplight;
     public Transform placeBeginPosi;
     public Transform secondBoardPosi;
+    public Transform selectBoardPosi;
 
     public Camera mapCamera;
 

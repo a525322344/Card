@@ -104,7 +104,7 @@ public class instantiateManager : MonoBehaviour
     //生成二级菜单
     public GameObject instanSecondBoard(secondBoardInfo secondboardInfo)
     {
-        secondBoard = Instantiate(uiSecondBoardGOList[secondboardInfo.order], mapRootInfo.secondBoardPosi);
+        secondBoard = Instantiate(uiSecondBoardGOList[secondboardInfo.order], mapRootInfo.selectBoardPosi);
         uiSecondBoard uis = secondBoard.GetComponent<uiSecondBoard>();
         uis.EnterInit(secondboardInfo);
         return secondBoard;

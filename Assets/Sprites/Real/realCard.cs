@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
+
 public enum RealCardState
 {
     Other,
@@ -37,6 +39,8 @@ public class realCard : MonoBehaviour
 
     public Text nameText;
     public Text describeText;
+    public TextMeshPro nameTextPro;
+    public TextMeshPro describeTextPro;
     //资源
     public int handorder;
     public handcardControll handcardControll;
@@ -198,72 +202,48 @@ public class realCard : MonoBehaviour
     public void Init(card playerCard,RealCardState _realCardState)
     {
         realCardState = _realCardState;
+        thisCard = playerCard;
+        nameText.text = playerCard.Name;
+        describeText.text = playerCard.Describe;
+        nameTextPro.text = playerCard.Name;
+        describeTextPro.text = playerCard.Describe;
+        //cardTexture.sprite = gameManager.Instance.instantiatemanager.cardSprites[playerCard.TextureId];
+        switch (playerCard.Kind)
+        {
+            case CardKind.AttackCard:
+                cardBoard.sprite = cardBoardSprites[0];
+                cardKindIcon.sprite = cardKindIconSprites[0];
+                break;
+            case CardKind.SkillCard:
+                cardBoard.sprite = cardBoardSprites[1];
+                cardKindIcon.sprite = cardKindIconSprites[1];
+                break;
+        }
+        Instantiate(costGO[playerCard.Cost], costtran);
+        realcost.Init(thisCard);
+        realcost.gameObject.SetActive(false);
         if (realCardState == RealCardState.RealCard)
         {
-            thisCard = playerCard;
-            nameText.text = playerCard.Name;
-            describeText.text = playerCard.Describe;
-
-            //cardTexture.sprite = gameManager.Instance.instantiatemanager.cardSprites[playerCard.TextureId];
-            switch (playerCard.Kind)
-            {
-                case CardKind.AttackCard:
-                    cardBoard.sprite = cardBoardSprites[0];
-                    cardKindIcon.sprite = cardKindIconSprites[0];
-                    break;
-                case CardKind.SkillCard:
-                    cardBoard.sprite = cardBoardSprites[1];
-                    cardKindIcon.sprite = cardKindIconSprites[1];
-                    break;
-            }
-            GameObject.Instantiate(costGO[playerCard.Cost], costtran);
-
-            realcost.Init(thisCard);
-            realcost.gameObject.SetActive(false);
-
-            //Instantiate(gameManager.Instance.instantiatemanager.costs[thisCard.Cost - 1],costtran);
             gameManager.Instance.battlemanager.setCardDescribe(this, new MagicPart());
+            //nameText.gameObject.SetActive(true);
+            //describeText.gameObject.SetActive(true);
+            //nameTextPro.gameObject.SetActive(false);
+            //describeTextPro.gameObject.SetActive(false);
         }
         else if (realCardState == RealCardState.AwardCard)
         {
-            thisCard = playerCard;
-            nameText.text = playerCard.Name;
-            describeText.text = playerCard.Describe;
-
-            //cardTexture.sprite = gameManager.Instance.instantiatemanager.cardSprites[playerCard.TextureId];
-            switch (playerCard.Kind)
-            {
-                case CardKind.AttackCard:
-                    cardBoard.sprite = cardBoardSprites[0];
-                    cardKindIcon.sprite = cardKindIconSprites[0];
-                    break;
-                case CardKind.SkillCard:
-                    cardBoard.sprite = cardBoardSprites[1];
-                    cardKindIcon.sprite = cardKindIconSprites[1];
-                    break;
-            }
-            cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 0;
-            GameObject.Instantiate(costGO[playerCard.Cost], costtran);
-            gameManager.Instance.battlemanager.setCardDescribe(this, new MagicPart());
+            nameText.gameObject.SetActive(false);
+            describeText.gameObject.SetActive(false);
+            nameTextPro.gameObject.SetActive(true);
+            describeTextPro.gameObject.SetActive(true);
         }
         else if (realCardState == RealCardState.SelectCard)
         {
-            thisCard = playerCard;
-            nameText.text = playerCard.Name;
-            describeText.text = playerCard.Describe;
-            switch (playerCard.Kind)
-            {
-                case CardKind.AttackCard:
-                    cardBoard.sprite = cardBoardSprites[0];
-                    cardKindIcon.sprite = cardKindIconSprites[0];
-                    break;
-                case CardKind.SkillCard:
-                    cardBoard.sprite = cardBoardSprites[1];
-                    cardKindIcon.sprite = cardKindIconSprites[1];
-                    break;
-            }
+            nameText.gameObject.SetActive(false);
+            describeText.gameObject.SetActive(false);
+            nameTextPro.gameObject.SetActive(true);
+            describeTextPro.gameObject.SetActive(true);
             cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 0;
-            GameObject.Instantiate(costGO[playerCard.Cost], costtran);
             handCardState = HandCardState.Freedom;
         }
     }
