@@ -163,6 +163,12 @@ public class uiShopBoard : MonoBehaviour
                 UisecondBoard_SelectCard uiselectboard = selectcard.GetComponent<UisecondBoard_SelectCard>();
                 uiselectboard.EnterInit(selectBoardInfo);
                 uiselectboard.Init(gameManager.Instance.playerinfo.playerDeck, 1);
+                uiselectboard.describeText.text = "删除1张卡";
+                uiselectboard.CancelButton.AddListener(() =>
+                {
+                    TurnOn(true);
+                    Destroy(uiselectboard.gameObject);
+                });
                 uiselectboard.onSelectCards = (cardlist) =>
                 {
                     foreach(playerCard card in cardlist)

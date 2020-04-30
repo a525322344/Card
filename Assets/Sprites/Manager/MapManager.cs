@@ -34,7 +34,15 @@ public class MapManager : MonoBehaviour
     //事件战斗比例(百分比)
     public float befallBattlePrent;
     //精英怪层
-    public int hardEnemyStorey = 5;
+    public Vector2 hardEnemyNumRange;
+    public int perLineMaxHardEnemyNum;
+    public float sleepCloseHardEnemyPresent;
+    //商店
+    public Vector2 shopNumRange;
+    public int perLineMaxShopNum;
+    //休息
+    public Vector2 sleepNumRange;
+    public int perSleepMaxNum;
     //宝箱层
     public int treasureStorey = 7;
     public int hardEnemyExtraNum = 2;
@@ -48,20 +56,20 @@ public class MapManager : MonoBehaviour
         Debug.Log("init map");
         maprootinfo = gameManager.Instance.instantiatemanager.mapRootInfo;
 
-        place newplace;
-        //战斗地点
-        newplace = new battlePlace(new monInfo_Cat(), 3);      
-        realplaceList.Add(instantiatePlace(newplace));
-        //事件地点
-        secondBoardInfo secondboard = new secondBoardInfo(0,"部件配置");
-        //befallinfo secondbefall = new befallinfo("整装待发", -1, null, new Button_OverSortPart());
-        befallinfo newbefallinfo = new befallinfo("整装待发", 0, "英雄征途的第一步：整理背包",
-            new Button_ExitBefall("直接出发"),new Button_SecondBoard(secondboard));
-        newplace = new befallPlace(newbefallinfo);
-        realplaceList.Add(instantiatePlace(newplace));
-        //商店地点
-        newplace = new shopPlace();
-        realplaceList.Add(instantiatePlace(newplace));
+        //place newplace;
+        ////战斗地点
+        //newplace = new battlePlace(1,new monInfo_Cat(), 3);      
+        //realplaceList.Add(instantiatePlace(newplace));
+        ////事件地点
+        //secondBoardInfo secondboard = new secondBoardInfo(0,"部件配置");
+        ////befallinfo secondbefall = new befallinfo("整装待发", -1, null, new Button_OverSortPart());
+        //befallinfo newbefallinfo = new befallinfo("整装待发", 0, "英雄征途的第一步：整理背包",
+        //    new Button_ExitBefall("直接出发"),new Button_SecondBoard(secondboard));
+        //newplace = new befallPlace(newbefallinfo);
+        //realplaceList.Add(instantiatePlace(newplace));
+        ////商店地点
+        //newplace = new shopPlace();
+        //realplaceList.Add(instantiatePlace(newplace));
         /////////////////////////////分割线//////////////////////////////
         RandomGenerateMap();
     }
@@ -71,11 +79,11 @@ public class MapManager : MonoBehaviour
         PlaceNode startPlaceNode = new PlaceNode(new startPlace(), new Vector2(2.5f, 0));
         intListDic.Add(0, new List<PlaceNode>() { startPlaceNode });
         placeNodeDic.Add(startPlaceNode.PointPosi, startPlaceNode);
-        PlaceNode endPlaceNode = new PlaceNode(new battlePlace(new monInfo_Cat(), 0, 3), new Vector2(2.5f, allStoreyNum));
+        PlaceNode endPlaceNode = new PlaceNode(new battlePlace(3,new monInfo_Cat(), 0), new Vector2(2.5f, allStoreyNum));
         intListDic.Add(allStoreyNum, new List<PlaceNode>() { endPlaceNode });
         placeNodeDic.Add(endPlaceNode.PointPosi, endPlaceNode);
         //普通战斗
-        place battleplace = new battlePlace(new monInfo_Cat(), 3, 1);
+        place battleplace = new battlePlace(1,new monInfo_Cat(), 3);
         //普通事件
         place befallplace = new befallPlace(new befallinfo("普通事件", 0, "普通的事件"));
         //空白
@@ -295,11 +303,105 @@ public class MapManager : MonoBehaviour
                 i++;
             }
         }
-
+        //排序，为生成做准备
         foreach (var intlist in intListDic)
         {
             intlist.Value.Sort();
         }
+        //依概率生成普通怪物或事件
+        foreach (var vp in placeNodeDic)
+        {
+            if (Random.Range(0, 100) > befallBattlePrent)
+            {
+                place placebefall = new befallPlace();
+                vp.Value.thisplace = placebefall;
+            }
+            else
+            {
+                place battlebefall = new battlePlace();
+                vp.Value.thisplace = battleplace;
+            }
+        }
+        //精英怪
+        int hardenemyNum =(int) Random.Range(hardEnemyNumRange.x, hardEnemyNumRange.y + 1);
+        for(int i = 0; i < hardenemyNum;)
+        {
+            PlaceNode nowplacenode = ListOperation.RandomValue<PlaceNode>(placeNodeList);
+            if (CanBeHardEnemy(nowplacenode)){
+                nowplacenode.thisplace = new battlePlace(2);
+                if (Random.Range(0, 100) < sleepCloseHardEnemyPresent)
+                {
+                    if (Random.Range(0, 100) > 50)
+                    {
+                        foreach(PlaceNode p in nowplacenode.nextNodeList)
+                        {
+                            if (p.thisplace.imageorder == 1 | p.thisplace.imageorder == 4)
+                            {
+                                p.thisplace = new sleepPlace();
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (PlaceNode p in nowplacenode.lastNodeList)
+                        {
+                            if (p.thisplace.imageorder == 1 | p.thisplace.imageorder == 4)
+                            {
+                                p.thisplace = new sleepPlace();
+                                break;
+                            }
+                        }
+                    }
+                }
+                i++;
+            }
+        }
+        //商店
+        int shopNum = (int)Random.Range(shopNumRange.x, shopNumRange.y + 1);
+        for (int i = 0; i < shopNum;)
+        {
+            PlaceNode nowplacenode = ListOperation.RandomValue<PlaceNode>(placeNodeList);
+            if (CanBeShop(nowplacenode))
+            {
+                nowplacenode.thisplace = new shopPlace();
+                i++;
+            }
+        }
+        //boss前一层是休息
+        foreach (PlaceNode placenode in intListDic[allStoreyNum - 1])
+        {
+            place sleepPlace = new sleepPlace();
+            placenode.thisplace = sleepPlace;
+        }
+        int sleepNum = (int)Random.Range(sleepNumRange.x, sleepNumRange.y + 1);
+        for (int i = 0; i < sleepNum;)
+        {
+            PlaceNode nowplacenode = ListOperation.RandomValue<PlaceNode>(placeNodeList);
+            if (CanBeSleep(nowplacenode))
+            {
+                nowplacenode.thisplace = new sleepPlace();
+                i++;
+            }
+        }
+        //第零层是休息
+        startPlaceNode.thisplace = new sleepPlace();
+        //第一层都是战斗
+        foreach (PlaceNode placenode in intListDic[1])
+        {
+            place Place = new battlePlace();
+            placenode.thisplace = Place;
+        }
+        //第7层都是宝箱
+        foreach (PlaceNode placenode in intListDic[7])
+        {
+            place treasurePlace = new treasurePlace();
+            placenode.thisplace = treasurePlace;
+        }
+
+        //最后是boss层
+        endPlaceNode.thisplace = new battlePlace(3, new monInfo_Cat(), 0);
+        Debug.Log(LinePlaceNum(endPlaceNode, 1));
         //生成节点        
         foreach (var vp in placeNodeDic)
         {
@@ -318,7 +420,6 @@ public class MapManager : MonoBehaviour
                 linerender.SetPosition(1, new Vector3(placeNode.realplaceTran.position.x, placeNode.realplaceTran.position.y, -0.5f));
             }
         }
-
     }
     bool CanDeleteNode(PlaceNode placeNode)
     {
@@ -393,6 +494,155 @@ public class MapManager : MonoBehaviour
             return false;
         }
         return true;
+    }
+    bool CanBeHardEnemy(PlaceNode placeNode)
+    {
+        if (placeNode.PointPosi.y<=2|placeNode.PointPosi.y>=allStoreyNum-3|placeNode.PointPosi.y==7)
+        {
+            return false;
+        }
+        if (LinePlaceNum(placeNode, 2) >= perLineMaxHardEnemyNum)
+        {
+            return false;
+        }
+        //附近有不行
+        foreach(PlaceNode p in placeNode.nextNodeList)
+        {
+            if (p.thisplace.imageorder == 2)
+            {
+                return false;
+            }
+        }
+        foreach (PlaceNode p in placeNode.lastNodeList)
+        {
+            if (p.thisplace.imageorder == 2)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    bool CanBeShop(PlaceNode placeNode)
+    {
+        if (placeNode.PointPosi.y <= 1 | placeNode.PointPosi.y >= allStoreyNum - 1 | placeNode.PointPosi.y == 7)
+        {
+            return false;
+        }
+        if (LinePlaceNum(placeNode, 5) >= perLineMaxShopNum)
+        {
+            return false;
+        }
+        //不会占用
+        if (placeNode.thisplace.imageorder == 2)
+        {
+            return false;
+        }
+        //附近有相同不行
+        foreach (PlaceNode p in placeNode.nextNodeList)
+        {
+            if (p.thisplace.imageorder ==5)
+            {
+                return false;
+            }
+        }
+        foreach (PlaceNode p in placeNode.lastNodeList)
+        {
+            if (p.thisplace.imageorder == 5)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    bool CanBeSleep(PlaceNode placeNode)
+    {
+        if (placeNode.PointPosi.y <= 4 | placeNode.PointPosi.y >= allStoreyNum - 2 | placeNode.PointPosi.y == 7)
+        {
+            return false;
+        }
+        if (LinePlaceNum(placeNode, 0) >= perSleepMaxNum)
+        {
+            return false;
+        }
+        //不会占用
+        if (placeNode.thisplace.imageorder == 2| placeNode.thisplace.imageorder==5)
+        {
+            return false;
+        }
+        //附近有相同不行
+        foreach (PlaceNode p in placeNode.nextNodeList)
+        {
+            if (p.thisplace.imageorder == 0)
+            {
+                return false;
+            }
+        }
+        foreach (PlaceNode p in placeNode.lastNodeList)
+        {
+            if (p.thisplace.imageorder == 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    int LinePlaceNum(PlaceNode placeNode,int kind)
+    {
+        int lastnum = 0;
+        foreach(PlaceNode lastnode in placeNode.lastNodeList)
+        {
+            int thislinenum = lastPlaceNum(lastnode, kind);
+            if (thislinenum > lastnum)
+            {
+                lastnum = thislinenum;
+            }
+        }
+        int nextnum = 0;
+        foreach(PlaceNode nextnode in placeNode.nextNodeList)
+        {
+            int thislinenum = nextPlaceNum(nextnode, kind);
+            if (thislinenum > nextnum)
+            {
+                nextnum = thislinenum;
+            }
+        }
+        return lastnum + nextnum;
+    }
+    int lastPlaceNum(PlaceNode placeNode,int kind)
+    {
+        int thisnum = 0;
+        if (placeNode.thisplace.imageorder == kind)
+        {
+            thisnum = 1;
+        }
+        int lastnum = 0;
+        foreach (PlaceNode lastnode in placeNode.lastNodeList)
+        {
+            int thislinenum = lastPlaceNum(lastnode, kind);
+            if ( thislinenum> lastnum)
+            {
+                lastnum = thislinenum;
+            }
+        }
+        return thisnum + lastnum;
+    }
+    int nextPlaceNum(PlaceNode placeNode, int kind)
+    {
+        int thisnum = 0;
+        if (placeNode.thisplace.imageorder == kind)
+        {
+            thisnum = 1;
+        }
+        int nextnum = 0;
+        foreach (PlaceNode nextnode in placeNode.nextNodeList)
+        {
+            int thislinenum = nextPlaceNum(nextnode, kind);
+            if (thislinenum > nextnum)
+            {
+                nextnum = thislinenum;
+            }
+        }
+        return thisnum + nextnum;
     }
     //地点位置数据
     public List<Vector3> vector3list = new List<Vector3>() { new Vector3(7.44f, 4.11f), new Vector3(0.28f, -1.18f), new Vector3(-8.67f, -3.65f), new Vector3(1.01f, -8.83f) ,new Vector3(-13.68f, 4.02f),new Vector3(-3.61f, 5.29f) };

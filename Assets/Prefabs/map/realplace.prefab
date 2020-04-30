@@ -48,7 +48,9 @@ MonoBehaviour:
   placeNode:
     PointPosi: {x: 0, y: 0}
     placeState: 0
+    realplaceTran: {fileID: 0}
     nextNodeList: []
+    lastNodeList: []
   spriteRenderer: {fileID: 5002958631369474955}
   spriteTran: {fileID: 821007682726380381}
   NormalColor: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 0.8039216}
@@ -70,7 +72,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5, z: 1}
+  m_Size: {x: 2, y: 2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1970781870813467852
 GameObject:
@@ -98,7 +100,7 @@ Transform:
   m_GameObject: {fileID: 1970781870813467852}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children: []
   m_Father: {fileID: 821007682726380381}
   m_RootOrder: 0
@@ -140,7 +142,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d0d7574ba417a6049bd27c38cb033b21, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 576d520c8677d2e42a745a7a92b0ea71, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

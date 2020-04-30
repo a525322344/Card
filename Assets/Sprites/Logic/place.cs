@@ -3,7 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
-
+//1——普通敌人
+//2——精英敌人
+//3——Boss
+//4——事件
+//5——商店
+//0——休息
+//6——宝箱
+//7——空
 public abstract class place
 {
     public int imageorder;
@@ -14,12 +21,17 @@ public class battlePlace : place
 {
     public monsterInfo monsterInfo;
     public int sceneId;
-    public battlePlace(monsterInfo monsterinfo=null,int sceneid=0,int battleRank=1)
+    public battlePlace(int battleRank = 1,monsterInfo monsterinfo=null,int sceneid=0)
     {
         monsterInfo = monsterinfo;
         sceneId = sceneid;
         imageorder = battleRank;
     }
+    //public battlePlace(int battleRank=1, int sceneid = 0)
+    //{
+    //    sceneId = sceneid;
+    //    imageorder = battleRank;
+    //}
     public override void onclick()
     {
         //进入战斗
@@ -68,6 +80,10 @@ public class shopPlace : place
 public class befallPlace : place
 {
     public befallinfo m_befallinfo;
+    public befallPlace()
+    {
+        imageorder = 4;
+    }
     public befallPlace(befallinfo beffalinfo)
     {
         m_befallinfo = beffalinfo;

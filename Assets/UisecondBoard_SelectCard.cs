@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public delegate void onSelectCards(List<playerCard> a);
 public class UisecondBoard_SelectCard : uiSecondBoard
@@ -20,13 +21,53 @@ public class UisecondBoard_SelectCard : uiSecondBoard
     public List<playerCard> selectCardList = new List<playerCard>();
     //外部设置
     public onSelectCards onSelectCards;
+    public spriteButton CancelButton;
+    //滑块设置
+    public Transform cardscale;
+    public Transform cardFolder;
+    public GameObject sliderFolder;
+    public Transform curpos;
+    public Transform sliderUpPosi;
+    public Transform sliderDownPosi;
+    float slideralllength;
+    float upz;
+    float downz;
+
+    float allLength;                //总长
+    public float present;           //占比
+    public float screenLength = 16; //
+    float canmoveLength;
+    public float cardlength = 6.6f;
+
+    private void Update()
+    {
+        //旋转部分
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)//下
+        {
+            present += 0.2f;
+            if (present > 1)
+            {
+                present = 1;
+            }
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)//上
+        {
+            present -= 0.2f;
+            if (present < 0)
+            {
+                present = 0;
+            }
+        }
+        canmoveLength = allLength - screenLength;
+        cardFolder.transform.DOLocalMoveY(present * canmoveLength, 0.2f);
+        curpos.DOLocalMoveY(upz -present * slideralllength,0.2f);
+    }
 
     public override void EnterInit(secondBoardInfo secondInfo)
     {
         base.EnterInit(secondInfo);
 
     }
-
     public void Init(List<playerCard> cardlist,int selectnum)
     {
         freeCardList = new List<playerCard>(cardlist);
@@ -68,6 +109,20 @@ public class UisecondBoard_SelectCard : uiSecondBoard
                 h = 0;
                 v++;
             }
+        }
+        //计算总长
+        allLength = v * -distanceVer * cardscale.localScale.x + cardlength;
+        if (screenLength < allLength)
+        {
+            sliderFolder.SetActive(true);
+            canmoveLength = allLength - screenLength;
+            upz = sliderUpPosi.position.y;
+            downz = sliderDownPosi.position.y;
+            slideralllength = upz - downz;
+        }
+        else
+        {
+            sliderFolder.SetActive(false);
         }
     }
     public override void Exit()
