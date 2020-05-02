@@ -8,6 +8,7 @@ public enum GridState
     Power,          //可以使用
     Can,
     Used,           //使用过的
+    Marked                //被标记的
 }
 public class realLatice : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class realLatice : MonoBehaviour
     public realpart realpart;
     public realgrid realgrid;
     public MeshRenderer renderer;
+
 
     public void Init(latice l,realKnapsack father,GameState state)
     {
@@ -106,6 +108,13 @@ public class realLatice : MonoBehaviour
             }
             realgrid.changeMaterial();
             changeColor();
+        }
+    }
+    public void UsedMark()
+    {
+        if(gridState == GridState.Marked)
+        {
+            gridState = GridState.Power;
         }
     }
 
