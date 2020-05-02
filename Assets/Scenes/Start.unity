@@ -73080,7 +73080,12 @@ PrefabInstance:
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: uiSecondBoardGOList.Array.size
-      value: 2
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: beFallSprites.Array.size
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
@@ -73104,19 +73109,19 @@ PrefabInstance:
         type: 3}
       propertyPath: mapPlaceSprites.Array.data[0]
       value: 
-      objectReference: {fileID: 21300000, guid: 9c3cdf19f32b1974caaa2051dc256fe5,
+      objectReference: {fileID: 21300000, guid: 30aa6fec7c1f1c94688be230f062d4bc,
         type: 3}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: mapPlaceSprites.Array.data[1]
       value: 
-      objectReference: {fileID: 21300000, guid: 423db43bc235924449900f527727c344,
+      objectReference: {fileID: 21300000, guid: d8f468b71b94b384dabfd5387a22f3f6,
         type: 3}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: mapPlaceSprites.Array.data[2]
       value: 
-      objectReference: {fileID: 21300000, guid: f627fd0af508f4244ae3a165ea936598,
+      objectReference: {fileID: 21300000, guid: ebb02a2b553ce8a4f9f3b70791c1ae4a,
         type: 3}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
@@ -73128,7 +73133,7 @@ PrefabInstance:
         type: 3}
       propertyPath: mapPlaceSprites.Array.data[5]
       value: 
-      objectReference: {fileID: 21300000, guid: 786f6f03e9ec292439b0c65914d6da7c,
+      objectReference: {fileID: 21300000, guid: 25eff41a4a4b85e4c8ba5dc99f873c6c,
         type: 3}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
@@ -73140,7 +73145,7 @@ PrefabInstance:
         type: 3}
       propertyPath: mapPlaceSprites.Array.data[4]
       value: 
-      objectReference: {fileID: 21300000, guid: 576d520c8677d2e42a745a7a92b0ea71,
+      objectReference: {fileID: 21300000, guid: a8306ea456aa2574bb21e072f57646b3,
         type: 3}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
@@ -73171,6 +73176,60 @@ PrefabInstance:
       propertyPath: uiSecondBoardGOList.Array.data[1]
       value: 
       objectReference: {fileID: 675200926777136499, guid: 01e6895b355a38946bb58f6fcb7434d2,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: beFallSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 23cce77a21fd3f14681cebe6e02bc91b,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: beFallSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: fb4989e7e5d4d0f47ac63e102b591019,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: beFallSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: fb4989e7e5d4d0f47ac63e102b591019,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: beFallSprites.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: fb4989e7e5d4d0f47ac63e102b591019,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: beFallSprites.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300000, guid: fb4989e7e5d4d0f47ac63e102b591019,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: beFallSprites.Array.data[6]
+      value: 
+      objectReference: {fileID: 21300000, guid: fb4989e7e5d4d0f47ac63e102b591019,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: beFallSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 23cce77a21fd3f14681cebe6e02bc91b,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: uiSecondBoardGOList.Array.data[2]
+      value: 
+      objectReference: {fileID: 5103741371516490659, guid: 2e4a4da72e97c9d439be887cc2d956f6,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: MonsterAll.Array.data[0]
+      value: 
+      objectReference: {fileID: 9148584800839085505, guid: 0cd54c6528d633944a6091a594569c7e,
         type: 3}
     - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
@@ -73271,6 +73330,21 @@ PrefabInstance:
         type: 3}
       propertyPath: sleepCloseHardEnemyPresent
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapCameraMoveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: positionDown
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: positionUp
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 362da131cad69c3408bab7cc127cafeb, type: 3}

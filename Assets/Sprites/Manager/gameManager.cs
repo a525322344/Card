@@ -100,6 +100,7 @@ public class gameManager : MonoBehaviour
     {
         mapmanager = gameObject.GetComponent<MapManager>();
         instantiatemanager.mapRootInfo= GameObject.Find("root").GetComponent<MapRootInfo>();
+        gameState = GameState.MapSence;
         mapmanager.InitMap();
         uimanager.InitMapUI();
     }
@@ -115,6 +116,8 @@ public class gameManager : MonoBehaviour
     }
     public void exitBattlescene()
     {
+        gameManager.Instance.SwitchScene(false);
+        Destroy(battlemanager);
         SceneManager.UnloadSceneAsync(battleScene);
     }
 }

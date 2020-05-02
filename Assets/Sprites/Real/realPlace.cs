@@ -17,26 +17,32 @@ public class realPlace : MonoBehaviour
     public Color DisableColor;
     public float colorChangeTime;
     public float overside = 1.3f;
+    public float oversideTogo = 1.5f;
     public float sizeChangeTime;
     public bool b_mouseOver;
 
-    private void Start()
-    {
-        //placeNode = new PlaceNode();
-    }
+    public AnimationCurve curve;
+    public AnimationCurve alphacurve;
+    public float runtime=1;
+    [Range(0,1)]
+    private float puntime;
+    private bool isfront = true;
 
+    public Image biaoji;
     public void Update()
     {
         switch (placeNode.placeState)
         {
-            case PlaceState.DenseFog:
-                DOTween.To(() => spriteRenderer.color, x => spriteRenderer.color = x, NormalColor, colorChangeTime);
+            case PlaceState.Cannot:
                 if (b_mouseOver)
                 {
                     spriteTran.DOScale(Vector3.one * overside, sizeChangeTime);
+                    Color color = new Color(NormalColor.r, NormalColor.g, NormalColor.b, 1);
+                    DOTween.To(() => spriteRenderer.color, x => spriteRenderer.color = x, color, colorChangeTime);
                 }
                 else
                 {
+                    DOTween.To(() => spriteRenderer.color, x => spriteRenderer.color = x, NormalColor, colorChangeTime);
                     spriteTran.DOScale(Vector3.one, sizeChangeTime);
                 }
                 break;
@@ -52,15 +58,57 @@ public class realPlace : MonoBehaviour
                 }
                 break;
             case PlaceState.ToGo:
-            case PlaceState.ToGoOut:
-                DOTween.To(() => spriteRenderer.color, x => spriteRenderer.color = x, ToGoColor, colorChangeTime);
                 if (b_mouseOver)
                 {
-                    spriteTran.DOScale(Vector3.one * overside, sizeChangeTime);
+                    if (isfront)
+                    {
+                        puntime += Time.deltaTime / runtime;
+                        if (puntime > 1)
+                        {
+                            puntime = 1;
+                            isfront = false;
+                        }
+                    }
+                    else
+                    {
+                        puntime -= Time.deltaTime / runtime;
+                        if (puntime < 0)
+                        {
+                            puntime = 0;
+                            isfront = true;
+                        }
+                    }
+                    float alpha = alphacurve.Evaluate(1);
+                    Color color = new Color(ToGoColor.r, ToGoColor.g, ToGoColor.b, alpha);
+                    DOTween.To(() => spriteRenderer.color, x => spriteRenderer.color = x, color, colorChangeTime);
+                    spriteTran.DOScale(Vector3.one * oversideTogo, sizeChangeTime);
                 }
                 else
                 {
-                    spriteTran.DOScale(Vector3.one, sizeChangeTime);
+                    if (isfront)
+                    {
+                        puntime += Time.deltaTime / runtime;
+                        if (puntime > 1)
+                        {
+                            puntime = 1;
+                            isfront = false;
+                        }
+                    }
+                    else
+                    {
+                        puntime -= Time.deltaTime / runtime;
+                        if (puntime < 0)
+                        {
+                            puntime = 0;
+                            isfront = true;
+                        }
+                    }
+                    float scale = curve.Evaluate(puntime);
+                    scale = 1 + (oversideTogo - 1) * scale;
+                    spriteTran.DOScale(Vector3.one * scale, sizeChangeTime);
+                    float alpha = alphacurve.Evaluate(puntime);
+                    Color color = new Color(ToGoColor.r, ToGoColor.g, ToGoColor.b, alpha);
+                    DOTween.To(() => spriteRenderer.color, x => spriteRenderer.color = x, color, colorChangeTime);
                 }
                 break;
             case PlaceState.Used:
@@ -91,14 +139,63 @@ public class realPlace : MonoBehaviour
 
     public void OnMouseDown()
     {
-        thisplace.onclick();
+        if (gameManager.Instance.mapmanager.MapPlaceOpen)
+        {
+            StartCoroutine(IEenterPlace());
+        }
+        else
+        {
+            switch (placeNode.placeState)
+            {
+                case PlaceState.Cannot:
+                    break;
+                case PlaceState.NowOn:
+                    break;
+                case PlaceState.ToGo:
+                    StartCoroutine(IEenterPlace());
+                    break;
+                case PlaceState.Used:
+                    break;
+            }
+        }
     }
     public void OnMouseEnter()
     {
+        switch (placeNode.placeState)
+        {
+            case PlaceState.Cannot:
+                break;
+            case PlaceState.NowOn:
+                break;
+            case PlaceState.ToGo:
+                break;
+            case PlaceState.Used:
+                break;
+        }
         b_mouseOver = true;
     }
     public void OnMouseExit()
     {
+        switch (placeNode.placeState)
+        {
+            case PlaceState.Cannot:
+                break;
+            case PlaceState.NowOn:
+                break;
+            case PlaceState.ToGo:
+                break;
+            case PlaceState.Used:
+                break;
+        }
         b_mouseOver = false;
+    }
+    IEnumerator IEenterPlace()
+    {
+        //画标记
+        biaoji.gameObject.SetActive(true);
+        DOTween.To(() => biaoji.fillAmount, x => biaoji.fillAmount = x, 1, 0.25f);
+        yield return new WaitForSeconds(0.3f);
+        gameManager.Instance.mapmanager.SetNowPlace(placeNode);
+        thisplace.onclick();
     }
 }

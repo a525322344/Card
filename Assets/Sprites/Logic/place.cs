@@ -19,25 +19,19 @@ public abstract class place
 
 public class battlePlace : place
 {
-    public monsterInfo monsterInfo;
     public int sceneId;
-    public battlePlace(int battleRank = 1,monsterInfo monsterinfo=null,int sceneid=0)
+    public int storey;
+    public battlePlace(int battleRank = 1,int _storey=1,int sceneid=0)
     {
-        monsterInfo = monsterinfo;
+        storey = _storey;
         sceneId = sceneid;
         imageorder = battleRank;
     }
-    //public battlePlace(int battleRank=1, int sceneid = 0)
-    //{
-    //    sceneId = sceneid;
-    //    imageorder = battleRank;
-    //}
     public override void onclick()
     {
         //进入战斗
         gameManager.Instance.mapmanager.EnterBattle(this);
     }
-
 }
 
 public class spacePlace : place
@@ -79,21 +73,13 @@ public class shopPlace : place
 
 public class befallPlace : place
 {
-    public befallinfo m_befallinfo;
     public befallPlace()
     {
         imageorder = 4;
     }
-    public befallPlace(befallinfo beffalinfo)
-    {
-        m_befallinfo = beffalinfo;
-        imageorder = 4;
-    }
     public override void onclick()
     {
-        //打开二级事件窗口
-        gameManager.Instance.uimanager.uiBefallBoard.EnterEventBoard(m_befallinfo);
-        gameManager.Instance.mapmanager.mapState = MapState.EventWindow;
+        gameManager.Instance.mapmanager.EnterBefall();
     }
 
     public int eventnum;
@@ -118,14 +104,14 @@ public class treasurePlace : place
     }
     public override void onclick()
     {
+        gameManager.Instance.mapmanager.EnterTreasure();
     }
 }
 
 public enum PlaceState
 {
-    DenseFog,   //迷雾，还未解锁
+    Cannot,     //不可选的
     ToGo,       //可选的
-    ToGoOut,    //事件中
     NowOn,      //当前位置
     Used,       //过去的
 }
@@ -136,11 +122,12 @@ public class PlaceNode: IComparable
     public PlaceState placeState;
     public place thisplace;
     public Transform realplaceTran;
+    public realPlace realPlace;
     public PlaceNode(place nowplace,Vector2 posi)
     {
         thisplace = nowplace;
         PointPosi = posi;
-        placeState = PlaceState.DenseFog;
+        placeState = PlaceState.Cannot;
     }
 
 

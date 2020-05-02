@@ -16,6 +16,8 @@ public class UImanager : MonoBehaviour
     public Button roundEndButton;
     [HideInInspector]
     public uiVectorBoard uiVectorBoard;
+    [HideInInspector]
+    public UisecondBoard_SelectPart uiTreasurePartBoard;
     //战斗场景回合结束按钮
     public void EndRound()
     {

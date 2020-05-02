@@ -128,7 +128,7 @@ public class uiShopBoard : MonoBehaviour
             if (playerinfo.money >= saleinfo.price)
             {
                 playerinfo.money -= saleinfo.price;
-                playerinfo.AddNewPart(_part);
+                playerinfo.AddMagicPart(_part);
 
                 Destroy(saleinfo.thingGO);
                 Destroy(saleinfo.priceGO);

@@ -298,6 +298,10 @@ namespace AllAsset
     {
         //从表格里获得的所有卡
         public static List<playerCard> AllIdCards = new List<playerCard>();
+        public static List<playerCard> deriveCards = new List<playerCard>();    //衍生卡                                                                               
+        public static List<playerCard> canGetCards = new List<playerCard>();    //可获得卡
+        public static List<playerCard> curseCards = new List<playerCard>();     //诅咒和状态卡
+        //细分
         public static List<playerCard> AllUpgradeCards = new List<playerCard>();
         public static List<playerCard> attactCards = new List<playerCard>();
         public static List<playerCard> skillCards = new List<playerCard>();
@@ -310,6 +314,15 @@ namespace AllAsset
     public static class MapAsset
     {
         public static List<monsterInfo> AllMonsters = new List<monsterInfo>();
+        public static List<monsterInfo> nMonster1s = new List<monsterInfo>();
+        public static List<monsterInfo> nMonster2s = new List<monsterInfo>();
+        public static List<monsterInfo> nMonster3s = new List<monsterInfo>();
+        public static List<monsterInfo> hMonster1s = new List<monsterInfo>();
+        public static List<monsterInfo> hMonster2s = new List<monsterInfo>();
+        public static List<monsterInfo> bossLists = new List<monsterInfo>();
+
+        public static List<befallinfo> AllBefallInfos = new List<befallinfo>();
+        public static List<befallinfo> mapSystemBefall = new List<befallinfo>();
         //public static
         public static string GetSceneStr(int id)
         {

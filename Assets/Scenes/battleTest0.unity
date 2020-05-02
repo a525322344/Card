@@ -198,6 +198,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1448008434673421793, guid: 6ab66e8b877394d4ab03874e95db963d,
+        type: 3}
+      propertyPath: healthslider
+      value: 
+      objectReference: {fileID: 937748496}
     - target: {fileID: 2831618940249110163, guid: 6ab66e8b877394d4ab03874e95db963d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -488,6 +493,18 @@ PrefabInstance:
       objectReference: {fileID: 1248116967}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0be205746ae69d43bee4138c9635c17, type: 3}
+--- !u!114 &937748496 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7891576763804266234, guid: b0be205746ae69d43bee4138c9635c17,
+    type: 3}
+  m_PrefabInstance: {fileID: 937748495}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5b74cfbeeea5a4439ff6712fb002d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1248116966
 PrefabInstance:
   m_ObjectHideFlags: 0

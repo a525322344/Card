@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using TMPro;
 
 public class realEnemy : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class realEnemy : MonoBehaviour
     public GameObject damageshow;
 
     public Animator animator;
+    public TextMeshPro nameTextmesh;
+    public bool mouseOver;
 
     Dictionary<string, realState> nameStatePairs = new Dictionary<string, realState>();
     List<GameObject> statego = new List<GameObject>();
@@ -26,8 +30,22 @@ public class realEnemy : MonoBehaviour
         enemy.healthmax = monsterinfo.health;
         enemy.healthnow = monsterinfo.health;
         healthslider.Init(enemy);
+        color0 = new Color(nameTextmesh.color.r, nameTextmesh.color.g, nameTextmesh.color.b, 0);
+        color1 = new Color(nameTextmesh.color.r, nameTextmesh.color.g, nameTextmesh.color.b, 1);
     }
-
+    Color color0;
+    Color color1;
+    private void Update()
+    {
+        if (mouseOver)
+        {
+            DOTween.To(() => nameTextmesh.color, x => nameTextmesh.color = x, color1, 0.5f);
+        }
+        else
+        {
+            DOTween.To(() => nameTextmesh.color, x => nameTextmesh.color = x, color0, 0.5f);
+        }
+    }
     public void changeHealthAndArmor(float armor,float heath)
     {
         healthslider.SetSlider(armor, heath);
@@ -64,5 +82,13 @@ public class realEnemy : MonoBehaviour
     public void changeAnimation(int i)
     {
         animator.SetInteger("animaInt", i);
+    }
+    private void OnMouseEnter()
+    {
+        mouseOver = true;
+    }
+    private void OnMouseExit()
+    {
+        mouseOver = false;
     }
 }

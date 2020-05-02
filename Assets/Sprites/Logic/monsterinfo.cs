@@ -130,7 +130,7 @@ public class monInfo_Sample : monsterInfo
         name = "" + damagenum + "级怪物";
         health = damagenum * 5+10;
         monsterLevel = damagenum;
-        actionList.Add(new actionHurt(damagenum));
+        actionList.Add(new actionHurt(damagenum * 2));
         actionList.Add(new actionAdmix(new actionArmor(damagenum), new actionHurt(damagenum)));
         actionList.Add(new actionHurt(damagenum * 2));
 
