@@ -12,7 +12,13 @@ public class playerInfo
     public List<MagicPart> MagicPartDick = new List<MagicPart>();
     //玩家的魔法书
     public knapsack playerKnapsack;
+    //战场buff
+    public List<BattleBuff> battleBuffList = new List<BattleBuff>();
+    //每回合抽牌数
     public int roundStartDrawCardNum = 5;
+    //宝箱选择项数
+    public int treasureToSelectNum = 3;
+
     public int playerHealthMax = 100;
     public int playerHealth = 100;
     public int money=200;
@@ -21,15 +27,39 @@ public class playerInfo
     {
         playerDeck.Add(card);
     }
-    public void AddNewPart(MagicPart magic)
-    {
-        MagicPartDick.Add(magic);
-    }
+    //public void AddNewPart(MagicPart magic)
+    //{
+    //    MagicPartDick.Add(magic);
+    //}
     public void RemoveCard(playerCard card)
     {
         if (playerDeck.Contains(card))
         {
             playerDeck.Remove(card);
+        }
+    }
+    public void GetMoney(int m)
+    {
+        money += m;
+        if (money < 0)
+        {
+            money = 0;
+        }
+    }
+    //获得诅咒卡
+    public void AddCurseCard()
+    {
+
+    }
+    public void AddBattleBuff(BattleBuff buff)
+    {
+        battleBuffList.Add(buff);
+    }
+    public void AddMagicPart(MagicPart magicPart=null)
+    {
+        if (magicPart != null)
+        {
+            MagicPartDick.Add(new MagicPart(magicPart));
         }
     }
     //初始化玩家的开局卡组
@@ -46,11 +76,23 @@ public class playerInfo
     public void MagicPartDickInit()
     {
         MagicPartDick.Clear();
-        MagicPartDick.Add(magicpartAsset.AllMagicParts[0]);
-        MagicPartDick.Add(magicpartAsset.AllMagicParts[1]);
+        AddMagicPart(magicpartAsset.AllMagicParts[0]);
+        AddMagicPart(magicpartAsset.AllMagicParts[1]);
     }
     public void KnapSackInit(bool[] ise)
     {
         playerKnapsack = new knapsack(ise);
     }
+}
+
+public class BattleBuff
+{
+    public BattleBuff(string name,int times)
+    {
+        buffName = name;
+        Times = times;
+    }
+    public string buffName;
+    public string buffDescrie;
+    public int Times;
 }

@@ -290,7 +290,11 @@ public class battleManager : MonoBehaviour
         BattleRound = BattleState.PlayerRound;
     }
 
+    //胜利
+    public void EndBattleScene()
+    {
 
+    }
     //回合结束按钮
     public void ButtonToEndPlayerRound()
     {

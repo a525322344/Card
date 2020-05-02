@@ -59,6 +59,32 @@ public abstract class buttoninfo
         buttonFun();
     }
 }
+//通用按钮
+public class Button_Info : buttoninfo
+{
+    public Button_Info(string des,buttonTo buttonTo)
+    {
+        buttonFun = new buttonTo(() =>
+        {
+        });
+        buttonDescribe = des;
+        buttonFun += buttonTo;
+    }
+}
+//通用离开——关闭事件页
+public class Button_Exit : buttoninfo
+{
+    public Button_Exit(string des, buttonTo buttonTo)
+    {
+        buttonFun = new buttonTo(() =>
+        {
+            gameManager.Instance.uimanager.uiBefallBoard.ExitEventBoard();
+            gameManager.Instance.mapmanager.mapState = MapState.MainMap;
+        });
+        buttonDescribe = des;
+        buttonFun += buttonTo;
+    }
+}
 //退出
 public class Button_ExitBefall : buttoninfo
 {
@@ -74,7 +100,7 @@ public class Button_ExitBefall : buttoninfo
     }
     public Button_ExitBefall()
     {
-        buttonDescribe = "回避";
+        buttonDescribe = "退出";
         //退出遭遇
         buttonFun = new buttonTo(() =>
         {
@@ -83,20 +109,6 @@ public class Button_ExitBefall : buttoninfo
         });
     }
 }
-//整理背包
-//public class Button_SortPart : Button_NextBeffal
-//{
-
-//    public Button_SortPart(befallinfo nextBefallInfo)
-//    {
-//        nextBefall = nextBefallInfo;
-//        buttonDescribe = "好，做好准备";
-//        buttonFun += new buttonTo(() =>
-//        {
-//            gameManager.Instance.instantiatemanager.instanSortPart(gameManager.Instance.playerinfo.MagicPartDick,gameManager.Instance.playerinfo.playerKnapsack);
-//        });
-//    }
-//}
 //进入下一个事件
 public class Button_NextBeffal:buttoninfo
 {
@@ -132,16 +144,3 @@ public class Button_SecondBoard : buttoninfo
     }
 }
 
-public class Button_OverSortPart : buttoninfo
-{
-    public Button_OverSortPart()
-    {
-        buttonDescribe = "完成！";
-        buttonFun=new buttonTo(() =>
-        {
-            gameManager.Instance.uimanager.uiBefallBoard.ExitEventBoard();
-            gameManager.Instance.instantiatemanager.ExitSortPart();
-            gameManager.Instance.mapmanager.mapState = MapState.MainMap;
-        });
-    }
-}

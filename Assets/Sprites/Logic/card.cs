@@ -7,7 +7,6 @@ public enum CardKind
     AttackCard, 
     SkillCard,
     AbilityCard,
-    StateCard,
     CurseCard
 }
 [System.Serializable]
@@ -46,7 +45,6 @@ public class playerCard : card
         switch (kind)
         {
             case CardKind.CurseCard:
-            case CardKind.StateCard:
                 break;
             case CardKind.PlayerCard:
                 break;
@@ -88,7 +86,6 @@ public class playerCard : card
         switch (kind)
         {
             case CardKind.CurseCard:
-            case CardKind.StateCard:
                 break;
             case CardKind.PlayerCard:
                 break;

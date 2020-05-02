@@ -101,6 +101,18 @@ public class MagicPart : Part
         }
         Vector2GridRotate = new Dictionary<Vector2, grid>(Vector2GridPairs);
     }
+    public MagicPart(MagicPart magicPart)
+    {
+        rotateInt = 0;
+        Vector2GridPairs = new Dictionary<Vector2, grid>(magicPart.Vector2GridPairs);
+        gridsum = 0;
+        Vector2GridRotate = new Dictionary<Vector2, grid>(magicPart.Vector2GridPairs);
+        foreach(Reaction r in magicPart.m_overallReactionList)
+        {
+            m_overallReactionList.Add(r);
+        }
+        describe = magicPart.describe;
+    }
     public override void addReaction(Reaction reaction)
     {
         reaction.Active = false;

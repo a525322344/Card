@@ -55,6 +55,34 @@ public static class ListOperation
         return tList[Random.Range(0, tList.Count)];
     }
     /// <summary>
+    /// 随机选择项，返回num长度的链表
+    /// </summary>
+    /// <typeparam name="T_class"></typeparam>
+    /// <param name="tlist">母表</param>
+    /// <param name="num">选择长度</param>
+    /// <returns></returns>
+    public static List<T_class> RandomValueList<T_class>(List<T_class> tlist,int num)
+    {
+        List<T_class> alllist = new List<T_class>(tlist);
+        List<T_class> returnlist = new List<T_class>();
+        for(int i = 0; i < num;)
+        {
+            if (alllist.Count == 0)
+            {
+                Debug.Log("总池不足，只选择数：" + returnlist.Count);
+                break;
+            }
+            T_class newt = RandomValue<T_class>(alllist);
+            if (!returnlist.Contains(newt))
+            {
+                returnlist.Add(newt);
+                alllist.Remove(newt);
+                i++;
+            }
+        }
+        return returnlist;
+    }
+    /// <summary>
     /// 将整个链表插入另一个链表中
     /// </summary>
     /// <typeparam name="T_class"></typeparam>

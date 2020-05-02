@@ -11,9 +11,11 @@ public class InitData
 
     public void Awake()
     {
-        //CardInit();
-        EditorCardInit(gameManager.Instance.CardEditorBoard);
+        CardInit();
+        //EditorCardInit(gameManager.Instance.CardEditorBoard);
         MagicPartInit();
+        BefallInit();
+        MonsterInit();
     }
     //数据加载全卡
     void CardInit()
@@ -128,8 +130,10 @@ public class InitData
         cardEffectBase whethereffect4 = new CardEffect_Whether(judgeFillV, new CardEffect_RepeatByFill(judgeFillV, new Armor(6)));
         gongshoujianbei.AddEffect(whethereffect3);
         gongshoujianbei.AddEffect(whethereffect4);
-
         cardAsset.AllIdCards.Add(gongshoujianbei);
+        //诅咒
+        playerCard zuzhou = new playerCard(24, "诅咒", CardKind.CurseCard, 0, 0);
+        cardAsset.AllIdCards.Add(zuzhou);
     }
     //“手动”加载全部件 可能是暂定
     void MagicPartInit()
@@ -137,7 +141,7 @@ public class InitData
         int[] a = { 0, 1, 0, 0, 1, 0, 0, 0, 0 };
         Reaction reaction = new Reaction_Create(new EffectEvent(new Burn(1),null), EventKind.Event_PlayCard);
         MagicPart Init_BURNUP_1 = new MagicPart(a,0);
-        Init_BURNUP_1.describe = "灼烧+1";
+        Init_BURNUP_1.describe = "灼烧添加";
         Init_BURNUP_1.addReaction(reaction);
 
         AllAsset.magicpartAsset.AllMagicParts.Add(Init_BURNUP_1);
@@ -147,9 +151,195 @@ public class InitData
         MagicPart Init_DefenceUp_1 = new MagicPart(a,1);
         Init_DefenceUp_1.describe = "敏捷+2";
         Init_DefenceUp_1.addReaction(reaction);
-
         AllAsset.magicpartAsset.AllMagicParts.Add(Init_DefenceUp_1);
+
+        reaction = new Reaction_Affect("力量增加", new extraAttackUp(2), EventKind.Event_Damage);
+        MagicPart newpart = new MagicPart(a, 2);
+        newpart.describe = "力量+2";
+        newpart.addReaction(reaction);
+        AllAsset.magicpartAsset.AllMagicParts.Add(newpart);
+
+        reaction = new Reaction_Affect("力量增加", new extraAttackUp(1), EventKind.Event_Damage);
+        newpart = new MagicPart(a, 2);
+        newpart.describe = "和谐";
+        newpart.addReaction(reaction);
+        reaction = new Reaction_Affect("敏捷增加", new extraDeffenceUp(1), EventKind.Event_Armor);
+        newpart.addReaction(reaction);
+        AllAsset.magicpartAsset.AllMagicParts.Add(newpart);
     }
+    //加载遭遇事件
+    void BefallInit()
+    {
+        playerInfo player = gameManager.Instance.playerinfo;
+        befallinfo befallinfo;
+        //宝箱事件
+        befallinfo = new befallinfo("宝箱", 0, "宝箱，不会有宝箱怪的",
+            new Button_Exit("直接离开", () =>
+             {
+
+             }),
+            new Button_Info("打开",()=> {
+                
+                gameManager.Instance.uimanager.uiBefallBoard.SetActive(false);
+                //随机选出可选部件
+                List<MagicPart> selectparts = ListOperation.RandomValueList<MagicPart>(AllAsset.magicpartAsset.AllMagicParts, player.treasureToSelectNum);
+                //打开选择部件面板
+                secondBoardInfo secondBoard = new secondBoardInfo(2);
+                secondBoard.onExit += () =>
+                {
+
+                };
+                if (gameManager.Instance.uimanager.uiTreasurePartBoard)
+                {
+                    gameManager.Instance.uimanager.uiTreasurePartBoard.gameObject.SetActive(true);
+                }
+                else
+                {
+                    GameObject selectpart = instantiateManager.instance.instanSecondBoard(secondBoard);
+                    UisecondBoard_SelectPart uiselectboard = selectpart.GetComponent<UisecondBoard_SelectPart>();
+                    gameManager.Instance.uimanager.uiTreasurePartBoard = uiselectboard;
+                    uiselectboard.EnterInit(secondBoard);
+                    uiselectboard.Init(selectparts, 1);
+                    uiselectboard.describeText.text = "选择1个部件";
+                    uiselectboard.CancelButton.AddListener(() =>
+                    {
+                        selectpart.SetActive(false);
+                        gameManager.Instance.uimanager.uiBefallBoard.SetActive(true);
+                    });
+                    uiselectboard.onSelectParts = (partlist) =>
+                    {
+                        foreach(MagicPart part in partlist)
+                        {
+                            player.AddMagicPart(part);
+                        }
+                        GameObject.Destroy(selectpart);
+                        gameManager.Instance.mapmanager.mapState = MapState.MainMap;
+                    };
+                }
+            })
+             );
+        MapAsset.mapSystemBefall.Add(befallinfo);
+        //不知名石像
+        string name="";
+        befallinfo = new befallinfo("不知名的石像", 1, "看起来像是某种祭祀仪式的场所，正中间的石像在月光下显得格外阴森，石像周围有很多祭品",
+            new Button_Exit("离开", () => {
+
+            }),
+            new Button_Exit("拿走全部祭品", () => {
+                gameManager.Instance.playerinfo.GetMoney(200);
+                gameManager.Instance.playerinfo.AddCurseCard();//
+            }),
+            new Button_Exit("拿走一半祭品", () => {
+                gameManager.Instance.playerinfo.GetMoney(100);
+                gameManager.Instance.playerinfo.AddBattleBuff(new BattleBuff("疯狂", 1));//
+            }),
+            new Button_Exit("献上祭品("+ name + ")", () => {
+                playerCard playerCard = ListOperation.RandomValue<playerCard>(player.playerDeck);
+                name = playerCard.Name;
+                player.RemoveCard(playerCard);
+                player.AddMagicPart();//
+            })
+            );
+        MapAsset.AllBefallInfos.Add(befallinfo);
+        //部件配置
+        secondBoardInfo secondboard = new secondBoardInfo(0, "部件配置");
+        befallinfo = new befallinfo("整装待发", 0, "英雄征途的第一步：整理背包",
+            new Button_ExitBefall("直接出发"), new Button_SecondBoard(secondboard));
+        MapAsset.AllBefallInfos.Add(befallinfo);
+
+    }
+    void MonsterInit()
+    {
+        //普通怪物
+        //1~3层(最少要有三只
+        monsterInfo monster;
+        monster = new monInfo_Sample(4);
+        monster.Id = 0;
+        monster.name = "普通怪物_1_a";
+        MapAsset.nMonster1s.Add(monster);
+        MapAsset.AllMonsters.Add(monster);
+
+        monster = new monInfo_Sample(4);
+        monster.Id = 0;
+        monster.name = "普通怪物_1_b";
+        MapAsset.nMonster1s.Add(monster);
+        MapAsset.AllMonsters.Add(monster);
+
+        monster = new monInfo_Sample(4);
+        monster.Id = 0;
+        monster.name = "普通怪物_1_c";
+        MapAsset.nMonster1s.Add(monster);
+        MapAsset.AllMonsters.Add(monster);
+        //4~6层(三只
+        monster = new monInfo_Sample(6);
+        monster.Id = 0;
+        monster.name = "普通怪物_2_a";
+        MapAsset.nMonster2s.Add(monster);
+        MapAsset.AllMonsters.Add(monster);
+
+        monster = new monInfo_Sample(6);
+        monster.Id = 0;
+        monster.name = "普通怪物_2_b";
+        MapAsset.nMonster2s.Add(monster);
+        MapAsset.AllMonsters.Add(monster);
+
+        monster = new monInfo_Sample(6);
+        monster.Id = 0;
+        monster.name = "普通怪物_2_c";
+        MapAsset.nMonster2s.Add(monster);
+        MapAsset.AllMonsters.Add(monster);
+        //8~10层
+        monster = new monInfo_Sample(8);
+        monster.Id = 0;
+        monster.name = "普通怪物_3_a";
+        MapAsset.nMonster3s.Add(monster);
+        MapAsset.AllMonsters.Add(monster);
+
+        monster = new monInfo_Sample(8);
+        monster.Id = 0;
+        monster.name = "普通怪物_3_b";
+        MapAsset.nMonster3s.Add(monster);
+        MapAsset.AllMonsters.Add(monster);
+
+        monster = new monInfo_Sample(8);
+        monster.Id = 0;
+        monster.name = "普通怪物_3_c";
+        MapAsset.nMonster3s.Add(monster);
+        MapAsset.AllMonsters.Add(monster);
+        //精英怪物
+        //3~6层
+        monster = new monInfo_Sample(8);
+        monster.Id = 0;
+        monster.name = "精英怪物_1_a";
+        MapAsset.hMonster1s.Add(monster);
+        MapAsset.AllMonsters.Add(monster);
+
+        monster = new monInfo_Sample(8);
+        monster.Id = 0;
+        monster.name = "精英怪物_1_b";
+        MapAsset.hMonster1s.Add(monster);
+        MapAsset.AllMonsters.Add(monster);
+
+        //8~10层
+        monster = new monInfo_Sample(8);
+        monster.Id = 0;
+        monster.name = "精英怪物_2_a";
+        MapAsset.hMonster2s.Add(monster);
+        MapAsset.AllMonsters.Add(monster);
+
+        monster = new monInfo_Sample(8);
+        monster.Id = 0;
+        monster.name = "精英怪物_2_b";
+        MapAsset.hMonster2s.Add(monster);
+        MapAsset.AllMonsters.Add(monster);
+        //boss
+        monster = new monInfo_Sample(12);
+        monster.Id = 0;
+        monster.name = "boss";
+        MapAsset.bossLists.Add(monster);
+        MapAsset.AllMonsters.Add(monster);
+    }
+
 
     public void EditorCardInit(CardEditorBoard cardboard)
     {
@@ -223,7 +413,6 @@ public class InitData
         }
         return Effect;
     }
-
     judgeCondition JudgeFromInit(editorJudge ejudge)
     {
         judgeCondition Judge = new Judge_NullTrue();

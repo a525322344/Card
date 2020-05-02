@@ -40,7 +40,6 @@ public class uiVectorBoard : MonoBehaviour
     }
     public void ContinueToMap()
     {
-        gameManager.Instance.SwitchScene(false);
         gameManager.Instance.exitBattlescene();
     }
     public void selectcard(int i)

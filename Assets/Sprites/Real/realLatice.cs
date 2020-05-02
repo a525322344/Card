@@ -26,6 +26,7 @@ public class realLatice : MonoBehaviour
     public realKnapsack realknapsack;
     public latice thislatice;
     public GameState gameState;
+    //战斗中判断格子使用状态
     public GridState gridState;
 
 

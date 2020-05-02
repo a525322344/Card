@@ -203,8 +203,8 @@ public class realCard : MonoBehaviour
     {
         realCardState = _realCardState;
         thisCard = playerCard;
-        nameText.text = playerCard.Name;
-        describeText.text = playerCard.Describe;
+        //nameText.text = playerCard.Name;
+        //describeText.text = playerCard.Describe;
         nameTextPro.text = playerCard.Name;
         describeTextPro.text = playerCard.Describe;
         //cardTexture.sprite = gameManager.Instance.instantiatemanager.cardSprites[playerCard.TextureId];
@@ -213,13 +213,19 @@ public class realCard : MonoBehaviour
             case CardKind.AttackCard:
                 cardBoard.sprite = cardBoardSprites[0];
                 cardKindIcon.sprite = cardKindIconSprites[0];
+                Instantiate(costGO[playerCard.Cost], costtran);
                 break;
             case CardKind.SkillCard:
                 cardBoard.sprite = cardBoardSprites[1];
                 cardKindIcon.sprite = cardKindIconSprites[1];
+                Instantiate(costGO[playerCard.Cost], costtran);
+                break;
+            case CardKind.CurseCard:
+                cardBoard.sprite = cardBoardSprites[0];
+                cardKindIcon.gameObject.SetActive(false);
                 break;
         }
-        Instantiate(costGO[playerCard.Cost], costtran);
+
         realcost.Init(thisCard);
         realcost.gameObject.SetActive(false);
         if (realCardState == RealCardState.RealCard)
@@ -232,17 +238,17 @@ public class realCard : MonoBehaviour
         }
         else if (realCardState == RealCardState.AwardCard)
         {
-            nameText.gameObject.SetActive(false);
-            describeText.gameObject.SetActive(false);
-            nameTextPro.gameObject.SetActive(true);
-            describeTextPro.gameObject.SetActive(true);
+            //nameText.gameObject.SetActive(false);
+            //describeText.gameObject.SetActive(false);
+            //nameTextPro.gameObject.SetActive(true);
+            //describeTextPro.gameObject.SetActive(true);
         }
         else if (realCardState == RealCardState.SelectCard)
         {
-            nameText.gameObject.SetActive(false);
-            describeText.gameObject.SetActive(false);
-            nameTextPro.gameObject.SetActive(true);
-            describeTextPro.gameObject.SetActive(true);
+            //nameText.gameObject.SetActive(false);
+            //describeText.gameObject.SetActive(false);
+            //nameTextPro.gameObject.SetActive(true);
+            //describeTextPro.gameObject.SetActive(true);
             cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 0;
             handCardState = HandCardState.Freedom;
         }
@@ -402,9 +408,12 @@ public class realCard : MonoBehaviour
                 switch (handCardState)
                 {
                     case HandCardState.Enter:
-                        handCardState = HandCardState.Select;
-                        cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 1;
-                        handcardControll.SetSelectCard(this);
+                        if (thisCard.Kind != CardKind.CurseCard)
+                        {
+                            handCardState = HandCardState.Select;
+                            cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                            handcardControll.SetSelectCard(this);
+                        }
                         break;
                     case HandCardState.WaitToSelectEnter:
                         //被选到

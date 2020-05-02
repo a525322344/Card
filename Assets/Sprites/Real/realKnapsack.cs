@@ -81,7 +81,7 @@ public class realKnapsack : MonoBehaviour
                 laticePairs.Add(posi, realLatice);
             }
 
-            Debug.Log(usedLaticePairs.Count);
+            Debug.Log("可使用部件格："+usedLaticePairs.Count);
             //初始化部件
             InitInstallPart(GameState.BattleSence);
 

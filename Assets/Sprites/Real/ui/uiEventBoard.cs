@@ -74,4 +74,15 @@ public class uiEventBoard : MonoBehaviour
         }
         gameObject.SetActive(false);
     }
+    public void SetActive(bool on)
+    {
+        if (on)
+        {
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+    }
 }

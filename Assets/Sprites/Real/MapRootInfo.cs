@@ -16,6 +16,7 @@ public class MapRootInfo : MonoBehaviour
     public Transform secondBoardPosi;
     public Transform selectBoardPosi;
 
+    public Transform cameraMove;
     public Camera mapCamera;
 
     public float sortPositionZ()
