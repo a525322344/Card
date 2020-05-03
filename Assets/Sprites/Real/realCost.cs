@@ -42,6 +42,7 @@ public class realCost : MonoBehaviour
                 {
                     lastRealLatice.ToSetPart(null);
                     lastRealLatice = null;
+                    gameManager.Instance.battlemanager.setCardDescribe(new MagicPart());
                 }
             }
             //如若没有过改变，则不用再次检测

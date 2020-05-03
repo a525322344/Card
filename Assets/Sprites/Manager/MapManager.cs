@@ -867,6 +867,12 @@ public class MapManager : MonoBehaviour
         befallinfo befallinfo = AllAsset.MapAsset.mapSystemBefall[0];
         gameManager.Instance.uimanager.uiBefallBoard.EnterEventBoard(befallinfo);
     }
+    public void EnterSleep()
+    {
+        mapState = MapState.EventWindow;
+        befallinfo befallinfo = AllAsset.MapAsset.mapSystemBefall[1];
+        gameManager.Instance.uimanager.uiBefallBoard.EnterEventBoard(befallinfo);
+    }
     public void EnterBefall()
     {
         befallinfo befallinfo = ListOperation.RandomValue<befallinfo>(befallList);

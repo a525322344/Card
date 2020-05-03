@@ -16,8 +16,9 @@ public class card
     public int Id;
     public CardKind Kind;
     public int Cost;
-    public int Rank;        //基本0，普通1，稀有2，罕见3，
+    public int Rank;        //基本0，普通1，稀有2，罕见3，衍生4
     public int TextureId;
+    public bool IsGrade;
 
     public Dictionary<Vector2, int> vecCostPairs = new Dictionary<Vector2, int>();
 
@@ -28,54 +29,7 @@ public class card
 [System.Serializable]
 public class playerCard : card
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="id">序号</param>
-    /// <param name="name">卡名</param>
-    /// <param name="kind">种类（enum CardKind）</param>
-    /// <param name="_damageToEnemy">伤害</param>
-    /// <param name="_deffenceToOwn">护甲</param>
-    public playerCard(int id, string name, CardKind kind,int cost,int _damageToEnemy,int _deffenceToOwn)
-    {
-        Id = id;
-        Name = name;
-        Kind = kind;
-        Cost = cost;
-        switch (kind)
-        {
-            case CardKind.CurseCard:
-                break;
-            case CardKind.PlayerCard:
-                break;
-        }
-
-        for (int i = -1; i < 2; i++)
-        {
-            for (int j = -1; j < 2; j++)
-            {
-                vecCostPairs.Add(new Vector2(i, j), 0);
-            }
-        }
-        switch (Cost)
-        {
-            case 0:
-                break;
-            case 1:
-                vecCostPairs[new Vector2(0,0)] = 1;
-                break;
-            case 2:
-                vecCostPairs[new Vector2(0, 0)] = 1;
-                vecCostPairs[new Vector2(0, -1)] = 1;
-                break;
-                //other
-        }
-        damageToEnemy = _damageToEnemy;
-        deffenceToOwn = _deffenceToOwn;
-        setEffect();
-        CardDescribe();
-    }
-    public playerCard(int id, string name, CardKind kind, int cost,int rank)
+    public playerCard(int id, string name, CardKind kind, int cost,int rank,bool grade=false)
     {
         TextureId = 0;
         Id = id;
@@ -83,6 +37,7 @@ public class playerCard : card
         Kind = kind;
         Cost = cost;
         Rank = rank;
+        IsGrade = grade;
         switch (kind)
         {
             case CardKind.CurseCard:
@@ -124,19 +79,6 @@ public class playerCard : card
     //打出效果链表
     public List<cardEffectBase> EffectPlayList = new List<cardEffectBase>();
 
-    private void setEffect()
-    {
-        if (damageToEnemy > 0)
-        {
-            cardEffectBase effect = new Damage(damageToEnemy);
-            EffectPlayList.Add(effect);
-        }
-        if (deffenceToOwn > 0)
-        {
-            cardEffectBase effect = new Armor(deffenceToOwn);
-            EffectPlayList.Add(effect);
-        }       
-    }
     public string CardDescribe()
     {
         Describe = "";
@@ -151,14 +93,16 @@ public class playerCard : card
         {
             Describe = Describe.Substring(0, Describe.Length - 1);
         }
+        //Debug.Log(Describe);
         return Describe;
+
     }
 
     //    逻辑操作 手动添加效果
     public void AddEffect(cardEffectBase effect)
     {
         EffectPlayList.Add(effect);
-        CardDescribe();
+        //CardDescribe();
     }
 }
 

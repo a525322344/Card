@@ -117,6 +117,7 @@ public class gameManager : MonoBehaviour
     public void exitBattlescene()
     {
         gameManager.Instance.SwitchScene(false);
+        playerinfo.playerHealth = battlemanager.battleInfo.Player.healthnow;
         Destroy(battlemanager);
         SceneManager.UnloadSceneAsync(battleScene);
     }

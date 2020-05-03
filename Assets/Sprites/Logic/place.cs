@@ -92,7 +92,7 @@ public class sleepPlace : place
     }
     public override void onclick()
     {
-        throw new System.NotImplementedException();
+        gameManager.Instance.mapmanager.EnterSleep();
     }
 }
 

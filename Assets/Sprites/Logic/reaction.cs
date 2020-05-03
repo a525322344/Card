@@ -108,8 +108,7 @@ public abstract class Reaction
     public virtual void dealReaction() { }
     public virtual extraEffectBase getExtreEffect() { return null; }
 
-    //反应一次就移除
-    protected bool m_Active = true;
+    protected bool m_Active = false;
     public bool b_haveEvent = false;
 }
 
@@ -123,10 +122,16 @@ public class Reaction_Affect : Reaction
         affectEffect = extraEffect;
         b_haveEvent = false;
     }
-
+    public Reaction_Affect(Reaction reaction)
+    {
+        name = reaction.name;
+        kind = reaction.getReactionKind();
+        affectEffect = reaction.getExtreEffect();
+        b_haveEvent = reaction.b_haveEvent;
+        Debug.Log("reaction_affect");
+    }
     public override extraEffectBase getExtreEffect()
     {
-        //Debug.Log("reaction"+name);
         return affectEffect;
     }
 
@@ -142,10 +147,17 @@ public class Reaction_Create : Reaction
         toCreateEvent = createEvent;
         b_haveEvent = true;
     }
+    public Reaction_Create(Reaction reaction)
+    {
+        kind = reaction.getReactionKind();
+        toCreateEvent = (reaction as Reaction_Create).toCreateEvent;
+        b_haveEvent = reaction.b_haveEvent;
+        Debug.Log("reaction_create");
+    }
     public override void dealReaction()
     {
         gameManager.Instance.battlemanager.eventManager.InsertEvent(toCreateEvent);
     }
-    private singleEvent toCreateEvent;
+    public singleEvent toCreateEvent;
 }
 

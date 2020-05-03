@@ -11,8 +11,8 @@ public class InitData
 
     public void Awake()
     {
-        CardInit();
-        //EditorCardInit(gameManager.Instance.CardEditorBoard);
+        //CardInit();
+        EditorCardInit(gameManager.Instance.CardEditorBoard);
         MagicPartInit();
         BefallInit();
         MonsterInit();
@@ -21,11 +21,11 @@ public class InitData
     void CardInit()
     {
         ShowAllCards = cardAsset.AllIdCards;
-        csvcard = CSVLoader.LoadCsvData<csvcard>(Application.streamingAssetsPath + "/cardcsv.csv");
-        foreach (int i in csvcard.Keys)
-        {
-            cardAsset.AllIdCards.Add(new playerCard(csvcard[i].id, csvcard[i].name, CSVLoader.StringToEnum(csvcard[i].kind),csvcard[i].cost ,csvcard[i].damage, csvcard[i].deffence));
-        }
+        //csvcard = CSVLoader.LoadCsvData<csvcard>(Application.streamingAssetsPath + "/cardcsv.csv");
+        //foreach (int i in csvcard.Keys)
+        //{
+        //    cardAsset.AllIdCards.Add(new playerCard(csvcard[i].id, csvcard[i].name, CSVLoader.StringToEnum(csvcard[i].kind),csvcard[i].cost ,csvcard[i].damage, csvcard[i].deffence));
+        //}
         //给火球术添加灼烧效果
         cardAsset.AllIdCards[2].AddEffect(new Burn(3));
         //1费 抽2，打5
@@ -178,8 +178,7 @@ public class InitData
              {
 
              }),
-            new Button_Info("打开",()=> {
-                
+            new Button_Info("打开",()=> {              
                 gameManager.Instance.uimanager.uiBefallBoard.SetActive(false);
                 //随机选出可选部件
                 List<MagicPart> selectparts = ListOperation.RandomValueList<MagicPart>(AllAsset.magicpartAsset.AllMagicParts, player.treasureToSelectNum);
@@ -218,6 +217,46 @@ public class InitData
                 }
             })
              );
+        MapAsset.mapSystemBefall.Add(befallinfo);
+        //营地事件
+        befallinfo = new befallinfo("营火", 0, "修养生息或者稳固实力",
+            new Button_Exit("直接离开",()=> { }),
+            new Button_Exit("恢复血量（30%）",()=> {
+                float h = player.playerHealthMax * 0.3f;
+                player.RecoveryHealth((int)h);
+            }),
+            new Button_Exit("升级卡牌",()=> {
+                gameManager.Instance.uimanager.uiBefallBoard.SetActive(false);
+                secondBoardInfo secondBoard = new secondBoardInfo(1);
+                GameObject selectcard = instantiateManager.instance.instanSecondBoard(secondBoard);
+                UisecondBoard_SelectCard uiselectBoard = selectcard.GetComponent<UisecondBoard_SelectCard>();
+                uiselectBoard.EnterInit(secondBoard);
+                List<playerCard> cangradeCardList = new List<playerCard>();
+                foreach(playerCard card in player.playerDeck)
+                {
+                    if (!card.IsGrade)
+                    {
+                        cangradeCardList.Add(card);
+                    }
+                }
+                uiselectBoard.Init(cangradeCardList,1);
+                uiselectBoard.describeText.text = "选择1张卡升级";
+                uiselectBoard.CancelButton.AddListener(() =>
+                {
+                    GameObject.Destroy(uiselectBoard.gameObject);
+                    gameManager.Instance.uimanager.uiBefallBoard.SetActive(true);
+                });
+                uiselectBoard.onSelectCards = (cards) =>
+                {
+                    foreach(playerCard card in cards)
+                    {
+                        player.UpgradeCard(card);
+                    }
+                    GameObject.Destroy(uiselectBoard.gameObject);
+                    gameManager.Instance.mapmanager.mapState = MapState.MainMap;
+                };
+            })
+            );
         MapAsset.mapSystemBefall.Add(befallinfo);
         //不知名石像
         string name="";
@@ -343,9 +382,10 @@ public class InitData
 
     public void EditorCardInit(CardEditorBoard cardboard)
     {
-        foreach(editorCard card in cardboard.AllCards)
+        foreach(editorCardCollect ecard in cardboard.allCards)
         {
-            playerCard newcard = new playerCard(card.id, card.name, card.Kind, card.cost, (int)card.Rank);
+            editorCard card = ecard.Card;
+            playerCard newcard = new playerCard(card.id, card.name, card.Kind, card.cost, (int)card.Rank,false);
             foreach(editorEffect eE in card.playEffects)
             {
                 newcard.AddEffect(EffectFromInit(eE));
@@ -354,7 +394,52 @@ public class InitData
                     newcard.AddEffect(new CardEffect_ToExitLink());
                 }
             }
+            newcard.CardDescribe();
             cardAsset.AllIdCards.Add(newcard);
+            card = ecard.gradeCard;
+            newcard = new playerCard(card.id, card.name, card.Kind, card.cost, (int)card.Rank,true);
+            foreach (editorEffect eE in card.playEffects)
+            {
+                newcard.AddEffect(EffectFromInit(eE));
+                if (eE.effectKind == EnumEffect.LinkRandom)
+                {
+                    newcard.AddEffect(new CardEffect_ToExitLink());
+                }
+            }
+            newcard.CardDescribe();
+            cardAsset.AllGradeCards.Add(newcard);
+        }
+        foreach(playerCard playerCard in cardAsset.AllIdCards)
+        {
+            if (playerCard.Rank == 0 | playerCard.Rank == 4)
+            {
+                cardAsset.deriveCards.Add(playerCard);
+            }
+            else
+            {
+                cardAsset.canGetCards.Add(playerCard);
+                if (playerCard.Rank == 1)
+                {
+                    cardAsset.noramlCards.Add(playerCard);
+                }
+                else if (playerCard.Rank == 2)
+                {
+                    cardAsset.rareCards.Add(playerCard);
+                }
+                else if (playerCard.Rank == 3)
+                {
+                    cardAsset.superCards.Add(playerCard);
+                }
+            }
+            //类型
+            if (playerCard.Kind == CardKind.AttackCard)
+            {
+                cardAsset.attactCards.Add(playerCard);
+            }
+            else if (playerCard.Kind == CardKind.SkillCard)
+            {
+                cardAsset.skillCards.Add(playerCard);
+            }
         }
     }
     cardEffectBase EffectFromInit(editorEffect editorEffect,params judgeCondition[] judges)
@@ -430,7 +515,7 @@ public class InitData
         }
         return Judge;
     }
-    public static List<perform> PerformListFromInit(editorCard card)
+    public static List<perform> PerformListFromInit(editorCardCollect card)
     {
         List<perform> performs = new List<perform>();
         foreach(editorPerform eP in card.performlist)
