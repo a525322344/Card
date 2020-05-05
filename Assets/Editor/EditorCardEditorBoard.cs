@@ -7,29 +7,23 @@ using UnityEditorInternal;
 [CustomEditor(typeof(CardEditorBoard))]
 public class EditorCardEditorBoard : Editor
 {
-    private editorCard selectcard;
-    private bool isSelect;
+    private editorCardCollect selectcard;
+    private bool isSelect = false;
     private ReorderableList reorderList;
 
     bool foldout_Cards = true;
     Vector2 scrollPos = new Vector2(0, 0);
     int toremove = -1;
     int toremoveeffect = -1;
-    //[MenuItem("Tools/CardEditorBoard")]//在unity菜单Window下有MyWindow选项
-    //static void Init()
-    //{
 
-    //    EditorCardEditorBoard myWindow = (EditorCardEditorBoard)EditorWindow.GetWindow(typeof(EditorCardEditorBoard), false, "CardEditorBoard", true);//创建窗口
-    //    myWindow.Show();//展示
-    //}
     private void OnEnable()
     {
         CardEditorBoard cardboard = (CardEditorBoard)target;
-        reorderList = new ReorderableList(cardboard.AllCards, cardboard.AllCards.GetType());
+        reorderList = new ReorderableList(cardboard.allCards, cardboard.allCards.GetType());
         //绘制元素
         reorderList.drawElementCallback = (Rect rect, int index, bool selected, bool focused) =>
           {
-              editorCard ECard = cardboard.AllCards[index];
+              editorCardCollect ECard = cardboard.allCards[index];
               rect.y += 2;
               rect.height = EditorGUIUtility.singleLineHeight;
               rect.width = 20;
@@ -37,7 +31,7 @@ public class EditorCardEditorBoard : Editor
               EditorGUI.LabelField(rect, "ID");
               rect.x += 15;
               EditorGUI.BeginDisabledGroup(true);
-              EditorGUI.IntField(rect,ECard.id);
+              EditorGUI.IntField(rect,ECard.Card.id);
               EditorGUI.EndDisabledGroup();
               //name
               rect.x += 25;
@@ -45,28 +39,28 @@ public class EditorCardEditorBoard : Editor
               EditorGUI.LabelField(rect, "Name");
               rect.x += 35;
               rect.width = 80;
-              ECard.name = EditorGUI.TextField(rect, ECard.name);
+              ECard.Card.name = EditorGUI.TextField(rect, ECard.Card.name);
               //cost
               rect.x += 85;
               rect.width = 40;
               EditorGUI.LabelField(rect, "Cost");
               rect.x += 35;
               rect.width = 20;
-              ECard.cost = EditorGUI.IntField(rect, ECard.cost);
+              ECard.Card.cost = EditorGUI.IntField(rect, ECard.Card.cost);
               //kind
               rect.x += 25;
               rect.width = 40;
               EditorGUI.LabelField(rect, "Kind");
               rect.x += 35;
               rect.width = 50;
-              ECard.Kind = (CardKind)EditorGUI.EnumPopup(rect, ECard.Kind);
+              ECard.Card.Kind = (CardKind)EditorGUI.EnumPopup(rect, ECard.Card.Kind);
               //rank
               rect.x += 55;
               rect.width = 40;
               EditorGUI.LabelField(rect, "Rank");
               rect.x += 35;
               rect.width = 40;
-              ECard.Rank = (Rank)EditorGUI.EnumPopup(rect, ECard.Rank);
+              ECard.Card.Rank = (Rank)EditorGUI.EnumPopup(rect, ECard.Card.Rank);
               //remove
               rect.x += 50;
               rect.width = 60;
@@ -94,12 +88,12 @@ public class EditorCardEditorBoard : Editor
         //重新排序
         reorderList.onReorderCallback = (ReorderableList list) =>
           {
-              //cardboard.AutoIdOrder();
+              cardboard.AutoIdOrder();
           };
         //选择
         reorderList.onSelectCallback = (ReorderableList list) =>
           {
-              selectcard = cardboard.AllCards[list.index];
+              selectcard = cardboard.allCards[list.index];
               isSelect = true;
           };
         //移除回调
@@ -155,7 +149,7 @@ public class EditorCardEditorBoard : Editor
             //处理删除卡
             if (toremove != -1)
             {
-                cardboard.AllCards.Remove(cardboard.AllCards[toremove]);
+                cardboard.allCards.Remove(cardboard.allCards[toremove]);
                 toremove = -1;
             }
             EditorGUILayout.EndScrollView();
@@ -169,70 +163,143 @@ public class EditorCardEditorBoard : Editor
                 EditorGUILayout.BeginVertical("box");
                 #region 第一行 名称 费用 id
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("卡名", GUILayout.Width(35));
-                selectcard.name = EditorGUILayout.TextField(selectcard.name);
-                GUILayout.Space(5);
-                EditorGUILayout.LabelField("费用", GUILayout.Width(35));
-                selectcard.cost = EditorGUILayout.IntField(selectcard.cost, GUILayout.Width(20));
-                GUILayout.Space(5);
-                EditorGUILayout.LabelField("种类", GUILayout.Width(30));
-                selectcard.Kind = (CardKind)EditorGUILayout.EnumPopup(selectcard.Kind, GUILayout.Width(50));
-                GUILayout.Space(5);
-                EditorGUILayout.LabelField("品级", GUILayout.Width(30));
-                selectcard.Rank = (Rank)EditorGUILayout.EnumPopup(selectcard.Rank, GUILayout.Width(50));
-                EditorGUILayout.LabelField("Id", GUILayout.Width(17));
-                EditorGUI.BeginDisabledGroup(true);
-                selectcard.id = EditorGUILayout.IntField(selectcard.id, GUILayout.Width(20));
-                EditorGUI.EndDisabledGroup();
+                selectcard.showGrade = EditorGUILayout.Toggle(selectcard.showGrade,GUILayout.Width(10));
+                if (selectcard.showGrade)
+                {
+                    EditorGUILayout.LabelField("升级版  卡名", GUILayout.Width(70));
+                    selectcard.gradeCard.name = EditorGUILayout.TextField(selectcard.gradeCard.name);
+                    GUILayout.Space(5);
+                    EditorGUILayout.LabelField("费用", GUILayout.Width(35));
+                    selectcard.gradeCard.cost = EditorGUILayout.IntField(selectcard.gradeCard.cost, GUILayout.Width(20));
+                    GUILayout.Space(5);
+                    EditorGUILayout.LabelField("种类", GUILayout.Width(30));
+                    selectcard.gradeCard.Kind = (CardKind)EditorGUILayout.EnumPopup(selectcard.gradeCard.Kind, GUILayout.Width(50));
+                    GUILayout.Space(5);
+                    EditorGUILayout.LabelField("品级", GUILayout.Width(30));
+                    selectcard.gradeCard.Rank = (Rank)EditorGUILayout.EnumPopup(selectcard.gradeCard.Rank, GUILayout.Width(50));
+                    EditorGUILayout.LabelField("Id", GUILayout.Width(17));
+                    EditorGUI.BeginDisabledGroup(true);
+                    selectcard.gradeCard.id = EditorGUILayout.IntField(selectcard.gradeCard.id, GUILayout.Width(20));
+                    EditorGUI.EndDisabledGroup();
+                }
+                else
+                {
+                    EditorGUILayout.LabelField("升级版  卡名", GUILayout.Width(70));
+                    selectcard.Card.name = EditorGUILayout.TextField(selectcard.Card.name);
+                    GUILayout.Space(5);
+                    EditorGUILayout.LabelField("费用", GUILayout.Width(35));
+                    selectcard.Card.cost = EditorGUILayout.IntField(selectcard.Card.cost, GUILayout.Width(20));
+                    GUILayout.Space(5);
+                    EditorGUILayout.LabelField("种类", GUILayout.Width(30));
+                    selectcard.Card.Kind = (CardKind)EditorGUILayout.EnumPopup(selectcard.Card.Kind, GUILayout.Width(50));
+                    GUILayout.Space(5);
+                    EditorGUILayout.LabelField("品级", GUILayout.Width(30));
+                    selectcard.Card.Rank = (Rank)EditorGUILayout.EnumPopup(selectcard.Card.Rank, GUILayout.Width(50));
+                    EditorGUILayout.LabelField("Id", GUILayout.Width(17));
+                    EditorGUI.BeginDisabledGroup(true);
+                    selectcard.Card.id = EditorGUILayout.IntField(selectcard.Card.id, GUILayout.Width(20));
+                    EditorGUI.EndDisabledGroup();
+                }
+
                 EditorGUILayout.EndHorizontal();
                 #endregion
                 #region 第二行 效果&演示
                 GUI.color = Color.white;
                 EditorGUILayout.BeginHorizontal();
                 #region 效果表
-                EditorGUILayout.BeginVertical("box");
-                EditorGUILayout.LabelField("效果表", GUILayout.MinWidth(60));
-                for (int i = 0; i < selectcard.playEffects.Count; i++)
+                if (selectcard.showGrade)
                 {
                     EditorGUILayout.BeginVertical("box");
-                    editorEffect effect = selectcard.playEffects[i];
-                    //名称 数值 移除
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField("【" + effect.name + "】", GUILayout.MinWidth(60));
-                    EditorGUILayout.LabelField("Num", GUILayout.Width(35));
-                    effect.num = EditorGUILayout.IntField(effect.num, GUILayout.Width(20));
-                    if (GUILayout.Button("Remove"))
+                    EditorGUILayout.LabelField("效果表", GUILayout.MinWidth(60));
+                    for (int i = 0; i < selectcard.gradeCard.playEffects.Count; i++)
                     {
-                        toremoveeffect = i;
+                        EditorGUILayout.BeginVertical("box");
+                        editorEffect effect = selectcard.gradeCard.playEffects[i];
+                        //名称 数值 移除
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.LabelField("【" + effect.name + "】", GUILayout.MinWidth(60));
+                        EditorGUILayout.LabelField("Num", GUILayout.Width(35));
+                        effect.num = EditorGUILayout.IntField(effect.num, GUILayout.Width(20));
+                        if (GUILayout.Button("Remove"))
+                        {
+                            toremoveeffect = i;
+                        }
+                        EditorGUILayout.EndHorizontal();
+                        //子效果表
+                        if (effect.b_haveChildEffect || effect.b_haveJudge)
+                        {
+                            childEffectShow(effect);
+                        }
+                        EditorGUILayout.EndVertical();
+                    }
+                    if (toremoveeffect != -1)
+                    {
+                        selectcard.gradeCard.playEffects.Remove(selectcard.gradeCard.playEffects[toremoveeffect]);
+                        toremoveeffect = -1;
+                    }
+                    //添加效果行
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Add Effect", GUILayout.Width(60));
+                    EnumEffect enumEffect = (EnumEffect)EditorGUILayout.EnumPopup(EnumEffect.Default);
+                    if (enumEffect != EnumEffect.Default)
+                    {
+                        selectcard.gradeCard.playEffects.Add(CardEditorBoard.EffectFromEnum(enumEffect));
+                        enumEffect = EnumEffect.Default;
                     }
                     EditorGUILayout.EndHorizontal();
-                    //子效果表
-                    if (effect.b_haveChildEffect|| effect.b_haveJudge)
-                    {
-                        childEffectShow(effect);
-                    }
+
                     EditorGUILayout.EndVertical();
                 }
-                if (toremoveeffect != -1)
+                else
                 {
-                    selectcard.playEffects.Remove(selectcard.playEffects[toremoveeffect]);
-                    toremoveeffect = -1;
-                }
-                //添加效果行
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Add Effect", GUILayout.Width(60));
-                EnumEffect enumEffect = (EnumEffect)EditorGUILayout.EnumPopup(EnumEffect.Default);
-                if (enumEffect != EnumEffect.Default)
-                {
-                    selectcard.playEffects.Add(CardEditorBoard.EffectFromEnum(enumEffect));
-                    enumEffect = EnumEffect.Default;
-                }
-                EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.BeginVertical("box");
+                    EditorGUILayout.LabelField("效果表", GUILayout.MinWidth(60));
+                    for (int i = 0; i < selectcard.Card.playEffects.Count; i++)
+                    {
+                        EditorGUILayout.BeginVertical("box");
+                        editorEffect effect = selectcard.Card.playEffects[i];
+                        //名称 数值 移除
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.LabelField("【" + effect.name + "】", GUILayout.MinWidth(60));
+                        EditorGUILayout.LabelField("Num", GUILayout.Width(35));
+                        effect.num = EditorGUILayout.IntField(effect.num, GUILayout.Width(20));
+                        if (GUILayout.Button("Remove"))
+                        {
+                            toremoveeffect = i;
+                        }
+                        EditorGUILayout.EndHorizontal();
+                        //子效果表
+                        if (effect.b_haveChildEffect || effect.b_haveJudge)
+                        {
+                            childEffectShow(effect);
+                        }
+                        EditorGUILayout.EndVertical();
+                    }
+                    if (toremoveeffect != -1)
+                    {
+                        selectcard.Card.playEffects.Remove(selectcard.Card.playEffects[toremoveeffect]);
+                        toremoveeffect = -1;
+                    }
+                    //添加效果行
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("Add Effect", GUILayout.Width(60));
+                    EnumEffect enumEffect = (EnumEffect)EditorGUILayout.EnumPopup(EnumEffect.Default);
+                    if (enumEffect != EnumEffect.Default)
+                    {
+                        selectcard.Card.playEffects.Add(CardEditorBoard.EffectFromEnum(enumEffect));
+                        selectcard.gradeCard.playEffects.Add(CardEditorBoard.EffectFromEnum(enumEffect));
+                        enumEffect = EnumEffect.Default;
+                    }
+                    EditorGUILayout.EndHorizontal();
 
-                EditorGUILayout.EndVertical();
+                    EditorGUILayout.EndVertical();
+                }
+
                 #endregion
                 #region 演出表
                 EditorGUILayout.BeginVertical("box");
+                //帮助信息
+                EditorGUILayout.HelpBox("动画：1-待机 2-攻击 3-受击",MessageType.Info);
                 //第一行 标题 排序按钮
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("演出表",GUILayout.MinWidth(60));

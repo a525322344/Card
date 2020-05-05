@@ -22,15 +22,25 @@ public class playerInfo
     public int playerHealthMax = 100;
     public int playerHealth = 100;
     public int money=200;
-
+    //添加新卡牌
     public void AddNewCard(playerCard card)
     {
         playerDeck.Add(card);
     }
-    //public void AddNewPart(MagicPart magic)
-    //{
-    //    MagicPartDick.Add(magic);
-    //}
+    //升级卡牌
+    public void UpgradeCard(playerCard card)
+    {
+        if (card.IsGrade == false)
+        {
+            playerDeck.Add(cardAsset.AllGradeCards[card.Id]);
+            playerDeck.Remove(card);
+        }
+        else
+        {
+            Debug.Log("错误");
+        }
+    }
+    //移除卡牌
     public void RemoveCard(playerCard card)
     {
         if (playerDeck.Contains(card))
@@ -38,6 +48,7 @@ public class playerInfo
             playerDeck.Remove(card);
         }
     }
+    //获得金钱
     public void GetMoney(int m)
     {
         money += m;
@@ -55,6 +66,7 @@ public class playerInfo
     {
         battleBuffList.Add(buff);
     }
+    //获得部件
     public void AddMagicPart(MagicPart magicPart=null)
     {
         if (magicPart != null)
@@ -62,6 +74,15 @@ public class playerInfo
             MagicPartDick.Add(new MagicPart(magicPart));
         }
     }
+    public void RecoveryHealth(int h)
+    {
+        playerHealth += h;
+        if (playerHealth > playerHealthMax)
+        {
+            playerHealth = playerHealthMax;
+        }
+    }
+
     //初始化玩家的开局卡组
     public void PlayerDickInit(List<int> ts)
     {
@@ -82,6 +103,10 @@ public class playerInfo
     public void KnapSackInit(bool[] ise)
     {
         playerKnapsack = new knapsack(ise);
+        playerKnapsack.installParts.Add(new Vector2(1, 2), MagicPartDick[0]);
+        playerKnapsack.installParts.Add(new Vector2(2, 2), MagicPartDick[1]);
+        //MagicPartDick.Remove(MagicPartDick[0]);
+        //MagicPartDick.Remove(MagicPartDick[1]);
     }
 }
 

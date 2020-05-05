@@ -109,7 +109,8 @@ public class MagicPart : Part
         Vector2GridRotate = new Dictionary<Vector2, grid>(magicPart.Vector2GridPairs);
         foreach(Reaction r in magicPart.m_overallReactionList)
         {
-            m_overallReactionList.Add(r);
+            Reaction newreaction = ReflectOperation.NewClassByReflect<Reaction>(r);
+            m_overallReactionList.Add(newreaction);
         }
         describe = magicPart.describe;
     }

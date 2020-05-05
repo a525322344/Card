@@ -106,6 +106,7 @@ public enum Rank
     普通,
     稀有,
     罕见,
+    衍生,
 }
 [System.Serializable]
 public class editorCard
@@ -122,6 +123,19 @@ public class editorCard
     public int rank;
     public int textureId;
     public List<editorEffect> playEffects = new List<editorEffect>();
+}
+[System.Serializable]
+public class editorCardCollect
+{
+    public editorCardCollect()
+    {
+        Card = new editorCard();
+        gradeCard = new editorCard();
+        showGrade = false;
+    }
+    public bool showGrade;
+    public editorCard Card;
+    public editorCard gradeCard;
 
     public float alltime;
     public List<editorPerform> performlist = new List<editorPerform>();
@@ -130,16 +144,19 @@ public class editorCard
 [CreateAssetMenu(menuName = "CardEditorBoard")]
 public class CardEditorBoard : ScriptableObject
 {
-    public List<editorCard> AllCards = new List<editorCard>();
+    //public List<editorCard> AllCards = new List<editorCard>();
+
+    public List<editorCardCollect> allCards = new List<editorCardCollect>();
     public void AddCard()
     {
-        AllCards.Add(new editorCard());
+        allCards.Add(new editorCardCollect());
     } 
     public void AutoIdOrder()
     {
-        for(int i = 0; i < AllCards.Count; i++)
+        for(int i = 0; i < allCards.Count; i++)
         {
-            AllCards[i].id = i;
+            allCards[i].Card.id = i;
+            allCards[i].gradeCard.id = i;
         }
     }
 

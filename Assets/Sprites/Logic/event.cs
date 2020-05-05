@@ -206,6 +206,7 @@ public class EffectEvent : singleEvent
         prepareEvent();
         insertEvent();
         m_effect.DealEffect(m_effect.mixnum, battleInfo);
+        m_effect.mixnum = m_effect.getNum();
         if (m_effect.b_hasChildEffect)
         {
             Debug.Log("描述：" + m_effect.DescribeEffect());
@@ -405,7 +406,7 @@ public class CardEvent : singleEvent
     public List<perform> performList = new List<perform>();
     public void InitPerform()
     {
-        editorCard editorCard = gameManager.Instance.CardEditorBoard.AllCards[playercard.Id];
+        editorCardCollect editorCard = gameManager.Instance.CardEditorBoard.allCards[playercard.Id];
         alltime = editorCard.alltime;
         performList = InitData.PerformListFromInit(editorCard);
     }

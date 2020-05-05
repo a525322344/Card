@@ -297,14 +297,22 @@ namespace AllAsset
     public static class cardAsset
     {
         //从表格里获得的所有卡
-        public static List<playerCard> AllIdCards = new List<playerCard>();
+        public static List<playerCard> AllIdCards = new List<playerCard>();     //总卡池
+        public static List<playerCard> AllGradeCards = new List<playerCard>();  //升级卡池，可以用id来找到
+        //自动计算
+        //是否在游戏游戏过程中选到
         public static List<playerCard> deriveCards = new List<playerCard>();    //衍生卡                                                                               
-        public static List<playerCard> canGetCards = new List<playerCard>();    //可获得卡
-        public static List<playerCard> curseCards = new List<playerCard>();     //诅咒和状态卡
-        //细分
-        public static List<playerCard> AllUpgradeCards = new List<playerCard>();
+        public static List<playerCard> canGetCards = new List<playerCard>();    //游戏中可获得卡
+        //类型
         public static List<playerCard> attactCards = new List<playerCard>();
         public static List<playerCard> skillCards = new List<playerCard>();
+        //稀有度
+        public static List<playerCard> noramlCards = new List<playerCard>();
+        public static List<playerCard> rareCards = new List<playerCard>();
+        public static List<playerCard> superCards = new List<playerCard>();
+        //手动添加
+        public static List<playerCard> curseCards = new List<playerCard>();     //诅咒和状态卡
+
     }
     //声明所有的魔力部件
     public static class magicpartAsset

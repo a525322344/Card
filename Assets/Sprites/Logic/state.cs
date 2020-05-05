@@ -86,6 +86,7 @@ public class StateBurn : stateWithReaction
         m_reactionEvent = new StateEvent(this,new effectBurnDamage(0));
         eventkind = EventKind.Event_Damage;
         m_reaction = new Reaction_Create(m_reactionEvent, eventkind);
+        m_reaction.Active = true;
     }
     public override void SetInState()
     {

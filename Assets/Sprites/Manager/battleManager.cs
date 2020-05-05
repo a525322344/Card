@@ -169,6 +169,10 @@ public class battleManager : MonoBehaviour
     private void Update()
     {
         eventManager.EventListUpdate();
+        if (Input.GetMouseButton(1))
+        {
+            dickInGame = ListOperation.Shufle<playerCard>(dickInGame);
+        }
     }
 
 
@@ -179,9 +183,10 @@ public class battleManager : MonoBehaviour
         {
             dickInGame = new List<playerCard>(dickDiscard);
             dickInGame = ListOperation.Shufle<playerCard>(dickInGame);
+            Debug.Log("洗牌");
             dickDiscard.Clear();
         }
-        playerCard thiscard = dickInGame[dickInGame.Count - 1];
+        playerCard thiscard = dickInGame[0];
         dickInGame.Remove(thiscard);
         dickHandCard.Add(thiscard);
 
@@ -195,7 +200,7 @@ public class battleManager : MonoBehaviour
         {
             realknapsack.UseSelectLatices();
             CardEvent newevent = new CardEvent((playerCard)selectedCard.thisCard, selectedPart, new emplyPlayCard());
-            //newevent.InitPerform();
+            newevent.InitPerform();
             EventShow neweventshow = new EventShow(newevent, eventManager.BattleEventShows);
             eventManager.BattleEventShows.Add(neweventshow);
 
@@ -203,7 +208,6 @@ public class battleManager : MonoBehaviour
             gameManager.Instance.battlemanager.b_isSelectCard = false;
             //从手牌删掉这张卡
             deleteHandCard(selectedCard);
-
         }
     }
     //根据强化动态更新卡牌描述
