@@ -16,6 +16,7 @@ public class MapManager : MonoBehaviour
 {
     public MapState mapState = MapState.MainMap;
     public List<realPlace> realplaceList = new List<realPlace>();
+    public GameObject mapplayerGO;
     //public Dictionary<Vector2, PlaceNode> placeNodeDic = new Dictionary<Vector2, PlaceNode>();
     private MapRootInfo maprootinfo;
     public bool MapPlaceOpen;
@@ -51,6 +52,8 @@ public class MapManager : MonoBehaviour
     Dictionary<int, List<PlaceNode>> intListDic = new Dictionary<int, List<PlaceNode>>();
     List<PlaceNode> placeNodeList = new List<PlaceNode>();
     Dictionary<Vector2, PlaceNode> placeNodeDic = new Dictionary<Vector2, PlaceNode>();
+    public realMapPlayer mapplayer;
+
 
     float positionZ;
     public float positionUp;
@@ -64,21 +67,21 @@ public class MapManager : MonoBehaviour
             {
                 if (Input.GetAxis("Mouse ScrollWheel") < 0)//下
                 {
-                    positionZ -= mapCameraMoveSpeed;
-                    if (positionZ < positionDown)
-                    {
-                        positionZ = positionDown;
-                    }
-                }
-                if (Input.GetAxis("Mouse ScrollWheel") > 0)//上
-                {
                     positionZ += mapCameraMoveSpeed;
                     if (positionZ > positionUp)
                     {
                         positionZ = positionUp;
                     }
                 }
-                maprootinfo.cameraMove.DOLocalMoveY(positionZ, 0.7f);
+                if (Input.GetAxis("Mouse ScrollWheel") > 0)//上
+                {
+                    positionZ -= mapCameraMoveSpeed;
+                    if (positionZ < positionDown)
+                    {
+                        positionZ = positionDown;
+                    }
+                }
+                maprootinfo.cameraMove.DOLocalMoveX(positionZ, 0.7f);
             }
         }
     }
@@ -176,7 +179,7 @@ public class MapManager : MonoBehaviour
         //添加边路
         int outplacenum = (int)Random.Range(outPlaceNumRange.x, outPlaceNumRange.y + 1);
         //左边
-        int startstorey = (int)Random.Range(2, allStoreyNum - 2 - outplacenum);
+        int startstorey = (int)Random.Range(2, allStoreyNum - 3 - outplacenum);
         for (int i = 0; i < outplacenum; i++)
         {
             Vector2 posi = new Vector2(0, startstorey + i);
@@ -200,7 +203,7 @@ public class MapManager : MonoBehaviour
         outplacenum = (int)Random.Range(outPlaceNumRange.x, outPlaceNumRange.y + 1);
         if (startstorey + lastoutnum / 2 < allStoreyNum / 2)
         {
-            startstorey = (int)Random.Range(startstorey + lastoutnum + 2, allStoreyNum - 2 - outplacenum);
+            startstorey = (int)Random.Range(startstorey + lastoutnum + 2, allStoreyNum - 3 - outplacenum);
         }
         else
         {
@@ -329,7 +332,10 @@ public class MapManager : MonoBehaviour
                             nextvectors.Remove(tolinknextV);
                         }
                         while (!placeNodeDic.ContainsKey(tolinknextV));
-                        lastnode.LinkNode(placeNodeDic[tolinknextV]);
+                        if (placeNodeDic.ContainsKey(tolinknextV))
+                        {
+                            lastnode.LinkNode(placeNodeDic[tolinknextV]);
+                        }
                     }
                 }
                 //之后
@@ -355,7 +361,10 @@ public class MapManager : MonoBehaviour
                             lastvectors.Remove(tolinklastV);
                         }
                         while (!placeNodeDic.ContainsKey(tolinklastV));
-                        placeNodeDic[tolinklastV].LinkNode(nextnode);
+                        if (placeNodeDic.ContainsKey(tolinklastV))
+                        {
+                            placeNodeDic[tolinklastV].LinkNode(nextnode);
+                        }
                     }
 
                 }
@@ -493,6 +502,10 @@ public class MapManager : MonoBehaviour
         {
             p.placeState = PlaceState.ToGo;
         }
+
+        //创建player
+        mapplayer = Instantiate(mapplayerGO, maprootinfo.placefolder).GetComponent<realMapPlayer>();
+        mapplayer.Init(startPlaceNode);
     }
     bool CanDeleteNode(PlaceNode placeNode)
     {
@@ -798,8 +811,8 @@ public class MapManager : MonoBehaviour
         GameObject placego = Instantiate(
             gameManager.Instance.instantiatemanager.placeGO,
             new Vector3(
-                maprootinfo.placeBeginPosi.position.x+ (pointx + x)* Random.Range(placedistanceRange.x, placedistanceRange.y),
-                maprootinfo.placeBeginPosi.position.y+ (placenode.PointPosi.y + y)*placedistanceRange.y,
+                maprootinfo.placeBeginPosi.position.x+ (placenode.PointPosi.y + y) * placedistanceRange.y,
+                maprootinfo.placeBeginPosi.position.y+ (pointx + x) * Random.Range(placedistanceRange.x, placedistanceRange.y),
                 maprootinfo.placeBeginPosi.position.z
             ) ,//maprootinfo.placeBeginPosi.position + new Vector3(pointx+x,placenode.PointPosi.y+y)*Random.Range(placedistanceRange.x,placedistanceRange.y),
             Quaternion.identity,
@@ -863,13 +876,13 @@ public class MapManager : MonoBehaviour
     
     public void EnterTreasure()
     {
-        mapState = MapState.EventWindow;
+        EventWindow(true);
         befallinfo befallinfo = AllAsset.MapAsset.mapSystemBefall[0];
         gameManager.Instance.uimanager.uiBefallBoard.EnterEventBoard(befallinfo);
     }
     public void EnterSleep()
     {
-        mapState = MapState.EventWindow;
+        EventWindow(true);
         befallinfo befallinfo = AllAsset.MapAsset.mapSystemBefall[1];
         gameManager.Instance.uimanager.uiBefallBoard.EnterEventBoard(befallinfo);
     }
@@ -878,7 +891,7 @@ public class MapManager : MonoBehaviour
         befallinfo befallinfo = ListOperation.RandomValue<befallinfo>(befallList);
         //打开二级事件窗口
         gameManager.Instance.uimanager.uiBefallBoard.EnterEventBoard(befallinfo);
-        gameManager.Instance.mapmanager.mapState = MapState.EventWindow;
+        gameManager.Instance.mapmanager.EventWindow(true); //mapState = MapState.EventWindow;
     }
     IEnumerator IEenterBattle(AsyncOperation asyncOperation,monsterInfo monster)
     {
@@ -890,5 +903,19 @@ public class MapManager : MonoBehaviour
         gameManager.Instance.battlemanager.InitBattlemanaget();
         gameManager.Instance.battlemanager.BattleStartEnemySet(monster);
         gameManager.Instance.battlemanager.startBattale();
+    }
+
+    public void EventWindow(bool isw)
+    {
+        if (isw)
+        {
+            mapState = MapState.EventWindow;
+            maprootinfo.mapCamera.GetComponent<GaussianBlur>().enabled = true;
+        }
+        else
+        {
+            mapState = MapState.MainMap;
+            maprootinfo.mapCamera.GetComponent<GaussianBlur>().enabled = false;
+        }
     }
 }

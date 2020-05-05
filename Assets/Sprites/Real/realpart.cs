@@ -86,6 +86,7 @@ public class realpart : MonoBehaviour
         else if(state == RealPartState.Sort)
         {
             initpositionZ=transform.position.z;
+            meshTran.gameObject.SetActive(false);
             GetComponent<BoxCollider>().size = new Vector3(100, 100, 2);
         }
         else if (state == RealPartState.Select)

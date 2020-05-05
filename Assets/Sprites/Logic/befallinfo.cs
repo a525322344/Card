@@ -79,7 +79,7 @@ public class Button_Exit : buttoninfo
         buttonFun = new buttonTo(() =>
         {
             gameManager.Instance.uimanager.uiBefallBoard.ExitEventBoard();
-            gameManager.Instance.mapmanager.mapState = MapState.MainMap;
+            gameManager.Instance.mapmanager.EventWindow(false);// mapState = MapState.MainMap;
         });
         buttonDescribe = des;
         buttonFun += buttonTo;
@@ -95,7 +95,7 @@ public class Button_ExitBefall : buttoninfo
         buttonFun = new buttonTo(() =>
         {
             gameManager.Instance.uimanager.uiBefallBoard.ExitEventBoard();
-            gameManager.Instance.mapmanager.mapState = MapState.MainMap;
+            gameManager.Instance.mapmanager.EventWindow(false); //mapState = MapState.MainMap;
         });
     }
     public Button_ExitBefall()
@@ -105,7 +105,7 @@ public class Button_ExitBefall : buttoninfo
         buttonFun = new buttonTo(() =>
         {
             gameManager.Instance.uimanager.uiBefallBoard.ExitEventBoard();
-            gameManager.Instance.mapmanager.mapState = MapState.MainMap;
+            gameManager.Instance.mapmanager.EventWindow(false); //mapState = MapState.MainMap;
         });
     }
 }
@@ -137,7 +137,7 @@ public class Button_SecondBoard : buttoninfo
               {
                   sbui.GetComponent<uiSecondBoard>().exitToDo += () =>
                   {
-                      gameManager.Instance.mapmanager.mapState = MapState.MainMap;
+                      gameManager.Instance.mapmanager.EventWindow(false); //mapState = MapState.MainMap;
                   };
               }
           });

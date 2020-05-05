@@ -67,7 +67,7 @@ public class shopPlace : place
     {
         //进入商店
         instantiateManager.instance.instanShopBoard();
-        gameManager.Instance.mapmanager.mapState = MapState.EventWindow;
+        gameManager.Instance.mapmanager.EventWindow(true);// mapState = MapState.EventWindow;
     }
 }
 

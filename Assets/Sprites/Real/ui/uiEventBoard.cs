@@ -50,7 +50,7 @@ public class uiEventBoard : MonoBehaviour
         for(int i = 0; i < befall.buttons.Count; i++)
         {
             buttons[i].onClick.AddListener(befall.buttons[i].onclick);
-            buttons[i].GetComponentInChildren<Text>().text = befall.buttons[i].buttonDescribe;
+            buttons[i].GetComponent<uiEventbutton>().Init(befall.buttons[i].buttonDescribe); 
             buttons[i].gameObject.SetActive(true);
         }
 

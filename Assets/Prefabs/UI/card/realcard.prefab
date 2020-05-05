@@ -76,7 +76,7 @@ SpriteRenderer:
   m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &370791222049824574
@@ -793,12 +793,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 341f61b4d0b73fa4eac08d6449401556, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0725545e8de386c46a4016c40747b724, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.95, y: 5.78}
+  m_Size: {x: 3.8, y: 5.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1310,7 +1310,7 @@ MonoBehaviour:
   cardBoard: {fileID: 4598856509703217802}
   cardKindIcon: {fileID: 1066331044379815024}
   cardBoardSprites:
-  - {fileID: 21300000, guid: 341f61b4d0b73fa4eac08d6449401556, type: 3}
+  - {fileID: 21300000, guid: 0725545e8de386c46a4016c40747b724, type: 3}
   - {fileID: 21300000, guid: c1351db7df5042041a5b7eb0bfed50bd, type: 3}
   - {fileID: 21300000, guid: 8a328470d6064ca41b752d4a48fdf3ea, type: 3}
   cardKindIconSprites:
@@ -1335,6 +1335,7 @@ MonoBehaviour:
     Cost: 0
     Rank: 0
     TextureId: 0
+    IsGrade: 0
     Describe: 
   realCardState: 0
   handCardState: 0
