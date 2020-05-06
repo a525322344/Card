@@ -163,6 +163,24 @@ namespace AllAsset
             }
         }
 
+        public static void DiscardHand(int num, battleInfo battleinfo)
+        {
+            int n = 0;
+            List<realCard> realCardList = gameManager.Instance.battlemanager.realCardList;
+            List<playerCard> dickDiscard = gameManager.Instance.battlemanager.dickDiscard;
+            List<playerCard> dickHandCard = gameManager.Instance.battlemanager.dickHandCard;
+
+            for (int i = realCardList.Count - 1; i >= 0; i--)
+            {
+                realCard indexrealcard = realCardList[i];
+                dickHandCard.Remove((playerCard)realCardList[i].thisCard);
+                dickDiscard.Add((playerCard)realCardList[i].thisCard);
+                realCardList.Remove(realCardList[i]);
+                GameObject.Destroy(indexrealcard.transform.parent.gameObject);
+                n++;
+            }
+        }
+
         public static void PreSelectCard(int num,battleInfo battleinfo)//准备弃卡
         {
             gameManager.Instance.battlemanager.preWaitToDiscard(num);
