@@ -108,6 +108,11 @@ public abstract class Reaction
     public virtual void dealReaction() { }
     public virtual extraEffectBase getExtreEffect() { return null; }
 
+    public virtual string ReactionDescribe()
+    {
+        return "";
+    }
+
     protected bool m_Active = false;
     public bool b_haveEvent = false;
 }
@@ -133,6 +138,10 @@ public class Reaction_Affect : Reaction
     public override extraEffectBase getExtreEffect()
     {
         return affectEffect;
+    }
+    public override string ReactionDescribe()
+    {
+        return affectEffect.Describe();
     }
 
     private extraEffectBase affectEffect;

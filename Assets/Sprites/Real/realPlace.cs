@@ -143,7 +143,10 @@ public class realPlace : MonoBehaviour
     {
         if (gameManager.Instance.mapmanager.MapPlaceOpen)
         {
-            StartCoroutine(IEenterPlace());
+            if (gameManager.Instance.mapmanager.mapState == MapState.MainMap)
+            {
+                StartCoroutine(IEenterPlace());
+            }
         }
         else
         {

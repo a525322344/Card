@@ -74,7 +74,7 @@ public class gameManager : MonoBehaviour
             SceneManager.SetActiveScene(battleScene);
             instantiatemanager.mapRootInfo.mapCamera.GetComponent<AudioListener>().enabled = false;
             instantiatemanager.mapRootInfo.mapCamera.enabled = false;
-            instantiatemanager.mapRootInfo.maplight.enabled = false;
+            //instantiatemanager.mapRootInfo.maplight.enabled = false;
             instantiatemanager.mapRootInfo.transform.gameObject.SetActive(false);
         }
         else
@@ -82,7 +82,7 @@ public class gameManager : MonoBehaviour
             SceneManager.SetActiveScene(mapScene);
             instantiatemanager.mapRootInfo.mapCamera.GetComponent<AudioListener>().enabled = true;
             instantiatemanager.mapRootInfo.mapCamera.enabled = true;
-            instantiatemanager.mapRootInfo.maplight.enabled = true;
+            //instantiatemanager.mapRootInfo.maplight.enabled = true;
             instantiatemanager.mapRootInfo.transform.gameObject.SetActive(true);
         }
     }

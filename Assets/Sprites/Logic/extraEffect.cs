@@ -13,6 +13,7 @@ public enum AffectEffectKind
 }
 public abstract class extraEffectBase
 {
+    public string name;
     public abstract int AdjustEffect(int cardnum);
     public abstract bool canInfluence(cardEffectBase _cardEffectBase);
     public cardEffectBase getInfluenceEffect()
@@ -23,7 +24,16 @@ public abstract class extraEffectBase
     protected int priority;
     protected int adjustnum;
     protected cardEffectBase CanInffenceEffect;
+    public virtual string Describe()
+    {
+        return "";
+    }
     protected DeleExtraEffect deleAdjust;
+
+    protected string ColorGold = "<color=#CFB53B>";
+    protected string ColorBlue = "<color=#007FFF>";
+    protected string ColorGreen = "<color=#32CD32>";
+    protected string ColorEnd = "</color>";
 }
 
 public class extraAttackUp : extraEffectBase
@@ -47,6 +57,10 @@ public class extraAttackUp : extraEffectBase
     {
         return _cardEffectBase.GetType() == CanInffenceEffect.GetType();
     }
+    public override string Describe()
+    {
+        return "卡牌造成的伤害增加" + ColorBlue + adjustnum + ColorEnd;
+    }
 }
 public class extraDeffenceUp : extraEffectBase
 {
@@ -64,7 +78,11 @@ public class extraDeffenceUp : extraEffectBase
     public override bool canInfluence(cardEffectBase _cardEffectBase)
     {
         return _cardEffectBase.GetType() == CanInffenceEffect.GetType();
-    }   
+    }
+    public override string Describe()
+    {
+        return "从卡牌获得的护甲增加" + ColorBlue + adjustnum + ColorEnd;
+    }
 }
 public class extraBurnUp : extraEffectBase
 {
@@ -83,5 +101,8 @@ public class extraBurnUp : extraEffectBase
     {
         return _cardEffectBase.GetType() == CanInffenceEffect.GetType();
     }
-
+    public override string Describe()
+    {
+        return "给与的灼烧层数增加" + ColorBlue + adjustnum + ColorEnd;
+    }
 }

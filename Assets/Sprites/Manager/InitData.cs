@@ -225,7 +225,7 @@ public class InitData
                 float h = player.playerHealthMax * 0.3f;
                 player.RecoveryHealth((int)h);
             }),
-            new Button_Exit("升级卡牌",()=> {
+            new Button_Info("升级卡牌",()=> {
                 gameManager.Instance.uimanager.uiBefallBoard.SetActive(false);
                 secondBoardInfo secondBoard = new secondBoardInfo(1);
                 GameObject selectcard = instantiateManager.instance.instanSecondBoard(secondBoard);
