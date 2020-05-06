@@ -29,7 +29,6 @@ public class realLatice : MonoBehaviour
     //战斗中判断格子使用状态
     public GridState gridState;
 
-
     public realpart realpart;
     public realgrid realgrid;
     public MeshRenderer renderer;
@@ -44,6 +43,18 @@ public class realLatice : MonoBehaviour
 
         if (gameState == GameState.MapSence)
         {
+            switch (thislatice.state)
+            {
+                case LaticeState.NotExploit:
+                    gameObject.SetActive(false);
+                    break;
+                case LaticeState.Exploit:
+                    break;
+                case LaticeState.Install:
+                    break;
+                case LaticeState.CanInstall:
+                    break;
+            }
             changeColor();
         }
         else if(gameState == GameState.BattleSence)

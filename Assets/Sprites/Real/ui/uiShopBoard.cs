@@ -140,7 +140,7 @@ public class uiShopBoard : MonoBehaviour
         //注册退出按钮
         exitbutton.AddListener(() =>
         {
-            gameManager.Instance.mapmanager.mapState = MapState.MainMap;
+            gameManager.Instance.mapmanager.EventWindow(false); //mapState = MapState.MainMap;
             Destroy(gameObject);
         });
         //注册删卡按键

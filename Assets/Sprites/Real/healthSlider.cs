@@ -7,6 +7,7 @@ public class healthSlider : MonoBehaviour
 {
     public Image sliderImage;
     public Text healthText;
+    public bool isbattle=true;
     public Image armorIcon;
     public Text armorText;
     public Transform statePosi;
@@ -23,20 +24,50 @@ public class healthSlider : MonoBehaviour
         armor = pawn.armor;
         SetSlider(armor, nowhealth);
     }
+    public void Init(playerInfo playerInfo)
+    {
+        maxhealth = playerInfo.playerHealthMax;
+        nowhealth = playerInfo.playerHealth;
+        SetSlider(armor, nowhealth);
+    }
     
 
     public void SetSlider(float finalarmor,float finalheath)
     {
         armor = finalarmor;
         nowhealth = finalheath;
-        if (armor > 0)
+        if (isbattle)
         {
-            armorText.text = "" + armor;
-            armorIcon.gameObject.SetActive(true);
+            if (armor > 0)
+            {
+                armorText.text = "" + armor;
+                armorIcon.gameObject.SetActive(true);
+            }
+            else
+            {
+                armorIcon.gameObject.SetActive(false);
+            }
         }
-        else
+
+        healthText.text = "" + nowhealth + "/" + maxhealth;
+        sliderImage.fillAmount = nowhealth / maxhealth;
+    }
+    public void SetSlider(float finalarmor, float finalheath,float _maxhealth)
+    {
+        armor = finalarmor;
+        nowhealth = finalheath;
+        maxhealth = _maxhealth;
+        if (isbattle)
         {
-            armorIcon.gameObject.SetActive(false);
+            if (armor > 0)
+            {
+                armorText.text = "" + armor;
+                armorIcon.gameObject.SetActive(true);
+            }
+            else
+            {
+                armorIcon.gameObject.SetActive(false);
+            }
         }
         healthText.text = "" + nowhealth + "/" + maxhealth;
         sliderImage.fillAmount = nowhealth / maxhealth;

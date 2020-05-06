@@ -58,7 +58,7 @@ public class realKnapsack : MonoBehaviour
         }
         else if (KnapsackState == GameState.BattleSence)
         {
-            meshFolder.gameObject.SetActive(false);
+            //meshFolder.gameObject.SetActive(false);
             //生成实例Latice
             for (int i = 0; i < 25; i++)
             {

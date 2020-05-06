@@ -212,7 +212,7 @@ public class InitData
                             player.AddMagicPart(part);
                         }
                         GameObject.Destroy(selectpart);
-                        gameManager.Instance.mapmanager.mapState = MapState.MainMap;
+                        gameManager.Instance.mapmanager.EventWindow(false); //mapState = MapState.MainMap;
                     };
                 }
             })
@@ -253,7 +253,7 @@ public class InitData
                         player.UpgradeCard(card);
                     }
                     GameObject.Destroy(uiselectBoard.gameObject);
-                    gameManager.Instance.mapmanager.mapState = MapState.MainMap;
+                    gameManager.Instance.mapmanager.EventWindow(false); //mapState = MapState.MainMap;
                 };
             })
             );

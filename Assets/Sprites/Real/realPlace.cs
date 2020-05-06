@@ -10,6 +10,7 @@ public class realPlace : MonoBehaviour
     public place thisplace;
 
     public SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteDown;
     public Transform spriteTran;
     public Color NormalColor;
     public Color ToGoColor;
@@ -50,7 +51,7 @@ public class realPlace : MonoBehaviour
                 DOTween.To(() => spriteRenderer.color, x => spriteRenderer.color = x, NormalColor, colorChangeTime);
                 if (b_mouseOver)
                 {
-                    spriteTran.DOScale(Vector3.one * overside, sizeChangeTime);
+                    spriteTran.DOScale(Vector3.one, sizeChangeTime);
                 }
                 else
                 {
@@ -130,6 +131,7 @@ public class realPlace : MonoBehaviour
         thisplace = _placenode.thisplace;
         placeNode = _placenode;
         spriteRenderer.sprite = gameManager.Instance.instantiatemanager.mapPlaceSprites[thisplace.imageorder];
+        spriteDown.sprite = gameManager.Instance.instantiatemanager.mapPlaceDiSprites[thisplace.imageorder];
     }
     public void Init(place _placenode)
     {
@@ -152,7 +154,10 @@ public class realPlace : MonoBehaviour
                 case PlaceState.NowOn:
                     break;
                 case PlaceState.ToGo:
-                    StartCoroutine(IEenterPlace());
+                    if (gameManager.Instance.mapmanager.mapState == MapState.MainMap)
+                    {
+                        StartCoroutine(IEenterPlace());
+                    }
                     break;
                 case PlaceState.Used:
                     break;
@@ -193,8 +198,11 @@ public class realPlace : MonoBehaviour
     {
         //画标记
         biaoji.gameObject.SetActive(true);
+        //玩家token移动
         DOTween.To(() => biaoji.fillAmount, x => biaoji.fillAmount = x, 1, 0.25f);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.15f);
+        gameManager.Instance.mapmanager.mapplayer.MoveTo(placeNode);
+        yield return new WaitForSeconds(0.8f);
         gameManager.Instance.mapmanager.SetNowPlace(placeNode);
         thisplace.onclick();
     }

@@ -167,7 +167,7 @@ SpriteRenderer:
   m_Size: {x: 10.24, y: 10.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1972082160367306617
@@ -267,6 +267,7 @@ MonoBehaviour:
     fatherPart:
       name: 
       id: 0
+      rank: 0
       gridsum: 0
       gridpower: 0
       rotateInt: 0
@@ -403,6 +404,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c972ef2afaeb7a843bb5c32e458da0f8, type: 2}
+    - target: {fileID: -1504981713932161579, guid: 4ba17847b3a94a940849ba2697a8b8d9,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 4ba17847b3a94a940849ba2697a8b8d9,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ba17847b3a94a940849ba2697a8b8d9, type: 3}
 --- !u!4 &4900281118438397543 stripped

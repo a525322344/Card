@@ -81,6 +81,7 @@ public class playerInfo
         {
             playerHealth = playerHealthMax;
         }
+        gameManager.Instance.mapmanager.mapplayer.healthSlider.SetSlider(0, gameManager.Instance.playerinfo.playerHealth);
     }
 
     //初始化玩家的开局卡组

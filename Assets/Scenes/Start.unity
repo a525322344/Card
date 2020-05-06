@@ -73089,6 +73089,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
+      propertyPath: mapPlaceDiSprites.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
       propertyPath: stateSprites.Array.data[1]
       value: 
       objectReference: {fileID: 21300000, guid: e0434b18f2c007f4eb559eb0dc7b9e6e,
@@ -73133,13 +73138,13 @@ PrefabInstance:
         type: 3}
       propertyPath: mapPlaceSprites.Array.data[5]
       value: 
-      objectReference: {fileID: 21300000, guid: 25eff41a4a4b85e4c8ba5dc99f873c6c,
+      objectReference: {fileID: 21300000, guid: eac73b632a0eea4429e5773cff6ad22f,
         type: 3}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: mapPlaceSprites.Array.data[6]
       value: 
-      objectReference: {fileID: 21300000, guid: 692074a94d9d78246b1917150694294f,
+      objectReference: {fileID: 21300000, guid: b360b8e979279f148983afbbe7db5a2a,
         type: 3}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
@@ -73231,6 +73236,54 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9148584800839085505, guid: 0cd54c6528d633944a6091a594569c7e,
         type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceDiSprites.Array.data[6]
+      value: 
+      objectReference: {fileID: 21300000, guid: a9d6bae2d70a24f43abfc9a9dadedc31,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceDiSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 62b15b689f82bfa4b8995afa6c286cf2,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceDiSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 880aadc8ed9707d418ada58385a868fc,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceDiSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 04b6760b9dd3a744ba9acd73ec0bf3e4,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceDiSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: f7f29d2714a02a244b86b8cbb14bb912,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceDiSprites.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: 8e7b942e4a0cded4dac96234623b54e4,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceDiSprites.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300000, guid: 4fb0015dfa6617c4ba0de56073c5911a,
+        type: 3}
+    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapPlaceDiSprites.Array.data[7]
+      value: 
+      objectReference: {fileID: 21300000, guid: 7890fa5ff57ca8348bafd838b7c2b9d0,
+        type: 3}
     - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: outPlaceNumRange.x
@@ -73254,12 +73307,12 @@ PrefabInstance:
     - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: placedistanceRange.x
-      value: 4
+      value: 3.2
       objectReference: {fileID: 0}
     - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: placedistanceRange.y
-      value: 5.5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
@@ -73344,7 +73397,18 @@ PrefabInstance:
     - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: positionUp
-      value: 60
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: mapplayerGO
+      value: 
+      objectReference: {fileID: 7993240219386138150, guid: d4ea79c94bb889742a08e48d3dadbf95,
+        type: 3}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: minPlaceNumPerStorey
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 362da131cad69c3408bab7cc127cafeb, type: 3}
