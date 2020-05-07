@@ -8,9 +8,10 @@ namespace AllAsset
     //声明所有的效果，供委托，无标签
     public static class effectAsset
     {
-        public static void EmptyEffect(int num,battleInfo battleinfo) { }
-        public static void EnemyGetHurt(int num, battleInfo battleInfo)
+        public static void EmptyEffect(int num,battleInfo battleinfo,out int returnnum) { returnnum = 0; }
+        public static void EnemyGetHurt(int num, battleInfo battleInfo,out int returnnum)
         {
+            returnnum = num;
             //对敌人造成“num”点伤害。
             if (num < 0)
             {
@@ -19,8 +20,9 @@ namespace AllAsset
             battleInfo.Enemy.hurtHealth(num);
         }
 
-        public static void EnemyGetRealHurt(int num,battleInfo battleInfo)
+        public static void EnemyGetRealHurt(int num,battleInfo battleInfo,out int returnnum)
         {
+            returnnum = num;
             if (num < 0)
             {
                 num = 0;
@@ -28,8 +30,9 @@ namespace AllAsset
             battleInfo.Enemy.realHurtHealth(num);
         }
 
-        public static void PlayerGetArmor(int num, battleInfo battleInfo)
+        public static void PlayerGetArmor(int num, battleInfo battleInfo, out int returnnum)
         {
+            returnnum = num;
             //获得“num”点护甲。
             if (num < 0)
             {
@@ -38,18 +41,21 @@ namespace AllAsset
             battleInfo.Player.GetArmor(num);
         }
 
-        public static void drawACard(int num,battleInfo battleInfo)
+        public static void drawACard(int num,battleInfo battleInfo, out int returnnum)
         {
+            returnnum = num;
             gameManager.Instance.battlemanager.DrawACard();
         }
 
-        public static void disAllCard(int num,battleInfo battleInfo)
+        public static void disAllCard(int num,battleInfo battleInfo, out int returnnum)
         {
+            returnnum = num;
             gameManager.Instance.battlemanager.deleteAllHandCard();
         }
 
-        public static void PlayerGetHurt(int num,battleInfo battleInfo)
+        public static void PlayerGetHurt(int num,battleInfo battleInfo, out int returnnum)
         {
+            returnnum = num;
             if (num < 0)
             {
                 num = 0;
@@ -57,8 +63,9 @@ namespace AllAsset
             battleInfo.Player.hurtHealth(num);
         }
 
-        public static void EnemyGetArmor(int num,battleInfo battleinfo)
+        public static void EnemyGetArmor(int num,battleInfo battleinfo, out int returnnum)
         {
+            returnnum = num;
             if (num < 0)
             {
                 num = 0;
@@ -66,8 +73,9 @@ namespace AllAsset
             battleinfo.Enemy.GetArmor(num);
         }
 
-        public static void EnemyDoubleBurn(int num, battleInfo battleinfo)
+        public static void EnemyDoubleBurn(int num, battleInfo battleinfo, out int returnnum)
         {
+            returnnum = num;
             stateAbstarct burnstate = new StateBurn(num);
             if (battleinfo.Enemy.nameStatePairs.ContainsKey(burnstate.key))
             {
@@ -76,8 +84,9 @@ namespace AllAsset
             }
         }
 
-        public static void EnemyGetBurn(int num,battleInfo battleinfo)
+        public static void EnemyGetBurn(int num,battleInfo battleinfo, out int returnnum)
         {
+            returnnum = num;
             stateAbstarct burnstate = new StateBurn(num);
             if (battleinfo.Enemy.nameStatePairs.ContainsKey(burnstate.key))
             {
@@ -93,8 +102,9 @@ namespace AllAsset
             }
         }
 
-        public static void RandomLinkPart(int num,battleInfo battleinfo)
+        public static void RandomLinkPart(int num,battleInfo battleinfo, out int returnnum)
         {
+            returnnum = num;
             List<realpart> copyrealparts = new List<realpart>(gameManager.Instance.battlemanager.realknapsack.realparts);
             int partnum= copyrealparts.Count;
             List<realpart> getlist = new List<realpart>();
@@ -124,11 +134,12 @@ namespace AllAsset
             }
             else
             {
-                LinkAllPart(0,battleinfo);
+                LinkAllPart(0,battleinfo,out returnnum);
             }
         }
-        public static void LinkAllPart(int num,battleInfo battleinfo)
+        public static void LinkAllPart(int num,battleInfo battleinfo, out int returnnum)
         {
+            returnnum = num;
             List<realpart> getlist = gameManager.Instance.battlemanager.realknapsack.realparts;
             List<MagicPart> getmagicParts = new List<MagicPart>();
             foreach (realpart rp in getlist)
@@ -145,8 +156,9 @@ namespace AllAsset
                 rp.enterLinkPart(linkPart);
             }
         }
-        public static void CreatState_ExitLinkPart(int num ,battleInfo battleinfo)
+        public static void CreatState_ExitLinkPart(int num ,battleInfo battleinfo, out int returnnum)
         {
+            returnnum = num;
             stateAbstarct exitLinkState = new StateExitLinkPart();
             if (!battleinfo.Player.nameStatePairs.ContainsKey(exitLinkState.key)){
                 exitLinkState.SetInState();
@@ -155,16 +167,18 @@ namespace AllAsset
                 gameManager.Instance.battlemanager.realplayer.StateUpdtae();
             }
         }
-        public static void ExitLinkPark(int num,battleInfo battleinfo)
+        public static void ExitLinkPark(int num,battleInfo battleinfo, out int returnnum)
         {
-            foreach(realpart rp in battleinfo.havenLinkParts)
+            returnnum = num;
+            foreach (realpart rp in battleinfo.havenLinkParts)
             {
                 rp.exitLinkPart();
             }
         }
 
-        public static void DiscardHand(int num, battleInfo battleinfo)
+        public static void DiscardHand(int num, battleInfo battleinfo, out int returnnum)
         {
+            returnnum = num;
             int n = 0;
             List<realCard> realCardList = gameManager.Instance.battlemanager.realCardList;
             List<playerCard> dickDiscard = gameManager.Instance.battlemanager.dickDiscard;
@@ -181,12 +195,14 @@ namespace AllAsset
             }
         }
 
-        public static void PreSelectCard(int num,battleInfo battleinfo)//准备弃卡
+        public static void PreSelectCard(int num,battleInfo battleinfo, out int returnnum)//准备弃卡
         {
+            returnnum = num;
             gameManager.Instance.battlemanager.preWaitToDiscard(num);
         }
-        public static void DisCardASelectedCard(int num,battleInfo battleinfo)
+        public static void DisCardASelectedCard(int num,battleInfo battleinfo, out int returnnum)
         {
+            returnnum = num;
             gameManager.Instance.battlemanager.deleteHandCard(num);
         }
     }
@@ -260,21 +276,6 @@ namespace AllAsset
                 }
                 
             }
-
-            //foreach (Vector2 currentpos in battleinfo.currentPos)
-            //{
-            //    foreach(Vector2 canusepos in battleinfo.canUsePos)
-            //    {
-            //        battleinfo.canUsePos.Remove(currentpos);
-            //        if (currentpos.x == canusepos.x)
-            //        {
-            //            isBuQiHeng = true;
-            //        }
-            //        else
-            //            isBuQiHeng = false;
-            //    }
-            //    num++;
-            //}
             return isBuQiHeng;
         }
 
@@ -309,6 +310,67 @@ namespace AllAsset
 
             }
             return isBuQiShu;
+        }
+        public static bool BuQi(int num, battleInfo battleinfo, out int returnnum)
+        {
+            bool isBu = false;
+            returnnum = 0;
+            List<int> Vints = new List<int>();
+            //判断横行的
+            foreach (Vector2 v in battleinfo.currentPos)
+            {
+                if (!Vints.Contains((int)v.x))
+                {
+                    Vints.Add((int)v.x);
+
+                    bool hIsFill = true;
+                    foreach (var vRl in gameManager.Instance.battlemanager.realknapsack.usedLaticePairs)
+                    {
+                        if (vRl.Key.x == v.x)
+                        {
+                            if (vRl.Value.gridState != GridState.Used)
+                            {
+                                hIsFill = false;
+                            }
+                        }
+                    }
+                    if (hIsFill)
+                    {
+                        returnnum++;
+                        isBu = true;
+                    }
+                }
+
+            }
+
+            Vints.Clear();
+            //判断竖列的
+            foreach (Vector2 v in battleinfo.currentPos)
+            {
+                if (!Vints.Contains((int)v.y))
+                {
+                    Vints.Add((int)v.y);
+
+                    bool hIsFill = true;
+                    foreach (var vRl in gameManager.Instance.battlemanager.realknapsack.usedLaticePairs)
+                    {
+                        if (vRl.Key.y == v.y)
+                        {
+                            if (vRl.Value.gridState != GridState.Used)
+                            {
+                                hIsFill = false;
+                            }
+                        }
+                    }
+                    if (hIsFill)
+                    {
+                        returnnum++;
+                        isBu = true;
+                    }
+                }
+
+            }
+            return isBu;
         }
     }
     //声明所有的卡牌

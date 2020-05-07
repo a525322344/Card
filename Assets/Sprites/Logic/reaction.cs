@@ -115,6 +115,15 @@ public abstract class Reaction
 
     protected bool m_Active = false;
     public bool b_haveEvent = false;
+    protected string judgeDescribe(EventKind eventKind)
+    {
+        switch (eventKind)
+        {
+            case EventKind.Event_PlayCard:
+                return "每打出一张牌";
+        }
+        return "没写";
+    }
 }
 
 //对反应的效果事件造成影响，强化或削弱效果
@@ -167,6 +176,31 @@ public class Reaction_Create : Reaction
     {
         gameManager.Instance.battlemanager.eventManager.InsertEvent(toCreateEvent);
     }
+    public override string ReactionDescribe()
+    {
+        return judgeDescribe(kind) + "," + toCreateEvent.eventDescribe;
+    }
     public singleEvent toCreateEvent;
 }
 
+
+public class biaoji
+{
+    public Reaction reaction;
+    public void setReaction()
+    {
+
+    }
+    public void ActiveBiaoji()
+    {
+        reaction.Active = true;
+    }
+    public void SleepBiaoji()
+    {
+        reaction.Active = false;
+    }
+    public void deleteReaction()
+    {
+
+    }
+}

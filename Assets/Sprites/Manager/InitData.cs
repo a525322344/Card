@@ -21,13 +21,16 @@ public class InitData
     void CardInit()
     {
         ShowAllCards = cardAsset.AllIdCards;
-        //csvcard = CSVLoader.LoadCsvData<csvcard>(Application.streamingAssetsPath + "/cardcsv.csv");
-        //foreach (int i in csvcard.Keys)
-        //{
-        //    cardAsset.AllIdCards.Add(new playerCard(csvcard[i].id, csvcard[i].name, CSVLoader.StringToEnum(csvcard[i].kind),csvcard[i].cost ,csvcard[i].damage, csvcard[i].deffence));
-        //}
-        //给火球术添加灼烧效果
-        cardAsset.AllIdCards[2].AddEffect(new Burn(3));
+        playerCard newcard;
+        //弃掉所有手牌，每弃一张手牌造成3点伤害，每补齐一横行或纵行，造成的伤害+1
+        newcard = new playerCard(0, "弃伤补升", CardKind.AttackCard, 2, 1);
+        cardEffectBase neweffect = new CardEffect_DisAllCard();
+        newcard.AddEffect(neweffect);
+        cardEffectBase repeateffect = new CardEffect_RepeatByEffect(neweffect);
+        repeateffect.AddChildEffect(new CardEffect_DamageByJudge(3,new Judge_buqiheng(0)));
+        newcard.AddEffect(repeateffect);
+        cardAsset.AllIdCards.Add(newcard);
+
         //1费 抽2，打5
         playerCard card_jinGangQiangPo = new playerCard(3,"金刚枪破", CardKind.AttackCard, 1, 1);
         card_jinGangQiangPo.AddEffect(new Damage(5));
@@ -386,25 +389,46 @@ public class InitData
         {
             editorCard card = ecard.Card;
             playerCard newcard = new playerCard(card.id, card.name, card.Kind, card.cost, (int)card.Rank,false);
+            cardEffectBase lasteffect = new Damage(0);
+            Debug.Log(card.name);
+            Debug.Log(card.playEffects.Count);
             foreach(editorEffect eE in card.playEffects)
             {
-                newcard.AddEffect(EffectFromInit(eE));
+                cardEffectBase neweffect = EffectFromInit(eE);
+                newcard.AddEffect(neweffect);
                 if (eE.effectKind == EnumEffect.LinkRandom)
                 {
                     newcard.AddEffect(new CardEffect_ToExitLink());
                 }
+                if (eE.effectKind == EnumEffect.RepeatByEffect)
+                {
+                    (neweffect as CardEffect_RepeatByEffect).numeffect = lasteffect;
+                }
+
+                lasteffect = neweffect;
             }
             newcard.CardDescribe();
             cardAsset.AllIdCards.Add(newcard);
+
             card = ecard.gradeCard;
+            lasteffect = new Damage(0);
+            Debug.Log(card.name);
+            Debug.Log(card.playEffects.Count);
             newcard = new playerCard(card.id, card.name, card.Kind, card.cost, (int)card.Rank,true);
             foreach (editorEffect eE in card.playEffects)
             {
-                newcard.AddEffect(EffectFromInit(eE));
+                cardEffectBase neweffect = EffectFromInit(eE);
+                newcard.AddEffect(neweffect);
                 if (eE.effectKind == EnumEffect.LinkRandom)
                 {
                     newcard.AddEffect(new CardEffect_ToExitLink());
                 }
+                if (eE.effectKind == EnumEffect.RepeatByEffect)
+                {
+                    (neweffect as CardEffect_RepeatByEffect).numeffect = lasteffect;
+                }
+
+                lasteffect = neweffect;
             }
             newcard.CardDescribe();
             cardAsset.AllGradeCards.Add(newcard);
@@ -444,11 +468,21 @@ public class InitData
     }
     cardEffectBase EffectFromInit(editorEffect editorEffect,params judgeCondition[] judges)
     {
+        Debug.Log(editorEffect.name);
         cardEffectBase Effect = new emplyPlayCard();
         switch (editorEffect.effectKind)
         {
             case EnumEffect.Damage:
                 Effect = new Damage(editorEffect.num);
+                break;
+            case EnumEffect.DamageByJudge:
+                Effect = new CardEffect_DamageByJudge(editorEffect.num);
+                Debug.Log(editorEffect.judges.Count);
+                foreach (editorJudge ej in editorEffect.judges)
+                {
+                    Effect.judgeConditions.Add(JudgeFromInit(ej));
+                }
+                (Effect as CardEffect_DamageByJudge).numjudge = Effect.judgeConditions[0];
                 break;
             case EnumEffect.Armor:
                 Effect = new Armor(editorEffect.num);
@@ -492,6 +526,16 @@ public class InitData
                     Effect.childeffects.Add(EffectFromInit(eE));
                 }
                 break;
+            case EnumEffect.DisAllCard:
+                Effect = new CardEffect_DisAllCard();
+                break;
+            case EnumEffect.RepeatByEffect:
+                Effect = new CardEffect_RepeatByEffect();
+                foreach (editorEffect eE in editorEffect.childeffects)
+                {
+                    Effect.childeffects.Add(EffectFromInit(eE));
+                }
+                break;
             default:
                 Debug.Log("没有该EditorEffect对应的Effect转换");
                 break;
@@ -511,6 +555,9 @@ public class InitData
                 break;
             case EnumJudge.每补齐一纵行:
                 Judge = new Judge_buqishu(0);
+                break;
+            case EnumJudge.每补齐一横行或纵行:
+                Judge = new Judge_BuQi();
                 break;
         }
         return Judge;

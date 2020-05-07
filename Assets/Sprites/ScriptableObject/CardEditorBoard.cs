@@ -54,6 +54,7 @@ public enum EnumJudge
     敌人意图攻击,
     每补齐一横行,
     每补齐一纵行,
+    每补齐一横行或纵行,
 }
 [System.Serializable]
 public class editorJudge
@@ -72,6 +73,7 @@ public enum EnumEffect
 {
     Default,
     Damage,
+    DamageByJudge,
     Armor,
     Repeat,
     DrawCard,
@@ -81,6 +83,8 @@ public enum EnumEffect
     Whether,
     DisCard,
     RepeatByFill,
+    RepeatByEffect,//此效果前面必须有效果，会使用前者的效果返回值
+    DisAllCard,
 }
 [System.Serializable]
 public class editorEffect
@@ -186,6 +190,14 @@ public class CardEditorBoard : ScriptableObject
             case EnumEffect.DisCard:
                 break;
             case EnumEffect.RepeatByFill:
+                effect.b_haveChildEffect = true;
+                break;
+            case EnumEffect.DisAllCard:          
+                break;
+            case EnumEffect.DamageByJudge:
+                effect.b_haveJudge = true;
+                break;
+            case EnumEffect.RepeatByEffect:
                 effect.b_haveChildEffect = true;
                 break;
         }

@@ -107,6 +107,7 @@ public class uiShopBoard : MonoBehaviour
             rp.partToSelect = partsToBuy;
             saleInfo.realCs = rp;
             saleInfo.priceGO = Instantiate(saleMoney, saleInfo.thingTran);
+            saleInfo.priceGO.transform.position = rp.saleposi.position;
             saleInfo.thingGO = partGO;
             saleInfo.priceGO.transform.GetChild(0).GetComponent<TextMeshPro>().text = "" + saleInfo.price;
             partSaleDic.Add(part, saleInfo);

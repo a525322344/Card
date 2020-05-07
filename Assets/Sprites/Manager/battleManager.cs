@@ -30,6 +30,7 @@ public class battleInfo
     public List<realpart> havenLinkParts = new List<realpart>();
     //当前事件
     public singleEvent nowEvent;
+    public CardEvent lastCardEvent;
     //敌人的意图
     public actionAbstract enemyAction;
     //选择的手牌
@@ -200,7 +201,7 @@ public class battleManager : MonoBehaviour
         {
             realknapsack.UseSelectLatices();
             CardEvent newevent = new CardEvent((playerCard)selectedCard.thisCard, selectedPart, new emplyPlayCard());
-            newevent.InitPerform();
+            //newevent.InitPerform();
             EventShow neweventshow = new EventShow(newevent, eventManager.BattleEventShows);
             eventManager.BattleEventShows.Add(neweventshow);
 
@@ -218,12 +219,12 @@ public class battleManager : MonoBehaviour
         selectedCard.describeText.text = cardevent.EventCardDescribe();
         selectedCard.describeTextPro.text = cardevent.EventCardDescribe();
     }
-    public void setCardDescribe(realCard realcard,MagicPart magicPart)
+    public void setCardDescribe(realCard realcard, MagicPart magicPart)
     {
         CardEvent cardevent = new CardEvent((playerCard)realcard.thisCard, magicPart, new emplyPlayCard());
         cardevent.preCardDescribe();
         realcard.describeText.text = cardevent.EventCardDescribe();
-        realcard.describeTextPro.text= cardevent.EventCardDescribe();
+        realcard.describeTextPro.text = cardevent.EventCardDescribe();
     }
     //丢弃全部手牌
     public void deleteAllHandCard()

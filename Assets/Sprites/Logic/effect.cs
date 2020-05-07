@@ -32,7 +32,7 @@ public enum EventKind
 }
 
 //对卡牌效果的委托
-public delegate void DeleCardEffect(int num,battleInfo battleinfo);
+public delegate void DeleCardEffect(int num,battleInfo battleinfo,out int returnnum);
 
 
 //抽象效果类，派生出所有效果
@@ -40,7 +40,7 @@ public abstract class EffectBase
 {
     public virtual void DealEffect(int num, battleInfo battleInfo)
     {
-        effectDele(num, battleInfo);
+        effectDele(num, battleInfo,out returnnum);
     }
     public virtual string DescribeEffect() { return ""; }
     public virtual void InitNum() { }
@@ -63,9 +63,11 @@ public abstract class EffectBase
 
     protected int num;
     public int mixnum;
+    public int returnnum;
     public bool b_hideDesctibe = false;
     public string frontDesctibe;
     public string backDesctibe;
+    public string returnDescribe;
 
     protected DeleCardEffect effectDele;
     
@@ -172,13 +174,53 @@ public class Damage : cardEffectBase
         backDesctibe = "点伤害";
     }
 }
+//伤害增加judge返回值
+public class CardEffect_DamageByJudge:cardEffectBase
+{
+    public judgeCondition numjudge;
+    int initnum;
+    public CardEffect_DamageByJudge(int _num,judgeCondition judge)
+    {
+        num = _num;
+        mixnum = _num;
+        initnum = _num;
+        effectDele = AllAsset.effectAsset.EnemyGetHurt;
+        eventkind = EventKind.Event_Damage;
+        judgeConditions.Add(judge);
+        b_judgeEffect = true;
+        numjudge = judge;
+
+        frontDesctibe = "造成";
+        backDesctibe = "点伤害";
+    }
+    public CardEffect_DamageByJudge(int _num)
+    {
+        num = _num;
+        mixnum = _num;
+        initnum = _num;
+        effectDele = AllAsset.effectAsset.EnemyGetHurt;
+        eventkind = EventKind.Event_Damage;
+        b_judgeEffect = true;
+
+        frontDesctibe = "造成";
+        backDesctibe = "点伤害";
+    }
+    public override void InitNum()
+    {
+        num = numjudge.returnNum + initnum;
+    }
+    public override string DescribeEffect()
+    {
+        return base.DescribeEffect()+numjudge.describe+",伤害+1";
+    }
+}
 //重复效果，有子效果表
 public class Repeat : cardEffectBase
 {
     public Repeat() { }
     public Repeat(int _num,params EffectBase[] effects)
     {
-        effectDele = new DeleCardEffect((a, b) => { });
+        effectDele = new DeleCardEffect((int a, battleInfo b, out int c) => { c = a; });
         num = _num;
         mixnum = num;
         foreach(EffectBase effect in effects)
@@ -251,7 +293,7 @@ public class DrawCard : Repeat
     {
         num = _num;
         mixnum = num;
-        effectDele = new DeleCardEffect((a, b) => { });
+        effectDele = new DeleCardEffect((int a,battleInfo b,out int c) => { c = a; });
         childeffects.Add(new drawACard());
         eventkind = EventKind.Event_DrawCard;
         b_hasChildEffect = true;
@@ -350,13 +392,13 @@ public class CardEffect_Whether : cardEffectBase
         b_judgeEffect = true;
         judgeConditions.Add(judge);
         childeffects.Add(effect);
-        effectDele = new DeleCardEffect((a, b) => { });
+        effectDele = new DeleCardEffect((int a, battleInfo b, out int c) => { c = a; });
         eventkind = EventKind.Event_Whether;
     }
     public CardEffect_Whether()
     {
         b_judgeEffect = true;
-        effectDele = new DeleCardEffect((a, b) => { });
+        effectDele = new DeleCardEffect((int a, battleInfo b, out int c) => { c = a; });
         eventkind = EventKind.Event_Whether;
     }
     public override string DescribeEffect()
@@ -370,7 +412,11 @@ public class CardEffect_Whether : cardEffectBase
         {
             describe += e.DescribeEffect() + "并";
         }
-        describe=describe.Substring(0, describe.Length - 1);
+        if (describe.Length != 0)
+        {
+            describe = describe.Substring(0, describe.Length - 1);
+        }
+
         return describe;
     }
 }
@@ -393,7 +439,7 @@ public class CardEffect_RepeatByFill : cardEffectBase
     public CardEffect_RepeatByFill(judgeCondition judge, EffectBase effect)
     {
         b_hasChildEffect = true;
-        effectDele = new DeleCardEffect((a, b) => { });
+        effectDele = new DeleCardEffect((int a, battleInfo b, out int c) => { c = a; });
         numJudge = judge;
         childeffects.Add(effect);
         eventkind = EventKind.Event_Fill;
@@ -402,7 +448,7 @@ public class CardEffect_RepeatByFill : cardEffectBase
     {
         numJudge = judge;
         b_hasChildEffect = true;
-        effectDele = new DeleCardEffect((a, b) => { });
+        effectDele = new DeleCardEffect((int a, battleInfo b, out int c) => { c = a; });
         eventkind = EventKind.Event_Fill;
     }
     public override void InitNum()
@@ -475,8 +521,59 @@ public class CardEffect_DisSomeCard : Repeat
         return result;
     }
 }
+public class CardEffect_DisAllCard : cardEffectBase
+{
+    public CardEffect_DisAllCard()
+    {
+        num = 0;
+        b_stopEffect = false;
+        b_hasChildEffect = true;
+        effectDele= new DeleCardEffect((int a, battleInfo b, out int c) => { c = a; });
+        childeffects.Add(new CardEffect_DisACard());
+        eventkind = EventKind.Event_DisSomeCard;
+        returnDescribe = "每弃一张手牌,";
+    }
+    public override string DescribeEffect()
+    {
+        return "弃掉全部手牌";
+    }
+    public override void InitNum()
+    {
+        num = gameManager.Instance.battlemanager.realCardList.Count;
+    }
+}
 
-
+public class CardEffect_RepeatByEffect:cardEffectBase
+{
+    public cardEffectBase numeffect;
+    public CardEffect_RepeatByEffect(cardEffectBase effect)
+    {
+        numeffect = effect;
+        b_hasChildEffect = true;
+        effectDele= new DeleCardEffect((int a, battleInfo b, out int c) => { c = a; }); ;
+        eventkind = EventKind.Event_Repeat;
+    }
+    public CardEffect_RepeatByEffect()
+    {
+        b_hasChildEffect = true;
+        effectDele = new DeleCardEffect((int a, battleInfo b, out int c) => { c = a; }); ;
+        eventkind = EventKind.Event_Repeat;
+    }
+    public override void InitNum()
+    {
+        num = numeffect.returnnum;
+    }
+    public override string DescribeEffect()
+    {
+        string des = "";
+        des += numeffect.returnDescribe;
+        foreach(cardEffectBase ef in childeffects)
+        {
+            des += ef.DescribeEffect();
+        }
+        return des;
+    }
+}
 
 ////
 //系统效果 一般排除在卡的影响效果外；
@@ -487,7 +584,7 @@ public class SystemRepeat : systemEffectBase
     public SystemRepeat() { }
     public SystemRepeat(int _num,params EffectBase[] effects)
     {
-        effectDele = new DeleCardEffect((a, b) => { });
+        effectDele = new DeleCardEffect((int a, battleInfo b, out int c) => { c = a; });
         num = _num;
         mixnum = _num;
         foreach(EffectBase effect in effects)

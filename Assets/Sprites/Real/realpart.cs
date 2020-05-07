@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
+
 public enum RealPartState
 {
     Battle,
@@ -24,7 +26,8 @@ public class realpart : MonoBehaviour
     public float distance = 0.333f;
     public Transform meshTran;
     public Transform gridFolder;
-    public Text text;
+    public Transform saleposi;
+    public TextMeshPro descritetext;
     //战斗相关类
     public MagicPart thisMagicPart;
     //public GameState realPartState;
@@ -75,7 +78,7 @@ public class realpart : MonoBehaviour
 
             gridRealgridPairs.Add(g.Value, newrealgrid);
         }
-        text.text = thisMagicPart.describe;
+        descritetext.text = thisMagicPart.partDescribe();
 
         if (state == RealPartState.Battle)
         {

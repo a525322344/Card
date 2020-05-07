@@ -204,6 +204,14 @@ public class MagicPart : Part
         }
     }
 
-
+    public string partDescribe()
+    {
+        describe = name+":";
+        foreach(Reaction reaction in m_overallReactionList)
+        {
+            describe += reaction.ReactionDescribe();
+        }
+        return describe;
+    }
     public string describe;
 }

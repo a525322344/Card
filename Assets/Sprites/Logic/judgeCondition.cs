@@ -82,3 +82,13 @@ public class Judge_buqishu : judgeCondition
         describe = "每补齐一纵行";
     }
 }
+
+public class Judge_BuQi : judgeCondition
+{
+    public Judge_BuQi()
+    {
+        param = 0;
+        whetherDele = AllAsset.judgeAsset.BuQi;
+        describe = "每补齐一横行或纵行";
+    }
+}

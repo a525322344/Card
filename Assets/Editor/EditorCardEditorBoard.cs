@@ -428,6 +428,7 @@ public class EditorCardEditorBoard : Editor
             if (enumJudge != EnumJudge.默认)
             {
                 effect.judges.Add(CardEditorBoard.JudgeFormEnum(enumJudge));
+                Debug.Log(effect.judges.Count);
             }
             EditorGUILayout.EndHorizontal();
 
@@ -450,7 +451,7 @@ public class EditorCardEditorBoard : Editor
             EditorGUILayout.EndHorizontal();
 
             //子效果
-            if (ce.b_haveChildEffect)
+            if (ce.b_haveChildEffect|ce.b_haveJudge)
             {
                 childEffectShow(ce);
             }

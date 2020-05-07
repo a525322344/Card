@@ -37,7 +37,7 @@ public static class ListOperation
         List<T_class> temporary = new List<T_class>(tList);
         List<T_class> result = new List<T_class>();
         int countNum = tList.Count;
-        Debug.Log(countNum);
+        //Debug.Log(countNum);
         while (result.Count < countNum)
         {
             int index = UnityEngine.Random.Range(0, temporary.Count);

@@ -125,7 +125,7 @@ public class EffectEvent : singleEvent
     /// <param name="fatherevent">事件父类</param>
     public EffectEvent(EffectBase effect, CardEvent fatherevent)
     {
-        eventDescribe = "(未强化)效果：" + effect.DescribeEffect();
+        eventDescribe = effect.DescribeEffect();
         m_effect = effect;
         m_fatherEvent = fatherevent;
         m_eventKind = effect.GetEventKind();
@@ -155,6 +155,18 @@ public class EffectEvent : singleEvent
         childEvents.Clear();
 
         recesiveNotice();
+
+        if (b_haveJudgeEvent)
+        {
+            if (m_effect.JudgeWhether(gameManager.Instance.battlemanager.battleInfo))
+            {
+                foreach (cardEffectBase effect in m_effect.childeffects)
+                {
+                    childEvents.Add(new EffectEvent(effect, m_fatherEvent));
+                }
+            }
+        }
+
         m_effect.InitNum();
         int index = m_effect.getNum();
         foreach (extraEffectBase extraEffect in m_extraEffectList)
@@ -173,16 +185,7 @@ public class EffectEvent : singleEvent
                 }
             }
         }
-        if (b_haveJudgeEvent)
-        {
-            if (m_effect.JudgeWhether(gameManager.Instance.battlemanager.battleInfo))
-            {
-                foreach (cardEffectBase effect in m_effect.childeffects)
-                {
-                    childEvents.Add(new EffectEvent(effect, m_fatherEvent));
-                }
-            }
-        }
+
         if (m_fatherEvent != null)
         {
             m_fatherEvent.MagicPart.sleepPart();
@@ -243,6 +246,25 @@ public class EffectEvent : singleEvent
     public void updateDescribe()
     {
         recesiveNotice();
+
+        if (b_haveJudgeEvent)
+        {
+            if (m_effect.JudgeWhether(gameManager.Instance.battlemanager.battleInfo))
+            {
+
+            }
+            childEvents.Clear();
+            foreach (cardEffectBase effect in m_effect.childeffects)
+            {
+                childEvents.Add(new EffectEvent(effect, m_fatherEvent));
+            }
+            for (int i = childEvents.Count - 1; i >= 0; i--)
+            {
+                EffectEvent e = (EffectEvent)childEvents[i];
+                e.updateDescribe();
+            }
+        }
+
         int index = m_effect.getNum();
         foreach (extraEffectBase extraEffect in m_extraEffectList)
         {
@@ -253,12 +275,10 @@ public class EffectEvent : singleEvent
         if (b_haveChildEvent)
         {
             childEvents.Clear();
-            for (int i = 0; i < index; i++)
+
+            foreach (cardEffectBase effect in m_effect.childeffects)
             {
-                foreach (cardEffectBase effect in m_effect.childeffects)
-                {
-                    childEvents.Add(new EffectEvent(effect, m_fatherEvent));
-                }
+                childEvents.Add(new EffectEvent(effect, m_fatherEvent));
             }
             //根据子事件表，创建添加EventShow
             for (int i = childEvents.Count - 1; i >= 0; i--)
@@ -384,7 +404,7 @@ public class CardEvent : singleEvent
         recesiveNotice();
         foreach (EffectEvent _event in childEvents)
         {
-            _event.prepareEvent();
+            _event.updateDescribe();
         }
         //休眠之前的部件
         m_magicPart.sleepPart();
