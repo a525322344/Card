@@ -183,6 +183,7 @@ MonoBehaviour:
     type: 3}
   distance: 95
   meshTran: {fileID: 4227206178624639679}
+  jiaotiaoTran: {fileID: 6839321338154586220}
   gridFolder: {fileID: 5087272682893854245}
   saleposi: {fileID: 8011119996207310093}
   descritetext: {fileID: 5667675023597618108}
