@@ -70,5 +70,20 @@ public class realgrid : MonoBehaviour
                 break;
         }
     }
-
+    private void OnMouseDown()
+    {
+        fatherPart.OnMouseDown();
+    }
+    private void OnMouseEnter()
+    {
+        fatherPart.OnMouseEnter();
+    }
+    private void OnMouseExit()
+    {
+        fatherPart.OnMouseExit();
+    }
+    private void OnMouseUp()
+    {
+        fatherPart.OnMouseUp();
+    }
 }

@@ -25,6 +25,7 @@ public class realpart : MonoBehaviour
     public GameObject realgridMode;
     public float distance = 0.333f;
     public Transform meshTran;
+    public Transform jiaotiaoTran;
     public Transform gridFolder;
     public Transform saleposi;
     public TextMeshPro descritetext;
@@ -56,6 +57,7 @@ public class realpart : MonoBehaviour
     public bool b_ShowOutlineInMap;
     public float installpartZOffset;
     private float initpositionZ;
+    private float initpositionmeshZ;
     //select
     public thingToSelect<MagicPart> partToSelect;
 
@@ -84,19 +86,28 @@ public class realpart : MonoBehaviour
         {
             b_ShowOutlineInMap = true;
             meshTran.gameObject.SetActive(false);
+            jiaotiaoTran.gameObject.SetActive(false);
+            sortState = SortState.Free;
             linkSavePart = thisMagicPart;
+            GetComponent<BoxCollider>().enabled = false;
         }
         else if(state == RealPartState.Sort)
         {
             initpositionZ=transform.position.z;
+            initpositionmeshZ = meshTran.position.z;
             meshTran.gameObject.SetActive(false);
-            GetComponent<BoxCollider>().size = new Vector3(100, 100, 2);
+            jiaotiaoTran.gameObject.SetActive(false);
+            meshTran.GetChild(0).gameObject.SetActive(false);
+            //GetComponent<BoxCollider>().size = new Vector3(100, 100, 2);
+            //GetComponent<BoxCollider>().center = new Vector3(0, 0, 0);
+            GetComponent<BoxCollider>().enabled = false;
         }
         else if (state == RealPartState.Select)
         {
             b_ShowOutlineInMap = false;
             sortState = SortState.Free;
-            GetComponent<BoxCollider>().size = new Vector3(300, 300, 2);
+            GetComponent<BoxCollider>().size = new Vector3(300, 350, 2);
+            GetComponent<BoxCollider>().center = new Vector3(0, -100, 0);
         }
         RotateRealPart();
     }
@@ -154,6 +165,7 @@ public class realpart : MonoBehaviour
         switch (realPartState)
         {
             case RealPartState.Battle:
+
                 break;
             case RealPartState.Sort:
                 switch (sortState)
@@ -162,10 +174,10 @@ public class realpart : MonoBehaviour
                         break;
                     case SortState.Select:
                         //跟随鼠标部分
-                        Vector3 mouseposition = Input.mousePosition;
-                        mouseposition = Camera.main.ScreenToWorldPoint(mouseposition);
-                        mouseposition=new Vector3(mouseposition.x,mouseposition.y, initpositionZ);
-                        transform.DOMove(mouseposition , 0);
+                        Vector3 mouseposition1 = Input.mousePosition;
+                        mouseposition1 = Camera.main.ScreenToWorldPoint(mouseposition1);
+                        mouseposition1=new Vector3(mouseposition1.x,mouseposition1.y, initpositionZ);
+                        transform.DOMove(mouseposition1 , 0);
                         //旋转部分
                         if(Input.GetAxis("Mouse ScrollWheel") < 0)//下
                         {
@@ -255,7 +267,7 @@ public class realpart : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
         if (realPartState == RealPartState.Sort)
         {
@@ -293,20 +305,44 @@ public class realpart : MonoBehaviour
             }
         }
     }
-    private void OnMouseEnter()
+    public void OnMouseEnter()
     {
         if (realPartState == RealPartState.Select)
         {
             switch (sortState)
             {
                 case SortState.Free:
-                case SortState.Enter:
                     sortState = SortState.Enter;
                     break;
             }
         }
+        if (realPartState == RealPartState.Sort)
+        {
+            switch (sortState)
+            {
+                case SortState.Free:
+                    break;
+                case SortState.Install:
+                    meshTran.gameObject.SetActive(true);
+                    break;
+            }
+        }
+        if (realPartState == RealPartState.Battle)
+        {
+            switch (sortState)
+            {
+                case SortState.Free:
+                case SortState.Enter:
+                    sortState = SortState.Enter;
+                    Vector3 mouseposition = Input.mousePosition;
+                    mouseposition = Camera.main.ScreenToWorldPoint(new Vector3(mouseposition.x, mouseposition.y, instantiateManager.instance.battleuiRoot.uiCanvas.planeDistance));
+                    meshTran.DOMove(mouseposition + Vector3.back * 1, 0);
+                    meshTran.gameObject.SetActive(true);
+                    break;
+            }
+        }
     }
-    private void OnMouseExit()
+    public void OnMouseExit()
     {
         if (realPartState == RealPartState.Select)
         {
@@ -318,8 +354,30 @@ public class realpart : MonoBehaviour
                     break;
             }
         }
+        if (realPartState == RealPartState.Sort)
+        {
+            switch (sortState)
+            {
+                case SortState.Free:
+                    break;
+                case SortState.Install:
+                    meshTran.gameObject.SetActive(false);
+                    break;
+            }
+        }
+        if (realPartState == RealPartState.Battle)
+        {
+            switch (sortState)
+            {
+                case SortState.Free:
+                case SortState.Enter:
+                    sortState = SortState.Free;
+                    meshTran.gameObject.SetActive(false);
+                    break;
+            }
+        }
     }
-    private void OnMouseUp()
+    public void OnMouseUp()
     {
         if (realPartState == RealPartState.Sort)
         {

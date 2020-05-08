@@ -73410,6 +73410,11 @@ PrefabInstance:
       propertyPath: minPlaceNumPerStorey
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2922839077239334161, guid: 362da131cad69c3408bab7cc127cafeb,
+        type: 3}
+      propertyPath: MapPlaceOpen
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 362da131cad69c3408bab7cc127cafeb, type: 3}
 --- !u!1001 &7068954691501731757

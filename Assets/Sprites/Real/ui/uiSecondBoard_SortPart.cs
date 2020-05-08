@@ -35,6 +35,7 @@ public class uiSecondBoard_SortPart : uiSecondBoard
                 part.transform.localPosition = Vector3.right * partDistance * j;
                 realpart rp = part.GetComponent<realpart>();
                 rp.Init(magicParts[i], RealPartState.Sort, partPosition);
+                rp.meshTran.gameObject.SetActive(true);
                 j++;
             }
         }
