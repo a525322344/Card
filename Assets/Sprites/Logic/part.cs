@@ -39,6 +39,11 @@ public class Part
             Debug.Log(name + ":" + r.name);
         }
     }
+
+    protected string ColorGold = "<color=#CFB53B>";
+    protected string ColorBlue = "<color=#007FFF>";
+    protected string ColorGreen = "<color=#32CD32>";
+    protected string ColorEnd = "</color>";
 }
 public class LinkPart : MagicPart
 {
@@ -72,8 +77,9 @@ public class MagicPart : Part
     public int gridpower;
     public MagicPart() { }
     //暂定：数组a应该是9位
-    public MagicPart(int[] a,int set)
+    public MagicPart(string _name,int[] a,int set)
     {
+        name = _name;
         rotateInt = 0;
         Vector2GridPairs = new Dictionary<Vector2, grid>();
         gridsum = 0;
@@ -103,6 +109,7 @@ public class MagicPart : Part
     }
     public MagicPart(MagicPart magicPart)
     {
+        name = magicPart.name;
         rotateInt = 0;
         Vector2GridPairs = new Dictionary<Vector2, grid>(magicPart.Vector2GridPairs);
         gridsum = 0;
@@ -206,10 +213,10 @@ public class MagicPart : Part
 
     public string partDescribe()
     {
-        describe = name+":";
+        describe = ColorGold+ name+"\n"+ColorEnd;
         foreach(Reaction reaction in m_overallReactionList)
         {
-            describe += reaction.ReactionDescribe();
+            describe += ColorBlue+ reaction.name +ColorEnd+ ":" + reaction.ReactionDescribe() + "\n";
         }
         return describe;
     }

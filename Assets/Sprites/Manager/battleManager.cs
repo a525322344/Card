@@ -298,7 +298,14 @@ public class battleManager : MonoBehaviour
     //胜利
     public void EndBattleScene()
     {
-
+        foreach(var state in battleInfo.Enemy.nameStatePairs)
+        {
+            state.Value.SetOutState();
+        }
+        foreach(var state in battleInfo.Player.nameStatePairs)
+        {
+            state.Value.SetOutState();
+        }
     }
     //回合结束按钮
     public void ButtonToEndPlayerRound()

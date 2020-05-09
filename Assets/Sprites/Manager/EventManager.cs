@@ -125,8 +125,9 @@ public class EventManager
         if (battleManager.battleInfo.Enemy.healthnow <= 0)
         {
             battleManager.BattleRound = BattleState.Vectory;
+            battleManager.EndBattleScene();
             gameManager.Instance.uimanager.roundEndButton.interactable = false;
-            gameManager.Instance.uimanager.uiVectorBoard.EnterVectorBoard();
+            gameManager.Instance.uimanager.uiVectorBoard.Init();
         }
     }
 

@@ -159,14 +159,16 @@ public class Reaction_Affect : Reaction
 //对反应的效果事件，产生新的事件
 public class Reaction_Create : Reaction
 {
-    public Reaction_Create(singleEvent createEvent, EventKind _kind)
+    public Reaction_Create(string name_, singleEvent createEvent, EventKind _kind)
     {
+        name = name_;
         kind = _kind;
         toCreateEvent = createEvent;
         b_haveEvent = true;
     }
     public Reaction_Create(Reaction reaction)
     {
+        name = reaction.name;
         kind = reaction.getReactionKind();
         toCreateEvent = (reaction as Reaction_Create).toCreateEvent;
         b_haveEvent = reaction.b_haveEvent;

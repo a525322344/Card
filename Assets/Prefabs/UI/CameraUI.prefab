@@ -440,6 +440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliderImage: {fileID: 5900916084101516577}
   healthText: {fileID: 8887586826358677154}
+  isbattle: 1
   armorIcon: {fileID: 3894078252524063842}
   armorText: {fileID: 511169441987232016}
   statePosi: {fileID: 8119972477884156378}
@@ -494,6 +495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliderImage: {fileID: 8984053326522979170}
   healthText: {fileID: 2728606223486507824}
+  isbattle: 1
   armorIcon: {fileID: 8845485851945865663}
   armorText: {fileID: 3994396121073679896}
   statePosi: {fileID: 5163846027734347403}
@@ -2310,7 +2312,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 5920
+    m_Bits: 14112
   m_RenderingLayerMask: 1
   m_Lightmapping: 1
   m_LightShadowCasterMode: 0

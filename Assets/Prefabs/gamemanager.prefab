@@ -48,13 +48,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameState: 0
   playerinfo:
-    playerDick: []
+    playerDeck: []
     MagicPartDick: []
     playerKnapsack:
       isexploits: 
     roundStartDrawCardNum: 5
+    treasureToSelectNum: 3
     playerHealthMax: 100
     playerHealth: 100
+    money: 200
   initdata:
     ShowAllCards: []
   battlemanager: {fileID: 0}
@@ -62,7 +64,7 @@ MonoBehaviour:
   mapmanager: {fileID: 0}
   uimanager: {fileID: 0}
   InitControllBoard: {fileID: 11400000, guid: f2b122f796562a34d9e784dadc3b696c, type: 2}
-  CardEditorBoard: {fileID: 0}
+  CardEditorBoard: {fileID: 11400000, guid: 8927315ad9a26d74cab3dcdfb5b9e202, type: 2}
   battleScene:
     m_Handle: 0
   mapScene:
@@ -95,18 +97,20 @@ MonoBehaviour:
     type: 3}
   actionDefense: {fileID: 8073743595131508596, guid: 8f87929cb5db6b24184a4fb52379ee5b,
     type: 3}
-  fireState: {fileID: 0}
   MonsterAll:
   - {fileID: 5888839611947553217, guid: b8a1fffdee2d37643b90617a01b8d310, type: 3}
   - {fileID: 9148584800839085505, guid: 0cd54c6528d633944a6091a594569c7e, type: 3}
   placeGO: {fileID: 2426738077868084505, guid: 984eb8fafb51e3f40ad45e7a17dda140, type: 3}
   loadGO: {fileID: 0}
+  shopUiGO: {fileID: 0}
+  uiSecondBoardGOList: []
   beFallSprites:
   - {fileID: 21300000, guid: fb4989e7e5d4d0f47ac63e102b591019, type: 3}
   mapPlaceSprites:
   - {fileID: 21300000, guid: d0d7574ba417a6049bd27c38cb033b21, type: 3}
   - {fileID: 21300000, guid: 2e31a7ce20f061847b7df44a45870a03, type: 3}
   - {fileID: 21300000, guid: db909e225d584a74da0fe7bb6060a298, type: 3}
+  mapPlaceDiSprites: []
   cardSprites: []
   stateSprites:
   - {fileID: 21300000, guid: 0108e999384aa354c8b59f76ac7a01d8, type: 3}
@@ -128,6 +132,7 @@ MonoBehaviour:
   uiBefallBoard: {fileID: 0}
   roundEndButton: {fileID: 0}
   uiVectorBoard: {fileID: 0}
+  uiTreasurePartBoard: {fileID: 0}
 --- !u!114 &2922839077239334161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,9 +147,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapState: 0
   realplaceList: []
-  placedistance: 5.5
+  mapplayerGO: {fileID: 0}
+  MapPlaceOpen: 0
+  placedistanceRange: {x: 0, y: 0}
   allStoreyNum: 12
   placeNumPerStorey: 4
+  minPlaceNumPerStorey: 2
+  outPlaceNumRange: {x: 0, y: 0}
+  deleteNodeNumRange: {x: 0, y: 0}
+  addLinklineNumRange: {x: 0, y: 0}
+  befallBattlePrent: 0
+  hardEnemyNumRange: {x: 0, y: 0}
+  perLineMaxHardEnemyNum: 0
+  sleepCloseHardEnemyPresent: 0
+  shopNumRange: {x: 0, y: 0}
+  perLineMaxShopNum: 0
+  sleepNumRange: {x: 0, y: 0}
+  perSleepMaxNum: 0
+  treasureStorey: 7
+  hardEnemyExtraNum: 2
+  mapplayer: {fileID: 0}
+  positionUp: 0
+  positionDown: 0
+  mapCameraMoveSpeed: 0
+  NowPlace:
+    PointPosi: {x: 0, y: 0}
+    placeState: 0
+    realplaceTran: {fileID: 0}
+    realPlace: {fileID: 0}
+    nextNodeList: []
+    lastNodeList: []
   vector3list:
   - {x: 7.44, y: 4.11, z: 0}
   - {x: 0.28, y: -1.18, z: 0}
