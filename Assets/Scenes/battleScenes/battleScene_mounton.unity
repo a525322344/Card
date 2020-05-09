@@ -215,6 +215,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ab66e8b877394d4ab03874e95db963d, type: 3}
+--- !u!114 &69941316 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1448008434673421793, guid: 6ab66e8b877394d4ab03874e95db963d,
+    type: 3}
+  m_PrefabInstance: {fileID: 69941315}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1923bdb8f24ee0f4eb60244ee4457637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &72804868 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 0986c1bf21ef0e647ae18027221c5557,
@@ -715,9 +727,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b973753ea9176d045b36683bd3fbc950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ENCamera: {fileID: 0}
+  ENCamera: {fileID: 1239466561734969374}
   monsterPosi: {fileID: 882473706369124445}
-  realplayer: {fileID: 0}
+  realplayer: {fileID: 69941316}
 --- !u!1 &882473706369124444
 GameObject:
   m_ObjectHideFlags: 0
