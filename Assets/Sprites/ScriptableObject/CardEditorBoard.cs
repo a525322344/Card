@@ -85,6 +85,7 @@ public enum EnumEffect
     RepeatByFill,
     RepeatByEffect,//此效果前面必须有效果，会使用前者的效果返回值
     DisAllCard,
+    Exhaust,
 }
 [System.Serializable]
 public class editorEffect
@@ -199,6 +200,8 @@ public class CardEditorBoard : ScriptableObject
                 break;
             case EnumEffect.RepeatByEffect:
                 effect.b_haveChildEffect = true;
+                break;
+            case EnumEffect.Exhaust:
                 break;
         }
         return effect;

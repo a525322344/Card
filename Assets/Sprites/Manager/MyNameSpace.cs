@@ -205,6 +205,18 @@ namespace AllAsset
             returnnum = num;
             gameManager.Instance.battlemanager.deleteHandCard(num);
         }
+
+        public static void ExhaustCard(int num,battleInfo battleinfo,out int returnnum)
+        {
+            returnnum = 0;
+            battleManager bmanager = gameManager.Instance.battlemanager;
+            playerCard thiscard = (battleinfo.nowEvent as EffectEvent).m_fatherEvent.playercard;
+            if (bmanager.dickDiscard.Contains(thiscard))
+            {
+                bmanager.dickDiscard.Remove(thiscard);
+            }
+            
+        }
     }
     //声明所有的额外强化效果
     public static class extraAsset

@@ -90,11 +90,11 @@ public class StateBurn : stateWithReaction
     }
     public override void SetInState()
     {
-        ReactionListController.recesiveReactonToSetIn(m_reaction);
+        gameManager.Instance.battlemanager.ReactionListController.recesiveReactonToSetIn(m_reaction);
     }
     public override void SetOutState()
     {
-        ReactionListController.GetReactionByEventkind(eventkind).Remove(m_reaction);
+        gameManager.Instance.battlemanager.ReactionListController.GetReactionByEventkind(eventkind).Remove(m_reaction);
         gameManager.Instance.battlemanager.battleInfo.Enemy.nameStatePairs.Remove("Burn");
         gameManager.Instance.battlemanager.battleInfo.Enemy.stateList.Remove(this);
         base.SetOutState();

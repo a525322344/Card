@@ -46,7 +46,7 @@ public class SystemEvent : singleEvent
     //设置影响效果，执行反应事件
     public override void recesiveNotice()
     {
-        List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(m_eventKind);
+        List<Reaction> reactionlist = gameManager.Instance.battlemanager.ReactionListController.GetReactionByEventkind(m_eventKind);
         foreach (Reaction reaction in reactionlist)
         {
             if (reaction.Active == true)
@@ -224,7 +224,7 @@ public class EffectEvent : singleEvent
     {
         m_extraEffectList.Clear();
         EventReactionList.Clear();
-        List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(m_eventKind);
+        List<Reaction> reactionlist = gameManager.Instance.battlemanager.ReactionListController.GetReactionByEventkind(m_eventKind);
         //Debug.Log(m_eventKind);
         foreach(Reaction reaction in reactionlist)
         {
@@ -292,7 +292,7 @@ public class EffectEvent : singleEvent
     //强化效果表
     private List<extraEffectBase> m_extraEffectList = new List<extraEffectBase>();
     //父类事件
-    private CardEvent m_fatherEvent;
+    public CardEvent m_fatherEvent;
     //场景战场信息
     private battleInfo battleInfo;
 }
@@ -367,7 +367,7 @@ public class CardEvent : singleEvent
     public override void recesiveNotice()
     {
         EventReactionList.Clear();
-        List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(m_eventKind);
+        List<Reaction> reactionlist = gameManager.Instance.battlemanager.ReactionListController.GetReactionByEventkind(m_eventKind);
         foreach (Reaction reaction in reactionlist)
         {
             //是否激活，只有休眠的魔法部件才是false
@@ -419,7 +419,7 @@ public class CardEvent : singleEvent
     {
         get { return m_magicPart; }
     }
-    private playerCard playercard;
+    public playerCard playercard;
 
     //演示
     public float alltime;
@@ -449,7 +449,7 @@ public class ActionEvent:singleEvent
 
     public override void recesiveNotice()
     {
-        List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(m_eventKind);
+        List<Reaction> reactionlist = gameManager.Instance.battlemanager.ReactionListController.GetReactionByEventkind(m_eventKind);
         foreach (Reaction reaction in reactionlist)
         {
             if (reaction.Active == true)
@@ -488,6 +488,10 @@ public class ActionEvent:singleEvent
     {
         return false;
     }
+
+    //演示
+    public float alltime=0.5f;
+    public List<perform> performList = new List<perform>();
 }
 //状态事件
 public class StateEvent : singleEvent
@@ -528,7 +532,7 @@ public class StateEvent : singleEvent
     }
     public override void recesiveNotice()
     {
-        List<Reaction> reactionlist = ReactionListController.GetReactionByEventkind(m_eventKind);
+        List<Reaction> reactionlist = gameManager.Instance.battlemanager.ReactionListController.GetReactionByEventkind(m_eventKind);
         foreach (Reaction reaction in reactionlist)
         {
             if (reaction.Active == true)

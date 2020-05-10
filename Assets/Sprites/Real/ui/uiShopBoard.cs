@@ -81,7 +81,7 @@ public class uiShopBoard : MonoBehaviour
             playerInfo playerinfo = gameManager.Instance.playerinfo;
             if (playerinfo.money >= saleinfo.price)
             {
-                playerinfo.money -= saleinfo.price;
+                playerinfo.GetMoney(-saleinfo.price);
                 playerinfo.AddNewCard(_card);
                 //
                 Destroy(saleinfo.thingGO);
@@ -128,7 +128,7 @@ public class uiShopBoard : MonoBehaviour
             playerInfo playerinfo = gameManager.Instance.playerinfo;
             if (playerinfo.money >= saleinfo.price)
             {
-                playerinfo.money -= saleinfo.price;
+                playerinfo.GetMoney(-saleinfo.price);
                 playerinfo.AddMagicPart(_part);
 
                 Destroy(saleinfo.thingGO);
@@ -178,7 +178,7 @@ public class uiShopBoard : MonoBehaviour
                     }
                     //删卡成功后
                     TurnOn(true);
-                    playerinfo.money -= deleteSale.price;
+                    playerinfo.GetMoney(-deleteSale.price);
                     Destroy(deleteSale.thingGO);
                     Destroy(deleteSale.priceGO);
                 };

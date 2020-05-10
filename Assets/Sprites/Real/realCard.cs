@@ -207,7 +207,7 @@ public class realCard : MonoBehaviour
         //describeText.text = playerCard.Describe;
         nameTextPro.text = playerCard.Name;
         describeTextPro.text = playerCard.Describe;
-        //cardTexture.sprite = gameManager.Instance.instantiatemanager.cardSprites[playerCard.TextureId];
+        cardTexture.sprite = gameManager.Instance.instantiatemanager.cardSprites[playerCard.TextureId];
         switch (playerCard.Kind)
         {
             case CardKind.AttackCard:
@@ -328,6 +328,12 @@ public class realCard : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        if (gameManager.Instance.gameState == GameState.BattleSence)
+        {
+            if (gameManager.Instance.battlemanager.BattleRound == BattleState.Vectory)
+                return;
+        }
+
         switch (realCardState)
         {
             case RealCardState.RealCard:
@@ -366,6 +372,11 @@ public class realCard : MonoBehaviour
     }
     private void OnMouseExit()
     {
+        if (gameManager.Instance.gameState == GameState.BattleSence)
+        {
+            if (gameManager.Instance.battlemanager.BattleRound == BattleState.Vectory)
+                return;
+        }
         switch (realCardState)
         {
             case RealCardState.RealCard:
@@ -402,6 +413,11 @@ public class realCard : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        if (gameManager.Instance.gameState == GameState.BattleSence)
+        {
+            if (gameManager.Instance.battlemanager.BattleRound == BattleState.Vectory)
+                return;
+        }
         switch (realCardState)
         {
             case RealCardState.RealCard:

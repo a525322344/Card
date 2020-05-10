@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public static class ReactionListController
+public class ReactionListController
 {
-    public static List<Reaction> GetReactionByEventkind(EventKind eventKind)
+    public List<Reaction> GetReactionByEventkind(EventKind eventKind)
     {
         switch (eventKind)
         {
@@ -54,38 +54,41 @@ public static class ReactionListController
                 return reactListToDisSomeCard;
             case EventKind.Event_Fill:
                 return reactListToFill;
+            case EventKind.Event_Exhaust:
+                return reactListToExhaust;
             //更新
             default:
                 Debug.Log("错误，没有写这个效果的额外效果表");
                 return null;
         }
     }
-    public static void recesiveReactonToSetIn(Reaction reaction)
+    public void recesiveReactonToSetIn(Reaction reaction)
     {
         GetReactionByEventkind(reaction.getReactionKind()).Add(reaction);
     }
 
-    private static List<Reaction> reactListToDamage = new List<Reaction>();
-    private static List<Reaction> reactListToArmor = new List<Reaction>();
-    private static List<Reaction> reactListToPlaycard = new List<Reaction>();
-    private static List<Reaction> reactListToDiscard = new List<Reaction>();
-    private static List<Reaction> reactListToDrawCard = new List<Reaction>();
-    private static List<Reaction> reactListToDrawACard = new List<Reaction>();
-    private static List<Reaction> reactListToRoundStartDrawCard = new List<Reaction>();
-    private static List<Reaction> reactListToPlayerGetHurt = new List<Reaction>();
-    private static List<Reaction> reactListToEnemyGetArmor = new List<Reaction>();
-    private static List<Reaction> reactListToAction = new List<Reaction>();
-    private static List<Reaction> reactListToRepeat = new List<Reaction>();
-    private static List<Reaction> reactListToSystemRepeat = new List<Reaction>();
-    private static List<Reaction> reactListToEnemyGetBurn = new List<Reaction>();
-    private static List<Reaction> reactListToEnemyBurnMultiply = new List<Reaction>();
-    private static List<Reaction> reactListToEnemyBurnDamage = new List<Reaction>();
-    private static List<Reaction> reactListToRoundEndDisCard = new List<Reaction>();
-    private static List<Reaction> reactListToLinkRandom = new List<Reaction>();
-    private static List<Reaction> reactListToWhether = new List<Reaction>();
-    private static List<Reaction> reactListToDisOneCard = new List<Reaction>();
-    private static List<Reaction> reactListToDisSomeCard = new List<Reaction>();
-    private static List<Reaction> reactListToFill = new List<Reaction>();
+    private List<Reaction> reactListToDamage = new List<Reaction>();
+    private List<Reaction> reactListToArmor = new List<Reaction>();
+    private List<Reaction> reactListToPlaycard = new List<Reaction>();
+    private List<Reaction> reactListToDiscard = new List<Reaction>();
+    private List<Reaction> reactListToDrawCard = new List<Reaction>();
+    private List<Reaction> reactListToDrawACard = new List<Reaction>();
+    private List<Reaction> reactListToRoundStartDrawCard = new List<Reaction>();
+    private List<Reaction> reactListToPlayerGetHurt = new List<Reaction>();
+    private List<Reaction> reactListToEnemyGetArmor = new List<Reaction>();
+    private List<Reaction> reactListToAction = new List<Reaction>();
+    private List<Reaction> reactListToRepeat = new List<Reaction>();
+    private List<Reaction> reactListToSystemRepeat = new List<Reaction>();
+    private List<Reaction> reactListToEnemyGetBurn = new List<Reaction>();
+    private List<Reaction> reactListToEnemyBurnMultiply = new List<Reaction>();
+    private List<Reaction> reactListToEnemyBurnDamage = new List<Reaction>();
+    private List<Reaction> reactListToRoundEndDisCard = new List<Reaction>();
+    private List<Reaction> reactListToLinkRandom = new List<Reaction>();
+    private List<Reaction> reactListToWhether = new List<Reaction>();
+    private List<Reaction> reactListToDisOneCard = new List<Reaction>();
+    private List<Reaction> reactListToDisSomeCard = new List<Reaction>();
+    private List<Reaction> reactListToFill = new List<Reaction>();
+    private List<Reaction> reactListToExhaust = new List<Reaction>();
     //更新
 }
 

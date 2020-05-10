@@ -385,6 +385,7 @@ public class InitData
         {
             editorCard card = ecard.Card;
             playerCard newcard = new playerCard(card.id, card.name, card.Kind, card.cost, (int)card.Rank,false);
+            newcard.TextureId = card.id;
             cardEffectBase lasteffect = new Damage(0);
             Debug.Log(card.name);
             Debug.Log(card.playEffects.Count);
@@ -411,6 +412,7 @@ public class InitData
             Debug.Log(card.name);
             Debug.Log(card.playEffects.Count);
             newcard = new playerCard(card.id, card.name, card.Kind, card.cost, (int)card.Rank,true);
+            newcard.TextureId = card.id;
             foreach (editorEffect eE in card.playEffects)
             {
                 cardEffectBase neweffect = EffectFromInit(eE);
@@ -531,6 +533,9 @@ public class InitData
                 {
                     Effect.childeffects.Add(EffectFromInit(eE));
                 }
+                break;
+            case EnumEffect.Exhaust:
+                Effect = new CardEffect_Exhaust();
                 break;
             default:
                 Debug.Log("没有该EditorEffect对应的Effect转换");

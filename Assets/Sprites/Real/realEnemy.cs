@@ -9,7 +9,7 @@ public class realEnemy : MonoBehaviour
     public pawnbase enemy;
     public monsterInfo monsterinfo;
     public healthSlider healthslider;
-    public Transform intentPosi;
+    public realIntent intent;
 
     public Transform damagePosi;
     public GameObject realStateGO;
@@ -21,6 +21,7 @@ public class realEnemy : MonoBehaviour
 
     Dictionary<string, realState> nameStatePairs = new Dictionary<string, realState>();
     List<GameObject> statego = new List<GameObject>();
+    private actionAbstract nowaction;
 
     public void Init(monsterInfo moninfo)
     {
@@ -53,7 +54,15 @@ public class realEnemy : MonoBehaviour
 
     public actionAbstract chooseAction()
     {
-        return monsterinfo.selectAction(1);
+        nowaction= monsterinfo.selectAction(1);
+        return nowaction;
+    }
+    public void ShowAction(bool isshow)
+    {
+        if (true)
+        {
+            intent.Init(nowaction);
+        }
     }
     public void StateUpdtae()
     {

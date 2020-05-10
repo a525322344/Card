@@ -28,7 +28,8 @@ public enum EventKind
     Event_Whether,              //条件效果
     Event_DisOneCard,           //弃一张卡
     Event_DisSomeCard,          //卡牌弃卡
-    Event_Fill                  //触发补齐后的效果
+    Event_Fill,                 //触发补齐后的效果
+    Event_Exhaust               //耗尽
 }
 
 //对卡牌效果的委托
@@ -230,7 +231,7 @@ public class Repeat : cardEffectBase
         b_hasChildEffect = true;
         eventkind = EventKind.Event_Repeat;
 
-        frontDesctibe = "重复";
+        frontDesctibe = "<b>重复</b>";
         backDesctibe = "次";
     }
     public override string DescribeEffect()
@@ -332,8 +333,8 @@ public class DoubleBurn : cardEffectBase
         effectDele = new DeleCardEffect(AllAsset.effectAsset.EnemyDoubleBurn);
         eventkind = EventKind.Event_EnemyBurnMultiply;
 
-        frontDesctibe = "给与敌人";
-        backDesctibe = "倍灼烧";
+        frontDesctibe = "使敌人的<b>灼烧</b>翻";
+        backDesctibe = "倍";
     }
 }
 //敌人获得灼伤
@@ -347,7 +348,7 @@ public class Burn : cardEffectBase
         eventkind = EventKind.Event_EnemyGetBurn;
 
         frontDesctibe = "给与敌人";
-        backDesctibe = "层灼烧";
+        backDesctibe = "层<b>灼烧</b>";
     }
 }
 //随机链接部件
@@ -360,7 +361,7 @@ public class LinkRandom : cardEffectBase
         effectDele = new DeleCardEffect(AllAsset.effectAsset.RandomLinkPart);
         eventkind = EventKind.Event_LinkRandom;
 
-        frontDesctibe = "本回合内随机链接";
+        frontDesctibe = "本回合内随机<b>链接</b>";
         backDesctibe = "个部件";
     }
 }
@@ -542,7 +543,7 @@ public class CardEffect_DisAllCard : cardEffectBase
         num = gameManager.Instance.battlemanager.realCardList.Count;
     }
 }
-
+//以效果返回值为参数的重复
 public class CardEffect_RepeatByEffect:cardEffectBase
 {
     public cardEffectBase numeffect;
@@ -574,6 +575,20 @@ public class CardEffect_RepeatByEffect:cardEffectBase
         return des;
     }
 }
+//
+public class CardEffect_Exhaust : cardEffectBase
+{
+    public CardEffect_Exhaust()
+    {
+        effectDele = AllAsset.effectAsset.ExhaustCard;
+        eventkind = EventKind.Event_Exhaust;
+    }
+    public override string DescribeEffect()
+    {
+        return "<b>耗尽</b>";
+    }
+}
+
 
 ////
 //系统效果 一般排除在卡的影响效果外；

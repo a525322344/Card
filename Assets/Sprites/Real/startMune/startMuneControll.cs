@@ -10,6 +10,8 @@ public class startMuneControll : MonoBehaviour
     private bool b_once = true;
     public bool b_autoOver = false;
     public bool b_animaOver = false;
+
+    private bool b_NotOpen = true;
     public List<Animator> startToPlayAnimators = new List<Animator>();
     public List<Animator> waitLoadPlay = new List<Animator>();
     public List<Transform> startToDestorys = new List<Transform>();
@@ -46,11 +48,15 @@ public class startMuneControll : MonoBehaviour
     //开始游戏按钮
     public void buttonEnterMap()
     {
-        //加载地图
-        AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync("Map",LoadSceneMode.Additive);
-        gameManager.Instance.mapScene = SceneManager.GetSceneByName("Map");
-        //_asyncOperation.allowSceneActivation = false;
-        StartCoroutine(IEenterMap(_asyncOperation));
+        if (b_NotOpen)
+        {
+            b_NotOpen = false;
+            //加载地图
+            AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync("Map", LoadSceneMode.Additive);
+            gameManager.Instance.mapScene = SceneManager.GetSceneByName("Map");
+            //_asyncOperation.allowSceneActivation = false;
+            StartCoroutine(IEenterMap(_asyncOperation));
+        }
     }
     IEnumerator IEenterMap(AsyncOperation _asyncOperation)
     {

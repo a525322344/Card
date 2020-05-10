@@ -22,13 +22,13 @@ public class Part
     {
         Debug.Log("part's set");
         m_overallReactionList.Add(reaction);
-        ReactionListController.recesiveReactonToSetIn(reaction);
+        gameManager.Instance.battlemanager.ReactionListController.recesiveReactonToSetIn(reaction);
     }
     public void SetinReactions()
     {
         foreach(Reaction reaction in m_overallReactionList)
         {
-            ReactionListController.recesiveReactonToSetIn(reaction);
+            gameManager.Instance.battlemanager.ReactionListController.recesiveReactonToSetIn(reaction);
         }
     }
     public List<Reaction> m_overallReactionList = new List<Reaction>();

@@ -56,6 +56,7 @@ public class playerInfo
         {
             money = 0;
         }
+        instantiateManager.instance.mapRootInfo.uiMapContrill.SetMoney();
     }
     //获得诅咒卡
     public void AddCurseCard()
