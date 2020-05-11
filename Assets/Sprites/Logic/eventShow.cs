@@ -36,6 +36,13 @@ public class EventShow
             performList = cardevent.performList;
             turn = 0;
         }
+        if (_event.m_eventKind == EventKind.Event_Action)
+        {
+            ActionEvent cardevent = _event as ActionEvent;
+            lasttime = cardevent.alltime;
+            performList = cardevent.performList;
+            turn = 0;
+        }
 
     }
     public bool upDateEvent(battleInfo battleinfo)

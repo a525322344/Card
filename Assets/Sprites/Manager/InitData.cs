@@ -142,31 +142,27 @@ public class InitData
     void MagicPartInit()
     {
         int[] a = { 0, 1, 0, 0, 1, 0, 0, 0, 0 };
-        Reaction reaction = new Reaction_Create(new EffectEvent(new Burn(1),null), EventKind.Event_PlayCard);
-        MagicPart Init_BURNUP_1 = new MagicPart(a,0);
-        Init_BURNUP_1.describe = "灼烧添加";
+        Reaction reaction = new Reaction_Create("火花1",new EffectEvent(new Burn(1),null), EventKind.Event_PlayCard);
+        MagicPart Init_BURNUP_1 = new MagicPart("焰火师",a,0);
         Init_BURNUP_1.addReaction(reaction);
 
         AllAsset.magicpartAsset.AllMagicParts.Add(Init_BURNUP_1);
 
         a[1] = 1;
-        reaction = new Reaction_Affect("敏捷增加",new extraDeffenceUp(2), EventKind.Event_Armor);
-        MagicPart Init_DefenceUp_1 = new MagicPart(a,1);
-        Init_DefenceUp_1.describe = "敏捷+2";
+        reaction = new Reaction_Affect("护盾2",new extraDeffenceUp(2), EventKind.Event_Armor);
+        MagicPart Init_DefenceUp_1 = new MagicPart("屏障之玉",a,1);
         Init_DefenceUp_1.addReaction(reaction);
         AllAsset.magicpartAsset.AllMagicParts.Add(Init_DefenceUp_1);
 
-        reaction = new Reaction_Affect("力量增加", new extraAttackUp(2), EventKind.Event_Damage);
-        MagicPart newpart = new MagicPart(a, 2);
-        newpart.describe = "力量+2";
+        reaction = new Reaction_Affect("法强2", new extraAttackUp(2), EventKind.Event_Damage);
+        MagicPart newpart = new MagicPart("强能法杖",a, 2);
         newpart.addReaction(reaction);
         AllAsset.magicpartAsset.AllMagicParts.Add(newpart);
 
-        reaction = new Reaction_Affect("力量增加", new extraAttackUp(1), EventKind.Event_Damage);
-        newpart = new MagicPart(a, 2);
-        newpart.describe = "和谐";
+        reaction = new Reaction_Affect("法强1", new extraAttackUp(1), EventKind.Event_Damage);
+        newpart = new MagicPart("奥术长袍",a, 2);
         newpart.addReaction(reaction);
-        reaction = new Reaction_Affect("敏捷增加", new extraDeffenceUp(1), EventKind.Event_Armor);
+        reaction = new Reaction_Affect("护盾1", new extraDeffenceUp(1), EventKind.Event_Armor);
         newpart.addReaction(reaction);
         AllAsset.magicpartAsset.AllMagicParts.Add(newpart);
     }
@@ -389,6 +385,7 @@ public class InitData
         {
             editorCard card = ecard.Card;
             playerCard newcard = new playerCard(card.id, card.name, card.Kind, card.cost, (int)card.Rank,false);
+            newcard.TextureId = card.id;
             cardEffectBase lasteffect = new Damage(0);
             Debug.Log(card.name);
             Debug.Log(card.playEffects.Count);
@@ -415,6 +412,7 @@ public class InitData
             Debug.Log(card.name);
             Debug.Log(card.playEffects.Count);
             newcard = new playerCard(card.id, card.name, card.Kind, card.cost, (int)card.Rank,true);
+            newcard.TextureId = card.id;
             foreach (editorEffect eE in card.playEffects)
             {
                 cardEffectBase neweffect = EffectFromInit(eE);
@@ -535,6 +533,9 @@ public class InitData
                 {
                     Effect.childeffects.Add(EffectFromInit(eE));
                 }
+                break;
+            case EnumEffect.Exhaust:
+                Effect = new CardEffect_Exhaust();
                 break;
             default:
                 Debug.Log("没有该EditorEffect对应的Effect转换");

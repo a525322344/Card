@@ -474,6 +474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveing: 0
   healthSlider: {fileID: 1940409272137325153}
+  delayShowTime: 3
 --- !u!1 &9002254128429895488
 GameObject:
   m_ObjectHideFlags: 0

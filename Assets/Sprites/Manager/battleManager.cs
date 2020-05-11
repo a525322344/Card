@@ -67,7 +67,7 @@ public class battleManager : MonoBehaviour
 {
     instantiateManager instantiatemanager;
     public EventManager eventManager;
-    
+    public ReactionListController ReactionListController;
     //战斗回合状态
     public BattleState BattleRound = BattleState.OutOfRound;
     public ROUNDSTAGE RoundStage = ROUNDSTAGE.Start;
@@ -119,6 +119,8 @@ public class battleManager : MonoBehaviour
     /// </summary>
     public void startBattale()
     {
+        //初始化反应管理器
+        ReactionListController = new ReactionListController();
         //初始化战斗卡组/洗牌
         dickInGame = new List<playerCard>(playerinfo.playerDeck);
         dickInGame = ListOperation.Shufle<playerCard>(dickInGame);
@@ -151,6 +153,7 @@ public class battleManager : MonoBehaviour
         ///先注销enemuControll nowenemy
         actionAbstract newaction = realenemy.chooseAction();
         battleInfo.enemyAction = newaction;
+        realenemy.ShowAction(true);
         EventShow enemyNextActionEvent = new EventShow(
             new ActionEvent(newaction),
             eventManager.BattleEnemyShows);
@@ -289,16 +292,31 @@ public class battleManager : MonoBehaviour
             new ActionEvent(realenemy.chooseAction()),
             eventManager.BattleEnemyShows
             );
+        realenemy.ShowAction(true);
         battleInfo.Player.destoryArmor(battleInfo.Player.armor);
         eventManager.BattleEnemyShows.Add(enemyNextActionEvent);
         RoundStage = ROUNDSTAGE.Start;
         BattleRound = BattleState.PlayerRound;
     }
 
-    //胜利
+    //胜利要处理的事情
     public void EndBattleScene()
     {
-
+        for(int i = battleInfo.Enemy.stateList.Count - 1; i >= 0; i--)
+        {
+            battleInfo.Enemy.stateList[i].SetOutState();
+        }
+        for (int i = battleInfo.Player.stateList.Count - 1; i >= 0; i--)
+        {
+            battleInfo.Player.stateList[i].SetOutState();
+        }
+        StartCoroutine(IEendBattle());
+        instantiateManager.instance.mapRootInfo.uiMapContrill.SetMoney();
+    }
+    IEnumerator IEendBattle()
+    {
+        yield return new WaitForSeconds(0.5f);
+        gameManager.Instance.uimanager.uiVectorBoard.Init();
     }
     //回合结束按钮
     public void ButtonToEndPlayerRound()

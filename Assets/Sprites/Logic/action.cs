@@ -31,6 +31,8 @@ public static class ActionOperation
 public abstract class actionAbstract
 {
     public ACTIONKIND Kind;
+    public int times;
+    public int num;
     public List<EffectBase> effects = new List<EffectBase>();
     public virtual void DoAction(int num, battleInfo info)
     {
@@ -43,8 +45,19 @@ public class actionHurt : actionAbstract
 {
     public actionHurt(int n)
     {
+        times = 1;
+        num = n;
         Kind = ACTIONKIND.Attack;
         effects.Add(new effectActionHurt(n));
+    }
+    public actionHurt(int n,int num)
+    {
+        times = num;
+        Kind = ACTIONKIND.Attack;
+        for(int i = 0; i < times; i++)
+        {
+            effects.Add(new effectActionHurt(n));
+        }
     }
 }
 

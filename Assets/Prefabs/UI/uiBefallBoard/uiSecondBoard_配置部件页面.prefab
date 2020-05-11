@@ -274,7 +274,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 13.97, y: -0.0000023842}
+  m_AnchoredPosition: {x: 12.09, y: 0.59}
   m_SizeDelta: {x: 82.39, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3358531334836997854
@@ -305,7 +305,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 2b172386a6211614dae2fd090f427893, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2dcf40739f7d2f441a623025d79f0e7d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -516,6 +516,36 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 3.7006538
       objectReference: {fileID: 0}
+    - target: {fileID: 3562137264672247539, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562137264672247539, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562137264329190476, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562137264329190476, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562137264329190476, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562137264744554138, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.02
+      objectReference: {fileID: 0}
     - target: {fileID: 4777947493193816408, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
         type: 3}
       propertyPath: m_Layer
@@ -533,13 +563,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3562137265997667873, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3562137265997667873, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
         type: 3}
-      propertyPath: m_Layer
-      value: 13
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3562137264672247537, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
         type: 3}
@@ -603,6 +633,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3562137265357032205, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
         type: 3}
+      propertyPath: m_Intensity
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562137265357032205, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
+        type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 12288
       objectReference: {fileID: 0}
@@ -635,6 +670,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562137264672247538, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
+        type: 3}
+      propertyPath: m_Range
+      value: 6.12
       objectReference: {fileID: 0}
     - target: {fileID: 3562137264672247538, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
         type: 3}
@@ -675,6 +715,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562137264744554137, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562137264744554137, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
+        type: 3}
+      propertyPath: m_Range
+      value: 20.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562137264744554137, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
+        type: 3}
+      propertyPath: m_SpotAngle
+      value: 139.5
       objectReference: {fileID: 0}
     - target: {fileID: 3562137264744554137, guid: dbbe50ba06a01d74f88f1ad69eef05b9,
         type: 3}
