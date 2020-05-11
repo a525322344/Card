@@ -681,3 +681,6 @@ public class StateEffect_ExitLinkPart : stateEffectBase
         eventkind = EventKind.Event_NULL;
     }
 }
+
+
+

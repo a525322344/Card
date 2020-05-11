@@ -189,7 +189,7 @@ public class biaoji
     public Reaction reaction;
     public void setReaction()
     {
-
+        reaction.Active = false;
     }
     public void ActiveBiaoji()
     {
@@ -201,6 +201,6 @@ public class biaoji
     }
     public void deleteReaction()
     {
-
+        reaction.Active = false;
     }
 }
