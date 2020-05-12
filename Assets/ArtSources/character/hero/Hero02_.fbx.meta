@@ -14,7 +14,7 @@ ModelImporter:
     second: attack
   - first:
       74: 441400550293438744
-    second: hurted_02
+    second: hurted_NoShield
   - first:
       74: 4659437804184042788
     second: defense
@@ -101,7 +101,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -148,7 +148,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: hurted_02
+      name: hurted_NoShield
       takeName: hurted_02
       internalID: 441400550293438744
       firstFrame: 97
