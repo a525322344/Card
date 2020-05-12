@@ -75,6 +75,12 @@ public class playerInfo
             MagicPartDick.Add(new MagicPart(magicPart));
         }
     }
+    public void MaxHP(int h)
+    {
+        playerHealthMax += h;
+        playerHealth += h;
+        gameManager.Instance.mapmanager.mapplayer.healthSlider.SetSlider(0, gameManager.Instance.playerinfo.playerHealth);
+    }
     public void RecoveryHealth(int h)
     {
         playerHealth += h;
