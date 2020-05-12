@@ -126,7 +126,7 @@ public class realLatice : MonoBehaviour
     {
         if(gridState == GridState.Marked)
         {
-            gridState = GridState.Power;
+            gridState = GridState.Used;
         }
     }
 

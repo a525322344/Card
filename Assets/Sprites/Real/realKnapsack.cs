@@ -426,6 +426,17 @@ public class realKnapsack : MonoBehaviour
     }
 
 
+    //public void MarkLattice(card _selectcard)
+    //{
+    //    if(_selectcard == null)
+    //    {
+    //        for(int i = 0; i < select)
+    //    }
+    //}
+
+
+
+
     public void ToSetPart(card _selectcard)
     {
         if (_selectcard == null)
