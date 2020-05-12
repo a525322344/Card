@@ -65,7 +65,14 @@ public abstract class EffectBase
     {
         num = _n;
     }
-
+    public virtual void InitMixNum()
+    {
+        mixnum = num;
+        foreach(EffectBase effect in childeffects)
+        {
+            effect.InitMixNum();
+        }
+    }
     protected int num;
     public int mixnum;
     public int returnnum;

@@ -16,7 +16,7 @@ public class uiVectorBoard : MonoBehaviour
     //List<GameObject> cardgo = new List<GameObject>();
     public GameObject d;
     
-    public void Init()
+    public void Init(int level)
     {
         gameObject.SetActive(true);
         isOn = true;
@@ -94,6 +94,19 @@ public class uiVectorBoard : MonoBehaviour
                 }
             }
         });
+        if (level == 1)
+        {
+            gameManager.Instance.playerinfo.GetMoney(20);
+            selectpart.gameObject.SetActive(false);
+        }
+        else if (level == 2)
+        {
+            gameManager.Instance.playerinfo.GetMoney(40);
+        }
+        else if (level == 3)
+        {
+            gameManager.Instance.playerinfo.GetMoney(75);
+        }
     }
     void Update()
     {

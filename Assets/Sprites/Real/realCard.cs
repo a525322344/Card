@@ -205,8 +205,12 @@ public class realCard : MonoBehaviour
         thisCard = playerCard;
         //nameText.text = playerCard.Name;
         //describeText.text = playerCard.Describe;
+        foreach(EffectBase effect in (playerCard as playerCard).EffectPlayList)
+        {
+            effect.InitMixNum();
+        }
         nameTextPro.text = playerCard.Name;
-        describeTextPro.text = playerCard.Describe;
+        describeTextPro.text = (playerCard as playerCard).CardDescribe();
         cardTexture.sprite = gameManager.Instance.instantiatemanager.cardSprites[playerCard.TextureId];
         switch (playerCard.Kind)
         {

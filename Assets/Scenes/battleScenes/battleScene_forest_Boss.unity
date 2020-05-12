@@ -248,31 +248,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4593093373003452762, guid: 6ab66e8b877394d4ab03874e95db963d,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 14adc048a4b0c494bb1cea1ddd912511, type: 2}
-    - target: {fileID: 3993957634610612420, guid: 6ab66e8b877394d4ab03874e95db963d,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 14adc048a4b0c494bb1cea1ddd912511, type: 2}
-    - target: {fileID: 1091175007905304439, guid: 6ab66e8b877394d4ab03874e95db963d,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 14adc048a4b0c494bb1cea1ddd912511, type: 2}
-    - target: {fileID: 1049629942708149491, guid: 6ab66e8b877394d4ab03874e95db963d,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 14adc048a4b0c494bb1cea1ddd912511, type: 2}
-    - target: {fileID: 2650955928829936109, guid: 6ab66e8b877394d4ab03874e95db963d,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 14adc048a4b0c494bb1cea1ddd912511, type: 2}
     - target: {fileID: 3941570665790729422, guid: 6ab66e8b877394d4ab03874e95db963d,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -303,6 +278,31 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -2.81
       objectReference: {fileID: 0}
+    - target: {fileID: 4593093373003452762, guid: 6ab66e8b877394d4ab03874e95db963d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14adc048a4b0c494bb1cea1ddd912511, type: 2}
+    - target: {fileID: 3993957634610612420, guid: 6ab66e8b877394d4ab03874e95db963d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14adc048a4b0c494bb1cea1ddd912511, type: 2}
+    - target: {fileID: 1091175007905304439, guid: 6ab66e8b877394d4ab03874e95db963d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14adc048a4b0c494bb1cea1ddd912511, type: 2}
+    - target: {fileID: 1049629942708149491, guid: 6ab66e8b877394d4ab03874e95db963d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14adc048a4b0c494bb1cea1ddd912511, type: 2}
+    - target: {fileID: 2650955928829936109, guid: 6ab66e8b877394d4ab03874e95db963d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14adc048a4b0c494bb1cea1ddd912511, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ab66e8b877394d4ab03874e95db963d, type: 3}
 --- !u!114 &751420605 stripped
@@ -518,6 +518,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1410476140342170906}
+    - target: {fileID: 3540266816084345666, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: secondpos
+      value: 
+      objectReference: {fileID: 1992241391}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0be205746ae69d43bee4138c9635c17, type: 3}
 --- !u!114 &1992241390 stripped
@@ -532,6 +537,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b74cfbeeea5a4439ff6712fb002d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1992241391 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3067484075892925060, guid: b0be205746ae69d43bee4138c9635c17,
+    type: 3}
+  m_PrefabInstance: {fileID: 1992241389}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2083805603 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2831618940249110163, guid: 6ab66e8b877394d4ab03874e95db963d,

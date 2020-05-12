@@ -757,6 +757,8 @@ public class MapManager : MonoBehaviour
                 case 9:
                 case 10:
                     return 3;
+                default:
+                    return 0;
             }
         }
         else
@@ -775,6 +777,8 @@ public class MapManager : MonoBehaviour
                 case 9:
                 case 10:
                     return 3;
+                default:
+                    return 0;
             }
         }
         return 1;
@@ -895,6 +899,9 @@ public class MapManager : MonoBehaviour
         if (monster.Id == 2)
         {
             sceneId = 3;
+        }
+        if (monster.monsterLevel == 3){
+            sceneId = 4;
         }
         AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync(AllAsset.MapAsset.GetSceneStr(sceneId),LoadSceneMode.Additive);
         gameManager.Instance.battleScene = SceneManager.GetSceneByName(AllAsset.MapAsset.GetSceneStr(sceneId));

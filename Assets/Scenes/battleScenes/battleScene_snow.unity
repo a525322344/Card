@@ -473,7 +473,7 @@ SpriteRenderer:
   m_Size: {x: 1.83, y: 1.82}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &368337444
@@ -1967,8 +1967,19 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1248116967}
+    - target: {fileID: 3540266816084345666, guid: b0be205746ae69d43bee4138c9635c17,
+        type: 3}
+      propertyPath: secondpos
+      value: 
+      objectReference: {fileID: 1992241390}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0be205746ae69d43bee4138c9635c17, type: 3}
+--- !u!4 &1992241390 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3067484075892925060, guid: b0be205746ae69d43bee4138c9635c17,
+    type: 3}
+  m_PrefabInstance: {fileID: 1992241389}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2022923443 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4021484518804429414, guid: 337179437d07d8544bcae4095149f75e,

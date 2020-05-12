@@ -491,46 +491,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1248116967}
-    - target: {fileID: 3540266816084345666, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: secondpos
-      value: 
-      objectReference: {fileID: 937748497}
-    - target: {fileID: 3955641781417242265, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067484075892925060, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.047892
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067484075892925060, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.051337
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067484075892925060, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -3.3808
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067484075892925060, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.406332
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067484075892925060, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.406332
-      objectReference: {fileID: 0}
-    - target: {fileID: 3067484075892925060, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.406332
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0be205746ae69d43bee4138c9635c17, type: 3}
 --- !u!114 &937748496 stripped
@@ -545,12 +505,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b74cfbeeea5a4439ff6712fb002d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &937748497 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3067484075892925060, guid: b0be205746ae69d43bee4138c9635c17,
-    type: 3}
-  m_PrefabInstance: {fileID: 937748495}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1248116966
 PrefabInstance:
   m_ObjectHideFlags: 0

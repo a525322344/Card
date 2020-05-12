@@ -82,6 +82,7 @@ public class battleManager : MonoBehaviour
     //战场信息
     public battleInfo battleInfo;
     public realEnemy realenemy;
+    public monsterInfo monster;
     public realPlayer realplayer;
     public realKnapsack realknapsack;
     public List<realpart> realPartList;
@@ -169,7 +170,7 @@ public class battleManager : MonoBehaviour
     {
         //实例化怪物
         instantiatemanager.instanMonster(monsterinfo, out realenemy);
-        
+        monster = monsterinfo;
     }
 
     private void Update()
@@ -338,7 +339,7 @@ public class battleManager : MonoBehaviour
     IEnumerator IEendBattle()
     {
         yield return new WaitForSeconds(0.5f);
-        gameManager.Instance.uimanager.uiVectorBoard.Init();
+        gameManager.Instance.uimanager.uiVectorBoard.Init(monster.monsterLevel);
     }
     //回合结束按钮
     public void ButtonToEndPlayerRound()
