@@ -35,6 +35,7 @@ public class instantiateManager : MonoBehaviour
     public GameObject actionDefense;
 
     public List<GameObject> MonsterAll = new List<GameObject>();
+    public List<Sprite> monsterHeadList = new List<Sprite>();
     //map
     public GameObject placeGO;
     public GameObject loadGO;

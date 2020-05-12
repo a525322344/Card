@@ -63,7 +63,15 @@ namespace AllAsset
             }
             battleInfo.Player.hurtHealth(num);
         }
-
+        public static void PlayerGetRealHurt(int num,battleInfo battleInfo,out int returnnum)
+        {
+            returnnum = num;
+            if (num < 0)
+            {
+                num = 0;
+            }
+            battleInfo.Player.realHurtHealth(num);
+        }
         public static void EnemyGetArmor(int num,battleInfo battleinfo, out int returnnum)
         {
             returnnum = num;
@@ -102,7 +110,23 @@ namespace AllAsset
                 gameManager.Instance.battlemanager.realenemy.StateUpdtae();
             }
         }
-
+        public static void PlayerGetBurn(int num, battleInfo battleinfo, out int returnnum)
+        {
+            returnnum = num;
+            stateAbstarct burnstate = new StatePlayerBurn(num);
+            if (battleinfo.Player.nameStatePairs.ContainsKey(burnstate.key))
+            {
+                battleinfo.Player.nameStatePairs[burnstate.key].num += num;
+                gameManager.Instance.battlemanager.realplayer.StateUpdtae();
+            }
+            else
+            {
+                burnstate.SetInState();
+                battleinfo.Player.nameStatePairs.Add(burnstate.key, burnstate);
+                battleinfo.Player.stateList.Add(burnstate);
+                gameManager.Instance.battlemanager.realplayer.StateUpdtae();
+            }
+        }
         public static void RandomLinkPart(int num,battleInfo battleinfo, out int returnnum)
         {
             returnnum = num;
@@ -496,6 +520,10 @@ namespace AllAsset
     }
     public static class MapAsset
     {
+        public static List<monsterInfo> NormalMonsterList = new List<monsterInfo>();
+        public static List<monsterInfo> HardMonsterList = new List<monsterInfo>();
+        public static List<monsterInfo> BossMonsterList = new List<monsterInfo>();
+
         public static List<monsterInfo> AllMonsters = new List<monsterInfo>();
         public static List<monsterInfo> nMonster1s = new List<monsterInfo>();
         public static List<monsterInfo> nMonster2s = new List<monsterInfo>();

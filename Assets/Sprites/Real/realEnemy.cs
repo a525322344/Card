@@ -26,6 +26,7 @@ public class realEnemy : MonoBehaviour
     public void Init(monsterInfo moninfo)
     {
         monsterinfo = moninfo;
+        monsterinfo.Init();
         enemy = new enemybase();
         enemy.name = monsterinfo.name;
         enemy.healthmax = monsterinfo.health;

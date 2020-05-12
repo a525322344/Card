@@ -11,6 +11,7 @@ public abstract class monsterInfo
     public int health;
     public List<actionAbstract> actionList = new List<actionAbstract>();
     public selectWay selectAction;
+    public virtual void Init() { }
 }
 [System.Serializable]
 public class monInfo_Slima : monsterInfo
@@ -49,44 +50,31 @@ public class monInfo_Cat : monsterInfo
     public monInfo_Cat()
     {
         name = "火云猫";
-        health = 150;
+        health = 40;
         Id = 1;
         monsterLevel = 1;
-        actionList.Add(new actionAdmix(new actionArmor(12), new actionHurt(9)));
-        actionList.Add(new actionHurt(6));
-        actionList.Add(new actionAdmix(new actionHurt(5), new actionHurt(5)));
-        actionList.Add(new actionHurt(8));
-        actionList.Add(new actionAdmix(new actionHurt(7), new actionHurt(7)));
-        actionList.Add(new actionHurt(10));
-        actionList.Add(new actionAdmix(new actionHurt(7), new actionHurt(7)));
-        actionList.Add(new actionHurt(12));
-        actionList.Add(new actionAdmix(new actionHurt(9), new actionHurt(9)));
-        actionList.Add(new actionHurt(14));
-        actionList.Add(new actionAdmix(new actionHurt(11), new actionHurt(11)));
-        actionList.Add(new actionHurt(16));
-        actionList.Add(new actionAdmix(new actionHurt(13), new actionHurt(13)));
-        actionList.Add(new actionHurt(18));
-        actionList.Add(new actionAdmix(new actionHurt(15), new actionHurt(15)));
-        actionList.Add(new actionHurt(20));
-        actionList.Add(new actionAdmix(new actionHurt(17), new actionHurt(17)));
+        actionList.Add(new actionAdmix(new actionHurt(5), new actionDebuff(new ActionEffect_MonsterBurn(1))));
+        actionList.Add(new actionDebuff(new ActionEffect_MonsterBurn(4)));
+        actionList.Add(new actionHurt(1,3));
+
 
         //顺序选择
         selectAction = new selectWay((int x) =>
         {
             actionAbstract action;
-            if (actionorder < actionList.Count - 1)
+            action = actionList[actionorder];
+            actionorder++;
+            if (actionorder == actionList.Count)
             {
-                action = actionList[actionorder];
-                actionorder++;
-            }
-            else
-            {
-                action = actionList[0];
-                actionorder = 1;
+                actionorder = 0;
             }
             return action;
-            //actionList.Remove(new actionAdmix(new actionArmor(12), new actionHurt(9)));
         });
+    }
+
+    public override void Init()
+    {
+        actionorder = 0;
     }
 }
 

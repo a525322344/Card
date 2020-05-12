@@ -36,7 +36,7 @@ public class EventShow
             performList = cardevent.performList;
             turn = 0;
         }
-        if (_event.m_eventKind == EventKind.Event_Action)
+        if (_event.m_eventKind == EventKind.Event_MonsterAction)
         {
             ActionEvent cardevent = _event as ActionEvent;
             lasttime = cardevent.alltime;

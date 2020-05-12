@@ -122,3 +122,52 @@ public class StateBurn : stateWithReaction
     private Reaction m_reaction;
     private singleEvent m_reactionEvent;
 }
+
+[System.Serializable]
+public class StatePlayerBurn : stateWithReaction
+{
+    public StatePlayerBurn(int _num)
+    {
+        name = "灼烧";
+        key = "PlayerBurn";
+        num = _num;
+        texint = 0;
+        m_reactionEvent = new StateEvent(this, new StateEffect_BurnHurt(0));
+        eventkind = EventKind.Event_MonsterHurt;
+        m_reaction = new Reaction_Create("灼烧", m_reactionEvent, eventkind, null);
+        m_reaction.Active = true;
+    }
+    public override void SetInState()
+    {
+        gameManager.Instance.battlemanager.ReactionListController.recesiveReactonToSetIn(m_reaction);
+    }
+    public override void SetOutState()
+    {
+        gameManager.Instance.battlemanager.ReactionListController.GetReactionByEventkind(eventkind).Remove(m_reaction);
+        gameManager.Instance.battlemanager.battleInfo.Player.nameStatePairs.Remove(key);
+        gameManager.Instance.battlemanager.battleInfo.Player.stateList.Remove(this);
+        base.SetOutState();
+    }
+    public override string DescribeState()
+    {
+        string result = "";
+        result += ColorGold + "灼烧" + ColorEnd;
+        result += "\n";
+        result += "在其受到伤害时，生命值减";
+        result += ColorBlue + num + ColorEnd;
+        result += "，然后灼烧层数减少";
+        result += ColorBlue + "1" + ColorEnd;
+        return result;
+    }
+    public override void DealState()
+    {
+        num--;
+        if (num == 0)
+        {
+            SetOutState();
+        }
+        base.DealState();
+    }
+    private Reaction m_reaction;
+    private singleEvent m_reactionEvent;
+}

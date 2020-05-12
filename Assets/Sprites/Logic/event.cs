@@ -441,7 +441,7 @@ public class ActionEvent:singleEvent
         {
             childEvents.Add(new EffectEvent(effect, null));
         }            
-        m_eventKind = EventKind.Event_Action;
+        m_eventKind = EventKind.Event_MonsterAction;
         b_haveChildEvent = true;
         b_logoutAfterDeal = true;
         eventDescribe = "(未强化)行动：" + "以后补充";

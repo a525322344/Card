@@ -18,7 +18,7 @@ public static class ActionOperation
         bool result = false;
         foreach(var ae in action.effects)
         {
-            if (ae.GetEventKind() == EventKind.Event_PlayerGetHurt)
+            if (ae.GetEventKind() == EventKind.Event_MonsterHurt)
             {
                 result = true;
             }
@@ -48,16 +48,39 @@ public class actionHurt : actionAbstract
         times = 1;
         num = n;
         Kind = ACTIONKIND.Attack;
-        effects.Add(new effectActionHurt(n));
+        effects.Add(new ActionEffect_MonsterHurt(n));
     }
-    public actionHurt(int n,int num)
+    public actionHurt(int n,int timess)
     {
-        times = num;
+        times = timess;
+        num = n;
         Kind = ACTIONKIND.Attack;
         for(int i = 0; i < times; i++)
         {
-            effects.Add(new effectActionHurt(n));
+            effects.Add(new ActionEffect_MonsterHurt(n));
         }
+    }
+}
+
+public class actionDebuff : actionAbstract
+{
+    public actionDebuff(EffectBase effect)
+    {
+        times = 1;
+        num = 1;
+        Kind = ACTIONKIND.Debuff;
+        effects.Add(effect);
+    }
+}
+
+public class actionPowerUp : actionAbstract
+{
+    public actionPowerUp(EffectBase effect)
+    {
+        times = 1;
+        num = 1;
+        Kind = ACTIONKIND.StrongUP;
+        effects.Add(effect);
     }
 }
 
@@ -66,7 +89,7 @@ public class actionArmor : actionAbstract
     public actionArmor(int n)
     {
         Kind = ACTIONKIND.Defense;
-        effects.Add(new effectActionEnemyArmor(n));
+        effects.Add(new ActionEffect_MonsterArmor(n));
     }
 }
 

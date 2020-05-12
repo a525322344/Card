@@ -28,11 +28,11 @@ public class ReactionListController
                 return reactListToRoundStartDrawCard;
             case EventKind.Event_RoundEndDisCard:
                 return reactListToRoundEndDisCard;
-            case EventKind.Event_PlayerGetHurt:
+            case EventKind.Event_MonsterHurt:
                 return reactListToPlayerGetHurt;
-            case EventKind.Event_EnemyGetArmor:
+            case EventKind.Event_MonsterArmor:
                 return reactListToEnemyGetArmor;
-            case EventKind.Event_Action:
+            case EventKind.Event_MonsterAction:
                 return reactListToAction;
             case EventKind.Event_Repeat:
                 return reactListToRepeat;
@@ -56,6 +56,10 @@ public class ReactionListController
                 return reactListToFill;
             case EventKind.Event_Exhaust:
                 return reactListToExhaust;
+            case EventKind.Event_MonsterBurn:
+                return reactListMonsterBurn;
+            case EventKind.Event_PlayerBurnDamage:
+                return reactListPlayerBurnDamage;
             //更新
             default:
                 Debug.Log("错误，没有写这个效果的额外效果表");
@@ -89,6 +93,9 @@ public class ReactionListController
     private List<Reaction> reactListToDisSomeCard = new List<Reaction>();
     private List<Reaction> reactListToFill = new List<Reaction>();
     private List<Reaction> reactListToExhaust = new List<Reaction>();
+    private List<Reaction> reactListMonsterBurn = new List<Reaction>();
+    private List<Reaction> reactListPlayerBurnDamage = new List<Reaction>();
+
     //更新
 }
 

@@ -12,7 +12,15 @@ public class InitData
     public void Awake()
     {
         //CardInit();
-        EditorCardInit(gameManager.Instance.CardEditorBoard);
+        if (gameManager.Instance.testcard)
+        {
+            EditorCardInit(gameManager.Instance.TestCardEditor);
+        }
+        else
+        {
+            EditorCardInit(gameManager.Instance.CardEditorBoard);
+        }
+
         MagicPartInit();
         BefallInit();
         MonsterInit();
@@ -142,29 +150,61 @@ public class InitData
     void MagicPartInit()
     {
         int[] a = { 0, 1, 0, 0, 1, 0, 0, 0, 0 };
-        Reaction reaction = new Reaction_Create("火花1",new EffectEvent(new Burn(1),null), EventKind.Event_PlayCard);
-        MagicPart Init_BURNUP_1 = new MagicPart("焰火师",a,0);
-        Init_BURNUP_1.addReaction(reaction);
+        MagicPart newpart;
+        Reaction reaction;
 
-        AllAsset.magicpartAsset.AllMagicParts.Add(Init_BURNUP_1);
-
-        a[1] = 1;
-        reaction = new Reaction_Affect("护盾2",new extraDeffenceUp(2), EventKind.Event_Armor);
-        MagicPart Init_DefenceUp_1 = new MagicPart("屏障之玉",a,1);
-        Init_DefenceUp_1.addReaction(reaction);
-        AllAsset.magicpartAsset.AllMagicParts.Add(Init_DefenceUp_1);
-
-        reaction = new Reaction_Affect("法强2", new extraAttackUp(2), EventKind.Event_Damage);
-        MagicPart newpart = new MagicPart("强能法杖",a, 2);
+        newpart = new MagicPart("护佑之石", a, 1);
+        reaction = new Reaction_Affect("护盾1", new extraDeffenceUp(1), EventKind.Event_Armor, newpart);
         newpart.addReaction(reaction);
-        AllAsset.magicpartAsset.AllMagicParts.Add(newpart);
+        magicpartAsset.AllMagicParts.Add(newpart);
 
-        reaction = new Reaction_Affect("法强1", new extraAttackUp(1), EventKind.Event_Damage);
-        newpart = new MagicPart("奥术长袍",a, 2);
+        newpart = new MagicPart("冲击之石", a, 0);
+        reaction = new Reaction_Affect("法强1", new extraAttackUp(1), EventKind.Event_Damage, newpart);
         newpart.addReaction(reaction);
-        reaction = new Reaction_Affect("护盾1", new extraDeffenceUp(1), EventKind.Event_Armor);
+        magicpartAsset.AllMagicParts.Add(newpart);
+
+        newpart = new MagicPart("印记护佑", a, 1);
+        reaction = new Reaction_Affect("护盾2", new extraDeffenceUp(2), EventKind.Event_Armor, newpart);
         newpart.addReaction(reaction);
-        AllAsset.magicpartAsset.AllMagicParts.Add(newpart);
+        magicpartAsset.AllMagicParts.Add(newpart);
+
+        newpart = new MagicPart("焰火师", a, 0);
+        reaction = new Reaction_Create("火花1",new EffectEvent(new Burn(1),null), EventKind.Event_PlayCard,newpart);
+        newpart.addReaction(reaction);
+        magicpartAsset.AllMagicParts.Add(newpart);
+
+        newpart = new MagicPart("弹幕齐射", a, 0);
+        reaction = new Reaction_Create("伤害2", new EffectEvent(new Damage(2), null), EventKind.Event_PlayCard, newpart);
+        newpart.addReaction(reaction);
+        magicpartAsset.AllMagicParts.Add(newpart);
+
+        a[2] = 1;
+        newpart = new MagicPart("力场", a, 1);
+        reaction = new Reaction_Create("能量护甲2", new EffectEvent(new PartEffect_Armor(2,newpart), null), EventKind.Event_PlayCard, newpart);
+        newpart.addReaction(reaction);
+        magicpartAsset.AllMagicParts.Add(newpart);
+
+        newpart = new MagicPart("能量爆弹", a, 2);
+        newpart.completeEvents.Add(new EffectEvent(new Damage(5), null));
+        magicpartAsset.AllMagicParts.Add(newpart);
+
+        newpart = new MagicPart("能量立场", a, 2);
+        newpart.completeEvents.Add(new EffectEvent(new Armor(5), null));
+        magicpartAsset.AllMagicParts.Add(newpart);
+
+        a[2] = 0;
+        a[1] = 0;
+        newpart = new MagicPart("零号法术", a, 2);
+        reaction = new Reaction_Create("额外的零", new EffectEvent(new CardEffect_Whether(new Judge_IsZeroCostCard(), new PartEffect_CopeLastCardEvent(1)), null), EventKind.Event_PlayCard, newpart);
+        newpart.addReaction(reaction);
+        magicpartAsset.AllMagicParts.Add(newpart);
+
+        newpart = new MagicPart("魔力绽放", a, 0);
+        reaction = new Reaction_Affect("法强5", new extraAttackUp(5), EventKind.Event_Damage, newpart);
+        newpart.addReaction(reaction);
+        magicpartAsset.AllMagicParts.Add(newpart);
+
+
     }
     //加载遭遇事件
     void BefallInit()
@@ -466,6 +506,9 @@ public class InitData
         monster.name = "boss";
         MapAsset.bossLists.Add(monster);
         MapAsset.AllMonsters.Add(monster);
+
+        //normal
+        MapAsset.NormalMonsterList.Add(new monInfo_Cat());
     }
 
 
@@ -483,7 +526,7 @@ public class InitData
             {
                 cardEffectBase neweffect = EffectFromInit(eE);
                 newcard.AddEffect(neweffect);
-                if (eE.effectKind == EnumEffect.LinkRandom)
+                if (eE.effectKind == EnumEffect.LinkRandom| eE.effectKind == EnumEffect.PartLinkRandom)
                 {
                     newcard.AddEffect(new CardEffect_ToExitLink());
                 }
@@ -626,6 +669,18 @@ public class InitData
                 break;
             case EnumEffect.Exhaust:
                 Effect = new CardEffect_Exhaust();
+                break;
+            case EnumEffect.DamageByPartPower:
+                Effect = new CardEffect_DamageByPartPower(editorEffect.num);
+                break;
+            case EnumEffect.ArmorByPartPower:
+                Effect = new CardEffect_ArmorByPartPower(editorEffect.num);
+                break;
+            case EnumEffect.PartLinkRandom:
+                Effect = new LinkThisWithRandom(editorEffect.num);
+                break;
+            case EnumEffect.RandomCardFromDiscard:
+                Effect = new CardEffect_GetCardFormDiscard(editorEffect.num);
                 break;
             default:
                 Debug.Log("没有该EditorEffect对应的Effect转换");

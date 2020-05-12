@@ -105,8 +105,17 @@ public class MapManager : MonoBehaviour
         hardEnemyLevel5 = ListOperation.RandomValueList<monsterInfo>(AllAsset.MapAsset.hMonster2s, 2);
         bossList = ListOperation.RandomValueList<monsterInfo>(AllAsset.MapAsset.bossLists, 1);
 
+        normalMonsterList = ListOperation.Shufle<monsterInfo>(AllAsset.MapAsset.NormalMonsterList);
+        hardMonsterList = ListOperation.Shufle<monsterInfo>(AllAsset.MapAsset.HardMonsterList);
+        bossList = ListOperation.Shufle<monsterInfo>(AllAsset.MapAsset.bossLists);
+        
         befallList = ListOperation.RandomValueList<befallinfo>(AllAsset.MapAsset.AllBefallInfos, 2);
     }
+    List<monsterInfo> normalMonsterList = new List<monsterInfo>();
+    int curseNormal = 0;
+    List<monsterInfo> hardMonsterList = new List<monsterInfo>();
+    int curseHard = 0;
+
     List<monsterInfo> normalEnemyLevel1 = new List<monsterInfo>();
     List<monsterInfo> normalEnemyLevel2 = new List<monsterInfo>();
     List<monsterInfo> normalEnemyLevel3 = new List<monsterInfo>();
@@ -832,33 +841,45 @@ public class MapManager : MonoBehaviour
         monsterInfo monster = normalEnemyLevel1[0];
         if (battle.imageorder == 1)
         {
-            if (battle.storey == 1)
+            //if (battle.storey == 1)
+            //{
+            //    monster = normalEnemyLevel1[0];
+            //    normalEnemyLevel1.Remove(monster);
+            //}
+            //else if (battle.storey == 2)
+            //{
+            //    monster = normalEnemyLevel2[0];
+            //    normalEnemyLevel2.Remove(monster);
+            //}
+            //else if (battle.storey == 3)
+            //{
+            //    monster = normalEnemyLevel3[0];
+            //    normalEnemyLevel3.Remove(monster);
+            //}
+            monster = normalMonsterList[curseNormal];
+            curseNormal++;
+            if (curseNormal == normalMonsterList.Count)
             {
-                monster = normalEnemyLevel1[0];
-                normalEnemyLevel1.Remove(monster);
-            }
-            else if (battle.storey == 2)
-            {
-                monster = normalEnemyLevel2[0];
-                normalEnemyLevel2.Remove(monster);
-            }
-            else if (battle.storey == 3)
-            {
-                monster = normalEnemyLevel3[0];
-                normalEnemyLevel3.Remove(monster);
+                curseNormal = 0;
             }
         }
         else if (battle.imageorder == 2)
         {
-            if (battle.storey == 1)
+            //if (battle.storey == 1)
+            //{
+            //    monster = hardEnemyLevel4[0];
+            //    hardEnemyLevel4.Remove(monster);
+            //}
+            //else if (battle.storey == 2)
+            //{
+            //    monster = hardEnemyLevel5[0];
+            //    hardEnemyLevel5.Remove(monster);
+            //}
+            monster = hardMonsterList[curseHard];
+            curseHard++;
+            if (curseHard == hardMonsterList.Count)
             {
-                monster = hardEnemyLevel4[0];
-                hardEnemyLevel4.Remove(monster);
-            }
-            else if (battle.storey == 2)
-            {
-                monster = hardEnemyLevel5[0];
-                hardEnemyLevel5.Remove(monster);
+                curseHard = 0;
             }
         }
         else if (battle.imageorder == 3)

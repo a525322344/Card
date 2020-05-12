@@ -16,9 +16,6 @@ public enum EventKind
     Event_DrawACard,            //抽一张牌
     Event_RoundStartDrawCard,   //回合开始抽牌
     Event_RoundEndDisCard,      //回合结束弃牌
-    Event_PlayerGetHurt,        //玩家受到伤害
-    Event_EnemyGetArmor,        //怪物获得护甲
-    Event_Action,               //怪物行动  "抽象效果"
     Event_Repeat,               //重复，包含子效果
     Event_SystmeRepeat,         //系统重复
     Event_EnemyGetBurn,         //获得灼烧  "抽象效果"
@@ -29,7 +26,14 @@ public enum EventKind
     Event_DisOneCard,           //弃一张卡
     Event_DisSomeCard,          //卡牌弃卡
     Event_Fill,                 //触发补齐后的效果
-    Event_Exhaust               //耗尽
+    Event_Exhaust,              //耗尽
+    //怪物行为
+    Event_MonsterHurt,         //玩家受到伤害
+    Event_MonsterArmor,        //怪物获得护甲
+    Event_MonsterAction,       //怪物行动  "抽象效果"
+    Event_MonsterBurn,
+    //Event_MonsterBurnDebuff,(用null
+    Event_PlayerBurnDamage,
 }
 
 //对卡牌效果的委托
@@ -757,13 +761,13 @@ public class RoundEndDisCard : systemEffectBase
 ////
 //行为效果
 //攻击玩家，玩家受到伤害
-public class effectActionHurt : actionEffectBase
+public class ActionEffect_MonsterHurt : actionEffectBase
 {
-    public effectActionHurt(int _num)
+    public ActionEffect_MonsterHurt(int _num)
     {
         num = _num;
         effectDele = new DeleCardEffect(AllAsset.effectAsset.PlayerGetHurt);
-        eventkind = EventKind.Event_PlayerGetHurt;
+        eventkind = EventKind.Event_MonsterHurt;
     }
     public override string DescribeEffect()
     {
@@ -771,19 +775,34 @@ public class effectActionHurt : actionEffectBase
     }
 }
 //怪物获得护甲
-public class effectActionEnemyArmor : actionEffectBase
+public class ActionEffect_MonsterArmor : actionEffectBase
 {
-    public effectActionEnemyArmor(int _num)
+    public ActionEffect_MonsterArmor(int _num)
     {
         num = _num;
         effectDele = new DeleCardEffect(AllAsset.effectAsset.EnemyGetArmor);
-        eventkind = EventKind.Event_EnemyGetArmor;
+        eventkind = EventKind.Event_MonsterArmor;
     }
     public override string DescribeEffect()
     {
         return "怪物获得护甲：" + num;
     }
 }
+
+public class ActionEffect_MonsterBurn : actionEffectBase
+{
+    public ActionEffect_MonsterBurn(int _num)
+    {
+        num = _num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.PlayerGetBurn);
+        eventkind = EventKind.Event_MonsterBurn;
+    }
+    public override string DescribeEffect()
+    {
+        return "给与玩家灼烧：" + num;
+    }
+}
+
 
 //状态效果
 //添加给状态事件，状态事件由状态reaction反应添加
@@ -798,6 +817,19 @@ public class effectBurnDamage : stateEffectBase
     public override string DescribeEffect()
     {
         return "灼烧伤害：" + num;
+    }
+}
+public class StateEffect_BurnHurt : stateEffectBase
+{
+    public StateEffect_BurnHurt(int _num = 0)
+    {
+        num = _num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.PlayerGetRealHurt);
+        eventkind = EventKind.Event_PlayerBurnDamage;
+    }
+    public override string DescribeEffect()
+    {
+        return "对玩家造成灼烧伤害" + num;
     }
 }
 
