@@ -100,7 +100,8 @@ public abstract class EffectBase
     {
         judgeConditions.Add(judge);
     }
-
+    //部件
+    public MagicPart magicpart;
 
     protected EventKind eventkind;          //该效果创建的事件类型
 }
@@ -130,6 +131,7 @@ public abstract class cardEffectBase : EffectBase
         return result;
     }
 }
+
 //系统效果抽象基类
 public abstract class stateEffectBase:EffectBase
 {
@@ -159,7 +161,14 @@ public class emplyPlayCard:emptyKind
         eventkind = EventKind.Event_PlayCard;
     }
 }
-
+//衍生的打出卡牌事件
+public class emplyVPlayCard : emptyKind
+{
+    public emplyVPlayCard()
+    {
+        eventkind = EventKind.Event_NULL;
+    }
+}
 
 //卡牌效果
 public class Damage : cardEffectBase
@@ -213,6 +222,28 @@ public class CardEffect_DamageByJudge:cardEffectBase
     public override string DescribeEffect()
     {
         return base.DescribeEffect()+numjudge.describe+",伤害+1";
+    }
+}
+
+public class CardEffect_DamageByPartPower : cardEffectBase
+{
+    int beishu;
+    public CardEffect_DamageByPartPower(int _num)
+    {
+        beishu = _num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.EnemyGetHurt);
+        eventkind = EventKind.Event_Damage;
+
+        frontDesctibe = "造成部件剩余能量*";
+        backDesctibe = "的伤害";
+    }
+    public override void InitNum()
+    {
+        num = gameManager.Instance.battlemanager.lastPart.gridpower*beishu;
+    }
+    public override string DescribeEffect()
+    {
+        return frontDesctibe + beishu + backDesctibe;
     }
 }
 //重复效果，有子效果表
@@ -270,6 +301,47 @@ public class Armor : cardEffectBase
 
         frontDesctibe = "获得";
         backDesctibe = "点护甲";
+    }
+}
+public class CardEffect_ArmorByPartPower:cardEffectBase
+{
+    int beishu;
+    public CardEffect_ArmorByPartPower(int _num = 1)
+    {
+        beishu = _num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.PlayerGetArmor);
+        eventkind = EventKind.Event_Armor;
+
+        frontDesctibe = "获得部件剩余能量*";
+        backDesctibe = "的护甲";
+    }
+    public override void InitNum()
+    {
+        num = gameManager.Instance.battlemanager.lastPart.gridpower* beishu;
+    }
+    public override string DescribeEffect()
+    {
+        return frontDesctibe + beishu + backDesctibe;
+    }
+}
+//部件产生的护甲(依据剩余能量
+public class PartEffect_Armor : cardEffectBase
+{
+    int beishu;
+    public PartEffect_Armor(int bei,MagicPart part)
+    {
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.PlayerGetArmor);
+        eventkind = EventKind.Event_Armor;
+        magicpart = part;
+        beishu = bei;
+    }
+    public override void InitNum()
+    {
+        num = magicpart.gridpower * beishu;
+    }
+    public override string DescribeEffect()
+    {
+        return "获得部件剩余能量*" + beishu + "的护甲";
     }
 }
 //抽一张卡(不直接使用)
@@ -365,6 +437,19 @@ public class LinkRandom : cardEffectBase
         backDesctibe = "个部件";
     }
 }
+public class LinkThisWithRandom : cardEffectBase
+{
+    public LinkThisWithRandom(int _num = 1)
+    {
+        num = _num;
+        mixnum = _num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.ThisPartLinkRandomPArt);
+        eventkind = EventKind.Event_LinkRandom;
+
+        frontDesctibe = "本回合内,此部件与随机";
+        backDesctibe = "个部件<b>链接</b>";
+    }
+}
 public class CardEffect_ToExitLink : cardEffectBase
 {
     public CardEffect_ToExitLink()
@@ -430,6 +515,20 @@ public class CardEffect_RepeatByJudge:cardEffectBase
         b_hasChildEffect = true;
         numJudge = judge;
         childeffects.Add(effect);
+    }
+}
+//事件复制
+public class PartEffect_CopeLastCardEvent : cardEffectBase
+{
+    public PartEffect_CopeLastCardEvent(int _num)
+    {
+        num = _num;
+        effectDele = AllAsset.effectAsset.CopyLastCard;
+        eventkind = EventKind.Event_NULL;
+    }
+    public override string DescribeEffect()
+    {
+        return "额外再打出" + num + "次";
     }
 }
 
@@ -542,6 +641,20 @@ public class CardEffect_DisAllCard : cardEffectBase
     {
         num = gameManager.Instance.battlemanager.realCardList.Count;
     }
+}
+//随机从弃牌堆拿牌
+public class CardEffect_GetCardFormDiscard : cardEffectBase
+{
+    public CardEffect_GetCardFormDiscard(int _num = 1)
+    {
+        num = _num;
+        mixnum = num;
+        eventkind = EventKind.Event_NULL;
+        effectDele = AllAsset.effectAsset.RandomGetCardFromDiscard;
+        frontDesctibe = "随机将弃牌堆的";
+        backDesctibe = "张牌加入手中";
+    }
+
 }
 //以效果返回值为参数的重复
 public class CardEffect_RepeatByEffect:cardEffectBase

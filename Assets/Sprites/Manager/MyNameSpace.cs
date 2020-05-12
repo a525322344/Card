@@ -38,6 +38,7 @@ namespace AllAsset
             {
                 num = 0;
             }
+            Debug.Log(num);
             battleInfo.Player.GetArmor(num);
         }
 
@@ -106,17 +107,17 @@ namespace AllAsset
         {
             returnnum = num;
             List<realpart> copyrealparts = new List<realpart>(gameManager.Instance.battlemanager.realknapsack.realparts);
-            int partnum= copyrealparts.Count;
+            int partnum = copyrealparts.Count;
             List<realpart> getlist = new List<realpart>();
             if (partnum > num)
             {
-                for(int i = 0; i < num; i++)
+                for (int i = 0; i < num; i++)
                 {
                     realpart get = ListOperation.RandomValue<realpart>(copyrealparts);
                     copyrealparts.Remove(get);
                     getlist.Add(get);
                 }
-                
+
                 List<MagicPart> getmagicParts = new List<MagicPart>();
                 foreach (realpart rp in getlist)
                 {
@@ -127,9 +128,51 @@ namespace AllAsset
                     getmagicParts.Add(rp.thisMagicPart);
                 }
                 LinkPart linkPart = new LinkPart(getmagicParts);
+                foreach (realpart rp in getlist)
+                {
+                    rp.enterLinkPart(linkPart);
+                    rp.linkrealParts = getlist;
+                }
+            }
+            else
+            {
+                LinkAllPart(0, battleinfo, out returnnum);
+            }
+        }
+        public static void ThisPartLinkRandomPArt(int num,battleInfo battleinfo, out int returnnum)
+        {
+            returnnum = num;
+            List<realpart> copyrealparts = new List<realpart>(gameManager.Instance.battlemanager.realknapsack.realparts);
+            copyrealparts.Remove(gameManager.Instance.battlemanager.lastPart.realpart);
+            int partnum = copyrealparts.Count;
+            List<realpart> getlist = new List<realpart>();
+            getlist.Add(gameManager.Instance.battlemanager.lastPart.realpart);
+            if (partnum >= num)
+            {
+                for(int i = 0; i < num; i++)
+                {
+                    realpart get = ListOperation.RandomValue<realpart>(copyrealparts);
+                    copyrealparts.Remove(get);
+                    getlist.Add(get);
+                }
+                
+                List<MagicPart> getmagicParts = new List<MagicPart>();
+                
+                foreach (realpart rp in getlist)
+                {
+                    if (!battleinfo.havenLinkParts.Contains(rp))
+                    {
+                        battleinfo.havenLinkParts.Add(rp);
+                    }
+                    getmagicParts.Add(rp.thisMagicPart);
+                    Debug.Log(rp.thisMagicPart.name);
+                }
+                
+                LinkPart linkPart = new LinkPart(getmagicParts);
                 foreach(realpart rp in getlist)
                 {
                     rp.enterLinkPart(linkPart);
+                    rp.linkrealParts = getlist;
                 }
             }
             else
@@ -137,6 +180,7 @@ namespace AllAsset
                 LinkAllPart(0,battleinfo,out returnnum);
             }
         }
+
         public static void LinkAllPart(int num,battleInfo battleinfo, out int returnnum)
         {
             returnnum = num;
@@ -154,6 +198,7 @@ namespace AllAsset
             foreach (realpart rp in getlist)
             {
                 rp.enterLinkPart(linkPart);
+                rp.linkrealParts = getlist;
             }
         }
         public static void CreatState_ExitLinkPart(int num ,battleInfo battleinfo, out int returnnum)
@@ -194,7 +239,25 @@ namespace AllAsset
                 n++;
             }
         }
+        public static void RandomGetCardFromDiscard(int num, battleInfo battleinfo, out int returnnum)
+        {
+            returnnum = num;
+            int n = 0;
+            List<realCard> realCardList = gameManager.Instance.battlemanager.realCardList;
+            List<playerCard> dickDiscard = gameManager.Instance.battlemanager.dickDiscard;
+            List<playerCard> dickHandCard = gameManager.Instance.battlemanager.dickHandCard;
 
+            for(int i = 0; i < num; i++)
+            {
+                if (dickDiscard.Count > 0)
+                {
+                    playerCard newcard = ListOperation.RandomValue<playerCard>(dickDiscard);
+                    dickDiscard.Remove(newcard);
+                    dickHandCard.Add(newcard);
+                    gameManager.Instance.battlemanager.GetACard(newcard);
+                }
+            }
+        }
         public static void PreSelectCard(int num,battleInfo battleinfo, out int returnnum)//准备弃卡
         {
             returnnum = num;
@@ -216,6 +279,14 @@ namespace AllAsset
                 bmanager.dickDiscard.Remove(thiscard);
             }
             
+        }
+        public static void CopyLastCard(int num, battleInfo battleinfo, out int returnnum)
+        {
+            returnnum = 0;
+            for(int i = 0; i < num; i++)
+            {
+                gameManager.Instance.battlemanager.PlayLastCard();
+            }
         }
     }
     //声明所有的额外强化效果
@@ -290,7 +361,6 @@ namespace AllAsset
             }
             return isBuQiHeng;
         }
-
         public static bool BuQiShu(int num, battleInfo battleinfo, out int returnnum)
         {
             bool isBuQiShu = false;
@@ -384,6 +454,19 @@ namespace AllAsset
             }
             return isBu;
         }
+        public static bool IsZeroCostCard(int num, battleInfo battleinfo, out int returnnum)
+        {
+            returnnum = 0;
+            if (gameManager.Instance.battlemanager.lastCard.Cost == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
     //声明所有的卡牌
     public static class cardAsset

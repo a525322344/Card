@@ -35,17 +35,19 @@ public class realPlace : MonoBehaviour
         switch (placeNode.placeState)
         {
             case PlaceState.Cannot:
-                if (b_mouseOver)
-                {
-                    spriteTran.DOScale(Vector3.one * overside, sizeChangeTime);
-                    Color color = new Color(NormalColor.r, NormalColor.g, NormalColor.b, 1);
-                    DOTween.To(() => spriteRenderer.color, x => spriteRenderer.color = x, color, colorChangeTime);
-                }
-                else
-                {
-                    DOTween.To(() => spriteRenderer.color, x => spriteRenderer.color = x, NormalColor, colorChangeTime);
-                    spriteTran.DOScale(Vector3.one, sizeChangeTime);
-                }
+                //if (b_mouseOver)
+                //{
+                //    spriteTran.DOScale(Vector3.one * overside, sizeChangeTime);
+                //    Color color = new Color(NormalColor.r, NormalColor.g, NormalColor.b, 1);
+                //    DOTween.To(() => spriteRenderer.color, x => spriteRenderer.color = x, color, colorChangeTime);
+                //}
+                //else
+                //{
+                //    DOTween.To(() => spriteRenderer.color, x => spriteRenderer.color = x, NormalColor, colorChangeTime);
+                //    spriteTran.DOScale(Vector3.one, sizeChangeTime);
+                //}
+                DOTween.To(() => spriteRenderer.color, x => spriteRenderer.color = x, NormalColor, colorChangeTime);
+                spriteTran.DOScale(Vector3.one, sizeChangeTime);
                 break;
             case PlaceState.NowOn:
                 DOTween.To(() => spriteRenderer.color, x => spriteRenderer.color = x, NormalColor, colorChangeTime);

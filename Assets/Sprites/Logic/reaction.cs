@@ -97,6 +97,7 @@ public class ReactionListController
 //反应器
 public abstract class Reaction
 {
+    public Part fatherpart;
     public string name;
     public bool Active {
         set { m_Active = value; }
@@ -132,16 +133,18 @@ public abstract class Reaction
 //对反应的效果事件造成影响，强化或削弱效果
 public class Reaction_Affect : Reaction
 {
-    public Reaction_Affect(string _name,extraEffectBase extraEffect, EventKind _kind)
+    public Reaction_Affect(string _name,extraEffectBase extraEffect, EventKind _kind,Part _fatherpart)
     {
+        fatherpart = _fatherpart;
         name = _name;
         kind = _kind;
         affectEffect = extraEffect;
         b_haveEvent = false;
     }
-    public Reaction_Affect(Reaction reaction)
+    public Reaction_Affect(Reaction reaction, Part _fatherpart)
     {
         name = reaction.name;
+        fatherpart = _fatherpart;
         kind = reaction.getReactionKind();
         affectEffect = reaction.getExtreEffect();
         b_haveEvent = reaction.b_haveEvent;
@@ -162,18 +165,21 @@ public class Reaction_Affect : Reaction
 //对反应的效果事件，产生新的事件
 public class Reaction_Create : Reaction
 {
-    public Reaction_Create(string name_, singleEvent createEvent, EventKind _kind)
+    public Reaction_Create(string name_, singleEvent createEvent, EventKind _kind,Part _fatherpart)
     {
+        fatherpart = _fatherpart;
         name = name_;
         kind = _kind;
         toCreateEvent = createEvent;
         b_haveEvent = true;
     }
-    public Reaction_Create(Reaction reaction)
+    public Reaction_Create(Reaction reaction, Part _fatherpart)
     {
         name = reaction.name;
+        fatherpart = _fatherpart;
         kind = reaction.getReactionKind();
         toCreateEvent = (reaction as Reaction_Create).toCreateEvent;
+        toCreateEvent.m_effect.magicpart = fatherpart as MagicPart;
         b_haveEvent = reaction.b_haveEvent;
         Debug.Log("reaction_create");
     }

@@ -92,3 +92,13 @@ public class Judge_BuQi : judgeCondition
         describe = "每补齐一横行或纵行";
     }
 }
+
+public class Judge_IsZeroCostCard : judgeCondition
+{
+    public Judge_IsZeroCostCard()
+    {
+        param = 0;
+        whetherDele = AllAsset.judgeAsset.IsZeroCostCard;
+        describe = "如果打出的是0费牌";
+    }
+}

@@ -61,7 +61,7 @@ public class playerInfo
     //获得诅咒卡
     public void AddCurseCard()
     {
-
+        playerDeck.Add(AllAsset.cardAsset.curseCards[0]);
     }
     public void AddBattleBuff(BattleBuff buff)
     {

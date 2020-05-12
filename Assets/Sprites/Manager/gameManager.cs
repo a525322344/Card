@@ -44,7 +44,8 @@ public class gameManager : MonoBehaviour
     public UImanager uimanager;
     public InitControllBoard InitControllBoard;
     public CardEditorBoard CardEditorBoard;
-
+    public bool testcard;
+    public CardEditorBoard TestCardEditor;
     public Scene battleScene;
     public Scene mapScene;
     //public Camera Encamera;
