@@ -17,6 +17,8 @@ public class healthSlider : MonoBehaviour
     private float nowhealth;
     private float armor;
 
+    public SpriteRenderer HeadRenderer;
+
     public void Init(pawnbase pawn)
     {
         maxhealth = pawn.healthmax;
@@ -30,7 +32,10 @@ public class healthSlider : MonoBehaviour
         nowhealth = playerInfo.playerHealth;
         SetSlider(armor, nowhealth);
     }
-    
+    public void SetMonsterHead(int i)
+    {
+        HeadRenderer.sprite = instantiateManager.instance.monsterHeadList[i];
+    }
 
     public void SetSlider(float finalarmor,float finalheath)
     {

@@ -509,6 +509,12 @@ public class InitData
 
         //normal
         MapAsset.NormalMonsterList.Add(new monInfo_Cat());
+        MapAsset.NormalMonsterList.Add(new monInfo_Bunny());
+        MapAsset.NormalMonsterList.Add(new monInfo_SnowMan());
+        //hard
+        MapAsset.HardMonsterList.Add(new monInfo_Bear());
+        //boss
+        MapAsset.BossMonsterList.Add(new monInfo_MoNv());
     }
 
 

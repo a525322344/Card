@@ -107,7 +107,7 @@ public class MapManager : MonoBehaviour
 
         normalMonsterList = ListOperation.Shufle<monsterInfo>(AllAsset.MapAsset.NormalMonsterList);
         hardMonsterList = ListOperation.Shufle<monsterInfo>(AllAsset.MapAsset.HardMonsterList);
-        bossList = ListOperation.Shufle<monsterInfo>(AllAsset.MapAsset.bossLists);
+        bossList = ListOperation.Shufle<monsterInfo>(AllAsset.MapAsset.BossMonsterList);
         
         befallList = ListOperation.RandomValueList<befallinfo>(AllAsset.MapAsset.AllBefallInfos, 2);
     }
@@ -484,7 +484,7 @@ public class MapManager : MonoBehaviour
         }
 
         //最后是boss层
-        endPlaceNode.thisplace = new battlePlace(3, 12, 0);
+        endPlaceNode.thisplace = new battlePlace(3, 12, 4);
         //生成节点        
         foreach (var vp in placeNodeDic)
         {
@@ -748,14 +748,15 @@ public class MapManager : MonoBehaviour
                 case 1:
                 case 2:
                 case 3:
+                    return 1;
                 case 4:
                 case 5:
                 case 6:
-                    return 4;
+                    return 2;
                 case 8:
                 case 9:
                 case 10:
-                    return 5;
+                    return 3;
             }
         }
         else
@@ -836,26 +837,24 @@ public class MapManager : MonoBehaviour
     //private void 
     public void EnterBattle(battlePlace battle)
     {
-        AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync(AllAsset.MapAsset.GetSceneStr(battle.sceneId),LoadSceneMode.Additive);
-        gameManager.Instance.battleScene = SceneManager.GetSceneByName(AllAsset.MapAsset.GetSceneStr(battle.sceneId));
         monsterInfo monster = normalEnemyLevel1[0];
         if (battle.imageorder == 1)
         {
-            //if (battle.storey == 1)
-            //{
-            //    monster = normalEnemyLevel1[0];
-            //    normalEnemyLevel1.Remove(monster);
-            //}
-            //else if (battle.storey == 2)
-            //{
-            //    monster = normalEnemyLevel2[0];
-            //    normalEnemyLevel2.Remove(monster);
-            //}
-            //else if (battle.storey == 3)
-            //{
-            //    monster = normalEnemyLevel3[0];
-            //    normalEnemyLevel3.Remove(monster);
-            //}
+            if (battle.storey == 1)
+            {
+                //monster = normalEnemyLevel1[0];
+                //normalEnemyLevel1.Remove(monster);
+            }
+            else if (battle.storey == 2)
+            {
+                //monster = normalEnemyLevel2[0];
+                //normalEnemyLevel2.Remove(monster);
+            }
+            else if (battle.storey == 3)
+            {
+                //monster = normalEnemyLevel3[0];
+                //normalEnemyLevel3.Remove(monster);
+            }
             monster = normalMonsterList[curseNormal];
             curseNormal++;
             if (curseNormal == normalMonsterList.Count)
@@ -885,13 +884,21 @@ public class MapManager : MonoBehaviour
         else if (battle.imageorder == 3)
         {
             monster = bossList[0];
-            bossList.Remove(monster);
+            //bossList.Remove(monster);
         }
         else
         {
             Debug.Log("错误");
             monster = normalEnemyLevel1[0];
         }
+        int sceneId = battle.storey;
+        if (monster.Id == 2)
+        {
+            sceneId = 3;
+        }
+        AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync(AllAsset.MapAsset.GetSceneStr(sceneId),LoadSceneMode.Additive);
+        gameManager.Instance.battleScene = SceneManager.GetSceneByName(AllAsset.MapAsset.GetSceneStr(sceneId));
+
         StartCoroutine(IEenterBattle(_asyncOperation, monster));
     }
     

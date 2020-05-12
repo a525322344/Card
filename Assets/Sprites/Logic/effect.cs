@@ -742,6 +742,10 @@ public class RoundStartDrawCard:SystemRepeat
     {
         return "回合开始抽卡";
     }
+    public override void InitNum()
+    {
+        
+    }
 }
 //回合结束弃卡
 public class RoundEndDisCard : systemEffectBase
@@ -771,7 +775,7 @@ public class ActionEffect_MonsterHurt : actionEffectBase
     }
     public override string DescribeEffect()
     {
-        return "怪物造成伤害：" + num;
+        return "怪物造成伤害：" + mixnum;
     }
 }
 //怪物获得护甲
@@ -785,7 +789,7 @@ public class ActionEffect_MonsterArmor : actionEffectBase
     }
     public override string DescribeEffect()
     {
-        return "怪物获得护甲：" + num;
+        return "怪物获得护甲：" + mixnum;
     }
 }
 
@@ -799,10 +803,51 @@ public class ActionEffect_MonsterBurn : actionEffectBase
     }
     public override string DescribeEffect()
     {
-        return "给与玩家灼烧：" + num;
+        return "给与玩家灼烧：" + mixnum;
     }
 }
 
+public class ActionEffect_MonsterPowerUp : actionEffectBase
+{
+    public ActionEffect_MonsterPowerUp(int _num)
+    {
+        num = _num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.EnemyGetPowerUp);
+        eventkind = EventKind.Event_NULL;
+    }
+    public override string DescribeEffect()
+    {
+        return "获得" + mixnum+"点力量";
+    }
+}
+
+public class ActionEffect_MonsterDownDrawCardNum : actionEffectBase
+{
+    public ActionEffect_MonsterDownDrawCardNum(int _num)
+    {
+        num = _num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.PlayerGetDownDrawCard);
+        eventkind = EventKind.Event_NULL;
+    }
+    public override string DescribeEffect()
+    {
+        return "是玩家抽牌数减少" + mixnum;
+    }
+}
+
+public class ActionEffect_MonsterAddStateMabi : actionEffectBase
+{
+    public ActionEffect_MonsterAddStateMabi(int _num)
+    {
+        num = _num;
+        effectDele = new DeleCardEffect(AllAsset.effectAsset.PlayerGetMabiCard);
+        eventkind = EventKind.Event_NULL;
+    }
+    public override string DescribeEffect()
+    {
+        return "麻痹玩家" + mixnum;
+    }
+}
 
 //状态效果
 //添加给状态事件，状态事件由状态reaction反应添加
@@ -841,6 +886,7 @@ public class StateEffect_ExitLinkPart : stateEffectBase
         eventkind = EventKind.Event_NULL;
     }
 }
+
 
 
 

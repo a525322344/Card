@@ -171,3 +171,99 @@ public class StatePlayerBurn : stateWithReaction
     private Reaction m_reaction;
     private singleEvent m_reactionEvent;
 }
+
+[System.Serializable]
+public class StateMonsterPower : stateWithReaction
+{
+    public StateMonsterPower(int _num)
+    {
+        name = "力量";
+        key = "MonsterPower";
+        num = _num;
+        texint = 0;
+        //m_reactionEvent = new StateEvent(this, new effectBurnDamage(0));
+        eventkind = EventKind.Event_MonsterHurt;
+        m_reaction = new Reaction_Affect("力量", new extraMonsterAttackUp(this), eventkind, null);
+        m_reaction.Active = true;
+    }
+    public override void SetInState()
+    {
+        gameManager.Instance.battlemanager.ReactionListController.recesiveReactonToSetIn(m_reaction);
+    }
+    public override void SetOutState()
+    {
+        gameManager.Instance.battlemanager.ReactionListController.GetReactionByEventkind(eventkind).Remove(m_reaction);
+        gameManager.Instance.battlemanager.battleInfo.Enemy.nameStatePairs.Remove(key);
+        gameManager.Instance.battlemanager.battleInfo.Enemy.stateList.Remove(this);
+        base.SetOutState();
+    }
+    public override string DescribeState()
+    {
+        string result = "";
+        result += ColorGold + "力量" + ColorEnd;
+        result += "\n";
+        result += "造成的伤害提升";
+        result += ColorBlue + num + ColorEnd;
+        result += "点";
+        //result += ColorBlue + "1" + ColorEnd;
+        return result;
+    }
+    public override void DealState()
+    {
+        num--;
+        if (num == 0)
+        {
+            SetOutState();
+        }
+        base.DealState();
+    }
+    private Reaction m_reaction;
+    private singleEvent m_reactionEvent;
+}
+
+[System.Serializable]
+public class StateRoundDrawCardLess : stateWithReaction
+{
+    public StateRoundDrawCardLess(int _num)
+    {
+        name = "回合抽牌减少";
+        key = "RoundDrawLess";
+        num = _num;
+        texint = 0;
+        eventkind = EventKind.Event_RoundStartDrawCard;
+        m_reaction = new Reaction_Affect("抽牌减少",new extraRoundDrawUp(-1), eventkind, null);
+        m_reaction.Active = true;
+    }
+    public override void SetInState()
+    {
+        gameManager.Instance.battlemanager.ReactionListController.recesiveReactonToSetIn(m_reaction);
+    }
+    public override void SetOutState()
+    {
+        gameManager.Instance.battlemanager.ReactionListController.GetReactionByEventkind(eventkind).Remove(m_reaction);
+        gameManager.Instance.battlemanager.battleInfo.Player.nameStatePairs.Remove(key);
+        gameManager.Instance.battlemanager.battleInfo.Player.stateList.Remove(this);
+        base.SetOutState();
+    }
+    public override string DescribeState()
+    {
+        string result = "";
+        result += ColorGold + "回合抽牌减少" + ColorEnd;
+        result += "\n";
+        result += "回合开始的的抽牌数量减少";
+        result += ColorBlue + num + ColorEnd;
+        result += "";
+        return result;
+    }
+    public override void DealState()
+    {
+        num--;
+        if (num == 0)
+        {
+            SetOutState();
+        }
+        base.DealState();
+    }
+    private Reaction m_reaction;
+    private singleEvent m_reactionEvent;
+}

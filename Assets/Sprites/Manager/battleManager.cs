@@ -183,6 +183,10 @@ public class battleManager : MonoBehaviour
 
 
     /// /////具体操作
+    public void ShufleCard()
+    {
+        dickInGame = ListOperation.Shufle<playerCard>(dickInGame);
+    }
     public void DrawACard()
     {
         if (dickInGame.Count == 0)

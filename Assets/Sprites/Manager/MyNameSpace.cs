@@ -127,6 +127,51 @@ namespace AllAsset
                 gameManager.Instance.battlemanager.realplayer.StateUpdtae();
             }
         }
+        public static void PlayerGetDownDrawCard(int num, battleInfo battleinfo, out int returnnum)
+        {
+            returnnum = num;
+            stateAbstarct burnstate = new StateRoundDrawCardLess(num);
+            if (battleinfo.Player.nameStatePairs.ContainsKey(burnstate.key))
+            {
+                battleinfo.Player.nameStatePairs[burnstate.key].num += num;
+                gameManager.Instance.battlemanager.realplayer.StateUpdtae();
+            }
+            else
+            {
+                burnstate.SetInState();
+                battleinfo.Player.nameStatePairs.Add(burnstate.key, burnstate);
+                battleinfo.Player.stateList.Add(burnstate);
+                gameManager.Instance.battlemanager.realplayer.StateUpdtae();
+            }
+        }
+        public static void PlayerGetMabiCard(int num, battleInfo battleinfo, out int returnnum)
+        {
+            returnnum = num;
+            playerCard statecard = new playerCard(99, "麻痹", CardKind.SkillCard, 1, 4);
+            statecard.AddEffect(new CardEffect_Exhaust());
+            for(int i = 0; i < num; i++)
+            {
+                gameManager.Instance.battlemanager.dickInGame.Add(statecard);
+            }
+            gameManager.Instance.battlemanager.ShufleCard();
+        }
+        public static void EnemyGetPowerUp(int num,battleInfo battleinfo,out int returnnum)
+        {
+            returnnum = num;
+            stateAbstarct burnstate = new StateMonsterPower(num);
+            if (battleinfo.Enemy.nameStatePairs.ContainsKey(burnstate.key))
+            {
+                battleinfo.Enemy.nameStatePairs[burnstate.key].num += num;
+                gameManager.Instance.battlemanager.realenemy.StateUpdtae();
+            }
+            else
+            {
+                burnstate.SetInState();
+                battleinfo.Enemy.nameStatePairs.Add(burnstate.key, burnstate);
+                battleinfo.Enemy.stateList.Add(burnstate);
+                gameManager.Instance.battlemanager.realenemy.StateUpdtae();
+            }
+        }
         public static void RandomLinkPart(int num,battleInfo battleinfo, out int returnnum)
         {
             returnnum = num;
@@ -547,6 +592,8 @@ namespace AllAsset
                     return "battleScene_forest";
                 case 3:
                     return "battleScene_snow";
+                case 4:
+                    return "battleScene_forest_Boss";
                 default:
                     Debug.Log("没有设置");
                     return "";

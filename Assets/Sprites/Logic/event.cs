@@ -46,6 +46,7 @@ public class SystemEvent : singleEvent
     //设置影响效果，执行反应事件
     public override void recesiveNotice()
     {
+        m_extraEffectList.Clear();
         List<Reaction> reactionlist = gameManager.Instance.battlemanager.ReactionListController.GetReactionByEventkind(m_eventKind);
         foreach (Reaction reaction in reactionlist)
         {
@@ -65,6 +66,7 @@ public class SystemEvent : singleEvent
     {
         childEvents.Clear();
         recesiveNotice();
+        m_effect.InitNum();
         int index = m_effect.getNum();
         foreach (extraEffectBase extraEffect in m_extraEffectList)
         {
@@ -169,12 +171,14 @@ public class EffectEvent : singleEvent
 
         m_effect.InitNum();
         int index = m_effect.getNum();
+        //Debug.Log(index);
         foreach (extraEffectBase extraEffect in m_extraEffectList)
         {
             index = extraEffect.AdjustEffect(index);
+            //Debug.Log(index);
         }
         m_effect.mixnum = index;
-
+        //Debug.Log(m_effect.mixnum);
         if (b_haveChildEvent)
         {
             for (int i = 0; i < index; i++)
@@ -208,8 +212,9 @@ public class EffectEvent : singleEvent
     {
         prepareEvent();
         insertEvent();
+        //Debug.Log(m_effect.mixnum);
         m_effect.DealEffect(m_effect.mixnum, battleInfo);
-        m_effect.mixnum = m_effect.getNum();
+
         if (m_effect.b_hasChildEffect)
         {
             Debug.Log("描述：" + m_effect.DescribeEffect());
@@ -218,6 +223,7 @@ public class EffectEvent : singleEvent
         {
             Debug.Log("效果：" + m_effect.DescribeEffect());
         }
+        m_effect.mixnum = m_effect.getNum();
     }
     //设置影响效果，执行反应事件
     public override void recesiveNotice()
@@ -426,9 +432,12 @@ public class CardEvent : singleEvent
     public List<perform> performList = new List<perform>();
     public void InitPerform()
     {
-        editorCardCollect editorCard = gameManager.Instance.CardEditorBoard.allCards[playercard.Id];
-        alltime = editorCard.alltime;
-        performList = InitData.PerformListFromInit(editorCard);
+        if(playercard.Id<= gameManager.Instance.CardEditorBoard.allCards.Count - 1)
+        {
+            editorCardCollect editorCard = gameManager.Instance.CardEditorBoard.allCards[playercard.Id];
+            alltime = editorCard.alltime;
+            performList = InitData.PerformListFromInit(editorCard);
+        }
     }
 }
 
@@ -461,10 +470,10 @@ public class ActionEvent:singleEvent
     public override void prepareEvent()
     {
         recesiveNotice();
-        foreach (EffectEvent _event in childEvents)
-        {
-            _event.prepareEvent();
-        }
+        //foreach (EffectEvent _event in childEvents)
+        //{
+        //    _event.prepareEvent();
+        //}
     }
     public override void insertEvent()
     {

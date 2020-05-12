@@ -16,6 +16,7 @@ public class playerInfo
     public List<BattleBuff> battleBuffList = new List<BattleBuff>();
     //每回合抽牌数
     public int roundStartDrawCardNum = 5;
+    public int thisBattleDrawCardNum;
     //宝箱选择项数
     public int treasureToSelectNum = 3;
 

@@ -16,14 +16,14 @@ public abstract class extraEffectBase
     public string name;
     public abstract int AdjustEffect(int cardnum);
     public abstract bool canInfluence(cardEffectBase _cardEffectBase);
-    public cardEffectBase getInfluenceEffect()
+    public EffectBase getInfluenceEffect()
     {
         return CanInffenceEffect;
     }
 
     protected int priority;
     protected int adjustnum;
-    protected cardEffectBase CanInffenceEffect;
+    protected EffectBase CanInffenceEffect;
     public virtual string Describe()
     {
         return "";
@@ -104,5 +104,58 @@ public class extraBurnUp : extraEffectBase
     public override string Describe()
     {
         return "给与的灼烧层数增加" + ColorBlue + adjustnum + ColorEnd;
+    }
+}
+
+public class extraMonsterAttackUp : extraEffectBase
+{
+    stateAbstarct PowerUpState;
+    public extraMonsterAttackUp(stateAbstarct state)
+    {
+        PowerUpState = state;
+        priority = 5;
+        adjustnum = state.num;
+        CanInffenceEffect = new ActionEffect_MonsterHurt(0);
+        deleAdjust = new DeleExtraEffect(AllAsset.extraAsset.addSubNum);
+    }
+    public override int AdjustEffect(int _cardnum)
+    {
+        Debug.Log(PowerUpState.name + PowerUpState.num);
+        return deleAdjust(_cardnum, PowerUpState.num);
+    }
+    public override bool canInfluence(cardEffectBase _cardEffectBase)
+    {
+        return _cardEffectBase.GetType() == CanInffenceEffect.GetType();
+    }
+    public override string Describe()
+    {
+        return "怪物造成的伤害增加" + ColorBlue + adjustnum + ColorEnd;
+    }
+}
+
+public class extraRoundDrawUp : extraEffectBase
+{
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="adjust">可以调整的数值</param>
+    public extraRoundDrawUp(int adjust)
+    {
+        priority = 5;
+        adjustnum = adjust;
+        CanInffenceEffect = new RoundStartDrawCard(0);
+        deleAdjust = new DeleExtraEffect(AllAsset.extraAsset.addSubNum);
+    }
+    public override int AdjustEffect(int _cardnum)
+    {
+        return deleAdjust(_cardnum, adjustnum);
+    }
+    public override bool canInfluence(cardEffectBase _cardEffectBase)
+    {
+        return _cardEffectBase.GetType() == CanInffenceEffect.GetType();
+    }
+    public override string Describe()
+    {
+        return "每回合抽牌数减少" + ColorBlue + adjustnum + ColorEnd;
     }
 }

@@ -51,11 +51,113 @@ public class monInfo_Cat : monsterInfo
     {
         name = "火云猫";
         health = 40;
-        Id = 1;
+        Id = 0;
         monsterLevel = 1;
         actionList.Add(new actionAdmix(new actionHurt(5), new actionDebuff(new ActionEffect_MonsterBurn(1))));
         actionList.Add(new actionDebuff(new ActionEffect_MonsterBurn(4)));
         actionList.Add(new actionHurt(1,3));
+
+
+        //顺序选择
+        selectAction = new selectWay((int x) =>
+        {
+            actionAbstract action;
+            action = actionList[actionorder];
+            actionorder++;
+            if (actionorder == actionList.Count)
+            {
+                actionorder = 0;
+            }
+            return action;
+        });
+    }
+
+    public override void Init()
+    {
+        actionorder = 0;
+    }
+}
+public class monInfo_Bunny : monsterInfo
+{
+    private int actionorder = 0;
+    public monInfo_Bunny()
+    {
+        name = "耳兔";
+        health = 40;
+        Id = 1;
+        monsterLevel = 1;
+        actionList.Add(new actionAdmix(new actionHurt(6), new actionArmor(12)));
+        actionList.Add(new actionPowerUp(new ActionEffect_MonsterPowerUp(3)));
+        actionList.Add(new actionHurt(3, 2));
+        actionList.Add(new actionHurt(6));
+
+
+        //顺序选择
+        selectAction = new selectWay((int x) =>
+        {
+            actionAbstract action;
+            action = actionList[actionorder];
+            actionorder++;
+            if (actionorder == actionList.Count)
+            {
+                actionorder = 1;
+            }
+            return action;
+        });
+    }
+
+    public override void Init()
+    {
+        actionorder = 0;
+    }
+}
+
+public class monInfo_SnowMan : monsterInfo
+{
+    private int actionorder = 0;
+    public monInfo_SnowMan()
+    {
+        name = "雪人";
+        health = 40;
+        Id = 2;
+        monsterLevel = 1;
+        actionList.Add(new actionDebuff(new ActionEffect_MonsterDownDrawCardNum(-1)));
+        actionList.Add(new actionAdmix(new actionHurt(9), new actionArmor(6)));
+        actionList.Add(new actionHurt(15));
+
+
+        //顺序选择
+        selectAction = new selectWay((int x) =>
+        {
+            actionAbstract action;
+            action = actionList[actionorder];
+            actionorder++;
+            if (actionorder == actionList.Count)
+            {
+                actionorder = 1;
+            }
+            return action;
+        });
+    }
+
+    public override void Init()
+    {
+        actionorder = 0;
+    }
+}
+
+public class monInfo_Bear : monsterInfo
+{
+    private int actionorder = 0;
+    public monInfo_Bear()
+    {
+        name = "雷熊";
+        health = 80;
+        Id = 3;
+        monsterLevel = 2;
+        actionList.Add(new actionDebuff(new ActionEffect_MonsterAddStateMabi(4)));
+        actionList.Add(new actionAdmix(new actionHurt(12), new actionArmor(8)));
+        actionList.Add(new actionHurt(24));
 
 
         //顺序选择
@@ -139,5 +241,41 @@ public class monInfo_Sample : monsterInfo
             return action;
             //actionList.Remove(new actionAdmix(new actionArmor(12), new actionHurt(9)));
         });
+    }
+}
+
+public class monInfo_MoNv : monsterInfo
+{
+    private int actionorder = 0;
+    public monInfo_MoNv()
+    {
+        name = "月之使者";
+        health = 200;
+        Id = 4;
+        monsterLevel = 3;
+        actionList.Add(new actionDebuff(new ActionEffect_MonsterBurn(4)));
+        actionList.Add(new actionHurt(8,2));
+        actionList.Add(new actionHurt(15));
+        actionList.Add(new actionAdmix(new actionArmor(12), new actionHurt(6)));
+        actionList.Add(new actionAdmix(new actionDebuff(new ActionEffect_MonsterAddStateMabi(3)), new actionPowerUp(new ActionEffect_MonsterPowerUp(2))));
+        actionList.Add(new actionHurt(4, 4));
+
+        //顺序选择
+        selectAction = new selectWay((int x) =>
+        {
+            actionAbstract action;
+            action = actionList[actionorder];
+            actionorder++;
+            if (actionorder == actionList.Count)
+            {
+                actionorder = 1;
+            }
+            return action;
+        });
+    }
+
+    public override void Init()
+    {
+        actionorder = 0;
     }
 }
