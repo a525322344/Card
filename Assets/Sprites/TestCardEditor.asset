@@ -1,0 +1,162 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ab2d0fd386c5c142a834116c056d3e5, type: 3}
+  m_Name: TestCardEditor
+  m_EditorClassIdentifier: 
+  allCards:
+  - showGrade: 0
+    Card:
+      name: link
+      id: 0
+      cost: 0
+      Rank: 0
+      Kind: 2
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: PartLinkRandom
+        num: 1
+        effectKind: 17
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    gradeCard:
+      name: "\u9ED8\u8BA4\u540D\u79F0"
+      id: 0
+      cost: 0
+      Rank: 0
+      Kind: 0
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: PartLinkRandom
+        num: 0
+        effectKind: 17
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    alltime: 0
+    performlist: []
+  - showGrade: 0
+    Card:
+      name: armor
+      id: 0
+      cost: 0
+      Rank: 0
+      Kind: 2
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: ArmorByPartPower
+        num: 2
+        effectKind: 16
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    gradeCard:
+      name: "\u9ED8\u8BA4\u540D\u79F0"
+      id: 0
+      cost: 0
+      Rank: 0
+      Kind: 0
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: ArmorByPartPower
+        num: 0
+        effectKind: 16
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    alltime: 0
+    performlist: []
+  - showGrade: 0
+    Card:
+      name: damage
+      id: 0
+      cost: 0
+      Rank: 0
+      Kind: 1
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: DamageByPartPower
+        num: 3
+        effectKind: 15
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    gradeCard:
+      name: "\u9ED8\u8BA4\u540D\u79F0"
+      id: 0
+      cost: 0
+      Rank: 0
+      Kind: 0
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: PartLinkRandom
+        num: 0
+        effectKind: 17
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+      - name: DamageByPartPower
+        num: 0
+        effectKind: 15
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    alltime: 0
+    performlist: []
+  - showGrade: 0
+    Card:
+      name: "\u4F24\u5BB3"
+      id: 0
+      cost: 1
+      Rank: 0
+      Kind: 1
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: Damage
+        num: 4
+        effectKind: 1
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    gradeCard:
+      name: "\u9ED8\u8BA4\u540D\u79F0"
+      id: 0
+      cost: 0
+      Rank: 0
+      Kind: 0
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: Damage
+        num: 0
+        effectKind: 1
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    alltime: 0
+    performlist: []

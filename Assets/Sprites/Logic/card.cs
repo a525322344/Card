@@ -19,7 +19,6 @@ public class card
     public int Rank;        //基本0，普通1，稀有2，罕见3，衍生4
     public int TextureId;
     public bool IsGrade;
-
     public Dictionary<Vector2, int> vecCostPairs = new Dictionary<Vector2, int>();
 
     public string Describe;
@@ -106,3 +105,48 @@ public class playerCard : card
     }
 }
 
+//interface Damage1
+//{
+//    void DoDamage();
+//}
+//interface Arror
+//{
+//    void DoArror();
+//}
+//interface Effect
+//{
+//    void DoArror1();
+//    void DoArror2();
+//    void DoArror3();
+//    void DoArror4();
+//    void DoArror5();
+
+//}
+//public abstract class cardt
+//{
+//    public abstract void playerCard();
+//}
+
+//public class DaJi:cardt, Damage1
+//{
+//    public void DoDamage()
+//    {
+
+//    }
+//    public override void playerCard()
+//    {
+//        DoDamage();
+//    }
+//}
+
+//public class Hujia :cardt, Arror
+//{
+//    public void DoArror()
+//    {
+
+//    }
+//    public override void playerCard()
+//    {
+//        DoArror();
+//    }
+//}

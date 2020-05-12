@@ -86,6 +86,10 @@ public enum EnumEffect
     RepeatByEffect,//此效果前面必须有效果，会使用前者的效果返回值
     DisAllCard,
     Exhaust,
+    DamageByPartPower,
+    ArmorByPartPower,
+    PartLinkRandom,
+    RandomCardFromDiscard,
 }
 [System.Serializable]
 public class editorEffect

@@ -36,6 +36,7 @@ public class realpart : MonoBehaviour
     public SortState sortState;
     #region linkPart
     private MagicPart linkSavePart;
+    public List<realpart> linkrealParts = new List<realpart>();
     public void enterLinkPart(MagicPart linkPart)
     {
         thisMagicPart = linkPart;
@@ -43,6 +44,7 @@ public class realpart : MonoBehaviour
     public void exitLinkPart()
     {
         thisMagicPart = linkSavePart;
+        linkrealParts.Clear();
     }
     #endregion
     private bool b_readyToPlayACard = false;
@@ -67,6 +69,7 @@ public class realpart : MonoBehaviour
         freeFater = father;
         realPartState = state;
         thisMagicPart = magicPart;
+        thisMagicPart.realpart = this;
         //根据magicpart中的grid表，创建realgird
         foreach (var g in thisMagicPart.Vector2GridPairs)
         {
@@ -119,6 +122,34 @@ public class realpart : MonoBehaviour
         foreach(var g in gridRealgridPairs)
         {
             g.Value.changeMaterial();
+        }
+    }
+    //充能效果
+    public void AllUsed()
+    {
+        bool isallused=true;
+        int power = 0;
+        foreach(var g in gridRealgridPairs)
+        {
+            if (g.Value.gridState != GridState.Used && g.Value.gridState != GridState.NotActive)
+            {
+                isallused = false;
+            }
+            if (g.Value.gridState == GridState.Power | g.Value.gridState == GridState.Can)
+            {
+                power++;
+            }
+        }
+        Debug.Log(power);
+        thisMagicPart.gridpower = power;
+        if (isallused)
+        {
+            Debug.Log("充能：");
+            foreach (singleEvent evnet in thisMagicPart.completeEvents)
+            {
+                EventShow neweventshow = new EventShow(evnet, gameManager.Instance.battlemanager.eventManager.BattleEventShows);
+                gameManager.Instance.battlemanager.eventManager.BattleEventShows.Add(neweventshow);
+            }
         }
     }
 
@@ -264,6 +295,13 @@ public class realpart : MonoBehaviour
         foreach(var grg in gridRealgridPairs)
         {
             grg.Value.gridOutlineCS.lineMode = mode;
+        }
+        foreach(realpart realpart in linkrealParts)
+        {
+            foreach (var grg in realpart.gridRealgridPairs)
+            {
+                grg.Value.gridOutlineCS.lineMode = mode;
+            }
         }
     }
 

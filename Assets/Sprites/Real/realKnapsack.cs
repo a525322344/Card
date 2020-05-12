@@ -81,7 +81,6 @@ public class realKnapsack : MonoBehaviour
                 laticePairs.Add(posi, realLatice);
             }
 
-            Debug.Log("可使用部件格："+usedLaticePairs.Count);
             //初始化部件
             InitInstallPart(GameState.BattleSence);
 
@@ -122,6 +121,7 @@ public class realKnapsack : MonoBehaviour
         {
             foreach (var centerPart in thisknapsack.installParts)
             {
+                centerPart.Value.gridpower = centerPart.Value.gridsum;
                 foreach (var vecGrid in thisknapsack.installParts[centerPart.Key].Vector2GridRotate)
                 {
                     if (vecGrid.Value.Opening)
@@ -157,6 +157,7 @@ public class realKnapsack : MonoBehaviour
             }
         }
     }
+    //update
     private void Update()
     {
         switch (KnapsackState)
@@ -169,6 +170,14 @@ public class realKnapsack : MonoBehaviour
                         b_readyToPlayCard = false;
                         gameManager.Instance.battlemanager.battleInfo.currentPos = currentPos;
                         gameManager.Instance.battlemanager.PlayCard();
+                        if (selectCard.Cost != 0)
+                        {
+                            foreach (realpart rp in realparts)
+                            {
+                                rp.AllUsed();
+                            }
+                        }
+                        ToSetPart(null);
                     }
                 }
                 break;
@@ -291,6 +300,8 @@ public class realKnapsack : MonoBehaviour
     //战斗操作
     public bool b_readyToPlayCard;
     public card selectCard;
+    public card LastCard;
+
     MagicPart nullpart = new MagicPart();
     public MagicPart selectPart;
     List<realLatice> selectLatices = new List<realLatice>();
@@ -397,14 +408,18 @@ public class realKnapsack : MonoBehaviour
         
         if (cost == 0)
         {
-            if (usedLaticePairs[center].gridState == GridState.Power | usedLaticePairs[center].gridState == GridState.Can| usedLaticePairs[center].gridState == GridState.Used)
+            if (usedLaticePairs.ContainsKey(center))
             {
-                if (usedLaticePairs[center].realpart.thisMagicPart != null)
+                if (usedLaticePairs[center].gridState == GridState.Power | usedLaticePairs[center].gridState == GridState.Can | usedLaticePairs[center].gridState == GridState.Used)
                 {
-                    selectPart = usedLaticePairs[center].realpart.thisMagicPart;
-                    selecRealParts.Add(usedLaticePairs[center].realpart);
+                    if (usedLaticePairs[center].realpart.thisMagicPart != null)
+                    {
+                        selectPart = usedLaticePairs[center].realpart.thisMagicPart;
+                        selecRealParts.Add(usedLaticePairs[center].realpart);
+                    }
                 }
             }
+
         }
         b_readyToPlayCard = result;
         return result;

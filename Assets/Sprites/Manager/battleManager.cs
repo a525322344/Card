@@ -95,6 +95,7 @@ public class battleManager : MonoBehaviour
     // [HideInInspector]
     public bool b_isSelectCard;
     public realCard selectedCard;
+    public playerCard lastCard;
     public void SetSelectedCard(realCard _playerCard)
     {
         selectedCard = _playerCard;
@@ -102,6 +103,7 @@ public class battleManager : MonoBehaviour
     //当前选择的部件
     //[HideInInspector]
     public MagicPart selectedPart;
+    public MagicPart lastPart;
     public void SetSelectPart(MagicPart _magicPart)
     {
         selectedPart = _magicPart;
@@ -190,6 +192,8 @@ public class battleManager : MonoBehaviour
             Debug.Log("洗牌");
             dickDiscard.Clear();
         }
+        if (dickInGame.Count == 0)
+            return;
         playerCard thiscard = dickInGame[0];
         dickInGame.Remove(thiscard);
         dickHandCard.Add(thiscard);
@@ -197,22 +201,36 @@ public class battleManager : MonoBehaviour
         //实例化卡牌
         instantiatemanager.instanDrawACard(thiscard);
     }
+    //得到卡牌
+    public void GetACard(playerCard card)
+    {
+        instantiatemanager.instanDrawACard(card);
+    }
     //打出一场卡牌
     public void PlayCard()
     {
         if (RoundStage == ROUNDSTAGE.Battle)
         {
             realknapsack.UseSelectLatices();
+            lastCard = selectedCard.thisCard as playerCard;
+            lastPart = selectedPart;
+
             CardEvent newevent = new CardEvent((playerCard)selectedCard.thisCard, selectedPart, new emplyPlayCard());
-            //newevent.InitPerform();
+            newevent.InitPerform();
             EventShow neweventshow = new EventShow(newevent, eventManager.BattleEventShows);
             eventManager.BattleEventShows.Add(neweventshow);
 
-            realknapsack.ToSetPart(null);
-            gameManager.Instance.battlemanager.b_isSelectCard = false;
+            b_isSelectCard = false;
             //从手牌删掉这张卡
             deleteHandCard(selectedCard);
         }
+    }
+    public void PlayLastCard()
+    {
+        CardEvent newevent = new CardEvent((playerCard)lastCard, lastPart, new emplyVPlayCard());
+        newevent.InitPerform();
+        EventShow neweventshow = new EventShow(newevent, eventManager.BattleEventShows);
+        eventManager.BattleEventShows.Add(neweventshow);
     }
     //根据强化动态更新卡牌描述
     public void setCardDescribe(MagicPart magicPart)

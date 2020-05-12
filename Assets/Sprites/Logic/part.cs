@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 //
 //新建一个Part过程
 //Part();
@@ -55,6 +56,7 @@ public class LinkPart : MagicPart
         foreach(var magicpart in magicParts)
         {
             gridsum += magicpart.gridsum;
+            gridpower += magicpart.gridpower;
             foreach(Reaction r in magicpart.m_overallReactionList)
             {
                 base.addReaction(r);
@@ -75,12 +77,14 @@ public class MagicPart : Part
     //功能信息
     public int gridsum;
     public int gridpower;
+    public int diWenNUm;
     public MagicPart() { }
     //暂定：数组a应该是9位
     public MagicPart(string _name,int[] a,int set)
     {
         name = _name;
         rotateInt = 0;
+        diWenNUm = set;
         Vector2GridPairs = new Dictionary<Vector2, grid>();
         gridsum = 0;
         for(int i = 0; i < a.Length; i++)
@@ -105,19 +109,29 @@ public class MagicPart : Part
             }
             Vector2GridPairs.Add(new Vector2(posx, posy), newgrid);
         }
+        gridpower = gridsum;
         Vector2GridRotate = new Dictionary<Vector2, grid>(Vector2GridPairs);
     }
     public MagicPart(MagicPart magicPart)
     {
         name = magicPart.name;
         rotateInt = 0;
+        diWenNUm = magicPart.diWenNUm;
         Vector2GridPairs = new Dictionary<Vector2, grid>(magicPart.Vector2GridPairs);
-        gridsum = 0;
+        gridsum = magicPart.gridsum;
+        gridpower = gridsum;
         Vector2GridRotate = new Dictionary<Vector2, grid>(magicPart.Vector2GridPairs);
         foreach(Reaction r in magicPart.m_overallReactionList)
         {
-            Reaction newreaction = ReflectOperation.NewClassByReflect<Reaction>(r);
-            m_overallReactionList.Add(newreaction);
+            object[] parms = new  object[]{ r,this};
+            Type type = r.GetType();
+            Reaction obj = (Reaction)Activator.CreateInstance(type, parms);
+            //Reaction newreaction = ReflectOperation.NewClassByReflect<Reaction>(r);
+            m_overallReactionList.Add(obj);
+        }
+        foreach(singleEvent singleEvent in magicPart.completeEvents)
+        {
+            completeEvents.Add(singleEvent);
         }
         describe = magicPart.describe;
     }
@@ -153,6 +167,7 @@ public class MagicPart : Part
     }
     public void PowerAllGrid()
     {
+        gridpower = gridsum;
         foreach (var g in Vector2GridPairs)
         {
             if (g.Value.Opening)
@@ -214,6 +229,15 @@ public class MagicPart : Part
     public string partDescribe()
     {
         describe = ColorGold+ name+"\n"+ColorEnd;
+        if (completeEvents.Count > 0)
+        {
+            describe += ColorBlue + "充能" + ColorEnd + ":";
+            foreach (singleEvent e in completeEvents)
+            {
+                describe += e.eventDescribe;
+            }
+            describe += "\n";
+        }
         foreach(Reaction reaction in m_overallReactionList)
         {
             describe += ColorBlue+ reaction.name +ColorEnd+ ":" + reaction.ReactionDescribe() + "\n";
@@ -221,4 +245,6 @@ public class MagicPart : Part
         return describe;
     }
     public string describe;
+    public List<singleEvent> completeEvents = new List<singleEvent>();
+    public realpart realpart;
 }

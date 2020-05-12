@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Card Editor Board
   m_EditorClassIdentifier: 
   allCards:
-  - showGrade: 1
+  - showGrade: 0
     Card:
       name: "\u5965\u6570\u98DE\u5F39"
       id: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
         childeffects: []
     alltime: 0
     performlist: []
-  - showGrade: 1
+  - showGrade: 0
     Card:
       name: "\u9B54\u6CD5\u62A4\u76FE"
       id: 1
@@ -132,10 +132,31 @@ MonoBehaviour:
         childeffects: []
     alltime: 0
     performlist: []
+  - showGrade: 0
+    Card:
+      name: "\u901F\u5C04\u98DE\u5F39"
+      id: 3
+      cost: 0
+      Rank: 1
+      Kind: 0
+      rank: 0
+      textureId: 0
+      playEffects: []
+    gradeCard:
+      name: "\u901F\u5C04\u98DE\u5F39+"
+      id: 3
+      cost: 0
+      Rank: 1
+      Kind: 0
+      rank: 0
+      textureId: 0
+      playEffects: []
+    alltime: 0
+    performlist: []
   - showGrade: 1
     Card:
       name: "\u70C8\u7130"
-      id: 3
+      id: 4
       cost: 1
       Rank: 1
       Kind: 2
@@ -151,7 +172,7 @@ MonoBehaviour:
         childeffects: []
     gradeCard:
       name: "\u70C8\u7130+"
-      id: 3
+      id: 4
       cost: 1
       Rank: 1
       Kind: 2
@@ -167,10 +188,10 @@ MonoBehaviour:
         childeffects: []
     alltime: 0
     performlist: []
-  - showGrade: 1
+  - showGrade: 0
     Card:
       name: "\u706B\u7130\u5316\u7532"
-      id: 4
+      id: 5
       cost: 2
       Rank: 2
       Kind: 2
@@ -193,7 +214,7 @@ MonoBehaviour:
         childeffects: []
     gradeCard:
       name: "\u9ED8\u8BA4\u540D\u79F0"
-      id: 4
+      id: 5
       cost: 0
       Rank: 0
       Kind: 0
@@ -219,7 +240,7 @@ MonoBehaviour:
   - showGrade: 0
     Card:
       name: "\u53CC\u91CD\u5965\u4E49"
-      id: 5
+      id: 6
       cost: 2
       Rank: 1
       Kind: 2
@@ -276,7 +297,7 @@ MonoBehaviour:
             childeffects: []
     gradeCard:
       name: "\u53CC\u91CD\u5965\u4E49"
-      id: 5
+      id: 6
       cost: 2
       Rank: 1
       Kind: 2
@@ -333,10 +354,10 @@ MonoBehaviour:
             childeffects: []
     alltime: 0
     performlist: []
-  - showGrade: 1
+  - showGrade: 0
     Card:
       name: "\u6BC1\u706D\u6697\u6CE2"
-      id: 6
+      id: 7
       cost: 2
       Rank: 3
       Kind: 1
@@ -369,7 +390,7 @@ MonoBehaviour:
           childeffects: []
     gradeCard:
       name: "\u6BC1\u706D\u6697\u6CE2+"
-      id: 6
+      id: 7
       cost: 2
       Rank: 3
       Kind: 1
@@ -405,7 +426,7 @@ MonoBehaviour:
   - showGrade: 1
     Card:
       name: "\u70B9\u71C3"
-      id: 7
+      id: 8
       cost: 1
       Rank: 2
       Kind: 1
@@ -442,7 +463,7 @@ MonoBehaviour:
           childeffects: []
     gradeCard:
       name: "\u70B9\u71C3+"
-      id: 7
+      id: 8
       cost: 1
       Rank: 0
       Kind: 0
@@ -477,5 +498,266 @@ MonoBehaviour:
           judges: []
           b_haveChildEffect: 0
           childeffects: []
+    alltime: 0
+    performlist: []
+  - showGrade: 1
+    Card:
+      name: "\u900F\u652F\u9B54\u6CD5"
+      id: 9
+      cost: 0
+      Rank: 3
+      Kind: 2
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: Exhaust
+        num: 0
+        effectKind: 14
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+      - name: DrawCard
+        num: 3
+        effectKind: 5
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    gradeCard:
+      name: "\u900F\u652F\u9B54\u6CD5+"
+      id: 9
+      cost: 0
+      Rank: 3
+      Kind: 2
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: Exhaust
+        num: 0
+        effectKind: 14
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+      - name: DrawCard
+        num: 5
+        effectKind: 5
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    alltime: 0
+    performlist: []
+  - showGrade: 0
+    Card:
+      name: "\u56DB\u65B9\u65A9"
+      id: 10
+      cost: 2
+      Rank: 1
+      Kind: 1
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: Repeat
+        num: 4
+        effectKind: 4
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 1
+        childeffects:
+        - name: Damage
+          num: 4
+          effectKind: 1
+          b_haveJudge: 0
+          judges: []
+          b_haveChildEffect: 0
+          childeffects: []
+    gradeCard:
+      name: "\u9ED8\u8BA4\u540D\u79F0"
+      id: 10
+      cost: 0
+      Rank: 0
+      Kind: 0
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: Repeat
+        num: 0
+        effectKind: 4
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 1
+        childeffects: []
+    alltime: 1
+    performlist:
+    - performkind: 1
+      time: 0.069
+      charactor: 0
+      animation: 2
+      animationSpeed: 1
+      effectWay: 0
+      effectGO: {fileID: 0}
+      effecttime: 0
+      movespeed: 0
+    - performkind: 1
+      time: 0.85
+      charactor: 1
+      animation: 3
+      animationSpeed: 1
+      effectWay: 0
+      effectGO: {fileID: 0}
+      effecttime: 0
+      movespeed: 0
+    - performkind: 2
+      time: 0.654
+      charactor: 0
+      animation: 0
+      animationSpeed: 0
+      effectWay: 2
+      effectGO: {fileID: 5185649957888063751, guid: bfcb35273d1d03940ac70ca4cfd8bcdc,
+        type: 3}
+      effecttime: 0.3
+      movespeed: 0
+    - performkind: 2
+      time: 0.753
+      charactor: 0
+      animation: 0
+      animationSpeed: 0
+      effectWay: 2
+      effectGO: {fileID: 5185649957888063751, guid: bfcb35273d1d03940ac70ca4cfd8bcdc,
+        type: 3}
+      effecttime: 0.3
+      movespeed: 0
+    - performkind: 2
+      time: 0.857
+      charactor: 0
+      animation: 0
+      animationSpeed: 0
+      effectWay: 2
+      effectGO: {fileID: 5185649957888063751, guid: bfcb35273d1d03940ac70ca4cfd8bcdc,
+        type: 3}
+      effecttime: 0.3
+      movespeed: 0
+    - performkind: 2
+      time: 0.952
+      charactor: 0
+      animation: 0
+      animationSpeed: 0
+      effectWay: 2
+      effectGO: {fileID: 5185649957888063751, guid: bfcb35273d1d03940ac70ca4cfd8bcdc,
+        type: 3}
+      effecttime: 0.3
+      movespeed: 0
+  - showGrade: 1
+    Card:
+      name: "\u5E94\u6025\u62A4\u76FE"
+      id: 11
+      cost: 0
+      Rank: 1
+      Kind: 2
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: Armor
+        num: 5
+        effectKind: 3
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    gradeCard:
+      name: "\u5E94\u6025\u62A4\u76FE+"
+      id: 11
+      cost: 0
+      Rank: 1
+      Kind: 2
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: Armor
+        num: 8
+        effectKind: 3
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    alltime: 0
+    performlist: []
+  - showGrade: 0
+    Card:
+      name: "\u80FD\u91CF\u62A4\u76FE"
+      id: 12
+      cost: 0
+      Rank: 1
+      Kind: 2
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: ArmorByPartPower
+        num: 2
+        effectKind: 16
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    gradeCard:
+      name: "\u9ED8\u8BA4\u540D\u79F0"
+      id: 12
+      cost: 0
+      Rank: 0
+      Kind: 0
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: ArmorByPartPower
+        num: 0
+        effectKind: 16
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    alltime: 0
+    performlist: []
+  - showGrade: 0
+    Card:
+      name: "\u5FEB\u901F\u65BD\u6CD5"
+      id: 13
+      cost: 0
+      Rank: 1
+      Kind: 1
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: DamageByPartPower
+        num: 3
+        effectKind: 15
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    gradeCard:
+      name: "\u9ED8\u8BA4\u540D\u79F0"
+      id: 13
+      cost: 0
+      Rank: 0
+      Kind: 0
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: PartLinkRandom
+        num: 0
+        effectKind: 17
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+      - name: DamageByPartPower
+        num: 0
+        effectKind: 15
+        b_haveJudge: 0
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
     alltime: 0
     performlist: []
