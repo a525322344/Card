@@ -257,6 +257,8 @@ public class InitData
             })
             );
         MapAsset.mapSystemBefall.Add(befallinfo);
+
+        //随机事件
         //不知名石像
         string name="";
         befallinfo = new befallinfo("不知名的石像", 1, "看起来像是某种祭祀仪式的场所，正中间的石像在月光下显得格外阴森，石像周围有很多祭品",
@@ -279,6 +281,94 @@ public class InitData
             })
             );
         MapAsset.AllBefallInfos.Add(befallinfo);
+
+        //神秘法阵
+        befallinfo = new befallinfo("神秘法阵", 1, "你走进一个山洞之中，石壁上好像画着什么东西，当你触碰到石壁的瞬间，一个法阵出现在你面前。你认出这是传送法阵，它可以送你去任何地方",
+            new Button_Exit("进入（你可以移动至下一层的任何地点）", () =>
+            {
+
+            })
+            );
+        MapAsset.AllBefallInfos.Add(befallinfo);
+
+        //魔法食客
+        befallinfo = new befallinfo("魔法食客", 1, "一个圆滚滚的生物出现在你面前  “你好像有很多好吃的，可以分我点儿么？”",
+            new Button_Exit("拒绝", () =>
+            {
+
+            }),
+            new Button_Info("进行投喂", () =>
+            {
+
+            })
+            );
+        MapAsset.AllBefallInfos.Add(befallinfo);
+
+        //路遇不平
+        befallinfo = new befallinfo("路遇不平", 1, "你看到一个邪教徒正洗劫着一家农户，他把头转向了你这边，显然，他已经注意到了你的存在“告诉你，别多管闲事啊！待会儿会留一份给你的。”",
+            new Button_Exit("欣然接受（获得50金币）", () =>
+            {
+
+            }),
+            new Button_Info("挺身而出", () =>
+            {
+
+            })
+            );
+        MapAsset.AllBefallInfos.Add(befallinfo);
+
+        //鲜血交易
+        befallinfo = new befallinfo("鲜血交易", 1, "一个手持小刀面带微笑的男子朝你走来“我这里可是有很多好东西哦，你想看看么？只需要一点点鲜血。”",
+            new Button_Exit("欣然接受（获得50金币）", () =>
+            {
+
+            }),
+            new Button_Info("挺身而出", () =>
+            {
+
+            })
+            );
+        MapAsset.AllBefallInfos.Add(befallinfo);
+
+        //静谧湖畔
+        befallinfo = new befallinfo("静谧湖畔", 1, "你找到了一座湖，静谧的湖面散发着魔法的微光",
+            new Button_Exit("欣然接受（获得50金币）", () =>
+            {
+
+            }),
+            new Button_Info("挺身而出", () =>
+            {
+
+            })
+            );
+        MapAsset.AllBefallInfos.Add(befallinfo);
+
+        //新的容器
+        befallinfo = new befallinfo("新的容器", 1, "一个新的魔法容器，可以用来调整你的魔法",
+            new Button_Exit("欣然接受（获得50金币）", () =>
+            {
+
+            }),
+            new Button_Info("挺身而出", () =>
+            {
+
+            })
+            );
+        MapAsset.AllBefallInfos.Add(befallinfo);
+
+        //微笑果农
+        befallinfo = new befallinfo("微笑果农", 1, "你误入一片果林，就在这时，一个声音响起：“哎呀呀年轻人，你想尝尝哪种水果呢？”",
+            new Button_Exit("欣然接受（获得50金币）", () =>
+            {
+
+            }),
+            new Button_Info("挺身而出", () =>
+            {
+
+            })
+            );
+        MapAsset.AllBefallInfos.Add(befallinfo);
+
         //部件配置
         secondBoardInfo secondboard = new secondBoardInfo(0, "部件配置");
         befallinfo = new befallinfo("整装待发", 0, "英雄征途的第一步：整理背包",
