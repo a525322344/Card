@@ -8,6 +8,7 @@ public class uiMapContrill : MonoBehaviour
     public spriteButton partui;
     public spriteButton cardui;
     public spriteButton money;
+    public healthSlider healthSlider;
     public TextMeshPro moneytext;
 
     private GameObject secondcardGO;
@@ -18,6 +19,8 @@ public class uiMapContrill : MonoBehaviour
     public void Init()
     {
         playerInfo player = gameManager.Instance.playerinfo;
+        healthSlider.isbattle = false;
+        healthSlider.Init(player);
         cardui.AddListener(() =>
         {
             laststate = gameManager.Instance.mapmanager.mapState;
@@ -38,6 +41,7 @@ public class uiMapContrill : MonoBehaviour
             {
 
             };
+
         });
         partui.AddListener(() =>
         {

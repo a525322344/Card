@@ -38,6 +38,7 @@ public class uiVectorBoard : MonoBehaviour
                     uis.EnterInit(second);
                     uis.Init(selectcardList, 1);
                     uis.describeText.text = "选择1张卡牌";
+                    uis.present = 0.5f;
                     uis.CancelButton.AddListener(() =>
                     {
                         selectcardGO.SetActive(false);

@@ -334,12 +334,16 @@ public class battleManager : MonoBehaviour
             battleInfo.Player.stateList[i].SetOutState();
         }
         StartCoroutine(IEendBattle());
-        instantiateManager.instance.mapRootInfo.uiMapContrill.SetMoney();
+
     }
     IEnumerator IEendBattle()
     {
         yield return new WaitForSeconds(0.5f);
         gameManager.Instance.uimanager.uiVectorBoard.Init(monster.monsterLevel);
+        instantiateManager.instance.mapRootInfo.uiMapContrill.SetMoney();
+
+        gameManager.Instance.mapmanager.mapplayer.healthSlider.SetSlider(0, gameManager.Instance.playerinfo.playerHealth, gameManager.Instance.playerinfo.playerHealthMax);
+        instantiateManager.instance.mapRootInfo.uiMapContrill.healthSlider.SetSlider(0, gameManager.Instance.playerinfo.playerHealth, gameManager.Instance.playerinfo.playerHealthMax);
     }
     //回合结束按钮
     public void ButtonToEndPlayerRound()

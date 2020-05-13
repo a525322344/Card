@@ -80,7 +80,8 @@ public class playerInfo
     {
         playerHealthMax += h;
         playerHealth += h;
-        gameManager.Instance.mapmanager.mapplayer.healthSlider.SetSlider(0, gameManager.Instance.playerinfo.playerHealth);
+        gameManager.Instance.mapmanager.mapplayer.healthSlider.SetSlider(0, gameManager.Instance.playerinfo.playerHealth, gameManager.Instance.playerinfo.playerHealthMax);
+        instantiateManager.instance.mapRootInfo.uiMapContrill.healthSlider.SetSlider(0, gameManager.Instance.playerinfo.playerHealth, gameManager.Instance.playerinfo.playerHealthMax);
     }
     public void RecoveryHealth(int h)
     {
@@ -90,6 +91,7 @@ public class playerInfo
             playerHealth = playerHealthMax;
         }
         gameManager.Instance.mapmanager.mapplayer.healthSlider.SetSlider(0, gameManager.Instance.playerinfo.playerHealth);
+        instantiateManager.instance.mapRootInfo.uiMapContrill.healthSlider.SetSlider(0, gameManager.Instance.playerinfo.playerHealth, gameManager.Instance.playerinfo.playerHealthMax);
     }
 
     //初始化玩家的开局卡组

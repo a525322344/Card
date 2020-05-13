@@ -109,7 +109,7 @@ public class MapManager : MonoBehaviour
         hardMonsterList = ListOperation.Shufle<monsterInfo>(AllAsset.MapAsset.HardMonsterList);
         bossList = ListOperation.Shufle<monsterInfo>(AllAsset.MapAsset.BossMonsterList);
         
-        befallList = ListOperation.RandomValueList<befallinfo>(AllAsset.MapAsset.AllBefallInfos, 2);
+        befallList = ListOperation.RandomValueList<befallinfo>(AllAsset.MapAsset.AllBefallInfos, 9);
     }
     List<monsterInfo> normalMonsterList = new List<monsterInfo>();
     int curseNormal = 0;
@@ -129,12 +129,23 @@ public class MapManager : MonoBehaviour
     public void SetNowPlace(PlaceNode placeNode)
     {
         NowPlace.placeState = PlaceState.Used;
-        foreach(PlaceNode p in NowPlace.nextNodeList)
+        NowPlace = placeNode;
+        foreach(PlaceNode p in placeNodeList)
         {
-            p.placeState = PlaceState.Cannot;
+            if (p.placeState != PlaceState.Used)
+            {
+                p.placeState = PlaceState.Cannot;
+            }
         }
         placeNode.placeState = PlaceState.NowOn;
         foreach (PlaceNode p in placeNode.nextNodeList)
+        {
+            p.placeState = PlaceState.ToGo;
+        }
+    }
+    public void Shenmifazhen()
+    {
+        foreach(PlaceNode p in intListDic[(int)NowPlace.PointPosi.y])
         {
             p.placeState = PlaceState.ToGo;
         }
@@ -924,6 +935,7 @@ public class MapManager : MonoBehaviour
     public void EnterBefall()
     {
         befallinfo befallinfo = ListOperation.RandomValue<befallinfo>(befallList);
+        befallList.Remove(befallinfo);
         //打开二级事件窗口
         gameManager.Instance.uimanager.uiBefallBoard.EnterEventBoard(befallinfo);
         gameManager.Instance.mapmanager.EventWindow(true); //mapState = MapState.EventWindow;

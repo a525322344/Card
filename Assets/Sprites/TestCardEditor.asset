@@ -272,3 +272,73 @@ MonoBehaviour:
       playEffects: []
     alltime: 0
     performlist: []
+  - showGrade: 0
+    Card:
+      name: 'hdasoih '
+      id: 8
+      cost: 1
+      Rank: 2
+      Kind: 1
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: Whether
+        num: 0
+        effectKind: 9
+        b_haveJudge: 1
+        judges:
+        - num: 0
+          b_UseNum: 0
+          judgeKind: 1
+        b_haveChildEffect: 0
+        childeffects:
+        - name: Armor
+          num: 6
+          effectKind: 3
+          b_haveJudge: 0
+          judges: []
+          b_haveChildEffect: 0
+          childeffects: []
+        - name: Burn
+          num: 4
+          effectKind: 6
+          b_haveJudge: 0
+          judges: []
+          b_haveChildEffect: 0
+          childeffects: []
+    gradeCard:
+      name: "\u9ED8\u8BA4\u540D\u79F0"
+      id: 8
+      cost: 0
+      Rank: 0
+      Kind: 0
+      rank: 0
+      textureId: 0
+      playEffects:
+      - name: Whether
+        num: 0
+        effectKind: 9
+        b_haveJudge: 1
+        judges: []
+        b_haveChildEffect: 0
+        childeffects: []
+    alltime: 0
+    performlist:
+    - performkind: 1
+      time: 0.052
+      charactor: 0
+      animation: 1
+      animationSpeed: 0
+      effectWay: 0
+      effectGO: {fileID: 0}
+      effecttime: 0
+      movespeed: 0
+    - performkind: 1
+      time: 0.932
+      charactor: 1
+      animation: 3
+      animationSpeed: 0
+      effectWay: 0
+      effectGO: {fileID: 0}
+      effecttime: 0
+      movespeed: 0

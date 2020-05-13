@@ -212,7 +212,7 @@ public class InitData
         playerInfo player = gameManager.Instance.playerinfo;
         befallinfo befallinfo;
         //宝箱事件
-        befallinfo = new befallinfo("宝箱", 0, "宝箱，不会有宝箱怪的",
+        befallinfo = new befallinfo("宝箱", 1, "宝箱，不会有宝箱怪的",
             new Button_Exit("直接离开", () =>
              {
 
@@ -257,10 +257,11 @@ public class InitData
             })
              );
         MapAsset.mapSystemBefall.Add(befallinfo);
+        MapAsset.AllBefallInfos.Add(befallinfo);
         //营地事件
-        befallinfo = new befallinfo("营火", 0, "修养生息或者稳固实力",
+        befallinfo = new befallinfo("营火", 3, "修养生息或者稳固实力",
             new Button_Exit("直接离开",()=> { }),
-            new Button_Exit("恢复血量（30%）",()=> {
+            new Button_Exit("恢复血量",()=> {
                 float h = player.playerHealthMax * 0.3f;
                 player.RecoveryHealth((int)h);
             }),
@@ -297,6 +298,7 @@ public class InitData
             })
             );
         MapAsset.mapSystemBefall.Add(befallinfo);
+        MapAsset.AllBefallInfos.Add(befallinfo);
 
         //随机事件
         //不知名石像
@@ -306,64 +308,122 @@ public class InitData
 
             }),
             new Button_Exit("拿走全部祭品", () => {
-                gameManager.Instance.playerinfo.GetMoney(200);
+                gameManager.Instance.playerinfo.GetMoney(150);
                 gameManager.Instance.playerinfo.AddCurseCard();//
             }),
             new Button_Exit("拿走一半祭品", () => {
-                gameManager.Instance.playerinfo.GetMoney(100);
+                gameManager.Instance.playerinfo.GetMoney(75);
                 gameManager.Instance.playerinfo.AddBattleBuff(new BattleBuff("疯狂", 1));//
             }),
             new Button_Exit("献上祭品("+ name + ")", () => {
                 playerCard playerCard = ListOperation.RandomValue<playerCard>(player.playerDeck);
                 name = playerCard.Name;
                 player.RemoveCard(playerCard);
-                player.AddMagicPart();//
+                //player.AddMagicPart();//
             })
             );
         MapAsset.AllBefallInfos.Add(befallinfo);
 
         //神秘法阵
-        befallinfo = new befallinfo("神秘法阵", 1, "你走进一个山洞之中，石壁上好像画着什么东西，当你触碰到石壁的瞬间，一个法阵出现在你面前。你认出这是传送法阵，它可以送你去任何地方",
-            new Button_Exit("进入（你可以移动至下一层的任何地点）", () =>
+        befallinfo = new befallinfo("神秘法阵", 2, "你走进一个山洞之中，石壁上好像画着什么东西，当你触碰到石壁的瞬间，一个法阵出现在你面前。你认出这是传送法阵，它可以送你去任何地方",
+            new Button_Exit("进入", () =>
             {
-
+                gameManager.Instance.mapmanager.Shenmifazhen();
             })
             );
         MapAsset.AllBefallInfos.Add(befallinfo);
 
         //魔法食客
-        befallinfo = new befallinfo("魔法食客", 1, "一个圆滚滚的生物出现在你面前  “你好像有很多好吃的，可以分我点儿么？”",
+        befallinfo = new befallinfo("魔法食客", 5, "一个圆滚滚的生物出现在你面前  “你好像有很多好吃的，可以分我点儿么？”",
             new Button_Exit("拒绝", () =>
             {
 
             }),
             new Button_Info("进行投喂", () =>
             {
+                player.RecoveryHealth(-15);
+                int a = Random.Range(1, 3);
+                if (a == 1)
+                    gameManager.Instance.playerinfo.GetMoney(100);
+                if (a == 2)
+                {
+                    gameManager.Instance.uimanager.uiBefallBoard.SetActive(false);
+                    secondBoardInfo secondBoard = new secondBoardInfo(1);
+                    GameObject selectcard = instantiateManager.instance.instanSecondBoard(secondBoard);
+                    UisecondBoard_SelectCard uiselectBoard = selectcard.GetComponent<UisecondBoard_SelectCard>();
+                    uiselectBoard.EnterInit(secondBoard);
+                    List<playerCard> cangradeCardList = new List<playerCard>();
+                    foreach (playerCard card in player.playerDeck)
+                    {
+                        if (!card.IsGrade)
+                        {
+                            cangradeCardList.Add(card);
+                        }
+                    }
+                    uiselectBoard.Init(cangradeCardList, 1);
+                    uiselectBoard.describeText.text = "选择1张卡升级";
+                    uiselectBoard.CancelButton.AddListener(() =>
+                    {
+                        GameObject.Destroy(uiselectBoard.gameObject);
+                        gameManager.Instance.uimanager.uiBefallBoard.SetActive(true);
+                    });
+                    uiselectBoard.onSelectCards = (cards) =>
+                    {
+                        foreach (playerCard card in cards)
+                        {
+                            player.UpgradeCard(card);
+                        }
+                        GameObject.Destroy(uiselectBoard.gameObject);
+                        gameManager.Instance.mapmanager.EventWindow(false); //mapState = MapState.MainMap;
+                    };
+                }
+                if (a == 3)
+                {
+                    secondBoardInfo selectBoardInfo = new secondBoardInfo(1);
+                    GameObject selectcard = instantiateManager.instance.instanSecondBoard(selectBoardInfo);
+                    UisecondBoard_SelectCard uiselectboard = selectcard.GetComponent<UisecondBoard_SelectCard>();
+                    uiselectboard.EnterInit(selectBoardInfo);
+                    uiselectboard.Init(gameManager.Instance.playerinfo.playerDeck, 1);
+                    uiselectboard.describeText.text = "删除1张卡";
+                    uiselectboard.CancelButton.AddListener(() =>
+                    {
+                        GameObject.Destroy(uiselectboard.gameObject);
+                    });
+                    uiselectboard.onSelectCards = (cardlist) =>
+                    {
+                        foreach (playerCard card in cardlist)
+                        {
+                            gameManager.Instance.playerinfo.RemoveCard(card);
+                        }
 
+                        GameObject.Destroy(uiselectboard.gameObject);
+                    };
+                }
             })
             );
         MapAsset.AllBefallInfos.Add(befallinfo);
 
         //路遇不平
-        befallinfo = new befallinfo("路遇不平", 1, "你看到一个邪教徒正洗劫着一家农户，他把头转向了你这边，显然，他已经注意到了你的存在“告诉你，别多管闲事啊！待会儿会留一份给你的。”",
-            new Button_Exit("欣然接受（获得50金币）", () =>
+        befallinfo = new befallinfo("路遇不平", 6, "你看到一个邪教徒正洗劫着一家农户，他把头转向了你这边，显然，他已经注意到了你的存在“告诉你，别多管闲事啊！待会儿会留一份给你的。”",
+            new Button_Exit("欣然接受", () =>
             {
-
+                gameManager.Instance.playerinfo.GetMoney(50);
             }),
-            new Button_Info("挺身而出", () =>
+            new Button_Exit("出手相助", () =>
             {
-
-            })
+                //gameManager.Instance.playerinfo.GetMoney(50);
+                gameManager.Instance.mapmanager.EnterBattle(new battlePlace(2,1,2));
+             })
             );
         MapAsset.AllBefallInfos.Add(befallinfo);
 
         //鲜血交易
-        befallinfo = new befallinfo("鲜血交易", 1, "一个手持小刀面带微笑的男子朝你走来“我这里可是有很多好东西哦，你想看看么？只需要一点点鲜血。”",
-            new Button_Exit("欣然接受（获得50金币）", () =>
+        befallinfo = new befallinfo("鲜血交易", 0, "一个手持小刀面带微笑的男子朝你走来“我这里可是有很多好东西哦，你想看看么？只需要一点点鲜血。”",
+            new Button_Exit("拒绝", () =>
             {
 
             }),
-            new Button_Info("挺身而出", () =>
+            new Button_Exit("接受", () =>
             {
 
             })
@@ -371,50 +431,48 @@ public class InitData
         MapAsset.AllBefallInfos.Add(befallinfo);
 
         //静谧湖畔
-        befallinfo = new befallinfo("静谧湖畔", 1, "你找到了一座湖，静谧的湖面散发着魔法的微光",
-            new Button_Exit("欣然接受（获得50金币）", () =>
+        befallinfo = new befallinfo("静谧湖畔", 3, "你找到了一座湖，静谧的湖面散发着魔法的微光",
+            new Button_Exit("饮下", () =>
             {
-
+                player.RecoveryHealth(15);
             }),
-            new Button_Info("挺身而出", () =>
+            new Button_Exit("洗涤身体", () =>
             {
+                secondBoardInfo selectBoardInfo = new secondBoardInfo(1);
+                GameObject selectcard = instantiateManager.instance.instanSecondBoard(selectBoardInfo);
+                UisecondBoard_SelectCard uiselectboard = selectcard.GetComponent<UisecondBoard_SelectCard>();
+                uiselectboard.EnterInit(selectBoardInfo);
+                uiselectboard.Init(gameManager.Instance.playerinfo.playerDeck, 1);
+                uiselectboard.describeText.text = "删除1张卡";
+                uiselectboard.CancelButton.AddListener(() =>
+                {
+                    GameObject.Destroy(uiselectboard.gameObject);
+                });
+                uiselectboard.onSelectCards = (cardlist) =>
+                {
+                    foreach (playerCard card in cardlist)
+                    {
+                        gameManager.Instance.playerinfo.RemoveCard(card);
+                    }
 
-            })
-            );
-        MapAsset.AllBefallInfos.Add(befallinfo);
-
-        //新的容器
-        befallinfo = new befallinfo("新的容器", 1, "一个新的魔法容器，可以用来调整你的魔法",
-            new Button_Exit("欣然接受（获得50金币）", () =>
-            {
-
-            }),
-            new Button_Info("挺身而出", () =>
-            {
-
+                    GameObject.Destroy(uiselectboard.gameObject);
+                };
             })
             );
         MapAsset.AllBefallInfos.Add(befallinfo);
 
         //微笑果农
-        befallinfo = new befallinfo("微笑果农", 1, "你误入一片果林，就在这时，一个声音响起：“哎呀呀年轻人，你想尝尝哪种水果呢？”",
-            new Button_Exit("欣然接受（获得50金币）", () =>
+        befallinfo = new befallinfo("微笑果农", 4, "你误入一片果林，就在这时，一个声音响起：“哎呀呀年轻人，你想尝尝哪种水果呢？”",
+            new Button_Exit("苹果", () =>
             {
-
+                player.RecoveryHealth(15);
             }),
-            new Button_Info("挺身而出", () =>
+            new Button_Exit("梨子", () =>
             {
-
+                player.MaxHP(5);
             })
             );
         MapAsset.AllBefallInfos.Add(befallinfo);
-
-        //部件配置
-        secondBoardInfo secondboard = new secondBoardInfo(0, "部件配置");
-        befallinfo = new befallinfo("整装待发", 0, "英雄征途的第一步：整理背包",
-            new Button_ExitBefall("直接出发"), new Button_SecondBoard(secondboard));
-        MapAsset.AllBefallInfos.Add(befallinfo);
-
     }
     void MonsterInit()
     {

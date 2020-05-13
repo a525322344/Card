@@ -74311,7 +74311,7 @@ PrefabInstance:
     - target: {fileID: 6214252688899465388, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: testcard
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6214252688899465388, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
@@ -74459,37 +74459,37 @@ PrefabInstance:
         type: 3}
       propertyPath: beFallSprites.Array.data[2]
       value: 
-      objectReference: {fileID: 21300000, guid: fb4989e7e5d4d0f47ac63e102b591019,
+      objectReference: {fileID: 21300000, guid: 360628256f8f7ec49bec7808449bcd11,
         type: 3}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: beFallSprites.Array.data[3]
       value: 
-      objectReference: {fileID: 21300000, guid: fb4989e7e5d4d0f47ac63e102b591019,
+      objectReference: {fileID: 21300000, guid: dd046d98124af8e4598173ea96f0ed22,
         type: 3}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: beFallSprites.Array.data[4]
       value: 
-      objectReference: {fileID: 21300000, guid: fb4989e7e5d4d0f47ac63e102b591019,
+      objectReference: {fileID: 21300000, guid: d360022ce31f82c44b79981bf75b2579,
         type: 3}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: beFallSprites.Array.data[5]
       value: 
-      objectReference: {fileID: 21300000, guid: fb4989e7e5d4d0f47ac63e102b591019,
+      objectReference: {fileID: 21300000, guid: 70eb1e5d270f2a348b8f381bb16aef1d,
         type: 3}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: beFallSprites.Array.data[6]
       value: 
-      objectReference: {fileID: 21300000, guid: fb4989e7e5d4d0f47ac63e102b591019,
+      objectReference: {fileID: 21300000, guid: 9c35b20141705e143a941052696f3998,
         type: 3}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
       propertyPath: beFallSprites.Array.data[0]
       value: 
-      objectReference: {fileID: 21300000, guid: 23cce77a21fd3f14681cebe6e02bc91b,
+      objectReference: {fileID: 21300000, guid: 2464f1588bc3f8a4fa30e5b410f08374,
         type: 3}
     - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
         type: 3}
