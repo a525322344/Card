@@ -155,7 +155,7 @@ public class Reaction_Affect : Reaction
         kind = reaction.getReactionKind();
         affectEffect = reaction.getExtreEffect();
         b_haveEvent = reaction.b_haveEvent;
-        Debug.Log("reaction_affect");
+        //Debug.Log("reaction_affect");
     }
     public override extraEffectBase getExtreEffect()
     {

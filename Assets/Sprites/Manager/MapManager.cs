@@ -145,7 +145,7 @@ public class MapManager : MonoBehaviour
     }
     public void Shenmifazhen()
     {
-        foreach(PlaceNode p in intListDic[(int)NowPlace.PointPosi.y])
+        foreach(PlaceNode p in intListDic[(int)NowPlace.PointPosi.y+1])
         {
             p.placeState = PlaceState.ToGo;
         }
@@ -179,6 +179,7 @@ public class MapManager : MonoBehaviour
         }
         //连线
         //start
+        Debug.Log("连线");
         for (int order = 1; order <= placeNumPerStorey; order++)
         {
             startPlaceNode.LinkNode(placeNodeDic[new Vector2(order, 1)]);
@@ -197,6 +198,7 @@ public class MapManager : MonoBehaviour
 
         //改变节点
         //添加边路
+        Debug.Log("添加边路");
         int outplacenum = (int)Random.Range(outPlaceNumRange.x, outPlaceNumRange.y + 1);
         //左边
         int startstorey = (int)Random.Range(2, allStoreyNum - 3 - outplacenum);
@@ -256,6 +258,7 @@ public class MapManager : MonoBehaviour
             placeNodeDic[posi].LinkNode(placeNodeDic[posi + Vector2.up]);
         }
         //添加路线
+        Debug.Log("添加路线");
         int addLinklineNun = (int)Random.Range(addLinklineNumRange.x, addLinklineNumRange.y + 1);
         for (int i = 0; i < addLinklineNun;)
         {
@@ -415,9 +418,11 @@ public class MapManager : MonoBehaviour
         }
         //精英怪
         int hardenemyNum =(int) Random.Range(hardEnemyNumRange.x, hardEnemyNumRange.y + 1);
+        List<PlaceNode> copyList = new List<PlaceNode>(placeNodeList);
         for(int i = 0; i < hardenemyNum;)
         {
-            PlaceNode nowplacenode = ListOperation.RandomValue<PlaceNode>(placeNodeList);
+            PlaceNode nowplacenode = ListOperation.RandomValue<PlaceNode>(copyList);
+            copyList.Remove(nowplacenode);
             if (CanBeHardEnemy(nowplacenode)){
                 battleplace = new battlePlace(2, enemyLevelFormStorey(false, (int)nowplacenode.PointPosi.y), 0);
                 nowplacenode.thisplace = battleplace;
@@ -449,16 +454,26 @@ public class MapManager : MonoBehaviour
                 }
                 i++;
             }
+            if (copyList.Count == 0)
+            {
+                break;
+            }
         }
         //商店
         int shopNum = (int)Random.Range(shopNumRange.x, shopNumRange.y + 1);
+        copyList = new List<PlaceNode>(placeNodeList);
         for (int i = 0; i < shopNum;)
         {
             PlaceNode nowplacenode = ListOperation.RandomValue<PlaceNode>(placeNodeList);
+            copyList.Remove(nowplacenode);
             if (CanBeShop(nowplacenode))
             {
                 nowplacenode.thisplace = new shopPlace();
                 i++;
+            }
+            if (copyList.Count == 0)
+            {
+                break;
             }
         }
         //boss前一层是休息

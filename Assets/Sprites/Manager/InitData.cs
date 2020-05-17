@@ -584,8 +584,8 @@ public class InitData
             playerCard newcard = new playerCard(card.id, card.name, card.Kind, card.cost, (int)card.Rank,false);
             newcard.TextureId = card.id;
             cardEffectBase lasteffect = new Damage(0);
-            Debug.Log(card.name);
-            Debug.Log(card.playEffects.Count);
+            //Debug.Log(card.name);
+            //Debug.Log(card.playEffects.Count);
             foreach(editorEffect eE in card.playEffects)
             {
                 cardEffectBase neweffect = EffectFromInit(eE);
@@ -606,8 +606,8 @@ public class InitData
 
             card = ecard.gradeCard;
             lasteffect = new Damage(0);
-            Debug.Log(card.name);
-            Debug.Log(card.playEffects.Count);
+            //Debug.Log(card.name);
+            //Debug.Log(card.playEffects.Count);
             newcard = new playerCard(card.id, card.name, card.Kind, card.cost, (int)card.Rank,true);
             newcard.TextureId = card.id;
             foreach (editorEffect eE in card.playEffects)
@@ -663,7 +663,7 @@ public class InitData
     }
     cardEffectBase EffectFromInit(editorEffect editorEffect,params judgeCondition[] judges)
     {
-        Debug.Log(editorEffect.name);
+        //Debug.Log(editorEffect.name);
         cardEffectBase Effect = new emplyPlayCard();
         switch (editorEffect.effectKind)
         {
