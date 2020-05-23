@@ -27,6 +27,10 @@ public class playerInfo
     public void AddNewCard(playerCard card)
     {
         playerDeck.Add(card);
+        if (gameManager.Instance.gameState == GameState.MapSence)
+        {
+            instantiateManager.instance.instanShowCard(card,1);
+        }
     }
     //升级卡牌
     public void UpgradeCard(playerCard card)
@@ -47,6 +51,11 @@ public class playerInfo
         if (playerDeck.Contains(card))
         {
             playerDeck.Remove(card);
+
+            if (gameManager.Instance.gameState == GameState.MapSence)
+            {
+                instantiateManager.instance.instanShowCard(card, 2);
+            }
         }
     }
     //获得金钱
@@ -63,6 +72,10 @@ public class playerInfo
     public void AddCurseCard()
     {
         playerDeck.Add(AllAsset.cardAsset.curseCards[0]);
+        if (gameManager.Instance.gameState == GameState.MapSence)
+        {
+            instantiateManager.instance.instanShowCard(AllAsset.cardAsset.curseCards[0], 1);
+        }
     }
     public void AddBattleBuff(BattleBuff buff)
     {

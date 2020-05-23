@@ -768,13 +768,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 324553195}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 2.63, y: 1.84}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
+  m_EffectDistance: {x: 0.79, y: 0.8}
   m_UseGraphicAlpha: 1
 --- !u!114 &324553198
 MonoBehaviour:
@@ -789,7 +789,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.89019614, g: 0.2627451, b: 0.35686275, a: 1}
+  m_Color: {r: 1, g: 0.3443396, b: 0.44411406, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -797,12 +797,12 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 93ddbe57bdc2b084a8d56585ab07e85d, type: 3}
-    m_FontSize: 58
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 59
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 58
+    m_MaxSize: 59
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1265,7 +1265,7 @@ Transform:
   - {fileID: 1537382467}
   - {fileID: 398067001}
   m_Father: {fileID: 2087041586}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1155474315
 MonoBehaviour:
@@ -1438,6 +1438,7 @@ MonoBehaviour:
   placeBeginPosi: {fileID: 113974000}
   secondBoardPosi: {fileID: 158935891}
   selectBoardPosi: {fileID: 1106947872}
+  showCardPosi: {fileID: 1530138795}
   uiMapContrill: {fileID: 1155474315}
   cameraMove: {fileID: 2087041586}
   mapCamera: {fileID: 1246670622}
@@ -1711,6 +1712,36 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &1530138794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1530138795}
+  m_Layer: 13
+  m_Name: showcardPosi
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1530138795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530138794}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 0.033635344, y: 0.033635344, z: 0.033635344}
+  m_Children: []
+  m_Father: {fileID: 2087041586}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1537382466
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2019,6 +2050,7 @@ Transform:
   - {fileID: 19518645}
   - {fileID: 158935891}
   - {fileID: 1106947872}
+  - {fileID: 1530138795}
   - {fileID: 1155474314}
   m_Father: {fileID: 1506843614}
   m_RootOrder: 1

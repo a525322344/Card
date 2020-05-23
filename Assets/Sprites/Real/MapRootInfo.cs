@@ -15,6 +15,7 @@ public class MapRootInfo : MonoBehaviour
     public Transform placeBeginPosi;
     public Transform secondBoardPosi;
     public Transform selectBoardPosi;
+    public Transform showCardPosi;
     public uiMapContrill uiMapContrill;
 
     public Transform cameraMove;

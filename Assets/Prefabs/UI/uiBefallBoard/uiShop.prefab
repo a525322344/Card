@@ -1040,6 +1040,7 @@ MonoBehaviour:
   exitbutton: {fileID: 2372007845217702740}
   DeleteButton: {fileID: 5016006694470109825}
   deleteCardMoney: 100
+  downmove: 20
   On: 0
   ToDeleteCardBoard: {fileID: 0}
 --- !u!1 &5183457121559172085

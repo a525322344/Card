@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8478088279808066865}
   - component: {fileID: 8065039856662685470}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: qian
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 2083282530438519612}
   - component: {fileID: 3994521914590255586}
   - component: {fileID: 7448793976872203202}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: sale
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,7 +292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8675278190920859505}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: moneyMoneyMoney~
   m_TagString: Untagged
   m_Icon: {fileID: 0}

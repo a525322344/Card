@@ -177,6 +177,7 @@ namespace AllAsset
             returnnum = num;
             List<realpart> copyrealparts = new List<realpart>(gameManager.Instance.battlemanager.realknapsack.realparts);
             int partnum = copyrealparts.Count;
+            Debug.Log("part数量:" + partnum);
             List<realpart> getlist = new List<realpart>();
             if (partnum > num)
             {

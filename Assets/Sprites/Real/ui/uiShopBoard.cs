@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AllAsset;
 using TMPro;
+using DG.Tweening;
 class saleInfo<T_real>
 {
     public Transform thingTran;
@@ -20,6 +21,8 @@ public class uiShopBoard : MonoBehaviour
     public spriteButton exitbutton;
     public Transform DeleteButton;
     public int deleteCardMoney;
+    public float downmove;
+    public float moveUpTime = 0.2f;
 
     public bool On = true;
     public thingToSelect<playerCard> cardsToBuy;
@@ -184,6 +187,8 @@ public class uiShopBoard : MonoBehaviour
                 };
             }
         });
+
+        MoveUp();
     }
 
     public void TurnOn(bool on)
@@ -215,5 +220,10 @@ public class uiShopBoard : MonoBehaviour
             deleteSale.realCs.isOn = false;
             exitbutton.isOn = false;
         }
+    }
+    public void MoveUp()
+    {
+        transform.localPosition = new Vector3(0, -downmove, 0);
+        transform.DOLocalMoveY(0, moveUpTime);
     }
 }

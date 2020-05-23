@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 392949282184879301}
   - component: {fileID: 8671216331186258955}
   - component: {fileID: 4117828611903852310}
-  m_Layer: 5
+  m_Layer: 13
   m_Name: befallButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 8671216331905909975}
   - component: {fileID: 8671216331905909973}
   - component: {fileID: 8671216331905909972}
-  m_Layer: 5
+  m_Layer: 13
   m_Name: buttonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}

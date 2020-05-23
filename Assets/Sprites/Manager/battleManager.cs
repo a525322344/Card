@@ -180,6 +180,12 @@ public class battleManager : MonoBehaviour
         {
             dickInGame = ListOperation.Shufle<playerCard>(dickInGame);
         }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            BattleRound = BattleState.Vectory;
+            EndBattleScene();
+            gameManager.Instance.uimanager.roundEndButton.interactable = false;
+        }
     }
 
 
@@ -242,14 +248,14 @@ public class battleManager : MonoBehaviour
     {
         CardEvent cardevent = new CardEvent((playerCard)gameManager.Instance.battlemanager.selectedCard.thisCard, magicPart, new emplyPlayCard());
         cardevent.preCardDescribe();
-        selectedCard.describeText.text = cardevent.EventCardDescribe();
+        //selectedCard.describeText.text = cardevent.EventCardDescribe();
         selectedCard.describeTextPro.text = cardevent.EventCardDescribe();
     }
     public void setCardDescribe(realCard realcard, MagicPart magicPart)
     {
         CardEvent cardevent = new CardEvent((playerCard)realcard.thisCard, magicPart, new emplyPlayCard());
         cardevent.preCardDescribe();
-        realcard.describeText.text = cardevent.EventCardDescribe();
+        //realcard.describeText.text = cardevent.EventCardDescribe();
         realcard.describeTextPro.text = cardevent.EventCardDescribe();
     }
     //丢弃全部手牌

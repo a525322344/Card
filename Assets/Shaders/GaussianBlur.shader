@@ -22,6 +22,7 @@ Shader "Custom/GaussianBlur"
 		half4 _MainTex_TexelSize;
 		float _BlurSize;
 		float4 _OffSets;
+		float _Brightness;
 
 		v2f_blur vert_blur(appdata_img v){
 			v2f_blur o;
@@ -47,7 +48,7 @@ Shader "Custom/GaussianBlur"
 			color += 0.10 * tex2D(_MainTex, i.uv23.zw);
 			color += 0.05 * tex2D(_MainTex, i.uv45.xy);
 			color += 0.05 * tex2D(_MainTex, i.uv45.zw);
-			return color;
+			return color*_Brightness;
 		}
 	ENDCG
 

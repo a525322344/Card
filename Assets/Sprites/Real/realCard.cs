@@ -11,6 +11,7 @@ public enum RealCardState
     RealCard,
     AwardCard,
     SelectCard,
+    ShowCard,
 }
 public enum HandCardState
 {
@@ -31,14 +32,14 @@ public class realCard : MonoBehaviour
     public Transform costtran;
     public SpriteRenderer cardTexture;
     public SpriteRenderer cardBoard;
-    public SpriteRenderer cardKindIcon;
+    //public SpriteRenderer cardKindIcon;
     //资源引用
     public Sprite[] cardBoardSprites;
-    public Sprite[] cardKindIconSprites;
+    //public Sprite[] cardKindIconSprites;
     public GameObject[] costGO;
+    public GameObject trailGO;
+    private List<SpriteRenderer> costrenders = new List<SpriteRenderer>();
 
-    public Text nameText;
-    public Text describeText;
     public TextMeshPro nameTextPro;
     public TextMeshPro describeTextPro;
     //资源
@@ -56,6 +57,8 @@ public class realCard : MonoBehaviour
 
     Transform toSelectPointTran;
     public Selection selection;
+
+    public float initdownmove = 60;
     // 根节点旋转角度
     private float adjustAngle;
     private const float deviationZ = 30;
@@ -203,8 +206,6 @@ public class realCard : MonoBehaviour
     {
         realCardState = _realCardState;
         thisCard = playerCard;
-        //nameText.text = playerCard.Name;
-        //describeText.text = playerCard.Describe;
         foreach(EffectBase effect in (playerCard as playerCard).EffectPlayList)
         {
             effect.InitMixNum();
@@ -212,21 +213,28 @@ public class realCard : MonoBehaviour
         nameTextPro.text = playerCard.Name;
         describeTextPro.text = (playerCard as playerCard).CardDescribe();
         cardTexture.sprite = gameManager.Instance.instantiatemanager.cardSprites[playerCard.TextureId];
+        Transform costTran;
         switch (playerCard.Kind)
         {
             case CardKind.AttackCard:
                 cardBoard.sprite = cardBoardSprites[0];
-                cardKindIcon.sprite = cardKindIconSprites[0];
-                Instantiate(costGO[playerCard.Cost], costtran);
+                costTran = Instantiate(costGO[playerCard.Cost], costtran).transform;
+                for(int i = 0; i < costTran.childCount; i++)
+                {
+                    costrenders.Add(costTran.GetChild(i).GetComponent<SpriteRenderer>());
+                }
                 break;
             case CardKind.SkillCard:
                 cardBoard.sprite = cardBoardSprites[1];
-                cardKindIcon.sprite = cardKindIconSprites[1];
-                Instantiate(costGO[playerCard.Cost], costtran);
+                costTran = Instantiate(costGO[playerCard.Cost], costtran).transform;
+                for (int i = 0; i < costTran.childCount; i++)
+                {
+                    costrenders.Add(costTran.GetChild(i).GetComponent<SpriteRenderer>());
+                }
                 break;
             case CardKind.CurseCard:
                 cardBoard.sprite = cardBoardSprites[0];
-                cardKindIcon.gameObject.SetActive(false);
+                //cardKindIcon.gameObject.SetActive(false);
                 break;
         }
 
@@ -235,25 +243,18 @@ public class realCard : MonoBehaviour
         if (realCardState == RealCardState.RealCard)
         {
             gameManager.Instance.battlemanager.setCardDescribe(this, new MagicPart());
-            //nameText.gameObject.SetActive(true);
-            //describeText.gameObject.SetActive(true);
-            //nameTextPro.gameObject.SetActive(false);
-            //describeTextPro.gameObject.SetActive(false);
         }
         else if (realCardState == RealCardState.AwardCard)
         {
-            //nameText.gameObject.SetActive(false);
-            //describeText.gameObject.SetActive(false);
-            //nameTextPro.gameObject.SetActive(true);
-            //describeTextPro.gameObject.SetActive(true);
         }
         else if (realCardState == RealCardState.SelectCard)
         {
-            //nameText.gameObject.SetActive(false);
-            //describeText.gameObject.SetActive(false);
-            //nameTextPro.gameObject.SetActive(true);
-            //describeTextPro.gameObject.SetActive(true);
-            cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 0;
+            //cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 0;
+            handCardState = HandCardState.Freedom;
+        }
+        else if (realCardState == RealCardState.ShowCard)
+        {
+            //cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 0;
             handCardState = HandCardState.Freedom;
         }
     }
@@ -290,7 +291,7 @@ public class realCard : MonoBehaviour
     public void StateSelect_Freedom()
     {
         handCardState = HandCardState.Other;
-        cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 0;
+        //cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 0;
         transform.position = cardmesh.position;
         handCardState = HandCardState.Freedom;
         cardmesh.SetParent(transform, true);
@@ -309,6 +310,25 @@ public class realCard : MonoBehaviour
         transform.position = gameManager.Instance.instantiatemanager.battleuiRoot.dicktran.position;
         handCardState = HandCardState.Draw;
     }
+    //alpha渐变
+    public void AlphaAnima(float a,float time=0)
+    {
+        Color tocolor;
+        tocolor=new Color(cardTexture.color.r, cardTexture.color.g, cardTexture.color.b, a);
+        DOTween.To(() => cardTexture.color, x => cardTexture.color = x, tocolor, time);
+        tocolor = new Color(cardBoard.color.r, cardBoard.color.g, cardBoard.color.b, a);
+        DOTween.To(() => cardBoard.color, x => cardBoard.color = x, tocolor, time);
+        foreach(SpriteRenderer sr in costrenders)
+        {
+            tocolor = new Color(sr.color.r, sr.color.g, sr.color.b, a);
+            DOTween.To(() => sr.color, x => sr.color = x, tocolor, time);
+        }
+        tocolor = new Color(nameTextPro.color.r, nameTextPro.color.g, nameTextPro.color.b, a);
+        DOTween.To(() => nameTextPro.color, x => nameTextPro.color = x, tocolor, time);
+        tocolor = new Color(describeTextPro.color.r, describeTextPro.color.g, describeTextPro.color.b, a);
+        DOTween.To(() => describeTextPro.color, x => describeTextPro.color = x, tocolor, time);
+    }
+
     //用于进入等待选择状态
     public void EnterStateWaitSelect()
     {
@@ -330,6 +350,34 @@ public class realCard : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="i">1-得到、2-删除</param>
+    public void ShowCard(int i)
+    {
+        if (i == 1)
+        {
+            transform.localPosition = new Vector3(0, -initdownmove, 0);
+            transform.DOLocalMoveY(0, 0.25f).onComplete += () =>
+            {
+                GameObject t = Instantiate(trailGO, transform);
+                AlphaAnima(0, 0.15f);
+                t.GetComponent<TrailControll>().StartMove(instantiateManager.instance.mapRootInfo.uiMapContrill.cardui.transform);
+                //t.transform.DOMove(instantiateManager.instance.mapRootInfo.uiMapContrill.cardui.transform.position, 1f);
+            };
+            Destroy(transform.parent.gameObject,1.5f);
+        }
+        else if (i == 2)
+        {
+            transform.localPosition = new Vector3(0, -initdownmove, 0);
+            transform.DOLocalMoveY(0, 0.25f).onComplete += () =>
+            {
+                AlphaAnima(0, 0.8f);;
+            };
+            Destroy(transform.parent.gameObject, 1.5f);
+        }
+    }
     private void OnMouseEnter()
     {
         if (gameManager.Instance.gameState == GameState.BattleSence)
@@ -431,7 +479,7 @@ public class realCard : MonoBehaviour
                         if (thisCard.Kind != CardKind.CurseCard)
                         {
                             handCardState = HandCardState.Select;
-                            cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                            //cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 1;
                             handcardControll.SetSelectCard(this);
                         }
                         break;

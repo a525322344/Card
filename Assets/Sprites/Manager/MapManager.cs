@@ -247,6 +247,10 @@ public class MapManager : MonoBehaviour
         {
             outEndNode.LinkNode(placeNodeDic[new Vector2(placeNumPerStorey, startstorey + outplacenum)]);
         }
+        else if (startstorey + outplacenum == allStoreyNum - 1)
+        {
+            outEndNode.LinkNode(endPlaceNode);
+        }
         else
         {
             Debug.Log("bug");
@@ -257,12 +261,15 @@ public class MapManager : MonoBehaviour
             Vector2 posi = new Vector2(placeNumPerStorey + 1, startstorey + i);
             placeNodeDic[posi].LinkNode(placeNodeDic[posi + Vector2.up]);
         }
+        List<PlaceNode> copyList;
         //添加路线
         Debug.Log("添加路线");
         int addLinklineNun = (int)Random.Range(addLinklineNumRange.x, addLinklineNumRange.y + 1);
+        copyList = new List<PlaceNode>(placeNodeList);
         for (int i = 0; i < addLinklineNun;)
         {
-            PlaceNode toaddLineNode = ListOperation.RandomValue<PlaceNode>(placeNodeList);
+            PlaceNode toaddLineNode = ListOperation.RandomValue<PlaceNode>(copyList);
+            copyList.Remove(toaddLineNode);
             if (CanAddLinkline(toaddLineNode))
             {
                 List<Vector2> tolinkVectors = new List<Vector2>
@@ -324,13 +331,19 @@ public class MapManager : MonoBehaviour
                 toaddLineNode.LinkNode(placeNodeDic[tolinkV]);
                 i++;
             }
+            if (copyList.Count == 0)
+            {
+                Debug.Log("可以添加路线的路径点不足");
+                break;
+            }
         }
         //删除节点
         int deleteNodeNum = (int)Random.Range(deleteNodeNumRange.x, deleteNodeNumRange.y + 1);
+        copyList = new List<PlaceNode>(placeNodeList);
         for (int i = 0; i < deleteNodeNum;)
         {
-            PlaceNode todeleteNode = ListOperation.RandomValue<PlaceNode>(placeNodeList);
-
+            PlaceNode todeleteNode = ListOperation.RandomValue<PlaceNode>(copyList);
+            copyList.Remove(todeleteNode);
             if (CanDeleteNode(todeleteNode))
             {
                 //之前
@@ -395,6 +408,11 @@ public class MapManager : MonoBehaviour
                 intListDic[(int)todeleteNode.PointPosi.y].Remove(todeleteNode);
                 i++;
             }
+            if (copyList.Count == 0)
+            {
+                Debug.Log("可以删除的路径点不足");
+                break;
+            }
         }
         //排序，为生成做准备
         foreach (var intlist in intListDic)
@@ -418,7 +436,7 @@ public class MapManager : MonoBehaviour
         }
         //精英怪
         int hardenemyNum =(int) Random.Range(hardEnemyNumRange.x, hardEnemyNumRange.y + 1);
-        List<PlaceNode> copyList = new List<PlaceNode>(placeNodeList);
+        copyList = new List<PlaceNode>(placeNodeList);
         for(int i = 0; i < hardenemyNum;)
         {
             PlaceNode nowplacenode = ListOperation.RandomValue<PlaceNode>(copyList);
@@ -456,6 +474,7 @@ public class MapManager : MonoBehaviour
             }
             if (copyList.Count == 0)
             {
+                Debug.Log("可以精英的路径点不足");
                 break;
             }
         }
@@ -473,6 +492,7 @@ public class MapManager : MonoBehaviour
             }
             if (copyList.Count == 0)
             {
+                Debug.Log("可以商店的路径点不足");
                 break;
             }
         }
@@ -967,8 +987,9 @@ public class MapManager : MonoBehaviour
         gameManager.Instance.battlemanager.startBattale();
     }
 
-    public void EventWindow(bool isw)
+    public void EventWindow(bool isw,float bright=1)
     {
+        maprootinfo.mapCamera.GetComponent<GaussianBlur>().brightness = bright;
         if (isw)
         {
             mapState = MapState.EventWindow;

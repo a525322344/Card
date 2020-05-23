@@ -122,6 +122,16 @@ public class instantiateManager : MonoBehaviour
         uiShopBoard uiShop = shopBoard.GetComponent<uiShopBoard>();
         uiShop.Init();
     }
+    //展示卡牌
+    public void instanShowCard(playerCard card, int i)
+    {
+        GameObject cardg = Instantiate(cardGO, mapRootInfo.showCardPosi);
+        realCard rc = cardg.transform.GetChild(0).GetComponent<realCard>();
+        rc.Init(card, RealCardState.ShowCard);
+        rc.ShowCard(i);
+        rc.AlphaAnima(0);
+        rc.AlphaAnima(1, 0.25f);
+    }
 
     //战斗——抽卡
     public void instanDrawACard(card playercard)

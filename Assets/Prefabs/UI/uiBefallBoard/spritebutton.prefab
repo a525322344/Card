@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1665012284248989643}
   - component: {fileID: 291757105006396622}
   - component: {fileID: 1523007685713028319}
-  m_Layer: 12
-  m_Name: exitbutton
+  m_Layer: 13
+  m_Name: spritebutton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,3 +106,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3dafd9af1ba0184ab5623b0f5e0a35b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOn: 1

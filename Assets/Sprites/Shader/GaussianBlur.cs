@@ -10,6 +10,8 @@ public class GaussianBlur : PostEffectBase
     public int downSample = 2;
     //迭代次数
     public int iteration = 1;
+    //亮度
+    public float brightness = 1;
     // Start is called before the first frame update
 
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
@@ -18,7 +20,7 @@ public class GaussianBlur : PostEffectBase
         {
             RenderTexture rt1 = RenderTexture.GetTemporary(source.width >> downSample, source.height >> downSample, 0,source.format);
             RenderTexture rt2 = RenderTexture.GetTemporary(source.width >> downSample, source.height >> downSample, 0,source.format); ;
-
+            _Material.SetFloat("_Brightness", brightness);
             Graphics.Blit(source, rt1);
             for(int i = 0; i < iteration; i++)
             {
