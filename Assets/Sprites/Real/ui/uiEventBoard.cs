@@ -19,6 +19,7 @@ public class uiEventBoard : MonoBehaviour
 
     public void EnterEventBoard(befallinfo befall)
     {
+        gameManager.Instance.uimanager.IsEventOn = true;
         //初始化
         for (int i = 0; i < 4; i++)
         {
@@ -59,7 +60,8 @@ public class uiEventBoard : MonoBehaviour
     //退出菜单
     public void ExitEventBoard()
     {
-        foreach(Button button in buttons)
+        gameManager.Instance.uimanager.IsEventOn = false;
+        foreach (Button button in buttons)
         {
             button.gameObject.SetActive(false);
         }

@@ -204,8 +204,8 @@ public class uiShopBoard : MonoBehaviour
             {
                 d.Value.realCs.sortState = SortState.Free;
             }
-            deleteSale.realCs.isOn = true;
-            exitbutton.isOn = true;
+            deleteSale.realCs.isMoseOn = true;
+            exitbutton.isMoseOn = true;
         }
         else
         {
@@ -217,8 +217,8 @@ public class uiShopBoard : MonoBehaviour
             {
                 d.Value.realCs.sortState = SortState.Other;
             }
-            deleteSale.realCs.isOn = false;
-            exitbutton.isOn = false;
+            deleteSale.realCs.isMoseOn = false;
+            exitbutton.isMoseOn = false;
         }
     }
     public void MoveUp()

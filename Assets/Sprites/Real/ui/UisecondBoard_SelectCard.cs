@@ -29,42 +29,46 @@ public class UisecondBoard_SelectCard : uiSecondBoard
     public Transform curpos;
     public Transform sliderUpPosi;
     public Transform sliderDownPosi;
-    float slideralllength;
-    float upz;
-    float downz;
+    public bool canmoveslider;
+    public float slideralllength;
+    public float upz;
+    public float downz;
 
-    float allLength;                //总长
+    public float allLength;                //总长
     public float present;           //占比
     public float screenLength = 16; //
-    float canmoveLength;
-    public float cardlength = 6.6f;
+    public float canmoveLength;
+    public float cardlength = 5.9f;
 
     private void Update()
     {
-        //旋转部分
-        if (Input.GetAxis("Mouse ScrollWheel") < 0)//下
+        if (canmoveslider)
         {
-            present += 0.2f;
-            if (present > 1)
+            if (Input.GetAxis("Mouse ScrollWheel") < 0)//下
             {
-                present = 1;
+                present += 0.4f;
+                if (present > 1)
+                {
+                    present = 1;
+                }
             }
-        }
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)//上
-        {
-            present -= 0.2f;
-            if (present < 0)
+            if (Input.GetAxis("Mouse ScrollWheel") > 0)//上
             {
-                present = 0;
+                present -= 0.4f;
+                if (present < 0)
+                {
+                    present = 0;
+                }
             }
+            canmoveLength = allLength - screenLength;
+            cardFolder.transform.DOLocalMoveY(present * canmoveLength, 0.2f);
+            curpos.DOLocalMoveY(upz - present * slideralllength, 0.2f);
         }
-        canmoveLength = allLength - screenLength;
-        cardFolder.transform.DOLocalMoveY(present * canmoveLength, 0.2f);
-        curpos.DOLocalMoveY(upz -present * slideralllength,0.2f);
     }
 
     public void Init(List<playerCard> cardlist,int selectnum)
     {
+        gameManager.Instance.mapmanager.EventWindow(true, 0.8f);
         freeCardList = new List<playerCard>(cardlist);
         selectNum = selectnum;
         cardsToSelect = new thingToSelect<playerCard>();
@@ -106,7 +110,10 @@ public class UisecondBoard_SelectCard : uiSecondBoard
             }
         }
         //计算总长
-        allLength = v * -distanceVer * cardscale.localScale.x + cardlength;
+        if (h == 0){
+            v--;
+        }
+        allLength = v * -distanceVer * cardscale.localScale.y + cardlength;
         if (screenLength < allLength)
         {
             sliderFolder.SetActive(true);
@@ -114,16 +121,25 @@ public class UisecondBoard_SelectCard : uiSecondBoard
             upz = sliderUpPosi.position.y;
             downz = sliderDownPosi.position.y;
             slideralllength = upz - downz;
+            canmoveslider = true;
         }
         else
         {
             sliderFolder.SetActive(false);
+            canmoveslider = false;
         }
+
+
+        CancelButton.AddListener(() =>
+        {
+            gameManager.Instance.mapmanager.EventWindow(false, 1);
+        });
     }
     public override void Exit()
     {
         base.Exit();
         onSelectCards(selectCardList);
+        gameManager.Instance.mapmanager.EventWindow(false, 1);
         //退出这个页面
         Destroy(gameObject);
     }

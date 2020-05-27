@@ -106,4 +106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3dafd9af1ba0184ab5623b0f5e0a35b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOn: 1
+  sleepColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
+  IsActive: 1
+  isMoseOn: 1

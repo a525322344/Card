@@ -9,6 +9,8 @@ public class UImanager : MonoBehaviour
     //开始场景
     public startMuneControll startMuneControll;
     //地图场景
+    public bool IsEventOn;
+    public bool IsShopOn;
     [HideInInspector]
     public uiEventBoard uiBefallBoard;
     //战斗场景
