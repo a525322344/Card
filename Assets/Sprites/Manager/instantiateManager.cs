@@ -59,7 +59,8 @@ public class instantiateManager : MonoBehaviour
 
     //地图遭遇——生成整理背包页面(功能下放)
     List<realpart> realparts = new List<realpart>();
-    GameObject knapscak;
+    [HideInInspector]
+    public GameObject knapscak;
     public void instanSortPart(List<MagicPart> magicParts,knapsack _knapsack)
     {
         //外部生成还没有安装的部件
@@ -102,7 +103,8 @@ public class instantiateManager : MonoBehaviour
         realparts.Clear();
         Destroy(knapscak);
     }
-    GameObject secondBoard;
+    [HideInInspector]
+    public GameObject secondBoard;
     //生成二级菜单
     public GameObject instanSecondBoard(secondBoardInfo secondboardInfo)
     {
@@ -116,12 +118,15 @@ public class instantiateManager : MonoBehaviour
         Destroy(secondBoard);
     }
     //商店
+    [HideInInspector]
+    public GameObject shopBoard;
     public void instanShopBoard()
     {
-        GameObject shopBoard = Instantiate(shopUiGO, mapRootInfo.secondBoardPosi);
+        shopBoard = Instantiate(shopUiGO, mapRootInfo.secondBoardPosi);
         uiShopBoard uiShop = shopBoard.GetComponent<uiShopBoard>();
         uiShop.Init();
     }
+
     //展示卡牌
     public void instanShowCard(playerCard card, int i)
     {

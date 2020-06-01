@@ -39,6 +39,10 @@ public class playerInfo
         {
             playerDeck.Add(cardAsset.AllGradeCards[card.Id]);
             playerDeck.Remove(card);
+            if (gameManager.Instance.gameState == GameState.MapSence)
+            {
+                instantiateManager.instance.instanShowCard(card, 1);
+            }
         }
         else
         {

@@ -25,6 +25,8 @@ public class realpart : MonoBehaviour
     public GameObject realgridMode;
     public float distance = 0.333f;
     public Transform meshTran;
+    public Transform diban;
+    public Transform mianban;
     public Transform jiaotiaoTran;
     public Transform gridFolder;
     public Transform saleposi;
@@ -92,6 +94,8 @@ public class realpart : MonoBehaviour
             jiaotiaoTran.gameObject.SetActive(false);
             sortState = SortState.Free;
             linkSavePart = thisMagicPart;
+            diban.gameObject.SetActive(false);
+            mianban.GetComponent<MeshRenderer>().enabled = true;
             GetComponent<BoxCollider>().enabled = false;
         }
         else if(state == RealPartState.Sort)
@@ -101,6 +105,8 @@ public class realpart : MonoBehaviour
             meshTran.gameObject.SetActive(false);
             jiaotiaoTran.gameObject.SetActive(false);
             meshTran.GetChild(0).gameObject.SetActive(false);
+            diban.gameObject.SetActive(false);
+            mianban.GetComponent<MeshRenderer>().enabled = true;
             //GetComponent<BoxCollider>().size = new Vector3(100, 100, 2);
             //GetComponent<BoxCollider>().center = new Vector3(0, 0, 0);
             GetComponent<BoxCollider>().enabled = false;
@@ -109,6 +115,8 @@ public class realpart : MonoBehaviour
         {
             b_ShowOutlineInMap = false;
             sortState = SortState.Free;
+            diban.gameObject.SetActive(true);
+            mianban.GetComponent<MeshRenderer>().enabled=false;
             GetComponent<BoxCollider>().size = new Vector3(300, 350, 2);
             GetComponent<BoxCollider>().center = new Vector3(0, -100, 0);
         }

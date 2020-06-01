@@ -171,6 +171,7 @@ public class uiShopBoard : MonoBehaviour
                 uiselectboard.CancelButton.AddListener(() =>
                 {
                     TurnOn(true);
+                    gameManager.Instance.mapmanager.EventWindow(true);
                     Destroy(uiselectboard.gameObject);
                 });
                 uiselectboard.onSelectCards = (cardlist) =>
@@ -182,6 +183,7 @@ public class uiShopBoard : MonoBehaviour
                     //删卡成功后
                     TurnOn(true);
                     playerinfo.GetMoney(-deleteSale.price);
+                    gameManager.Instance.mapmanager.EventWindow(true);
                     Destroy(deleteSale.thingGO);
                     Destroy(deleteSale.priceGO);
                 };
@@ -196,6 +198,7 @@ public class uiShopBoard : MonoBehaviour
         On = on;
         if (On)
         {
+            gameObject.SetActive(true);
             foreach (var d in cardSaleDic)
             {
                 d.Value.realCs.handCardState = HandCardState.Freedom;
@@ -209,6 +212,7 @@ public class uiShopBoard : MonoBehaviour
         }
         else
         {
+            gameObject.SetActive(false);
             foreach(var d in cardSaleDic)
             {
                 d.Value.realCs.handCardState = HandCardState.Other;
