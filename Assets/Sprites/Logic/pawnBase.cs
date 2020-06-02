@@ -12,19 +12,25 @@ public class pawnbase
     public List<stateAbstarct> stateList = new List<stateAbstarct>();///展示用链表
     public Dictionary<string, stateAbstarct> nameStatePairs = new Dictionary<string, stateAbstarct>();
 
-    public virtual void hurtHealth(int i)
+    public virtual void hurtHealth(int i,out int real)
     {
         if (i > 0)
         {
             if (armor > i)
             {
                 destoryArmor(i);
+                real = 0;
             }
             else
             {
                 healthnow -= (i - armor);
                 destoryArmor(armor);
+                real = i - armor;
             }
+        }
+        else
+        {
+            real = 0;
         }
     }
     public virtual void realHurtHealth(int i)
@@ -57,10 +63,10 @@ public class enemybase : pawnbase
         base.destoryArmor(i);
         gameManager.Instance.battlemanager.realenemy.changeHealthAndArmor(armor, healthnow);
     }
-    public override void hurtHealth(int i)
+    public override void hurtHealth(int i,out int real)
     {
-        base.hurtHealth(i);
-        gameManager.Instance.battlemanager.realenemy.showGetHurt(i);
+        base.hurtHealth(i,out real);
+        gameManager.Instance.battlemanager.realenemy.showGetHurt(real);
         gameManager.Instance.battlemanager.realenemy.changeHealthAndArmor(armor, healthnow);
     }
     public override void realHurtHealth(int i)
@@ -83,14 +89,16 @@ public class playerpawn : pawnbase
         base.destoryArmor(i);
         gameManager.Instance.battlemanager.realplayer.changeHealthAndArmor(armor, healthnow);
     }
-    public override void hurtHealth(int i)
+    public override void hurtHealth(int i,out int real)
     {
-        base.hurtHealth(i);
+        base.hurtHealth(i,out real);
         gameManager.Instance.battlemanager.realplayer.changeHealthAndArmor(armor, healthnow);
+        gameManager.Instance.battlemanager.realplayer.showGetHurt(real);
     }
     public override void realHurtHealth(int i)
     {
         base.realHurtHealth(i);
         gameManager.Instance.battlemanager.realplayer.changeHealthAndArmor(armor, healthnow);
+        gameManager.Instance.battlemanager.realplayer.showGetHurt(i);
     }
 }

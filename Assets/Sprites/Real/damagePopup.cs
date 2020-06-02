@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using TMPro;
 
 public class damagePopup : MonoBehaviour
 {
@@ -10,9 +11,10 @@ public class damagePopup : MonoBehaviour
     public Vector2 speedrange;
     public float speed;
     public float ac = 10;
-    public Text text;
+    public float alpha = 0.2f;
+    public TextMeshPro text;
     private float initscale=1;
-    private float lefttime=0.5f;
+    public float lefttime=0.5f;
 
     public float xrange;
     private float xspeed;
@@ -34,7 +36,10 @@ public class damagePopup : MonoBehaviour
     {
         speed -= ac * Time.deltaTime;
         transform.LookAt(instantiateManager.instance.battleEnvRoot.ENCamera.transform);
-        transform.DOScale(Vector3.one * initscale * 1.1f, lefttime);
+        transform.DOScale(Vector3.one * initscale * 1.5f, lefttime);
         transform.Translate(new Vector3(xspeed,speed,0) * Time.deltaTime);
+
+        Color color = new Color(text.color.r, text.color.g, text.color.b, alpha);
+        DOTween.To(() => text.color, x => text.color = x, color, lefttime);
     }
 }

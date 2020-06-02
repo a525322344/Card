@@ -3097,10 +3097,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: fdfb8d5ea7e13f5488cfbc8ce29edf81, type: 3}
-  colorThreshold: {r: 0, g: 0, b: 0, a: 1}
+  colorThreshold: {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 1}
   lightColor: {r: 1, g: 1, b: 1, a: 1}
   lightFactor: 0.8
-  samplerScale: 9.2
+  samplerScale: 4.3
   blurIteration: 3
   downSample: 1
   lightTransform: {fileID: 1115880762}

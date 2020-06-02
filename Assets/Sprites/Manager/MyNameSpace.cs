@@ -17,7 +17,7 @@ namespace AllAsset
             {
                 num = 0;
             }
-            battleInfo.Enemy.hurtHealth(num);
+            battleInfo.Enemy.hurtHealth(num,out returnnum);
         }
 
         public static void EnemyGetRealHurt(int num,battleInfo battleInfo,out int returnnum)
@@ -61,7 +61,7 @@ namespace AllAsset
             {
                 num = 0;
             }
-            battleInfo.Player.hurtHealth(num);
+            battleInfo.Player.hurtHealth(num,out returnnum);
         }
         public static void PlayerGetRealHurt(int num,battleInfo battleInfo,out int returnnum)
         {

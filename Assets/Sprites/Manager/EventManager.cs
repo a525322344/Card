@@ -122,12 +122,17 @@ public class EventManager
             }
         }
         //做胜利判断
+        if (battleManager.battleInfo.Player.healthnow <= 0)
+        {
+            gameManager.Instance.FailScene();
+        }
         if (battleManager.battleInfo.Enemy.healthnow <= 0)
         {
             battleManager.BattleRound = BattleState.Vectory;
             battleManager.EndBattleScene();
             gameManager.Instance.uimanager.roundEndButton.interactable = false;
         }
+
     }
 
     public void InsertEvent(singleEvent singleevent){

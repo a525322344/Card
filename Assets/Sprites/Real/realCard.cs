@@ -202,6 +202,7 @@ public class realCard : MonoBehaviour
         }
     }
     //供创建时使用
+
     public void Init(card playerCard,RealCardState _realCardState)
     {
         realCardState = _realCardState;
@@ -213,7 +214,7 @@ public class realCard : MonoBehaviour
         nameTextPro.text = playerCard.Name;
         describeTextPro.text = (playerCard as playerCard).CardDescribe();
         cardTexture.sprite = gameManager.Instance.instantiatemanager.cardSprites[playerCard.TextureId];
-        Transform costTran;
+        Transform costTran = transform;
         switch (playerCard.Kind)
         {
             case CardKind.AttackCard:
@@ -246,6 +247,7 @@ public class realCard : MonoBehaviour
         }
         else if (realCardState == RealCardState.AwardCard)
         {
+
         }
         else if (realCardState == RealCardState.SelectCard)
         {
@@ -256,6 +258,13 @@ public class realCard : MonoBehaviour
         {
             //cardKindIcon.GetComponent<SpriteRenderer>().sortingOrder = 0;
             handCardState = HandCardState.Freedom;
+        }
+    }
+    public void orderCost()
+    {
+        foreach(var sr in costrenders)
+        {
+            sr.sortingOrder = 1;
         }
     }
 

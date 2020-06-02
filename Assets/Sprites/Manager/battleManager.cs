@@ -107,6 +107,21 @@ public class battleManager : MonoBehaviour
     public MagicPart lastPart;
     public void SetSelectPart(MagicPart _magicPart)
     {
+        if (_magicPart == null)
+        {
+            if (realknapsack.selecRealParts.Count > 0)
+            {
+                realknapsack.selecRealParts[0].showPartDescribe(false);
+            }
+
+        }
+        else
+        {
+            if (realknapsack.selecRealParts.Count > 0)
+            {
+                realknapsack.selecRealParts[0].showPartDescribe(true);
+            }
+        }
         selectedPart = _magicPart;
     }
     #endregion
@@ -344,6 +359,7 @@ public class battleManager : MonoBehaviour
     }
     IEnumerator IEendBattle()
     {
+        realenemy.changeAnimation(5);
         yield return new WaitForSeconds(0.5f);
         gameManager.Instance.uimanager.uiVectorBoard.Init(monster.monsterLevel);
         instantiateManager.instance.mapRootInfo.uiMapContrill.SetMoney();

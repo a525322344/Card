@@ -973,8 +973,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4245223716312520693}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.33, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.24, y: 3.57, z: -0.54}
+  m_LocalScale: {x: 0.4816473, y: 0.4816473, z: 0.4816473}
   m_Children: []
   m_Father: {fileID: 2831618940249110163}
   m_RootOrder: 1
@@ -1121,6 +1121,7 @@ MonoBehaviour:
   damageshow: {fileID: 2690487459769679972, guid: 9bf6a271ab2b31d4b877a9edec1e052a,
     type: 3}
   damagePosi: {fileID: 4130153777139843851}
+  damageEffectPosi: {fileID: 4130153777139843851}
 --- !u!1 &5897805102237787502
 GameObject:
   m_ObjectHideFlags: 0

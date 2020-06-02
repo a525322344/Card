@@ -39,6 +39,7 @@ public abstract class actionAbstract
         effects[0].DealEffect(num, info);
     }
     public List<actionAbstract> actionList = new List<actionAbstract>();
+    public List<perform> performList = new List<perform>();
 }
 
 public class actionHurt : actionAbstract
@@ -48,48 +49,75 @@ public class actionHurt : actionAbstract
         times = 1;
         num = n;
         Kind = ACTIONKIND.Attack;
+        performList.Add(new PerformAnima(1, 2, 1,0.15f));
+        performList.Add(new PerformAnima(0, 3, 1,0.7f));
+
         effects.Add(new ActionEffect_MonsterHurt(n));
     }
-    public actionHurt(int n,int timess)
+    public actionHurt(int n,int timess,params perform[] performs)
     {
         times = timess;
         num = n;
         Kind = ACTIONKIND.Attack;
-        for(int i = 0; i < times; i++)
+        performList.Add(new PerformAnima(1, 2, 1, 0.15f));
+        performList.Add(new PerformAnima(0, 3, 1, 0.7f));
+        for (int i = 0; i < times; i++)
         {
             effects.Add(new ActionEffect_MonsterHurt(n));
+        }
+        foreach(perform per in performs)
+        {
+            performList.Add(per);
         }
     }
 }
 
 public class actionDebuff : actionAbstract
 {
-    public actionDebuff(EffectBase effect)
+    public actionDebuff(EffectBase effect, params perform[] performs)
     {
         times = 1;
         num = 1;
         Kind = ACTIONKIND.Debuff;
+        performList.Add(new PerformAnima(1, 2, 1, 0.1f));
+        performList.Add(new PerformEffect(1, instantiateManager.instance.EffectGOList[9], 0, 1, 0.3f));
         effects.Add(effect);
+        foreach (perform per in performs)
+        {
+            performList.Add(per);
+        }
     }
 }
 
 public class actionPowerUp : actionAbstract
 {
-    public actionPowerUp(EffectBase effect)
+    public actionPowerUp(EffectBase effect, params perform[] performs)
     {
         times = 1;
         num = 1;
         Kind = ACTIONKIND.StrongUP;
+        performList.Add(new PerformEffect(1, instantiateManager.instance.EffectGOList[9], 0, 1, 0.3f));
+        performList.Add(new PerformAnima(1, 4, 1, 0.1f));
         effects.Add(effect);
+        foreach (perform per in performs)
+        {
+            performList.Add(per);
+        }
     }
 }
 
 public class actionArmor : actionAbstract
 {
-    public actionArmor(int n)
+    public actionArmor(int n, params perform[] performs)
     {
         Kind = ACTIONKIND.Defense;
+        performList.Add(new PerformAnima(1, 3, 1, 0.1f));
+        performList.Add(new PerformEffect(1, instantiateManager.instance.EffectGOList[0], 0, 1, 0.3f));
         effects.Add(new ActionEffect_MonsterArmor(n));
+        foreach (perform per in performs)
+        {
+            performList.Add(per);
+        }
     }
 }
 
@@ -102,6 +130,10 @@ public class actionAdmix : actionAbstract
         {
             ListOperation.InsertList<EffectBase>(effects, actionab.effects);
             actionList.Add(actionab);
+            foreach(perform per in actionab.performList)
+            {
+                performList.Add(per);
+            }
         }
     }
     public override void DoAction(int n,battleInfo info)

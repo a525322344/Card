@@ -49,6 +49,12 @@ public class PerformAnima : perform
         animation = a;
         animaspeed = speed;
     }
+    public PerformAnima(int c,int a,float speed,float time){
+        charactor = c;
+        animation = a;
+        animaspeed = speed;
+        timeTurn = time;
+    }
     public override void Play()
     {
         if (charactor == 0)
@@ -76,6 +82,14 @@ public class PerformEffect:perform
         effect = _effect;
         speed = _speed;
         lasttime = time;
+    }
+    public PerformEffect(int _kind,GameObject _effect,float _speed,float time,float ttrun)
+    {
+        kind = _kind;
+        effect = _effect;
+        speed = _speed;
+        lasttime = time;
+        timeTurn = ttrun;
     }
 
     public override void Play()

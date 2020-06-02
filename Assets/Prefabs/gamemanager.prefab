@@ -53,6 +53,7 @@ MonoBehaviour:
     playerKnapsack:
       isexploits: 
     roundStartDrawCardNum: 5
+    thisBattleDrawCardNum: 0
     treasureToSelectNum: 3
     playerHealthMax: 100
     playerHealth: 100
@@ -65,6 +66,8 @@ MonoBehaviour:
   uimanager: {fileID: 0}
   InitControllBoard: {fileID: 11400000, guid: f2b122f796562a34d9e784dadc3b696c, type: 2}
   CardEditorBoard: {fileID: 11400000, guid: 8927315ad9a26d74cab3dcdfb5b9e202, type: 2}
+  testcard: 0
+  TestCardEditor: {fileID: 11400000, guid: 1f3bff11858d871469d2dc01a3e99740, type: 2}
   battleScene:
     m_Handle: 0
   mapScene:
@@ -98,24 +101,93 @@ MonoBehaviour:
   actionDefense: {fileID: 8073743595131508596, guid: 8f87929cb5db6b24184a4fb52379ee5b,
     type: 3}
   MonsterAll:
-  - {fileID: 5888839611947553217, guid: b8a1fffdee2d37643b90617a01b8d310, type: 3}
   - {fileID: 9148584800839085505, guid: 0cd54c6528d633944a6091a594569c7e, type: 3}
-  placeGO: {fileID: 2426738077868084505, guid: 984eb8fafb51e3f40ad45e7a17dda140, type: 3}
-  loadGO: {fileID: 0}
-  shopUiGO: {fileID: 0}
-  uiSecondBoardGOList: []
+  - {fileID: 9148584800839085505, guid: ac591365f3a0f1b4d853762e1371ee85, type: 3}
+  - {fileID: 9148584800839085505, guid: db7dbbaf205e0254d9a7b5ab4ded83ad, type: 3}
+  - {fileID: 9148584800839085505, guid: 731a199067cfa874789ae4380742ca3d, type: 3}
+  - {fileID: 9148584800839085505, guid: 2882bf24113a8674ea684ddb75abfc0f, type: 3}
+  monsterHeadList:
+  - {fileID: 21300000, guid: 0e1da40ec530e98428bd3c08bb2fcd07, type: 3}
+  - {fileID: 21300000, guid: 76110f3d7676d7048b27edc1c145a03d, type: 3}
+  - {fileID: 21300000, guid: 40f3ace9913b97947990884fec444386, type: 3}
+  - {fileID: 21300000, guid: 02bdf7c48cd45b84393798c37287a56b, type: 3}
+  - {fileID: 21300000, guid: 6038072a77f03af408dccc407dede7c0, type: 3}
+  placeGO: {fileID: 1280800841562665640, guid: ddd29dc69ea15c04f9a40d609ec65fde, type: 3}
+  loadGO: {fileID: 1027311187460179986, guid: 169c93cef30b18f45850a8a57d59cf76, type: 3}
+  shopUiGO: {fileID: 5183457121522521435, guid: 001af75d1369921428a60becca0dc56e,
+    type: 3}
+  uiSecondBoardGOList:
+  - {fileID: 2177771786091131045, guid: cfecafc1b77695744919550c94377212, type: 3}
+  - {fileID: 675200926777136499, guid: 01e6895b355a38946bb58f6fcb7434d2, type: 3}
+  - {fileID: 5103741371516490659, guid: 2e4a4da72e97c9d439be887cc2d956f6, type: 3}
+  - {fileID: 675200926777136499, guid: 6711618a984f1ee4aa4a8ced880a5942, type: 3}
+  EffectGOList:
+  - {fileID: 3536615487123929430, guid: aa9bf0af42c0e3f48a5c844af9bc41c4, type: 3}
+  - {fileID: 1594833154480470, guid: 2ac92cd69f41de44f8c17e67d8e17644, type: 3}
+  - {fileID: 5185649957888063751, guid: bfcb35273d1d03940ac70ca4cfd8bcdc, type: 3}
+  - {fileID: 6524982471341573584, guid: f61f41c54a3d09a41a62d3fcb5901c54, type: 3}
+  - {fileID: 7001065079164969052, guid: 37a67f85bf3eaba449efa699de83d89d, type: 3}
+  - {fileID: 1864613103826854, guid: 36ff54de8f9aee34980f6249b8395d23, type: 3}
+  - {fileID: 3739984737708905575, guid: 9ed827b9b8c0fba49a3381016f3e431d, type: 3}
+  - {fileID: 8116789151182180180, guid: 7c6ce4ff77e2e7c49ae74c85e64d2e42, type: 3}
+  - {fileID: 1108277559587484, guid: f06bd4589745ee54eba3e60070d1fe69, type: 3}
+  - {fileID: 1236004687241644, guid: 25ba44878909a9141b75ff2e31981901, type: 3}
+  - {fileID: 5132998640882722292, guid: 93760178eb209e84684782ee260a3099, type: 3}
+  - {fileID: 1274915141666192, guid: 5ccabff32a7c44a41b10f056be8ae4c0, type: 3}
+  - {fileID: 1779397397390998, guid: a05d14fdbb773e941be244930ab90f80, type: 3}
   beFallSprites:
-  - {fileID: 21300000, guid: fb4989e7e5d4d0f47ac63e102b591019, type: 3}
+  - {fileID: 21300000, guid: 2464f1588bc3f8a4fa30e5b410f08374, type: 3}
+  - {fileID: 21300000, guid: 23cce77a21fd3f14681cebe6e02bc91b, type: 3}
+  - {fileID: 21300000, guid: 360628256f8f7ec49bec7808449bcd11, type: 3}
+  - {fileID: 21300000, guid: dd046d98124af8e4598173ea96f0ed22, type: 3}
+  - {fileID: 21300000, guid: d360022ce31f82c44b79981bf75b2579, type: 3}
+  - {fileID: 21300000, guid: 70eb1e5d270f2a348b8f381bb16aef1d, type: 3}
+  - {fileID: 21300000, guid: 9c35b20141705e143a941052696f3998, type: 3}
   mapPlaceSprites:
-  - {fileID: 21300000, guid: d0d7574ba417a6049bd27c38cb033b21, type: 3}
-  - {fileID: 21300000, guid: 2e31a7ce20f061847b7df44a45870a03, type: 3}
-  - {fileID: 21300000, guid: db909e225d584a74da0fe7bb6060a298, type: 3}
-  mapPlaceDiSprites: []
-  cardSprites: []
+  - {fileID: 21300000, guid: 30aa6fec7c1f1c94688be230f062d4bc, type: 3}
+  - {fileID: 21300000, guid: d8f468b71b94b384dabfd5387a22f3f6, type: 3}
+  - {fileID: 21300000, guid: ebb02a2b553ce8a4f9f3b70791c1ae4a, type: 3}
+  - {fileID: 21300000, guid: e9b5c380d34c1ed459218d5aad217d03, type: 3}
+  - {fileID: 21300000, guid: a8306ea456aa2574bb21e072f57646b3, type: 3}
+  - {fileID: 21300000, guid: eac73b632a0eea4429e5773cff6ad22f, type: 3}
+  - {fileID: 21300000, guid: b360b8e979279f148983afbbe7db5a2a, type: 3}
+  - {fileID: 21300000, guid: 7890fa5ff57ca8348bafd838b7c2b9d0, type: 3}
+  mapPlaceDiSprites:
+  - {fileID: 21300000, guid: 880aadc8ed9707d418ada58385a868fc, type: 3}
+  - {fileID: 21300000, guid: 62b15b689f82bfa4b8995afa6c286cf2, type: 3}
+  - {fileID: 21300000, guid: 04b6760b9dd3a744ba9acd73ec0bf3e4, type: 3}
+  - {fileID: 21300000, guid: f7f29d2714a02a244b86b8cbb14bb912, type: 3}
+  - {fileID: 21300000, guid: 8e7b942e4a0cded4dac96234623b54e4, type: 3}
+  - {fileID: 21300000, guid: 4fb0015dfa6617c4ba0de56073c5911a, type: 3}
+  - {fileID: 21300000, guid: a9d6bae2d70a24f43abfc9a9dadedc31, type: 3}
+  - {fileID: 21300000, guid: 7890fa5ff57ca8348bafd838b7c2b9d0, type: 3}
+  cardSprites:
+  - {fileID: 21300000, guid: 1f09b31e5a459844ab168696e867ad3d, type: 3}
+  - {fileID: 21300000, guid: 63d95162edb40e34182ef87be8a8202e, type: 3}
+  - {fileID: 21300000, guid: cb0781b24a40e6d4999dd645bb87b438, type: 3}
+  - {fileID: 21300000, guid: 5e9ebba7f8797aa41892d5f52e9e6346, type: 3}
+  - {fileID: 21300000, guid: 9b93aa076b59f6f4dbd5db00ff3ed09f, type: 3}
+  - {fileID: 21300000, guid: baa9f9760682b0344868e1c311679680, type: 3}
+  - {fileID: 21300000, guid: 921cb181e76cdf94e94a238f71284dac, type: 3}
+  - {fileID: 21300000, guid: 04c18c50d65f97e4bb62a47a5f242bf7, type: 3}
+  - {fileID: 21300000, guid: 250995dcee1b42845b8f6cd92ee1346e, type: 3}
+  - {fileID: 21300000, guid: ad62765400302b5429f9442f75ef47d4, type: 3}
+  - {fileID: 21300000, guid: f82a8b1eeb34be24cbb4ed9c6914ce63, type: 3}
+  - {fileID: 21300000, guid: 124329d7efa57dd41bf4a84170bc2909, type: 3}
+  - {fileID: 21300000, guid: 476a2f23a662acf4e9f252ffe5bbf290, type: 3}
+  - {fileID: 21300000, guid: ff482c0b8a0a2e3439893cc6c21d6d59, type: 3}
+  - {fileID: 21300000, guid: b15d1b31531aeab4293418e715db75d8, type: 3}
+  - {fileID: 21300000, guid: 5251e62fb3dcf20489b231b94023040d, type: 3}
+  - {fileID: 21300000, guid: ccd39d35ea2496d4a889cba0dd7bebab, type: 3}
+  - {fileID: 21300000, guid: 324d14377e7b73846bd549a90fd03bf9, type: 3}
   stateSprites:
   - {fileID: 21300000, guid: 0108e999384aa354c8b59f76ac7a01d8, type: 3}
+  - {fileID: 21300000, guid: e0434b18f2c007f4eb559eb0dc7b9e6e, type: 3}
   waitSelectBoardGO: {fileID: 8728863353477294464, guid: 7babce6b90d3596479f89d6c1d6a1df6,
     type: 3}
+  knapscak: {fileID: 0}
+  secondBoard: {fileID: 0}
+  shopBoard: {fileID: 0}
 --- !u!114 &6214252688899465385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,6 +201,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMuneControll: {fileID: 0}
+  IsEventOn: 0
+  IsShopOn: 0
   uiBefallBoard: {fileID: 0}
   roundEndButton: {fileID: 0}
   uiVectorBoard: {fileID: 0}
@@ -147,29 +221,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapState: 0
   realplaceList: []
-  mapplayerGO: {fileID: 0}
-  MapPlaceOpen: 0
-  placedistanceRange: {x: 0, y: 0}
+  mapplayerGO: {fileID: 7993240219386138150, guid: d4ea79c94bb889742a08e48d3dadbf95,
+    type: 3}
+  MapPlaceOpen: 1
+  placedistanceRange: {x: 3.2, y: 4}
   allStoreyNum: 12
   placeNumPerStorey: 4
-  minPlaceNumPerStorey: 2
-  outPlaceNumRange: {x: 0, y: 0}
-  deleteNodeNumRange: {x: 0, y: 0}
-  addLinklineNumRange: {x: 0, y: 0}
-  befallBattlePrent: 0
-  hardEnemyNumRange: {x: 0, y: 0}
-  perLineMaxHardEnemyNum: 0
-  sleepCloseHardEnemyPresent: 0
-  shopNumRange: {x: 0, y: 0}
-  perLineMaxShopNum: 0
-  sleepNumRange: {x: 0, y: 0}
-  perSleepMaxNum: 0
+  minPlaceNumPerStorey: 3
+  outPlaceNumRange: {x: 2, y: 3}
+  deleteNodeNumRange: {x: 2, y: 3}
+  addLinklineNumRange: {x: 8, y: 15}
+  befallBattlePrent: 65
+  hardEnemyNumRange: {x: 4, y: 8}
+  perLineMaxHardEnemyNum: 2
+  sleepCloseHardEnemyPresent: 100
+  shopNumRange: {x: 4, y: 8}
+  perLineMaxShopNum: 2
+  sleepNumRange: {x: 4, y: 8}
+  perSleepMaxNum: 3
   treasureStorey: 7
   hardEnemyExtraNum: 2
   mapplayer: {fileID: 0}
-  positionUp: 0
+  positionUp: 19
   positionDown: 0
-  mapCameraMoveSpeed: 0
+  mapCameraMoveSpeed: 5
   NowPlace:
     PointPosi: {x: 0, y: 0}
     placeState: 0

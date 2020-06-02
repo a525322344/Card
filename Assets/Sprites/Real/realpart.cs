@@ -97,6 +97,7 @@ public class realpart : MonoBehaviour
             diban.gameObject.SetActive(false);
             mianban.GetComponent<MeshRenderer>().enabled = true;
             GetComponent<BoxCollider>().enabled = false;
+            meshTran.DOMove(instantiateManager.instance.battleuiRoot.partdescribe.position, 0);
         }
         else if(state == RealPartState.Sort)
         {
@@ -313,6 +314,11 @@ public class realpart : MonoBehaviour
         }
     }
 
+    public void showPartDescribe(bool b)
+    {
+        meshTran.gameObject.SetActive(b);
+    }
+
     public void OnMouseDown()
     {
         if (realPartState == RealPartState.Sort)
@@ -382,7 +388,8 @@ public class realpart : MonoBehaviour
                     sortState = SortState.Enter;
                     Vector3 mouseposition = Input.mousePosition;
                     mouseposition = Camera.main.ScreenToWorldPoint(new Vector3(mouseposition.x, mouseposition.y, instantiateManager.instance.battleuiRoot.uiCanvas.planeDistance));
-                    meshTran.DOMove(mouseposition + Vector3.back * 1, 0);
+                    //meshTran.DOMove(mouseposition + Vector3.back * 1, 0);
+                    //meshTran.DOMove(instantiateManager.instance.battleuiRoot.partdescribe.position, 0);
                     meshTran.gameObject.SetActive(true);
                     break;
             }

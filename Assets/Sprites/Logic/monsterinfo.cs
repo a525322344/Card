@@ -86,10 +86,10 @@ public class monInfo_Bunny : monsterInfo
         health = 40;
         Id = 1;
         monsterLevel = 1;
-        actionList.Add(new actionAdmix(new actionHurt(6), new actionArmor(12)));
+        actionList.Add(new actionAdmix(new actionHurt(6,1,new PerformEffect(0,instantiateManager.instance.EffectGOList[4],0,1,0.8f)), new actionArmor(12)));
         actionList.Add(new actionPowerUp(new ActionEffect_MonsterPowerUp(3)));
-        actionList.Add(new actionHurt(3, 2));
-        actionList.Add(new actionHurt(6));
+        actionList.Add(new actionHurt(3, 2, new PerformEffect(0, instantiateManager.instance.EffectGOList[7], 0, 1, 0.8f)));
+        actionList.Add(new actionHurt(6,1, new PerformEffect(0, instantiateManager.instance.EffectGOList[7], 0, 1, 0.8f)));
 
 
         //顺序选择
@@ -122,8 +122,8 @@ public class monInfo_SnowMan : monsterInfo
         Id = 2;
         monsterLevel = 1;
         actionList.Add(new actionDebuff(new ActionEffect_MonsterDownDrawCardNum(-1)));
-        actionList.Add(new actionAdmix(new actionHurt(9), new actionArmor(6)));
-        actionList.Add(new actionHurt(15));
+        actionList.Add(new actionAdmix(new actionHurt(9,1, new PerformEffect(0, instantiateManager.instance.EffectGOList[2], 0, 1, 0.8f)), new actionArmor(6)));
+        actionList.Add(new actionHurt(15,1, new PerformEffect(0, instantiateManager.instance.EffectGOList[5], 0, 1, 0.8f)));
 
 
         //顺序选择
@@ -156,8 +156,8 @@ public class monInfo_Bear : monsterInfo
         Id = 3;
         monsterLevel = 2;
         actionList.Add(new actionDebuff(new ActionEffect_MonsterAddStateMabi(4)));
-        actionList.Add(new actionAdmix(new actionHurt(12), new actionArmor(8)));
-        actionList.Add(new actionHurt(24));
+        actionList.Add(new actionAdmix(new actionHurt(12,1, new PerformEffect(0, instantiateManager.instance.EffectGOList[7], 0, 1, 0.8f)), new actionArmor(8)));
+        actionList.Add(new actionHurt(24,1, new PerformEffect(0, instantiateManager.instance.EffectGOList[11], 0, 1, 0.8f)));
 
 
         //顺序选择
@@ -253,12 +253,12 @@ public class monInfo_MoNv : monsterInfo
         health = 200;
         Id = 4;
         monsterLevel = 3;
-        actionList.Add(new actionDebuff(new ActionEffect_MonsterBurn(4)));
-        actionList.Add(new actionHurt(8,2));
-        actionList.Add(new actionHurt(15));
-        actionList.Add(new actionAdmix(new actionArmor(12), new actionHurt(6)));
-        actionList.Add(new actionAdmix(new actionDebuff(new ActionEffect_MonsterAddStateMabi(3)), new actionPowerUp(new ActionEffect_MonsterPowerUp(2))));
-        actionList.Add(new actionHurt(4, 4));
+        actionList.Add(new actionDebuff(new ActionEffect_MonsterBurn(4), new PerformEffect(0, instantiateManager.instance.EffectGOList[8], 0, 1, 0.8f)));
+        actionList.Add(new actionHurt(8,2, new PerformEffect(0, instantiateManager.instance.EffectGOList[7], 0, 1, 0.8f)));
+        actionList.Add(new actionHurt(15,1, new PerformEffect(0, instantiateManager.instance.EffectGOList[11], 0, 1, 0.8f)));
+        actionList.Add(new actionAdmix(new actionArmor(12), new actionHurt(6,1, new PerformEffect(0, instantiateManager.instance.EffectGOList[4], 0, 1, 0.8f))));
+        actionList.Add(new actionAdmix(new actionDebuff(new ActionEffect_MonsterAddStateMabi(3), new PerformEffect(1, instantiateManager.instance.EffectGOList[11], 0, 1, 0.3f)), new actionPowerUp(new ActionEffect_MonsterPowerUp(2))));
+        actionList.Add(new actionHurt(4, 4, new PerformEffect(0, instantiateManager.instance.EffectGOList[1], 0, 1, 0.8f)));
 
         //顺序选择
         selectAction = new selectWay((int x) =>

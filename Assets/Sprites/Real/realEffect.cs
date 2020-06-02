@@ -9,8 +9,9 @@ public class realEffect : MonoBehaviour
     int way;
     public void Init(int kind,float speed,float lasttime)
     {
+        //transform.localPosition = Vector3.zero;
         Destroy(gameObject, lasttime);
-        dir = gameManager.Instance.battlemanager.realenemy.transform.position - gameManager.Instance.battlemanager.realplayer.transform.position;
+        dir = gameManager.Instance.battlemanager.realenemy.damageEffectPosi.position - gameManager.Instance.battlemanager.realplayer.damageEffectPosi.position;
         movespeed = speed;
         way = kind;
     }

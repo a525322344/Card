@@ -305,7 +305,7 @@ public class realKnapsack : MonoBehaviour
     MagicPart nullpart = new MagicPart();
     public MagicPart selectPart;
     List<realLatice> selectLatices = new List<realLatice>();
-    List<realpart> selecRealParts = new List<realpart>();
+    public List<realpart> selecRealParts = new List<realpart>();
 
     //当前打出卡牌位置信息
     public List<Vector2> currentPos = new List<Vector2>();
@@ -414,10 +414,23 @@ public class realKnapsack : MonoBehaviour
                 {
                     if (usedLaticePairs[center].realpart.thisMagicPart != null)
                     {
+                        Debug.Log("ofei");
                         selectPart = usedLaticePairs[center].realpart.thisMagicPart;
                         selecRealParts.Add(usedLaticePairs[center].realpart);
                     }
+                    else
+                    {
+                        result = false;
+                    }
                 }
+                else
+                {
+                    result = false;
+                }
+            }
+            else
+            {
+                result = false;
             }
 
         }

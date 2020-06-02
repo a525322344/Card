@@ -66,7 +66,7 @@ public class UisecondBoard_SelectCard : uiSecondBoard
         }
     }
 
-    public void Init(List<playerCard> cardlist,int selectnum)
+    public void Init(List<playerCard> cardlist,int selectnum,int i=0)
     {
         gameManager.Instance.mapmanager.EventWindow(true, 0.8f);
         freeCardList = new List<playerCard>(cardlist);
@@ -100,7 +100,12 @@ public class UisecondBoard_SelectCard : uiSecondBoard
             GameObject cardGO = Instantiate(instantiateManager.instance.cardGO, cardZeroPosition);
             cardGO.transform.localPosition = new Vector3(h * distanceHor, v * distanceVer, 0);
             realCard rc = cardGO.transform.GetChild(0).GetComponent<realCard>();
+
             rc.Init(card, RealCardState.SelectCard);
+            if (i != 0)
+            {
+                rc.orderCost();
+            }
             rc.cardselects = cardsToSelect;
             h++;
             if (h >= numHor)

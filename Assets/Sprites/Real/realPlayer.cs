@@ -11,6 +11,7 @@ public class realPlayer : MonoBehaviour
     public GameObject realStateGO;
     public GameObject damageshow;
     public Transform damagePosi;
+    public Transform damageEffectPosi;
 
     List<GameObject> statego = new List<GameObject>();
 
@@ -49,5 +50,13 @@ public class realPlayer : MonoBehaviour
             stateg.GetComponent<realState>().Init(state.Value);
             a++;
         }
+    }
+
+    public void showGetHurt(int num)
+    {
+        StateUpdtae();
+        GameObject damage = Instantiate(damageshow, damagePosi);
+        Destroy(damage, 5);
+        damage.GetComponent<damagePopup>().Init(num);
     }
 }

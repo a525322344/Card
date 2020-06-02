@@ -10,9 +10,34 @@ public enum GameState
     StartMenu,
     MapSence,
     BattleSence,
+    Failure,
     BattleTest,
 }
-
+[System.Serializable]
+public class InitControll
+{
+    public InitControll()
+    {
+        knapsackLaticInit[6] = true;
+        knapsackLaticInit[7] = true;
+        knapsackLaticInit[8] = true;
+        knapsackLaticInit[11] = true;
+        knapsackLaticInit[12] = true;
+        knapsackLaticInit[13] = true;
+        //knapsackLaticInit[16] = true;
+        //knapsackLaticInit[17] = true;
+        //knapsackLaticInit[18] = true;
+    }
+    public List<int> carddeckInit = new List<int>() { 0, 0, 0, 0, 1, 1, 1, 1, 2, 3 };
+    public bool[] knapsackLaticInit = new bool[25]
+    {
+        false,false,false,false,false,
+        false,true,true,true,false,
+        false,true,true,true,false,
+        false,true,true,true,false,
+        false,false,false,false,false
+    };
+}
 public class gameManager : MonoBehaviour
 {
     //外部静态访问
@@ -42,7 +67,23 @@ public class gameManager : MonoBehaviour
     public MapManager mapmanager;
     [HideInInspector]
     public UImanager uimanager;
+
+
     public InitControllBoard InitControllBoard;
+
+    public bool useCSInit;
+    private bool[] knapsackLaticInit = new bool[25]
+    {
+        false,false,false,false,false,
+        false,true,true,true,false,
+        false,true,true,true,false,
+        false,true,true,true,false,
+        false,false,false,false,false
+    };
+    private List<int> carddeckInit = new List<int>() { 0, 0, 0, 0, 1, 1, 1, 1, 2, 3 };
+
+    //public InitControll InitControll = new InitControll();
+
     public CardEditorBoard CardEditorBoard;
     public bool testcard;
     public CardEditorBoard TestCardEditor;
@@ -61,11 +102,20 @@ public class gameManager : MonoBehaviour
         //游戏数据
         initdata = new InitData();
         initdata.Awake();
-    }
-    void Start()
-    {
         //游戏开始
         GameStartInit();
+    }
+
+    private void Update()
+    {
+        if (gameState == GameState.Failure)
+        {
+            if (Input.anyKeyDown)
+            {
+                Destroy(gameObject);
+                SceneManager.LoadScene("ReStart");
+            }
+        }
     }
 
     public void SwitchScene(bool tobattle)
@@ -92,9 +142,19 @@ public class gameManager : MonoBehaviour
     {
         //初始化玩家数据
         //playerinfo = new playerInfo();
-        playerinfo.PlayerDickInit(InitControllBoard.carddeckInit);
-        playerinfo.MagicPartDickInit();
-        playerinfo.KnapSackInit(InitControllBoard.knapsackLaticInit);
+        if (useCSInit)
+        {
+            playerinfo.PlayerDickInit(carddeckInit);
+            playerinfo.MagicPartDickInit();
+            playerinfo.KnapSackInit(knapsackLaticInit);
+        }
+        else
+        {
+            playerinfo.PlayerDickInit(InitControllBoard.carddeckInit);
+            playerinfo.MagicPartDickInit();
+            playerinfo.KnapSackInit(InitControllBoard.knapsackLaticInit);
+        }
+
     }
 
     public void mapManagerInit()
@@ -123,5 +183,13 @@ public class gameManager : MonoBehaviour
         mapmanager.mapplayer.healthSlider.SetSlider(0, playerinfo.playerHealth);
         Destroy(battlemanager);
         SceneManager.UnloadSceneAsync(battleScene);
+    }
+    public void FailScene()
+    {
+        gameState = GameState.Failure;
+        Destroy(battlemanager);
+        SceneManager.LoadScene("failure");
+        //SceneManager.UnloadSceneAsync(battleScene);
+        //SceneManager.UnloadSceneAsync(mapScene);
     }
 }

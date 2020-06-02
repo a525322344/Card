@@ -12,6 +12,7 @@ public class realEnemy : MonoBehaviour
     public realIntent intent;
 
     public Transform damagePosi;
+    public Transform damageEffectPosi;
     public GameObject realStateGO;
     public GameObject damageshow;
 

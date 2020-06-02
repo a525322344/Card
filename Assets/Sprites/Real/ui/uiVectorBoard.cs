@@ -25,18 +25,20 @@ public class uiVectorBoard : MonoBehaviour
         {
             if (isOn)
             {
+                isOn = false;
                 if (selectcardGO)
                 {
                     selectcardGO.SetActive(true);
                 }
                 else
                 {
+
                     List<playerCard> selectcardList = ListOperation.RandomValueList<playerCard>(AllAsset.cardAsset.canGetCards, 3);
-                    secondBoardInfo second = new secondBoardInfo(1);
+                    secondBoardInfo second = new secondBoardInfo(3);
                     selectcardGO = Instantiate(instantiateManager.instance.uiSecondBoardGOList[second.order], secondpos);
                     UisecondBoard_SelectCard uis = selectcardGO.GetComponent<UisecondBoard_SelectCard>();
                     uis.EnterInit(second);
-                    uis.Init(selectcardList, 1);
+                    uis.Init(selectcardList, 1,1);
                     uis.describeText.text = "选择1张卡牌";
                     uis.present = 0.5f;
                     uis.CancelButton.AddListener(() =>
@@ -61,6 +63,7 @@ public class uiVectorBoard : MonoBehaviour
         {
             if (isOn)
             {
+                isOn = false;
                 if (selectpartGO)
                 {
                     selectpartGO.SetActive(true);

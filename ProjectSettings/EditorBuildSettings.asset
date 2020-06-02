@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/battleScenes/battleScene_forest_Boss.unity
     guid: 45c50c565659e0644a79839ade206998
+  - enabled: 1
+    path: Assets/Scenes/failure.unity
+    guid: f54daa91a43c3614a87ad8709e5da779
+  - enabled: 1
+    path: Assets/Scenes/ReStart.unity
+    guid: 84c8df0c3766dcf4c9dcbfbb88604919
   m_configObjects: {}

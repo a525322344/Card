@@ -454,6 +454,7 @@ public class ActionEvent:singleEvent
         b_haveChildEvent = true;
         b_logoutAfterDeal = true;
         eventDescribe = "(未强化)行动：" + "以后补充";
+        performList = actionAb.performList;
     }
 
     public override void recesiveNotice()
@@ -499,7 +500,7 @@ public class ActionEvent:singleEvent
     }
 
     //演示
-    public float alltime=0.5f;
+    public float alltime=1;
     public List<perform> performList = new List<perform>();
 }
 //状态事件

@@ -9,6 +9,7 @@ public class UisecondBoard_SelectPart : uiSecondBoard
 {
     public Transform partZeroPosition;
     public TextMeshPro describeText;
+    public Transform dise;
     public int numHor;
     public float distanceHor;
 
@@ -60,7 +61,10 @@ public class UisecondBoard_SelectPart : uiSecondBoard
             rp.Init(partlist[i], RealPartState.Select);
             rp.partToSelect = partsToSelect;
         }
-        
+        if (gameManager.Instance.gameState == GameState.BattleSence)
+        {
+            dise.gameObject.SetActive(true);
+        }
     }
     public override void Exit()
     {

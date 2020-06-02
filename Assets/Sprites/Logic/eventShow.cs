@@ -34,6 +34,7 @@ public class EventShow
             CardEvent cardevent = _event as CardEvent;
             lasttime = cardevent.alltime;
             performList = cardevent.performList;
+            performList.Sort();
             turn = 0;
         }
         if (_event.m_eventKind == EventKind.Event_MonsterAction)
@@ -41,6 +42,7 @@ public class EventShow
             ActionEvent cardevent = _event as ActionEvent;
             lasttime = cardevent.alltime;
             performList = cardevent.performList;
+            performList.Sort();
             turn = 0;
         }
 

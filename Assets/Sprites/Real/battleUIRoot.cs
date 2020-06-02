@@ -16,7 +16,8 @@ public class battleUIRoot : MonoBehaviour
     public Transform cardBoardPosition;
     //意图的位置
     public Transform actionTran;
-
+    //
+    public Transform partdescribe;
     //弃卡选择框的位置
     public Transform waitSelectCard;
     //胜利结算面板

@@ -41,6 +41,7 @@ public class instantiateManager : MonoBehaviour
     public GameObject loadGO;
     public GameObject shopUiGO;
     public List<GameObject> uiSecondBoardGOList;
+    public List<GameObject> EffectGOList;
     public List<Sprite> beFallSprites = new List<Sprite>();
     public List<Sprite> mapPlaceSprites = new List<Sprite>();
     public List<Sprite> mapPlaceDiSprites = new List<Sprite>();
@@ -190,19 +191,19 @@ public class instantiateManager : MonoBehaviour
         switch (perform.kind)
         {
             case 0://主角位置
-                neweffect.transform.position = gameManager.Instance.battlemanager.realplayer.transform.position;
+                neweffect.transform.position = gameManager.Instance.battlemanager.realplayer.damageEffectPosi.position;
                 break;
             case 1://怪物位置
-                neweffect.transform.position = gameManager.Instance.battlemanager.realenemy.transform.position;
+                neweffect.transform.position = gameManager.Instance.battlemanager.realenemy.damageEffectPosi.position;
                 break;
             case 2://主》》怪
-                neweffect.transform.position = gameManager.Instance.battlemanager.realplayer.transform.position;
+                neweffect.transform.position = gameManager.Instance.battlemanager.realplayer.damageEffectPosi.position;
                 break;
             case 3://怪》》主
-                neweffect.transform.position = gameManager.Instance.battlemanager.realenemy.transform.position;
+                neweffect.transform.position = gameManager.Instance.battlemanager.realenemy.damageEffectPosi.position;
                 break;
             case 4://主角法杖位置
-                neweffect.transform.position = gameManager.Instance.battlemanager.realplayer.transform.position;
+                neweffect.transform.position = gameManager.Instance.battlemanager.realplayer.damageEffectPosi.position;
                 break;
         }
         neweffect.AddComponent<realEffect>().Init(perform.kind,perform.speed,perform.lasttime);

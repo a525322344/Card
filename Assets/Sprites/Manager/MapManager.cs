@@ -503,13 +503,20 @@ public class MapManager : MonoBehaviour
             placenode.thisplace = sleepPlace;
         }
         int sleepNum = (int)Random.Range(sleepNumRange.x, sleepNumRange.y + 1);
+        copyList = new List<PlaceNode>(placeNodeList);
         for (int i = 0; i < sleepNum;)
         {
-            PlaceNode nowplacenode = ListOperation.RandomValue<PlaceNode>(placeNodeList);
+            PlaceNode nowplacenode = ListOperation.RandomValue<PlaceNode>(copyList);
+            copyList.Remove(nowplacenode);
             if (CanBeSleep(nowplacenode))
             {
                 nowplacenode.thisplace = new sleepPlace();
                 i++;
+            }
+            if (copyList.Count == 0)
+            {
+                Debug.Log("可以休息的路径点不足");
+                break;
             }
         }
         //第零层是休息
