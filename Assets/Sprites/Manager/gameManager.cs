@@ -163,6 +163,7 @@ public class gameManager : MonoBehaviour
         instantiatemanager.mapRootInfo= GameObject.Find("root").GetComponent<MapRootInfo>();
         gameState = GameState.MapSence;
         instantiatemanager.mapRootInfo.uiMapContrill.Init();
+        initdata.MonsterInit();
         mapmanager.InitMap();
         uimanager.InitMapUI();
     }

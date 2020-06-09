@@ -78,7 +78,7 @@ public class uiVectorBoard : MonoBehaviour
                     selectpartGO = Instantiate(instantiateManager.instance.uiSecondBoardGOList[secondBoard.order], secondpos);
                     UisecondBoard_SelectPart uis = selectpartGO.GetComponent<UisecondBoard_SelectPart>();
                     uis.EnterInit(secondBoard);
-                    uis.Init(selectparts, 1);
+                    uis.Init(selectparts, 1,1);
                     uis.describeText.text = "选择1个部件";
                     uis.CancelButton.AddListener(() =>
                     {

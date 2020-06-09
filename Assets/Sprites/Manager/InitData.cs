@@ -23,7 +23,7 @@ public class InitData
 
         MagicPartInit();
         BefallInit();
-        MonsterInit();
+        //MonsterInit();
     }
     //数据加载全卡
     void CardInit()
@@ -212,7 +212,7 @@ public class InitData
         playerInfo player = gameManager.Instance.playerinfo;
         befallinfo befallinfo;
         //宝箱事件
-        befallinfo = new befallinfo("宝箱", 1, "宝箱，不会有宝箱怪的",
+        befallinfo = new befallinfo("宝箱", 8, "宝箱，不会有宝箱怪的",
             new Button_Exit("直接离开", () =>
              {
 
@@ -252,6 +252,7 @@ public class InitData
                         }
                         GameObject.Destroy(selectpart);
                         gameManager.Instance.mapmanager.EventWindow(false); //mapState = MapState.MainMap;
+                        gameManager.Instance.uimanager.uiBefallBoard.ExitEventBoard();
                     };
                 }
             })
@@ -259,9 +260,9 @@ public class InitData
         MapAsset.mapSystemBefall.Add(befallinfo);
         MapAsset.AllBefallInfos.Add(befallinfo);
         //营地事件
-        befallinfo = new befallinfo("营火", 3, "修养生息或者稳固实力",
+        befallinfo = new befallinfo("营火", 7, "修养生息或者稳固实力",
             new Button_Exit("直接离开",()=> { }),
-            new Button_Exit("恢复血量",()=> {
+            new Button_Exit("恢复血量（30%最大生命值）",()=> {
                 float h = player.playerHealthMax * 0.3f;
                 player.RecoveryHealth((int)h);
             }),
@@ -294,6 +295,7 @@ public class InitData
                     }
                     GameObject.Destroy(uiselectBoard.gameObject);
                     gameManager.Instance.mapmanager.EventWindow(false); //mapState = MapState.MainMap;
+                    gameManager.Instance.uimanager.uiBefallBoard.ExitEventBoard();
                 };
             })
             );
@@ -307,15 +309,15 @@ public class InitData
             new Button_Exit("离开", () => {
 
             }),
-            new Button_Exit("拿走全部祭品", () => {
+            new Button_Exit("拿走全部祭品（获得150G，被诅咒）", () => {
                 gameManager.Instance.playerinfo.GetMoney(150);
                 gameManager.Instance.playerinfo.AddCurseCard();//
             }),
-            new Button_Exit("拿走一半祭品", () => {
+            new Button_Exit("拿走一半祭品（获得75G）", () => {
                 gameManager.Instance.playerinfo.GetMoney(75);
                 gameManager.Instance.playerinfo.AddBattleBuff(new BattleBuff("疯狂", 1));//
             }),
-            new Button_Exit("献上祭品("+ name + ")", () => {
+            new Button_Exit("献上祭品(随机删除一张卡)", () => {
                 playerCard playerCard = ListOperation.RandomValue<playerCard>(player.playerDeck);
                 name = playerCard.Name;
                 player.RemoveCard(playerCard);
@@ -326,7 +328,7 @@ public class InitData
 
         //神秘法阵
         befallinfo = new befallinfo("神秘法阵", 2, "你走进一个山洞之中，石壁上好像画着什么东西，当你触碰到石壁的瞬间，一个法阵出现在你面前。你认出这是传送法阵，它可以送你去任何地方",
-            new Button_Exit("进入", () =>
+            new Button_Exit("进入（下一层你可以忽略路线）", () =>
             {
                 gameManager.Instance.mapmanager.Shenmifazhen();
             })
@@ -339,7 +341,7 @@ public class InitData
             {
 
             }),
-            new Button_Info("进行投喂", () =>
+            new Button_Info("进行投喂（损失15点生命值，然后？？？）", () =>
             {
                 player.RecoveryHealth(-15);
                 int a = Random.Range(1, 3);
@@ -405,11 +407,11 @@ public class InitData
 
         //路遇不平
         befallinfo = new befallinfo("路遇不平", 6, "你看到一个邪教徒正洗劫着一家农户，他把头转向了你这边，显然，他已经注意到了你的存在“告诉你，别多管闲事啊！待会儿会留一份给你的。”",
-            new Button_Exit("欣然接受", () =>
+            new Button_Exit("欣然接受（获得50G）", () =>
             {
                 gameManager.Instance.playerinfo.GetMoney(50);
             }),
-            new Button_Exit("出手相助", () =>
+            new Button_Exit("出手相助(进行一场精英战斗)", () =>
             {
                 //gameManager.Instance.playerinfo.GetMoney(50);
                 gameManager.Instance.mapmanager.EnterBattle(new battlePlace(2,1,2));
@@ -432,11 +434,11 @@ public class InitData
 
         //静谧湖畔
         befallinfo = new befallinfo("静谧湖畔", 3, "你找到了一座湖，静谧的湖面散发着魔法的微光",
-            new Button_Exit("饮下", () =>
+            new Button_Exit("饮下（恢复15点生命值）", () =>
             {
                 player.RecoveryHealth(15);
             }),
-            new Button_Exit("洗涤身体", () =>
+            new Button_Exit("洗涤身体（删除一张卡）", () =>
             {
                 secondBoardInfo selectBoardInfo = new secondBoardInfo(1);
                 GameObject selectcard = instantiateManager.instance.instanSecondBoard(selectBoardInfo);
@@ -463,107 +465,107 @@ public class InitData
 
         //微笑果农
         befallinfo = new befallinfo("微笑果农", 4, "你误入一片果林，就在这时，一个声音响起：“哎呀呀年轻人，你想尝尝哪种水果呢？”",
-            new Button_Exit("苹果", () =>
+            new Button_Exit("苹果（恢复15点生命值）", () =>
             {
                 player.RecoveryHealth(15);
             }),
-            new Button_Exit("梨子", () =>
+            new Button_Exit("梨子（增加5点最大生命值）", () =>
             {
                 player.MaxHP(5);
             })
             );
         MapAsset.AllBefallInfos.Add(befallinfo);
     }
-    void MonsterInit()
+    public void MonsterInit()
     {
-        //普通怪物
-        //1~3层(最少要有三只
-        monsterInfo monster;
-        monster = new monInfo_Sample(4);
-        monster.Id = 0;
-        monster.name = "普通怪物_1_a";
-        MapAsset.nMonster1s.Add(monster);
-        MapAsset.AllMonsters.Add(monster);
+        ////普通怪物
+        ////1~3层(最少要有三只
+        //monsterInfo monster;
+        //monster = new monInfo_Sample(4);
+        //monster.Id = 0;
+        //monster.name = "普通怪物_1_a";
+        //MapAsset.nMonster1s.Add(monster);
+        //MapAsset.AllMonsters.Add(monster);
 
-        monster = new monInfo_Sample(4);
-        monster.Id = 0;
-        monster.name = "普通怪物_1_b";
-        MapAsset.nMonster1s.Add(monster);
-        MapAsset.AllMonsters.Add(monster);
+        //monster = new monInfo_Sample(4);
+        //monster.Id = 0;
+        //monster.name = "普通怪物_1_b";
+        //MapAsset.nMonster1s.Add(monster);
+        //MapAsset.AllMonsters.Add(monster);
 
-        monster = new monInfo_Sample(4);
-        monster.Id = 0;
-        monster.name = "普通怪物_1_c";
-        MapAsset.nMonster1s.Add(monster);
-        MapAsset.AllMonsters.Add(monster);
-        //4~6层(三只
-        monster = new monInfo_Sample(6);
-        monster.Id = 0;
-        monster.name = "普通怪物_2_a";
-        MapAsset.nMonster2s.Add(monster);
-        MapAsset.AllMonsters.Add(monster);
+        //monster = new monInfo_Sample(4);
+        //monster.Id = 0;
+        //monster.name = "普通怪物_1_c";
+        //MapAsset.nMonster1s.Add(monster);
+        //MapAsset.AllMonsters.Add(monster);
+        ////4~6层(三只
+        //monster = new monInfo_Sample(6);
+        //monster.Id = 0;
+        //monster.name = "普通怪物_2_a";
+        //MapAsset.nMonster2s.Add(monster);
+        //MapAsset.AllMonsters.Add(monster);
 
-        monster = new monInfo_Sample(6);
-        monster.Id = 0;
-        monster.name = "普通怪物_2_b";
-        MapAsset.nMonster2s.Add(monster);
-        MapAsset.AllMonsters.Add(monster);
+        //monster = new monInfo_Sample(6);
+        //monster.Id = 0;
+        //monster.name = "普通怪物_2_b";
+        //MapAsset.nMonster2s.Add(monster);
+        //MapAsset.AllMonsters.Add(monster);
 
-        monster = new monInfo_Sample(6);
-        monster.Id = 0;
-        monster.name = "普通怪物_2_c";
-        MapAsset.nMonster2s.Add(monster);
-        MapAsset.AllMonsters.Add(monster);
-        //8~10层
-        monster = new monInfo_Sample(8);
-        monster.Id = 0;
-        monster.name = "普通怪物_3_a";
-        MapAsset.nMonster3s.Add(monster);
-        MapAsset.AllMonsters.Add(monster);
+        //monster = new monInfo_Sample(6);
+        //monster.Id = 0;
+        //monster.name = "普通怪物_2_c";
+        //MapAsset.nMonster2s.Add(monster);
+        //MapAsset.AllMonsters.Add(monster);
+        ////8~10层
+        //monster = new monInfo_Sample(8);
+        //monster.Id = 0;
+        //monster.name = "普通怪物_3_a";
+        //MapAsset.nMonster3s.Add(monster);
+        //MapAsset.AllMonsters.Add(monster);
 
-        monster = new monInfo_Sample(8);
-        monster.Id = 0;
-        monster.name = "普通怪物_3_b";
-        MapAsset.nMonster3s.Add(monster);
-        MapAsset.AllMonsters.Add(monster);
+        //monster = new monInfo_Sample(8);
+        //monster.Id = 0;
+        //monster.name = "普通怪物_3_b";
+        //MapAsset.nMonster3s.Add(monster);
+        //MapAsset.AllMonsters.Add(monster);
 
-        monster = new monInfo_Sample(8);
-        monster.Id = 0;
-        monster.name = "普通怪物_3_c";
-        MapAsset.nMonster3s.Add(monster);
-        MapAsset.AllMonsters.Add(monster);
-        //精英怪物
-        //3~6层
-        monster = new monInfo_Sample(8);
-        monster.Id = 0;
-        monster.name = "精英怪物_1_a";
-        MapAsset.hMonster1s.Add(monster);
-        MapAsset.AllMonsters.Add(monster);
+        //monster = new monInfo_Sample(8);
+        //monster.Id = 0;
+        //monster.name = "普通怪物_3_c";
+        //MapAsset.nMonster3s.Add(monster);
+        //MapAsset.AllMonsters.Add(monster);
+        ////精英怪物
+        ////3~6层
+        //monster = new monInfo_Sample(8);
+        //monster.Id = 0;
+        //monster.name = "精英怪物_1_a";
+        //MapAsset.hMonster1s.Add(monster);
+        //MapAsset.AllMonsters.Add(monster);
 
-        monster = new monInfo_Sample(8);
-        monster.Id = 0;
-        monster.name = "精英怪物_1_b";
-        MapAsset.hMonster1s.Add(monster);
-        MapAsset.AllMonsters.Add(monster);
+        //monster = new monInfo_Sample(8);
+        //monster.Id = 0;
+        //monster.name = "精英怪物_1_b";
+        //MapAsset.hMonster1s.Add(monster);
+        //MapAsset.AllMonsters.Add(monster);
 
-        //8~10层
-        monster = new monInfo_Sample(8);
-        monster.Id = 0;
-        monster.name = "精英怪物_2_a";
-        MapAsset.hMonster2s.Add(monster);
-        MapAsset.AllMonsters.Add(monster);
+        ////8~10层
+        //monster = new monInfo_Sample(8);
+        //monster.Id = 0;
+        //monster.name = "精英怪物_2_a";
+        //MapAsset.hMonster2s.Add(monster);
+        //MapAsset.AllMonsters.Add(monster);
 
-        monster = new monInfo_Sample(8);
-        monster.Id = 0;
-        monster.name = "精英怪物_2_b";
-        MapAsset.hMonster2s.Add(monster);
-        MapAsset.AllMonsters.Add(monster);
-        //boss
-        monster = new monInfo_Sample(12);
-        monster.Id = 0;
-        monster.name = "boss";
-        MapAsset.bossLists.Add(monster);
-        MapAsset.AllMonsters.Add(monster);
+        //monster = new monInfo_Sample(8);
+        //monster.Id = 0;
+        //monster.name = "精英怪物_2_b";
+        //MapAsset.hMonster2s.Add(monster);
+        //MapAsset.AllMonsters.Add(monster);
+        ////boss
+        //monster = new monInfo_Sample(12);
+        //monster.Id = 0;
+        //monster.name = "boss";
+        //MapAsset.bossLists.Add(monster);
+        //MapAsset.AllMonsters.Add(monster);
 
         //normal
         MapAsset.NormalMonsterList.Add(new monInfo_Cat());

@@ -98,12 +98,12 @@ public class MapManager : MonoBehaviour
     //生成随机表单
     void RandomList()
     {
-        normalEnemyLevel1 = ListOperation.RandomValueList<monsterInfo>(AllAsset.MapAsset.nMonster1s, 3);
-        normalEnemyLevel2 = ListOperation.RandomValueList<monsterInfo>(AllAsset.MapAsset.nMonster2s, 3);
-        normalEnemyLevel3 = ListOperation.RandomValueList<monsterInfo>(AllAsset.MapAsset.nMonster3s, 3);
-        hardEnemyLevel4 = ListOperation.RandomValueList<monsterInfo>(AllAsset.MapAsset.hMonster1s, 2);
-        hardEnemyLevel5 = ListOperation.RandomValueList<monsterInfo>(AllAsset.MapAsset.hMonster2s, 2);
-        bossList = ListOperation.RandomValueList<monsterInfo>(AllAsset.MapAsset.bossLists, 1);
+       // normalEnemyLevel1 = ListOperation.RandomValueList<monsterInfo>(AllAsset.MapAsset.nMonster1s, 3);
+        //normalEnemyLevel2 = ListOperation.RandomValueList<monsterInfo>(AllAsset.MapAsset.nMonster2s, 3);
+        //normalEnemyLevel3 = ListOperation.RandomValueList<monsterInfo>(AllAsset.MapAsset.nMonster3s, 3);
+        //hardEnemyLevel4 = ListOperation.RandomValueList<monsterInfo>(AllAsset.MapAsset.hMonster1s, 2);
+        //hardEnemyLevel5 = ListOperation.RandomValueList<monsterInfo>(AllAsset.MapAsset.hMonster2s, 2);
+       // bossList = ListOperation.RandomValueList<monsterInfo>(AllAsset.MapAsset.bossLists, 1);
 
         normalMonsterList = ListOperation.Shufle<monsterInfo>(AllAsset.MapAsset.NormalMonsterList);
         hardMonsterList = ListOperation.Shufle<monsterInfo>(AllAsset.MapAsset.HardMonsterList);
@@ -894,7 +894,7 @@ public class MapManager : MonoBehaviour
     //private void 
     public void EnterBattle(battlePlace battle)
     {
-        monsterInfo monster = normalEnemyLevel1[0];
+        monsterInfo monster = normalMonsterList[0];
         if (battle.imageorder == 1)
         {
             if (battle.storey == 1)

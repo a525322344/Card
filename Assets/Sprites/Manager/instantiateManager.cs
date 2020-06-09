@@ -40,8 +40,8 @@ public class instantiateManager : MonoBehaviour
     public GameObject placeGO;
     public GameObject loadGO;
     public GameObject shopUiGO;
-    public List<GameObject> uiSecondBoardGOList;
-    public List<GameObject> EffectGOList;
+    public List<GameObject> uiSecondBoardGOList = new List<GameObject>();
+    public List<GameObject> EffectGOList = new List<GameObject>();
     public List<Sprite> beFallSprites = new List<Sprite>();
     public List<Sprite> mapPlaceSprites = new List<Sprite>();
     public List<Sprite> mapPlaceDiSprites = new List<Sprite>();

@@ -20,7 +20,7 @@ public class uiEventbutton : MonoBehaviour
     {
         if (ismouseOver)
         {
-            transform.DOScale(Vector3.one * 1.5f, 0.2f);
+            transform.DOScale(Vector3.one * 1.2f, 0.2f);
         }
         else
         {

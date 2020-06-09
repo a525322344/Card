@@ -26,7 +26,7 @@ public class UisecondBoard_SelectPart : uiSecondBoard
     {
         
     }
-    public void Init(List<MagicPart> partlist,int selectnum)
+    public void Init(List<MagicPart> partlist,int selectnum,int gf=0)
     {
         freePartList = new List<MagicPart>(partlist);
         selectNum = selectnum;
@@ -62,6 +62,10 @@ public class UisecondBoard_SelectPart : uiSecondBoard
             rp.partToSelect = partsToSelect;
         }
         if (gameManager.Instance.gameState == GameState.BattleSence)
+        {
+            dise.gameObject.SetActive(true);
+        }
+        if (gf != 0)
         {
             dise.gameObject.SetActive(true);
         }
