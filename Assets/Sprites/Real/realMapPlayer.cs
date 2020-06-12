@@ -10,8 +10,9 @@ public class realMapPlayer : MonoBehaviour
     Vector3 targetplace;
     public float delayShowTime;
 
-    public void Init(PlaceNode nowplace)
+    public void Init(PlaceNode nowplace,float time)
     {
+        delayShowTime = time;
         transform.position = nowplace.realPlace.spriteRenderer.transform.position;
         targetplace = transform.position;
         healthSlider.isbattle = false;

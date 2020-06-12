@@ -74108,39 +74108,6 @@ PrefabInstance:
       propertyPath: startMuneControll
       value: 
       objectReference: {fileID: 7778218340182681180}
-    - target: {fileID: 6214252688899465388, guid: 362da131cad69c3408bab7cc127cafeb,
-        type: 3}
-      propertyPath: InitControllBoard
-      value: 
-      objectReference: {fileID: 11400000, guid: f2b122f796562a34d9e784dadc3b696c,
-        type: 2}
-    - target: {fileID: 6214252688899465388, guid: 362da131cad69c3408bab7cc127cafeb,
-        type: 3}
-      propertyPath: useCSInit
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6214252688899465388, guid: 362da131cad69c3408bab7cc127cafeb,
-        type: 3}
-      propertyPath: playerinfo.money
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
-        type: 3}
-      propertyPath: beFallSprites.Array.size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
-        type: 3}
-      propertyPath: beFallSprites.Array.data[7]
-      value: 
-      objectReference: {fileID: 21300000, guid: 2ad27370a6256ea42b9ae1b96e64bf82,
-        type: 3}
-    - target: {fileID: 6214252688899465391, guid: 362da131cad69c3408bab7cc127cafeb,
-        type: 3}
-      propertyPath: beFallSprites.Array.data[8]
-      value: 
-      objectReference: {fileID: 21300000, guid: e0a2e086cdeecd04bb8ade583ef9acde,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 362da131cad69c3408bab7cc127cafeb, type: 3}
 --- !u!1 &7778218340182681179
@@ -74190,6 +74157,7 @@ MonoBehaviour:
   audioListener: {fileID: 639981049413199192}
   startCamera: {fileID: 639981049413199199}
   todown: {fileID: 1142008311}
+  playeruptime: 3
 --- !u!4 &9038355048958734297
 Transform:
   m_ObjectHideFlags: 0

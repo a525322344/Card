@@ -11,6 +11,7 @@ public enum GameState
     MapSence,
     BattleSence,
     Failure,
+    Win,
     BattleTest,
 }
 [System.Serializable]
@@ -89,6 +90,7 @@ public class gameManager : MonoBehaviour
     public CardEditorBoard TestCardEditor;
     public Scene battleScene;
     public Scene mapScene;
+    public bool useGoldhand = false;
     //public Camera Encamera;
     //public Camera UIcamera;
 
@@ -108,12 +110,26 @@ public class gameManager : MonoBehaviour
 
     private void Update()
     {
-        if (gameState == GameState.Failure)
+        if (gameState == GameState.Failure|gameState==GameState.Win)
         {
             if (Input.anyKeyDown)
             {
                 Destroy(gameObject);
                 SceneManager.LoadScene("ReStart");
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Home))
+        {
+            bool once = true;
+            if (useGoldhand&&once)
+            {
+                once = false;
+                useGoldhand = false;
+            }
+            else if((!useGoldhand)&&once)
+            {
+                once = false;
+                useGoldhand = true;
             }
         }
     }
@@ -157,14 +173,14 @@ public class gameManager : MonoBehaviour
 
     }
 
-    public void mapManagerInit()
+    public void mapManagerInit(float time)
     {
         mapmanager = gameObject.GetComponent<MapManager>();
         instantiatemanager.mapRootInfo= GameObject.Find("root").GetComponent<MapRootInfo>();
         gameState = GameState.MapSence;
         instantiatemanager.mapRootInfo.uiMapContrill.Init();
         initdata.MonsterInit();
-        mapmanager.InitMap();
+        mapmanager.InitMap(time);
         uimanager.InitMapUI();
     }
 
@@ -192,5 +208,11 @@ public class gameManager : MonoBehaviour
         SceneManager.LoadScene("failure");
         //SceneManager.UnloadSceneAsync(battleScene);
         //SceneManager.UnloadSceneAsync(mapScene);
+    }
+    public void WinScene()
+    {
+        gameState = GameState.Win;
+        Destroy(battlemanager);
+        SceneManager.LoadScene("Complete");
     }
 }

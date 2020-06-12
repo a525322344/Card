@@ -234,7 +234,8 @@ public class realCard : MonoBehaviour
                 }
                 break;
             case CardKind.CurseCard:
-                cardBoard.sprite = cardBoardSprites[0];
+            case CardKind.StateCard:
+                cardBoard.sprite = cardBoardSprites[2];
                 //cardKindIcon.gameObject.SetActive(false);
                 break;
         }

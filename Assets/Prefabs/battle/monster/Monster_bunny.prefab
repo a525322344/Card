@@ -255,6 +255,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: WorldUI
       objectReference: {fileID: 0}
+    - target: {fileID: 6391069500086407278, guid: a9b7e5e479d1e7a478d008c21f947762,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -6.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 6391069500086407278, guid: a9b7e5e479d1e7a478d008c21f947762,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.61
+      objectReference: {fileID: 0}
     - target: {fileID: 4761734532113768978, guid: a9b7e5e479d1e7a478d008c21f947762,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -380,15 +390,10 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6391069500086407278, guid: a9b7e5e479d1e7a478d008c21f947762,
+    - target: {fileID: 1677056682243302819, guid: a9b7e5e479d1e7a478d008c21f947762,
         type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -6.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 6391069500086407278, guid: a9b7e5e479d1e7a478d008c21f947762,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.61
+      propertyPath: m_Name
+      value: effectPosi
       objectReference: {fileID: 0}
     - target: {fileID: 2410185108157639525, guid: a9b7e5e479d1e7a478d008c21f947762,
         type: 3}
@@ -413,7 +418,7 @@ PrefabInstance:
     - target: {fileID: 7972938904699001274, guid: a9b7e5e479d1e7a478d008c21f947762,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -5.57
+      value: -3.39
       objectReference: {fileID: 0}
     - target: {fileID: 7972938904699001274, guid: a9b7e5e479d1e7a478d008c21f947762,
         type: 3}
@@ -434,11 +439,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -7.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 1677056682243302819, guid: a9b7e5e479d1e7a478d008c21f947762,
-        type: 3}
-      propertyPath: m_Name
-      value: effectPosi
       objectReference: {fileID: 0}
     - target: {fileID: 5695266509583792480, guid: a9b7e5e479d1e7a478d008c21f947762,
         type: 3}

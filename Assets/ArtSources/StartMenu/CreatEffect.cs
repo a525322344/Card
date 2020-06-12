@@ -18,7 +18,10 @@ public class CreatEffect : MonoBehaviour
     private void MapEnter()
     {
         Debug.Log("mapEnter");
-        gameManager.Instance.uimanager.startMuneControll.b_animaOver = true;
+        if (gameManager.Instance.uimanager.startMuneControll)
+        {
+            gameManager.Instance.uimanager.startMuneControll.b_animaOver = true;
+        }
     }
 
 }

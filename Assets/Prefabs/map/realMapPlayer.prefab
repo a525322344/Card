@@ -474,7 +474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveing: 0
   healthSlider: {fileID: 1940409272137325153}
-  delayShowTime: 3
+  delayShowTime: 0.2
 --- !u!1 &9002254128429895488
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,7 +491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7935167809493872181
 Transform:
   m_ObjectHideFlags: 0
@@ -530,3 +530,4 @@ MonoBehaviour:
   statePosi: {fileID: 0}
   statedistance: 0
   stateHNum: 0
+  HeadRenderer: {fileID: 0}

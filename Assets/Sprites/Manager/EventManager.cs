@@ -128,9 +128,16 @@ public class EventManager
         }
         if (battleManager.battleInfo.Enemy.healthnow <= 0)
         {
-            battleManager.BattleRound = BattleState.Vectory;
-            battleManager.EndBattleScene();
-            gameManager.Instance.uimanager.roundEndButton.interactable = false;
+            if (battleManager.monster.monsterLevel == 3)
+            {
+                gameManager.Instance.WinScene();
+            }
+            else
+            {
+                battleManager.BattleRound = BattleState.Vectory;
+                battleManager.EndBattleScene();
+                gameManager.Instance.uimanager.roundEndButton.interactable = false;
+            } 
         }
 
     }

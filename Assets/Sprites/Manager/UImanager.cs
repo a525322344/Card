@@ -44,7 +44,7 @@ public class UImanager : MonoBehaviour
         yield return new WaitUntil(() => {
             return _asyncOperation.isDone;
         });
-        gameManager.Instance.mapManagerInit();
+        gameManager.Instance.mapManagerInit(0);
         gameManager.Instance.mapScene = SceneManager.GetSceneByName("Map");
 
     }

@@ -63,6 +63,7 @@ public class uiEventBoard : MonoBehaviour
         gameManager.Instance.uimanager.IsEventOn = false;
         foreach (Button button in buttons)
         {
+            button.GetComponent<uiEventbutton>().ismouseOver = false;
             button.gameObject.SetActive(false);
         }
         gameObject.SetActive(false);

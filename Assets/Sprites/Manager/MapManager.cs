@@ -86,14 +86,14 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void InitMap()
+    public void InitMap(float time)
     {
         Debug.Log("init map");
         maprootinfo = gameManager.Instance.instantiatemanager.mapRootInfo;
         positionZ = maprootinfo.cameraMove.localPosition.y;
         /////////////////////////////分割线//////////////////////////////
         RandomList();
-        RandomGenerateMap();
+        RandomGenerateMap(time);
     }
     //生成随机表单
     void RandomList()
@@ -150,7 +150,7 @@ public class MapManager : MonoBehaviour
             p.placeState = PlaceState.ToGo;
         }
     }
-    private void RandomGenerateMap()
+    private void RandomGenerateMap(float time)
     {
         PlaceNode startPlaceNode = new PlaceNode(new startPlace(), new Vector2(2.5f, 0));
         intListDic.Add(0, new List<PlaceNode>() { startPlaceNode });
@@ -567,7 +567,7 @@ public class MapManager : MonoBehaviour
 
         //创建player
         mapplayer = Instantiate(mapplayerGO, maprootinfo.placefolder).GetComponent<realMapPlayer>();
-        mapplayer.Init(startPlaceNode);
+        mapplayer.Init(startPlaceNode,time);
     }
     bool CanDeleteNode(PlaceNode placeNode)
     {
@@ -955,6 +955,10 @@ public class MapManager : MonoBehaviour
         }
         if (monster.monsterLevel == 3){
             sceneId = 4;
+        }
+        if (gameManager.Instance.uimanager.startMuneControll)
+        {
+            gameManager.Instance.uimanager.startMuneControll.UnloadStartScene();
         }
         AsyncOperation _asyncOperation = SceneManager.LoadSceneAsync(AllAsset.MapAsset.GetSceneStr(sceneId),LoadSceneMode.Additive);
         gameManager.Instance.battleScene = SceneManager.GetSceneByName(AllAsset.MapAsset.GetSceneStr(sceneId));

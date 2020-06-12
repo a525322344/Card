@@ -750,7 +750,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5549986135759423697}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.98, y: 18, z: 0}
+  m_LocalPosition: {x: -3.98, y: 24.5, z: 0}
   m_LocalScale: {x: 37.21407, y: 38.210262, z: 1}
   m_Children: []
   m_Father: {fileID: 4077398821111810806}
@@ -793,7 +793,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0725545e8de386c46a4016c40747b724, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4c592f70d94f63143ac945c04995cecf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1277,9 +1277,9 @@ MonoBehaviour:
   cardTexture: {fileID: 7635143818129053764}
   cardBoard: {fileID: 4598856509703217802}
   cardBoardSprites:
-  - {fileID: 21300000, guid: 0725545e8de386c46a4016c40747b724, type: 3}
-  - {fileID: 21300000, guid: 83c979fec64f3b04cb008d9e22a80710, type: 3}
-  - {fileID: 21300000, guid: 8a328470d6064ca41b752d4a48fdf3ea, type: 3}
+  - {fileID: 21300000, guid: 4c592f70d94f63143ac945c04995cecf, type: 3}
+  - {fileID: 21300000, guid: 2be692a83e0805b4b88ae5bba720890b, type: 3}
+  - {fileID: 21300000, guid: ad2de52580ff1f4499a2f5dfc2c07a4f, type: 3}
   costGO:
   - {fileID: 8669777376031692105, guid: e667e65488397c142b8690a07e532ab6, type: 3}
   - {fileID: 241670723493789910, guid: 27f9604506762f042b57b634f4a3c79d, type: 3}

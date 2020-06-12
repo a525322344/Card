@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class uiEventbutton : MonoBehaviour
 {
-    bool ismouseOver;
+    public bool ismouseOver;
     public Text buttondescribe;
     public string describe;
 

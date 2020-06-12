@@ -18,6 +18,10 @@ public class startMuneControll : MonoBehaviour
     public AudioListener audioListener;
     public Camera startCamera;
     public todown todown;
+
+    public float playeruptime;
+
+    Scene startscene;
     // Update is called once per frame
     void Update()
     {
@@ -69,10 +73,11 @@ public class startMuneControll : MonoBehaviour
         yield return new WaitUntil(() => {
             return _asyncOperation.isDone;
         });
+        startscene= SceneManager.GetActiveScene();
         todown.b_todown = true;
         audioListener.enabled = false;
         startCamera.clearFlags = CameraClearFlags.Depth;
-        gameManager.Instance.mapManagerInit();
+        gameManager.Instance.mapManagerInit(playeruptime);
 
         //播放动画
         foreach (Animator animator in waitLoadPlay)
@@ -89,11 +94,14 @@ public class startMuneControll : MonoBehaviour
             return b_animaOver;
         });
         yield return new WaitForSeconds(1);
-        Scene scene = SceneManager.GetActiveScene();
+        startscene = SceneManager.GetActiveScene();
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Map"));
-        SceneManager.UnloadSceneAsync(scene);
+        SceneManager.UnloadSceneAsync(startscene);
         //完全切换场景
 
     }
-
+    public void UnloadStartScene()
+    {
+        SceneManager.UnloadSceneAsync(startscene);
+    }
 }

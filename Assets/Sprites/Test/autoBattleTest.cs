@@ -13,7 +13,7 @@ public class autoBattleTest : MonoBehaviour
         {
             GameObject gameManagerTest = Instantiate(gamemanager);
             gameManager.Instance.GameStartInit();
-            monsterInfo = new monInfo_Cat();
+            monsterInfo = new monInfo_MoNv();
             gameManager.Instance.gameState = GameState.BattleSence;
             gameManager.Instance.battleManagerInit();
             gameManager.Instance.battlemanager.InitBattlemanaget();

@@ -195,11 +195,18 @@ public class battleManager : MonoBehaviour
         {
             dickInGame = ListOperation.Shufle<playerCard>(dickInGame);
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W)&&gameManager.Instance.useGoldhand)
         {
-            BattleRound = BattleState.Vectory;
-            EndBattleScene();
-            gameManager.Instance.uimanager.roundEndButton.interactable = false;
+            if (monster.monsterLevel == 3)
+            {
+                gameManager.Instance.WinScene();
+            }
+            else
+            {
+                BattleRound = BattleState.Vectory;
+                EndBattleScene();
+                gameManager.Instance.uimanager.roundEndButton.interactable = false;
+            }
         }
     }
 

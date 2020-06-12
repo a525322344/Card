@@ -57,7 +57,7 @@ MonoBehaviour:
     treasureToSelectNum: 3
     playerHealthMax: 100
     playerHealth: 100
-    money: 200
+    money: 100
   initdata:
     ShowAllCards: []
   battlemanager: {fileID: 0}
@@ -65,6 +65,7 @@ MonoBehaviour:
   mapmanager: {fileID: 0}
   uimanager: {fileID: 0}
   InitControllBoard: {fileID: 11400000, guid: f2b122f796562a34d9e784dadc3b696c, type: 2}
+  useCSInit: 0
   CardEditorBoard: {fileID: 11400000, guid: 8927315ad9a26d74cab3dcdfb5b9e202, type: 2}
   testcard: 0
   TestCardEditor: {fileID: 11400000, guid: 1f3bff11858d871469d2dc01a3e99740, type: 2}
@@ -72,6 +73,7 @@ MonoBehaviour:
     m_Handle: 0
   mapScene:
     m_Handle: 0
+  useGoldhand: 0
 --- !u!114 &6214252688899465391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +145,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d360022ce31f82c44b79981bf75b2579, type: 3}
   - {fileID: 21300000, guid: 70eb1e5d270f2a348b8f381bb16aef1d, type: 3}
   - {fileID: 21300000, guid: 9c35b20141705e143a941052696f3998, type: 3}
+  - {fileID: 21300000, guid: 2ad27370a6256ea42b9ae1b96e64bf82, type: 3}
+  - {fileID: 21300000, guid: e0a2e086cdeecd04bb8ade583ef9acde, type: 3}
   mapPlaceSprites:
   - {fileID: 21300000, guid: 30aa6fec7c1f1c94688be230f062d4bc, type: 3}
   - {fileID: 21300000, guid: d8f468b71b94b384dabfd5387a22f3f6, type: 3}

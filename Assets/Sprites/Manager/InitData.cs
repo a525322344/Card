@@ -24,6 +24,7 @@ public class InitData
         MagicPartInit();
         BefallInit();
         //MonsterInit();
+        cardAsset.curseCards.Add(new playerCard(999, "诅咒", CardKind.CurseCard, 0, 0));
     }
     //数据加载全卡
     void CardInit()

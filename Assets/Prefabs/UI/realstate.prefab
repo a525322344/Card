@@ -171,7 +171,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
-  m_UseSpriteMesh: 0
+  m_UseSpriteMesh: 1
 --- !u!114 &2653412243803495595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,6 +184,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b628f35d091f4743a0cced62a4d1d30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisstate:
+    name: 
+    key: 
+    num: 0
+    texint: 0
   teximage: {fileID: 1462051690245587316}
   num: {fileID: 2492259741418907340}
   uiInfoFrameGo: {fileID: 5017613993221021445, guid: d4b5c67f034534e4887ffde8ec81e544,

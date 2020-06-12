@@ -20,6 +20,7 @@ public class uiShopBoard : MonoBehaviour
     public List<Transform> partTrans;
     public spriteButton exitbutton;
     public Transform DeleteButton;
+    public Transform[] saleposis;
     public int deleteCardMoney;
     public float downmove;
     public float moveUpTime = 0.2f;
@@ -88,7 +89,7 @@ public class uiShopBoard : MonoBehaviour
                 playerinfo.AddNewCard(_card);
                 //
                 Destroy(saleinfo.thingGO);
-                Destroy(saleinfo.priceGO);
+                //Destroy(saleinfo.priceGO);
             }
         };
 
@@ -103,14 +104,14 @@ public class uiShopBoard : MonoBehaviour
 
             saleInfo<realpart> saleInfo = new saleInfo<realpart>();
             saleInfo.price = sale;
-            saleInfo.thingTran = partTrans[i];
+            saleInfo.thingTran = saleposis[i];
             GameObject partGO = Instantiate(instantiateManager.instance.partGO, partTrans[i].GetChild(0));
             realpart rp = partGO.GetComponent<realpart>();
             rp.Init(part, RealPartState.Select);
             rp.partToSelect = partsToBuy;
             saleInfo.realCs = rp;
             saleInfo.priceGO = Instantiate(saleMoney, saleInfo.thingTran);
-            saleInfo.priceGO.transform.position = rp.saleposi.position;
+            //saleInfo.priceGO.transform.position = rp.saleposi.position;
             saleInfo.thingGO = partGO;
             saleInfo.priceGO.transform.GetChild(0).GetComponent<TextMeshPro>().text = "" + saleInfo.price;
             partSaleDic.Add(part, saleInfo);

@@ -42,7 +42,7 @@ public class uiMapContrill : MonoBehaviour
                     {
                         gameManager.Instance.instantiatemanager.shopBoard.GetComponent<uiShopBoard>().TurnOn(false);
                     }
-                    isopenOne = true;
+                    SetOpen(true);
                     List<playerCard> selectcardList = player.playerDeck;
                     secondBoardInfo second = new secondBoardInfo(1);
                     secondcardGO = Instantiate(instantiateManager.instance.uiSecondBoardGOList[second.order], instantiateManager.instance.mapRootInfo.selectBoardPosi);
@@ -65,7 +65,7 @@ public class uiMapContrill : MonoBehaviour
                             gameManager.Instance.mapmanager.EventWindow(true);
                         }
                         gameManager.Instance.mapmanager.mapState = laststate;
-                        isopenOne = false;
+                        SetOpen(false);
                         Destroy(secondcardGO);
                     });
                     uis.onSelectCards = (cardlist) =>
@@ -87,7 +87,7 @@ public class uiMapContrill : MonoBehaviour
                 if (gameManager.Instance.mapmanager.mapState == MapState.MainMap)
                 {
                     gameManager.Instance.mapmanager.mapState = MapState.EventWindow;
-                    isopenOne = true;
+                    SetOpen(true);
                     //gameManager.Instance.mapmanager.EventWindow(true, 0.5f);
                     if (gameManager.Instance.instantiatemanager.shopBoard)
                     {
@@ -97,7 +97,7 @@ public class uiMapContrill : MonoBehaviour
                     GameObject sbui = gameManager.Instance.instantiatemanager.instanSecondBoard(secondBoard);
                     sbui.GetComponent<uiSecondBoard>().exitToDo += () =>
                     {
-                        isopenOne = false;
+                        SetOpen(false);
                         if (gameManager.Instance.instantiatemanager.shopBoard)
                         {
                             gameManager.Instance.instantiatemanager.shopBoard.GetComponent<uiShopBoard>().TurnOn(true);
@@ -111,6 +111,12 @@ public class uiMapContrill : MonoBehaviour
             }
         });
         SetMoney();
+    }
+
+    public void SetOpen(bool se)
+    {
+        isopenOne = se;
+        gameObject.SetActive(!se);
     }
 
     public void SetMoney()

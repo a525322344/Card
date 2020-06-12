@@ -7,7 +7,8 @@ public enum CardKind
     AttackCard, 
     SkillCard,
     AbilityCard,
-    CurseCard
+    CurseCard,
+    StateCard,
 }
 [System.Serializable]
 public class card

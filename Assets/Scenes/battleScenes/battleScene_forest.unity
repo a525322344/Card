@@ -1583,26 +1583,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1410476140342170906}
-    - target: {fileID: 3540266816084345666, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: secondpos
-      value: 
-      objectReference: {fileID: 1992241391}
-    - target: {fileID: 8519204322471580253, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6726429574324028279, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3246817807579873266, guid: b0be205746ae69d43bee4138c9635c17,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0be205746ae69d43bee4138c9635c17, type: 3}
 --- !u!114 &1992241390 stripped
@@ -1617,12 +1597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b74cfbeeea5a4439ff6712fb002d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1992241391 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3067484075892925060, guid: b0be205746ae69d43bee4138c9635c17,
-    type: 3}
-  m_PrefabInstance: {fileID: 1992241389}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2078375530
 GameObject:
   m_ObjectHideFlags: 0
@@ -4247,6 +4221,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6452773627764869460, guid: 47417bae41271bd4c8c6c968bf2bf0a6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6452773628101215720, guid: 47417bae41271bd4c8c6c968bf2bf0a6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6452773629186040853, guid: 47417bae41271bd4c8c6c968bf2bf0a6,
         type: 3}
       propertyPath: m_Intensity
@@ -4258,16 +4242,6 @@ PrefabInstance:
       value: 3.06
       objectReference: {fileID: 0}
     - target: {fileID: 6452773629186040853, guid: 47417bae41271bd4c8c6c968bf2bf0a6,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6452773627764869460, guid: 47417bae41271bd4c8c6c968bf2bf0a6,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6452773628101215720, guid: 47417bae41271bd4c8c6c968bf2bf0a6,
         type: 3}
       propertyPath: m_Enabled
       value: 1
